@@ -756,7 +756,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.5)");
+			ImGui::Text("UETools GUI (v3.5b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -4227,7 +4227,7 @@ void GUI::Draw()
 				for (Unreal::Actor::DataStructure& actor : Features::ActorsList::filteredActors) // <-- Reference!
 				{
 					SDK::FVector2D screenPosition;
-					if (SDK::UGameplayStatics::ProjectWorldToScreen(playerController, actor.location, &screenPosition, false))
+					if (SDK::UGameplayStatics::ProjectWorldToScreen(playerController, actor.transform.location, &screenPosition, false))
 					{
 						ImU32 color;
 						if (Features::ActorsList::filterCheckValidness)
