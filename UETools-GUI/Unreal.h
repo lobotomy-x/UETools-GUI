@@ -43,6 +43,25 @@ namespace Unreal
 	};
 
 
+#ifdef WAIT_FOR_TITLE_INIT
+	static bool IsTitleInitialized()
+	{
+		if (SDK::UObject::GObjects == nullptr || SDK::UObject::GObjects->Num() == 0)
+			return false;
+
+		SDK::UWorld* World = SDK::UWorld::GetWorld();
+		if (World == nullptr)
+			return false;
+
+		SDK::UGameInstance* GameInstance = SDK::UGameplayStatics::GetGameInstance(World);
+		if (GameInstance == nullptr)
+			return false;
+
+		return true;
+	}
+#endif
+
+
 
 
 

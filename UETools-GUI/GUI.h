@@ -266,6 +266,15 @@ public:
 	* @param applicationModule - Handle of the current (this) DLL module.
 	*/
 	static void Init(const HMODULE& applicationModule);
+#ifdef WAIT_FOR_TITLE_INIT
+	/*
+	* @brief Initializes the GUI system once general Unreal Engine subsystems are up and running. Should be called to start ImGui and create the menu.
+	* @param applicationModule - Handle of the current (this) DLL module.
+	*/
+	static void InitOnTitleInitialized(const HMODULE& applicationModule);
+#endif
+
+
 	/*
 	* @brief Renders frame of GUI elements.
 	* 

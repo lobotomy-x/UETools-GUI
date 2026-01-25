@@ -747,6 +747,16 @@ void GUI::Init(const HMODULE& applicationModule)
 	StartWindowThread();
 }
 
+#ifdef WAIT_FOR_TITLE_INIT
+void GUI::InitOnTitleInitialized(const HMODULE& applicationModule)
+{
+	while (Unreal::IsTitleInitialized() == false)
+		Sleep(100);
+
+	Init(applicationModule);
+}
+#endif
+
 
 
 
@@ -756,7 +766,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.5b)");
+			ImGui::Text("UETools GUI (v3.5c)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);

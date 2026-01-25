@@ -20,6 +20,24 @@
 
 
 // ======================
+// |  GENERAL SECTION   |
+// ======================
+
+/*
+	#define WAIT_FOR_TITLE_INIT
+
+	Delays the GUI initialization loop until the core title classes are valid.
+
+	Use cases:
+	- When loading as an ASI plugin (early injection).
+	- To prevent crashes when accessing SDK pointers before the engine is fully set up.
+
+	Note: This will block the initialization thread (but not the main title thread) until the title is ready.
+*/
+
+
+
+// ======================
 // |  FEATURES SECTION  |
 // ======================
 
