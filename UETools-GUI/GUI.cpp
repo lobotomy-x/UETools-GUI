@@ -771,7 +771,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.6)");
+			ImGui::Text("UETools GUI (v3.6b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -3790,7 +3790,6 @@ void GUI::Draw()
 						ImGui::Text("When the character is Flying or in Ghost mode, moving forward teleports them in the direction the camera is facing,");
 						ImGui::Text("allowing for quick and easy navigation through the world.");
 						ImGui::SetFontRegular();
-						ImGui::BeginDisabled(movementComponent->bCheatFlying == false);
 						if (ImGui::TreeNode("Settings##DirectionalMovement"))
 						{
 							if (ImGui::Checkbox("Enabled##DirectionalMovement", &Features::DirectionalMovement::enabled))
@@ -3809,7 +3808,6 @@ void GUI::Draw()
 
 							ImGui::TreePop();
 						}
-						ImGui::EndDisabled();
 
 						ImGui::CategorySeparator();
 
