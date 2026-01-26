@@ -635,6 +635,11 @@ bool ImGui::KeyBindingInput(const char* label, KeyBinding* binding)
 
 				binding->isDetermined = true;
 				hasBindingChanged = true;
+
+#ifdef CONFIG_UPDATE_ON_NEW_KEYBINDING
+				Keybindings::SaveConfig();
+#endif
+
 				break;
 			}
 		}
@@ -766,7 +771,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.5c)");
+			ImGui::Text("UETools GUI (v3.6)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -817,91 +822,6 @@ void GUI::Draw()
 			ImGui::Text(" | ");
 
 
-#ifdef _DEBUG
-			if (GetIsMenuDebugEnabled())
-			{
-				if (ImGui::BeginMenu("Config Test"))
-				{
-					const bool default_bool = false;
-					const  int default_int = -1;
-					const float default_float = -1.0f;
-					const SDK::FVector default_fvector = SDK::FVector(-1.0f, -1.0f, -1.0f);
-					const std::string default_string = "ABCDEFG";
-
-					static bool test_bool = default_bool;
-					static int test_int = default_int;
-					static float test_float = default_float;
-					static SDK::FVector test_fvector = default_fvector;
-					static std::string test_string = default_string;
-
-					static std::string config_absolutepath = "NONE";
-					static bool config_directoryexist = false;
-					static bool config_fileexist = false;
-
-					static bool config_savetofile = true;
-					ImGui::Checkbox("Save Config To File", &config_savetofile);
-
-					static bool config_forceloadfail = false;
-					ImGui::Checkbox("Config Force Failed To Load", &config_forceloadfail);
-
-					if (ImGui::Button("Load Config & Update Displayed Data"))
-					{
-						ConfigInstance testConfig("config_test.cfg");
-						if (testConfig.Load() == false || config_forceloadfail)
-						{
-							testConfig.Set("Bool", true);
-							testConfig.Set("Int", 100);
-							testConfig.Set("Float", 376.814f);
-							testConfig.Set("FVector", SDK::FVector(54112.67f, 91433.12f, 86.09f));
-							testConfig.Set("String", "Hello, world!");
-
-							if (config_savetofile)
-								testConfig.Save();
-						}
-
-						test_bool = testConfig.Get<bool>("Bool").value_or(default_bool);
-						test_int = testConfig.Get<int>("Int").value_or(default_int);
-						test_float = testConfig.Get<float>("Float").value_or(default_float);
-						test_fvector = testConfig.Get<SDK::FVector>("FVector").value_or(default_fvector);
-						test_string = testConfig.Get<std::string>("String").value_or(default_string);
-						config_absolutepath = testConfig.GetAbsoluteFilePath();
-						config_directoryexist = testConfig.DoesFileDirectoryExist();
-						config_fileexist = testConfig.DoesFileExist();
-
-						PlayActionSound(true);
-					}
-
-					ImGui::NewLine();
-
-					ImGui::TextBoolColored("Bool: ", test_bool);
-					ImGui::TextIntColored("Int: ", test_int);
-					ImGui::TextFloatColored("Float: ", test_float);
-					ImGui::TextVectorColored("FVector: ", test_fvector);
-					ImGui::Text("String: ");
-					ImGui::SameLine();
-					ImGui::Text(test_string.c_str());
-					ImGui::Text("Config Path: ");
-					ImGui::SameLine();
-					ImGui::Text(config_absolutepath.c_str());
-					ImGui::TextBoolColored("Config Directory Exist: ", config_directoryexist);
-					ImGui::TextBoolColored("Config File Exist: ", config_fileexist);
-
-					ImGui::NewLine();
-
-					if (ImGui::Button("Open Config"))
-					{
-						if (config_fileexist == false)
-							PlayActionSound(false);
-						else
-						{
-							PlayActionSound(reinterpret_cast<std::intptr_t>(ShellExecuteA(nullptr, "open", config_absolutepath.c_str(), nullptr, nullptr, SW_SHOWNORMAL)) > 32);
-						}
-					}
-
-					ImGui::EndMenu();
-				}
-			}
-#endif
 
 
 
@@ -4035,6 +3955,10 @@ void GUI::Draw()
 				{
 					ImGui::PushID("##FreeCamera");
 
+					if (ImGui::Button("Toggle"))
+					{
+						Features::FreeCamera::Toggle();
+					}
 					ImGui::KeyBindingInput("Toggle:       ", &Keybindings::freeCamera_Toggle);
 
 					ImGui::NewLine();
@@ -5857,6 +5781,114 @@ bool Features::FreeCamera::TeleportPlayerToCamera()
 #endif
 
 
+
+
+
+
+void Keybindings::ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding)
+{
+	if (keybindingsConfig == nullptr || keyBinding == nullptr)
+		return;
+
+	if (keybindingsConfig->HasKey(entryName) == false)
+		return;
+
+	keyBinding->key = static_cast<ImGuiKey>(keybindingsConfig->Get<int>(entryName).value_or((int)keyBinding->key));
+}
+
+void Keybindings::LoadConfig()
+{
+	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
+	if (keybindingsConfig.Load() == false)
+	{
+		Keybindings::SaveConfig(); // If config doesn't exist yet, create it with values specified in .h class declaration.
+		keybindingsConfig.Load();
+	}
+
+	ReadKeyBindingFromConfig(&keybindingsConfig, "general_MenuOpenClose", &Keybindings::general_MenuOpenClose);
+
+#ifdef ACTOR_TRACE
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorTrace", &Keybindings::debug_ActorTrace);
+#endif
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListUpdate", &Keybindings::debug_ActorsListUpdate);
+#ifdef ACTORS_TRACKING
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListTracking", &Keybindings::debug_ActorsListTracking);
+#endif
+#ifdef COLLISION_VISUALIZER
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListCollisionDraw", &Keybindings::debug_ActorsListCollisionDraw);
+#endif
+
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Ghost", &Keybindings::characterMovement_Ghost);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Fly", &Keybindings::characterMovement_Fly);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Walk", &Keybindings::characterMovement_Walk);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Jump", &Keybindings::characterMovement_Jump);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Launch", &Keybindings::characterMovement_Launch);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Dash", &Keybindings::characterMovement_Dash);
+	
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StartFade", &Keybindings::characterCamera_StartFade);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StopFade", &Keybindings::characterCamera_StopFade);
+
+#ifdef FREE_CAMERA
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportCameraToPlayer", &Keybindings::freeCamera_TeleportCameraToPlayer);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_Toggle", &Keybindings::freeCamera_Toggle);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportPlayerToCamera", &Keybindings::freeCamera_TeleportPlayerToCamera);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveForward", &Keybindings::freeCamera_MoveForward);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveBackward", &Keybindings::freeCamera_MoveBackward);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveLeft", &Keybindings::freeCamera_MoveLeft);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveRight", &Keybindings::freeCamera_MoveRight);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveUp", &Keybindings::freeCamera_MoveUp);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveDown", &Keybindings::freeCamera_MoveDown);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateUp", &Keybindings::freeCamera_RotateUp);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateDown", &Keybindings::freeCamera_RotateDown);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateLeft", &Keybindings::freeCamera_RotateLeft);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateRight", &Keybindings::freeCamera_RotateRight);
+#endif
+}
+
+void Keybindings::SaveConfig()
+{
+	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
+	
+	keybindingsConfig.Set("general_MenuOpenClose", static_cast<int>(Keybindings::general_MenuOpenClose.key));
+
+#ifdef ACTOR_TRACE
+	keybindingsConfig.Set("debug_ActorTrace", static_cast<int>(Keybindings::debug_ActorTrace.key));
+#endif
+	keybindingsConfig.Set("debug_ActorsListUpdate", static_cast<int>(Keybindings::debug_ActorsListUpdate.key));
+#ifdef ACTORS_TRACKING
+	keybindingsConfig.Set("debug_ActorsListTracking", static_cast<int>(Keybindings::debug_ActorsListTracking.key));
+#endif
+#ifdef COLLISION_VISUALIZER
+	keybindingsConfig.Set("debug_ActorsListCollisionDraw", static_cast<int>(Keybindings::debug_ActorsListCollisionDraw.key));
+#endif
+
+	keybindingsConfig.Set("characterMovement_Ghost", static_cast<int>(Keybindings::characterMovement_Ghost.key));
+	keybindingsConfig.Set("characterMovement_Fly", static_cast<int>(Keybindings::characterMovement_Fly.key));
+	keybindingsConfig.Set("characterMovement_Walk", static_cast<int>(Keybindings::characterMovement_Walk.key));
+	keybindingsConfig.Set("characterMovement_Launch", static_cast<int>(Keybindings::characterMovement_Launch.key));
+	keybindingsConfig.Set("characterMovement_Dash", static_cast<int>(Keybindings::characterMovement_Dash.key));
+
+	keybindingsConfig.Set("characterCamera_StartFade", static_cast<int>(Keybindings::characterCamera_StartFade.key));
+	keybindingsConfig.Set("characterCamera_StopFade", static_cast<int>(Keybindings::characterCamera_StopFade.key));
+
+#ifdef FREE_CAMERA
+	keybindingsConfig.Set("freeCamera_TeleportCameraToPlayer", static_cast<int>(Keybindings::freeCamera_TeleportCameraToPlayer.key));
+	keybindingsConfig.Set("freeCamera_Toggle", static_cast<int>(Keybindings::freeCamera_Toggle.key));
+	keybindingsConfig.Set("freeCamera_TeleportPlayerToCamera", static_cast<int>(Keybindings::freeCamera_TeleportPlayerToCamera.key));
+	keybindingsConfig.Set("freeCamera_MoveForward", static_cast<int>(Keybindings::freeCamera_MoveForward.key));
+	keybindingsConfig.Set("freeCamera_MoveBackward", static_cast<int>(Keybindings::freeCamera_MoveBackward.key));
+	keybindingsConfig.Set("freeCamera_MoveLeft", static_cast<int>(Keybindings::freeCamera_MoveLeft.key));
+	keybindingsConfig.Set("freeCamera_MoveRight", static_cast<int>(Keybindings::freeCamera_MoveRight.key));
+	keybindingsConfig.Set("freeCamera_MoveUp", static_cast<int>(Keybindings::freeCamera_MoveUp.key));
+	keybindingsConfig.Set("freeCamera_MoveDown", static_cast<int>(Keybindings::freeCamera_MoveDown.key));
+	keybindingsConfig.Set("freeCamera_RotateUp", static_cast<int>(Keybindings::freeCamera_RotateUp.key));
+	keybindingsConfig.Set("freeCamera_RotateDown", static_cast<int>(Keybindings::freeCamera_RotateDown.key));
+	keybindingsConfig.Set("freeCamera_RotateLeft", static_cast<int>(Keybindings::freeCamera_RotateLeft.key));
+	keybindingsConfig.Set("freeCamera_RotateRight", static_cast<int>(Keybindings::freeCamera_RotateRight.key));
+#endif
+
+	keybindingsConfig.Save();
+}
 
 
 

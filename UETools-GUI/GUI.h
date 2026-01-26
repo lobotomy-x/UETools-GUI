@@ -749,22 +749,22 @@ namespace Features
 class Keybindings
 {
 public:
-	static inline ImGui::KeyBinding general_MenuOpenClose = ImGui::KeyBinding(ImGuiKey_Insert);
+	static inline ImGui::KeyBinding general_MenuOpenClose{ ImGuiKey_Insert };
 
 #ifdef ACTOR_TRACE
-	static inline ImGui::KeyBinding debug_ActorTrace = ImGui::KeyBinding(ImGuiKey_T);
+	static inline ImGui::KeyBinding debug_ActorTrace;
 #endif
-	static inline ImGui::KeyBinding debug_ActorsListUpdate = ImGui::KeyBinding(ImGuiKey_Keypad1);
+	static inline ImGui::KeyBinding debug_ActorsListUpdate;
 #ifdef ACTORS_TRACKING
-	static inline ImGui::KeyBinding debug_ActorsListTracking = ImGui::KeyBinding(ImGuiKey_Keypad2);
+	static inline ImGui::KeyBinding debug_ActorsListTracking;
 #endif
 #ifdef COLLISION_VISUALIZER
-	static inline ImGui::KeyBinding debug_ActorsListCollisionDraw = ImGui::KeyBinding(ImGuiKey_Keypad3);
+	static inline ImGui::KeyBinding debug_ActorsListCollisionDraw;
 #endif
 
-	static inline ImGui::KeyBinding characterMovement_Ghost = ImGui::KeyBinding(ImGuiKey_Keypad7);
-	static inline ImGui::KeyBinding characterMovement_Fly = ImGui::KeyBinding(ImGuiKey_Keypad8);
-	static inline ImGui::KeyBinding characterMovement_Walk = ImGui::KeyBinding(ImGuiKey_Keypad9);
+	static inline ImGui::KeyBinding characterMovement_Ghost;
+	static inline ImGui::KeyBinding characterMovement_Fly;
+	static inline ImGui::KeyBinding characterMovement_Walk;
 	static inline ImGui::KeyBinding characterMovement_Jump;
 	static inline ImGui::KeyBinding characterMovement_Launch;
 	static inline ImGui::KeyBinding characterMovement_Dash;
@@ -773,21 +773,25 @@ public:
 	static inline ImGui::KeyBinding characterCamera_StopFade;
 
 #ifdef FREE_CAMERA
-	static inline ImGui::KeyBinding freeCamera_TeleportCameraToPlayer = ImGui::KeyBinding(ImGuiKey_Keypad4);
-	static inline ImGui::KeyBinding freeCamera_Toggle = ImGui::KeyBinding(ImGuiKey_Keypad5);
-	static inline ImGui::KeyBinding freeCamera_TeleportPlayerToCamera = ImGui::KeyBinding(ImGuiKey_Keypad6);
-	static inline ImGui::KeyBinding freeCamera_MoveForward = ImGui::KeyBinding(ImGuiKey_W);
-	static inline ImGui::KeyBinding freeCamera_MoveBackward = ImGui::KeyBinding(ImGuiKey_S);
-	static inline ImGui::KeyBinding freeCamera_MoveLeft = ImGui::KeyBinding(ImGuiKey_A);
-	static inline ImGui::KeyBinding freeCamera_MoveRight = ImGui::KeyBinding(ImGuiKey_D);
-	static inline ImGui::KeyBinding freeCamera_MoveUp = ImGui::KeyBinding(ImGuiKey_E);
-	static inline ImGui::KeyBinding freeCamera_MoveDown = ImGui::KeyBinding(ImGuiKey_Q);
-	static inline ImGui::KeyBinding freeCamera_RotateUp = ImGui::KeyBinding(ImGuiKey_UpArrow);
-	static inline ImGui::KeyBinding freeCamera_RotateDown = ImGui::KeyBinding(ImGuiKey_DownArrow);
-	static inline ImGui::KeyBinding freeCamera_RotateLeft = ImGui::KeyBinding(ImGuiKey_LeftArrow);
-	static inline ImGui::KeyBinding freeCamera_RotateRight = ImGui::KeyBinding(ImGuiKey_RightArrow);
+	static inline ImGui::KeyBinding freeCamera_TeleportCameraToPlayer;
+	static inline ImGui::KeyBinding freeCamera_Toggle;
+	static inline ImGui::KeyBinding freeCamera_TeleportPlayerToCamera;
+	static inline ImGui::KeyBinding freeCamera_MoveForward{ ImGuiKey_W };
+	static inline ImGui::KeyBinding freeCamera_MoveBackward{ ImGuiKey_S };
+	static inline ImGui::KeyBinding freeCamera_MoveLeft{ ImGuiKey_A };
+	static inline ImGui::KeyBinding freeCamera_MoveRight{ ImGuiKey_D };
+	static inline ImGui::KeyBinding freeCamera_MoveUp{ ImGuiKey_E };
+	static inline ImGui::KeyBinding freeCamera_MoveDown{ ImGuiKey_Q };
+	static inline ImGui::KeyBinding freeCamera_RotateUp{ ImGuiKey_UpArrow };
+	static inline ImGui::KeyBinding freeCamera_RotateDown{ ImGuiKey_DownArrow };
+	static inline ImGui::KeyBinding freeCamera_RotateLeft{ ImGuiKey_LeftArrow };
+	static inline ImGui::KeyBinding freeCamera_RotateRight{ ImGuiKey_RightArrow };
 #endif
 
+
+	static void ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding);
+	static void LoadConfig();
+	static void SaveConfig();
 
 	static void Process();
 };

@@ -342,6 +342,9 @@ void DirectWindow11::Create()
 
 
 
+    /* External: Load Keybindings before entering the render loop. */
+    Keybindings::LoadConfig();
+
     // =================
     // |  RENDER LOOP  |
     // =================
