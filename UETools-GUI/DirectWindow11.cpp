@@ -342,9 +342,6 @@ void DirectWindow11::Create()
 
 
 
-    /* External: Load Keybindings before entering the render loop. */
-    Keybindings::LoadConfig();
-
     // =================
     // |  RENDER LOOP  |
     // =================
@@ -373,10 +370,12 @@ void DirectWindow11::Create()
         bool isMenuActive = GUI::GetIsMenuActive();
         static bool lastIsMenuActive = !isMenuActive; // Small trick to encourage initial SetWindowLong(). W/o it game wouldn't receive any inputs.
 
-        /* External: Keybindings processing lives here. */
-        Keybindings::Process();
-
         bool isInFocus = IsWindowFocus(hwnd) && bTargetSet;
+        if (isInFocus)
+        {
+            /* External: Keybindings processing lives here. */
+            Inputs::Keybindings::Process();
+        }
 
         /* Move the window on top of the targeted window and handle resize. */
         if (hTargetWindow != nullptr)

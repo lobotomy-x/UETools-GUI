@@ -9,7 +9,12 @@
 // | SYSTEM PATH SECTION |
 // =======================
 
+#define PATH_CONFIG_FEATURES "UETools\\Features.cfg"
 #define PATH_CONFIG_KEYBINDINGS "UETools\\Keybindings.cfg"
+
+#ifdef _DEBUG
+	#define PATH_LOG_EXCEPTIONS "UETools\\Exceptions.log"
+#endif
 
 
 
@@ -42,12 +47,6 @@
 	- To prevent crashes when accessing SDK pointers before the engine is fully set up.
 
 	Note: This will block the initialization thread (but not the main title thread) until the title is ready.
-*/
-
-#define CONFIG_UPDATE_ON_NEW_KEYBINDING
-/*
-	If defined, the configuration file will be automatically updated
-	whenever a keybinding is changed or a new one is set.
 */
 
 

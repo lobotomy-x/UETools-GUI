@@ -126,8 +126,8 @@ SDK::FRotator Math::Quat_ToRotator(const SDK::FQuat& quat)
     rotator.Yaw = std::atan2(siny_cosp, cosy_cosp);
 
     /* Convert radians back to degrees. */
-    rotator.Roll  *= RTD; // X
-    rotator.Pitch *= RTD; // Y
+    rotator.Roll  = rotator.Roll * RTD * -1.0f; // X
+    rotator.Pitch = rotator.Pitch * RTD * -1.0f; // Y
     rotator.Yaw   *= RTD; // Z
 
     return rotator;
@@ -136,8 +136,8 @@ SDK::FRotator Math::Quat_ToRotator(const SDK::FQuat& quat)
 SDK::FQuat Math::Rotator_ToQuat(const SDK::FRotator& rotator)
 {
     /* Convert degrees to radians and take half - angles, as quaternion uses half - angle trig. */
-    const float halfRoll  = 0.5f * rotator.Roll * DTR;  // X
-    const float halfPitch = 0.5f * rotator.Pitch * DTR; // Y
+    const float halfRoll  = 0.5f * rotator.Roll * DTR * -1.0f;  // X
+    const float halfPitch = 0.5f * rotator.Pitch * DTR * -1.0f; // Y
     const float halfYaw   = 0.5f * rotator.Yaw * DTR;   // Z
 
     /* Precompute sines / cosines of the half-angles. */

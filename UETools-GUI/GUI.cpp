@@ -636,9 +636,7 @@ bool ImGui::KeyBindingInput(const char* label, KeyBinding* binding)
 				binding->isDetermined = true;
 				hasBindingChanged = true;
 
-#ifdef CONFIG_UPDATE_ON_NEW_KEYBINDING
-				Keybindings::SaveConfig();
-#endif
+				Inputs::Config::Save();
 
 				break;
 			}
@@ -750,6 +748,9 @@ void GUI::Init(const HMODULE& applicationModule)
 	/* Before creating a DirectWindow, we need to make it aware of our DLL HMODULE. */
 	DirectWindow11::SetApplicationModule(applicationModule);
 	StartWindowThread();
+
+	Features::Config::Load();
+	Inputs::Config::Load();
 }
 
 #ifdef WAIT_FOR_TITLE_INIT
@@ -771,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.6b)");
+			ImGui::Text("UETools GUI (v3.7)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1686,7 +1687,7 @@ void GUI::Draw()
 						ImGui::BeginDisabled(Features::ActorTrace::enabled == false);
 						if (ImGui::TreeNode("Settings##ActorTrace"))
 						{
-							ImGui::KeyBindingInput("Key Binding:", &Keybindings::debug_ActorTrace);
+							ImGui::KeyBindingInput("Key Binding:", &Inputs::Keybindings::debug_ActorTrace);
 
 							ImGui::NewLine();
 
@@ -1871,14 +1872,14 @@ void GUI::Draw()
 						ImGui::SameLine();
 						ImGui::TextHint("Maximum Actor distance from Player in centimetres. Calculations doesn't update in background!\n\nThat allows to return to the game while keeping needed Actors filtered.");
 						
-						ImGui::KeyBindingInput("Update & Re-Filter Actors List:", &Keybindings::debug_ActorsListUpdate);
+						ImGui::KeyBindingInput("Update & Re-Filter Actors List:", &Inputs::Keybindings::debug_ActorsListUpdate);
 						ImGui::SameLine();
 						ImGui::TextHint("Can be found useful when tracking/drawing while filtering Actors In Distance, allowing to update dataset w/o opening the menu.");
 #ifdef ACTORS_TRACKING
-						ImGui::KeyBindingInput("Toggle Actors Tracking:        ", &Keybindings::debug_ActorsListTracking);
+						ImGui::KeyBindingInput("Toggle Actors Tracking:        ", &Inputs::Keybindings::debug_ActorsListTracking);
 #endif
 #ifdef COLLISION_VISUALIZER
-						ImGui::KeyBindingInput("Toggle Collision Draw:         ", &Keybindings::debug_ActorsListCollisionDraw);
+						ImGui::KeyBindingInput("Toggle Collision Draw:         ", &Inputs::Keybindings::debug_ActorsListCollisionDraw);
 #endif
 						
 						ImGui::NewLine();
@@ -3627,10 +3628,52 @@ void GUI::Draw()
 				if (characterObtained)
 				{
 					ImGui::Text("Character: %s", character->GetFullName().c_str());
-					SDK::FVector characterLocation = character->K2_GetActorLocation();
-					ImGui::TextVectorColored("Location:", characterLocation);
-					SDK::FRotator characterRotation = character->K2_GetActorRotation();
-					ImGui::TextRotatorColored("Rotation:", characterRotation);
+					Unreal::Transform characterTransform = Unreal::Actor::GetTransform(character);
+					ImGui::TextVectorColored("Location:", characterTransform.location);
+					static float customLocation[3];
+					if (ImGui::Button("Copy##Location"))
+					{
+						customLocation[0] = characterTransform.location.X;
+						customLocation[1] = characterTransform.location.X;
+						customLocation[2] = characterTransform.location.Z;
+						PlayActionSound(true);
+					}
+					ImGui::SameLine();
+					ImGui::InputFloat3("##Location", customLocation);
+					ImGui::SameLine();
+					if (ImGui::Button("Set##Location"))
+					{
+						if (character)
+						{
+							character->K2_TeleportTo({ customLocation[0], customLocation[1], customLocation[2] }, characterTransform.rotation);
+							PlayActionSound(true);
+						}
+						else
+							PlayActionSound(false);
+					}
+
+					ImGui::TextRotatorColored("Rotation:", characterTransform.rotation);
+					static float customRotation[3];
+					if (ImGui::Button("Copy##Rotation"))
+					{
+						customRotation[0] = characterTransform.rotation.Pitch;
+						customRotation[1] = characterTransform.rotation.Yaw;
+						customRotation[2] = characterTransform.rotation.Roll;
+						PlayActionSound(true);
+					}
+					ImGui::SameLine();
+					ImGui::InputFloat3("##Rotation", customRotation);
+					ImGui::SameLine();
+					if (ImGui::Button("Set##Rotation"))
+					{
+						if (character)
+						{
+							character->K2_TeleportTo(characterTransform.location, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
+							PlayActionSound(true);
+						}
+						else
+							PlayActionSound(false);
+					}
 
 					ImGui::NewLine();
 
@@ -3695,9 +3738,9 @@ void GUI::Draw()
 
 						ImGui::NewLine();
 
-						ImGui::KeyBindingInput("Ghost Key Binding:##Ghost", &Keybindings::characterMovement_Ghost);
-						ImGui::KeyBindingInput("Fly Key Binding:  ##Fly", &Keybindings::characterMovement_Fly);
-						ImGui::KeyBindingInput("Walk Key Binding: ##Walk", &Keybindings::characterMovement_Walk);
+						ImGui::KeyBindingInput("Ghost Key Binding:##Ghost", &Inputs::Keybindings::characterMovement_Ghost);
+						ImGui::KeyBindingInput("Fly Key Binding:  ##Fly", &Inputs::Keybindings::characterMovement_Fly);
+						ImGui::KeyBindingInput("Walk Key Binding: ##Walk", &Inputs::Keybindings::characterMovement_Walk);
 
 						ImGui::NewLine();
 
@@ -3795,15 +3838,27 @@ void GUI::Draw()
 							if (ImGui::Checkbox("Enabled##DirectionalMovement", &Features::DirectionalMovement::enabled))
 							{
 								if (Features::DirectionalMovement::enabled)
-									Features::DirectionalMovement::StartThread();
-								else
-									Features::DirectionalMovement::InvalidateThread();
+									Features::DirectionalMovement::Enable();
+								else Features::DirectionalMovement::Disable();
+
+								Features::Config::Save();
 							}
-							ImGui::InputDouble("Movement Step##DirectionalMovement", &Features::DirectionalMovement::step, 0.1, 1.0);
-							if (ImGui::InputDouble("Movement Delay##DirectionalMovement", &Features::DirectionalMovement::delay, 0.01, 0.1))
+							if (ImGui::Checkbox("Omni-Movement##DirectionalMovement", &Features::DirectionalMovement::omniMovement))
+							{
+								Features::Config::Save();
+							}
+							ImGui::SameLine();
+							ImGui::TextHint("Allows movement in all directions (Backward, Left, Right) relative to where you are looking.");
+							if (ImGui::InputFloat("Movement Step##DirectionalMovement", &Features::DirectionalMovement::step, 0.1, 1.0))
+							{
+								Features::Config::Save();
+							}
+							if (ImGui::InputFloat("Movement Delay##DirectionalMovement", &Features::DirectionalMovement::delay, 0.01, 0.1))
 							{
 								if (Features::DirectionalMovement::delay < 0.001)
 									Features::DirectionalMovement::delay = 0.001;
+
+								Features::Config::Save();
 							}
 
 							ImGui::TreePop();
@@ -3839,7 +3894,7 @@ void GUI::Draw()
 						}
 						ImGui::InputInt("Jump Limit", &character->JumpMaxCount, 1, 1);
 						ImGui::InputFloat("Jump Height", &movementComponent->JumpZVelocity, 0.1f, 1.0f);
-						ImGui::KeyBindingInput("Jump Key Binding:##Jump", &Keybindings::characterMovement_Jump);
+						ImGui::KeyBindingInput("Jump Key Binding:##Jump", &Inputs::Keybindings::characterMovement_Jump);
 
 						ImGui::NewLine();
 
@@ -3848,7 +3903,7 @@ void GUI::Draw()
 							Features::CharacterMovement::Launch();
 						}
 						ImGui::InputFloat3("Launch Velocity", Features::CharacterMovement::launchVelocity);
-						ImGui::KeyBindingInput("Launch Key Binding:##Launch", &Keybindings::characterMovement_Launch);
+						ImGui::KeyBindingInput("Launch Key Binding:##Launch", &Inputs::Keybindings::characterMovement_Launch);
 
 						ImGui::NewLine();
 
@@ -3857,7 +3912,7 @@ void GUI::Draw()
 							Features::CharacterMovement::Dash();
 						}
 						ImGui::InputDouble("Dash Strength", &Features::CharacterMovement::dashStrength, 0.1f, 1.0f);
-						ImGui::KeyBindingInput("Dash Key Binding:##Dash", &Keybindings::characterMovement_Dash);
+						ImGui::KeyBindingInput("Dash Key Binding:##Dash", &Inputs::Keybindings::characterMovement_Dash);
 
 						ImGui::TreePop();
 					}
@@ -3914,8 +3969,8 @@ void GUI::Draw()
 
 							ImGui::NewLine();
 
-							ImGui::KeyBindingInput("Start Fade Key Binding:", &Keybindings::characterCamera_StartFade);
-							ImGui::KeyBindingInput("Stop Fade Key Binding:", &Keybindings::characterCamera_StopFade);
+							ImGui::KeyBindingInput("Start Fade Key Binding:", &Inputs::Keybindings::characterCamera_StartFade);
+							ImGui::KeyBindingInput("Stop Fade Key Binding:", &Inputs::Keybindings::characterCamera_StopFade);
 						}
 						else
 							ImGui::Text("Camera Manager Doesn't Exist!");
@@ -3957,34 +4012,34 @@ void GUI::Draw()
 					{
 						Features::FreeCamera::Toggle();
 					}
-					ImGui::KeyBindingInput("Toggle:       ", &Keybindings::freeCamera_Toggle);
+					ImGui::KeyBindingInput("Toggle:       ", &Inputs::Keybindings::freeCamera_Toggle);
 
 					ImGui::NewLine();
 					
 					ImGui::Text("Movement Step:");
 					ImGui::SameLine();
 					ImGui::InputFloat("##MovementStep", &Features::FreeCamera::cameraMovementStep, 0.1f, 1.0f);
-					ImGui::KeyBindingInput("Move Forward: ", &Keybindings::freeCamera_MoveForward);
-					ImGui::KeyBindingInput("Move Backward:", &Keybindings::freeCamera_MoveBackward);
-					ImGui::KeyBindingInput("Move Left:    ", &Keybindings::freeCamera_MoveLeft);
-					ImGui::KeyBindingInput("Move Right:   ", &Keybindings::freeCamera_MoveRight);
-					ImGui::KeyBindingInput("Move Up:      ", &Keybindings::freeCamera_MoveUp);
-					ImGui::KeyBindingInput("Move Down:    ", &Keybindings::freeCamera_MoveDown);
+					ImGui::KeyBindingInput("Move Forward: ", &Inputs::Keybindings::freeCamera_MoveForward);
+					ImGui::KeyBindingInput("Move Backward:", &Inputs::Keybindings::freeCamera_MoveBackward);
+					ImGui::KeyBindingInput("Move Left:    ", &Inputs::Keybindings::freeCamera_MoveLeft);
+					ImGui::KeyBindingInput("Move Right:   ", &Inputs::Keybindings::freeCamera_MoveRight);
+					ImGui::KeyBindingInput("Move Up:      ", &Inputs::Keybindings::freeCamera_MoveUp);
+					ImGui::KeyBindingInput("Move Down:    ", &Inputs::Keybindings::freeCamera_MoveDown);
 
 					ImGui::NewLine();
 
 					ImGui::Text("Rotation Step:");
 					ImGui::SameLine();
 					ImGui::InputFloat("##RotationStep", &Features::FreeCamera::cameraRotationStep, 0.1f, 1.0f);
-					ImGui::KeyBindingInput("Rotate Up:    ", &Keybindings::freeCamera_RotateUp);
-					ImGui::KeyBindingInput("Rotate Down:  ", &Keybindings::freeCamera_RotateDown);
-					ImGui::KeyBindingInput("Rotate Left:  ", &Keybindings::freeCamera_RotateLeft);
-					ImGui::KeyBindingInput("Rotate Right: ", &Keybindings::freeCamera_RotateRight);
+					ImGui::KeyBindingInput("Rotate Up:    ", &Inputs::Keybindings::freeCamera_RotateUp);
+					ImGui::KeyBindingInput("Rotate Down:  ", &Inputs::Keybindings::freeCamera_RotateDown);
+					ImGui::KeyBindingInput("Rotate Left:  ", &Inputs::Keybindings::freeCamera_RotateLeft);
+					ImGui::KeyBindingInput("Rotate Right: ", &Inputs::Keybindings::freeCamera_RotateRight);
 
 					ImGui::NewLine();
 
-					ImGui::KeyBindingInput("Teleport Camera To Player:", &Keybindings::freeCamera_TeleportCameraToPlayer);
-					ImGui::KeyBindingInput("Teleport Player To Camera:", &Keybindings::freeCamera_TeleportPlayerToCamera);
+					ImGui::KeyBindingInput("Teleport Camera To Player:", &Inputs::Keybindings::freeCamera_TeleportCameraToPlayer);
+					ImGui::KeyBindingInput("Teleport Player To Camera:", &Inputs::Keybindings::freeCamera_TeleportPlayerToCamera);
 
 					ImGui::PopID();
 					ImGui::MenuSpacer();
@@ -4192,144 +4247,7 @@ void GUI::Draw()
 #ifdef COLLISION_VISUALIZER
 	if (Features::CollisionVisualizer::enabled)
 	{
-		/* UGameplayStatics::ProjectWorldToScreen() verify Player Controller reference within its code. */
-		SDK::APlayerController* playerController = Unreal::PlayerController::Get();
-		if (playerController)
-		{
-			SDK::FVector playerLocation = Unreal::PlayerController::GetLocation(0);
-
-			for (Unreal::Actor::DataStructure& actor : Features::ActorsList::filteredActors) // <-- Reference!
-			{
-				if (actor.reference == nullptr)
-					continue;
-
-				if (actor.reference->IsA(SDK::AVolume::StaticClass()))
-				{
-					if (actor.reference->IsA(SDK::APhysicsVolume::StaticClass()))
-					{
-						DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_PhysicsVolume), Features::CollisionVisualizer::thickness);
-						continue;
-					}
-
-					if (actor.reference->IsA(SDK::ABlockingVolume::StaticClass()))
-					{
-						DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_BlockingVolume), Features::CollisionVisualizer::thickness);
-						continue;
-					}
-						
-					if (actor.reference->IsA(SDK::ATriggerVolume::StaticClass()))
-					{
-						DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_TriggerVolume), Features::CollisionVisualizer::thickness);
-						continue;
-					}
-
-					if (actor.reference->IsA(SDK::APostProcessVolume::StaticClass()))
-					{
-						DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_PostProcessVolume), Features::CollisionVisualizer::thickness);
-						continue;
-					}
-
-					DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Other), Features::CollisionVisualizer::thickness);
-					continue;
-				}
-
-
-				std::vector<SDK::USkeletalMeshComponent*> skeletalMeshComponents;
-				std::vector<SDK::UStaticMeshComponent*> staticMeshComponents;
-				std::vector<SDK::UInstancedStaticMeshComponent*> instancedStaticMeshComponents;
-				std::vector<SDK::UCapsuleComponent*> capsuleComponents;
-				std::vector<SDK::USphereComponent*> sphereComponents;
-				std::vector<SDK::UBoxComponent*> boxComponents;
-				std::vector<SDK::USplineComponent*> splineComponents;
-				for (Unreal::ActorComponent::DataStructure actorComponent : actor.components)
-				{
-					if (actorComponent.reference == nullptr)
-						continue;
-
-					if (actorComponent.reference->IsA(SDK::UStaticMeshComponent::StaticClass()))
-					{
-						staticMeshComponents.push_back(static_cast<SDK::UStaticMeshComponent*>(actorComponent.reference));
-						continue;
-					}
-						
-					if (actorComponent.reference->IsA(SDK::UInstancedStaticMeshComponent::StaticClass()))
-					{
-						instancedStaticMeshComponents.push_back(static_cast<SDK::UInstancedStaticMeshComponent*>(actorComponent.reference));
-						continue;
-					}
-
-
-					if (actorComponent.reference->IsA(SDK::USkeletalMeshComponent::StaticClass()))
-					{
-						skeletalMeshComponents.push_back(static_cast<SDK::USkeletalMeshComponent*>(actorComponent.reference));
-						continue;
-					}
-
-						
-					if (actorComponent.reference->IsA(SDK::UCapsuleComponent::StaticClass()))
-					{
-						capsuleComponents.push_back(static_cast<SDK::UCapsuleComponent*>(actorComponent.reference));
-						continue;
-					}
-						
-					if (actorComponent.reference->IsA(SDK::USphereComponent::StaticClass()))
-					{
-						sphereComponents.push_back(static_cast<SDK::USphereComponent*>(actorComponent.reference));
-						continue;
-					}
-						
-					if (actorComponent.reference->IsA(SDK::UBoxComponent::StaticClass()))
-					{
-						boxComponents.push_back(static_cast<SDK::UBoxComponent*>(actorComponent.reference));
-						continue;
-					}
-
-					if (actorComponent.reference->IsA(SDK::USplineComponent::StaticClass()))
-					{
-						splineComponents.push_back(static_cast<SDK::USplineComponent*>(actorComponent.reference));
-						continue;
-					}
-				}
-
-
-				for (SDK::UStaticMeshComponent* staticMeshComponent : staticMeshComponents)
-				{
-					DebugDraw::DrawStaticMeshComponent(staticMeshComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_StaticMesh), Features::CollisionVisualizer::thickness);
-				}
-
-				for (SDK::UInstancedStaticMeshComponent* instancedStaticMeshComponent : instancedStaticMeshComponents)
-				{
-					DebugDraw::DrawInstancedStaticMeshComponent(instancedStaticMeshComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_StaticMesh), Features::CollisionVisualizer::thickness);
-				}
-
-
-				for (SDK::USkeletalMeshComponent* skeletalMeshComponent : skeletalMeshComponents)
-				{
-					DebugDraw::DrawSkeletalMeshComponent(skeletalMeshComponent, false, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Other), Features::CollisionVisualizer::thickness);
-				}
-
-
-				for (SDK::UCapsuleComponent* capsuleComponent : capsuleComponents)
-				{
-					DebugDraw::DrawCapsuleComponent(capsuleComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
-				}
-
-				for (SDK::USphereComponent* sphereComponent : sphereComponents)
-				{
-					DebugDraw::DrawSphereComponent(sphereComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
-				}
-
-				for (SDK::UBoxComponent* boxComponent : boxComponents)
-				{
-					DebugDraw::DrawBoxComponent(boxComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
-				}
-
-				for (SDK::USplineComponent* splineComponent : splineComponents)
-				{
-					DebugDraw::DrawSplineComponent(splineComponent, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
-				}
-			}
-		}
+		Features::CollisionVisualizer::ThreadSafeDraw();
 	}
 #endif
 }
@@ -4881,6 +4799,92 @@ void DebugDraw::DrawSplineComponent(SDK::USplineComponent* splineComponent, cons
 // ========================================================
 // |            #GUI #SHARED #CALLS #SHAREDCALLS          |
 // ========================================================
+LONG Features::ExceptionLogger::Log(LPEXCEPTION_POINTERS exceptionInfo, const char* title)
+{
+#ifdef _DEBUG
+	void* crashAddress = exceptionInfo->ExceptionRecord->ExceptionAddress;
+
+	HMODULE hModule = GetModuleHandle(nullptr);
+	uintptr_t baseAddress = (uintptr_t)hModule;
+	uintptr_t relativeOffset = (uintptr_t)crashAddress - baseAddress;
+
+	std::string stringTitle = title != nullptr ? std::string(title) : "FAILED TO READ TITLE";
+	std::stringstream stringStream;
+	stringStream << "[" << stringTitle << "]" << "\n";
+	stringStream << "Exception Code: 0x" << std::hex << std::uppercase << exceptionInfo->ExceptionRecord->ExceptionCode << "\n";
+	stringStream << "Absolute Address: 0x" << crashAddress << "\n";
+	stringStream << "Module Base:      0x" << (void*)baseAddress << "\n";
+	stringStream << "Relative Offset:  +0x" << relativeOffset << "\n";
+	stringStream << "--------------------------------------------------\n";
+
+	std::string logEntry = stringStream.str();
+	FileInstance exceptionsFile(PATH_LOG_EXCEPTIONS);
+	std::string fileContents = std::string();
+
+	if (exceptionsFile.DoesFileExist())
+	{
+		exceptionsFile.LoadText(&fileContents);
+
+		if (fileContents.empty() == false && fileContents.back() != '\n')
+		{
+			fileContents += "\n";
+		}
+	}
+
+	fileContents += logEntry;
+	exceptionsFile.SaveText(fileContents);
+#endif
+
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+
+
+
+
+template<typename T>
+inline void Features::Config::ReadFeatureFromConfig(ConfigInstance* featuresConfig, const std::string& entryName, T* featureValue)
+{
+	if (featuresConfig == nullptr || featureValue == nullptr)
+		return;
+
+	if (featuresConfig->HasKey(entryName) == false)
+		return;
+
+	*featureValue = featuresConfig->Get<T>(entryName).value_or(*featureValue);
+}
+
+void Features::Config::Load()
+{
+	ConfigInstance featuresConfig(PATH_CONFIG_FEATURES);
+	if (featuresConfig.Load() == false)
+	{
+		Features::Config::Save(); // If config doesn't exist yet, create it with values specified in .h class declaration.
+		featuresConfig.Load();
+	}
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_enabled", &Features::DirectionalMovement::enabled);
+	if (Features::DirectionalMovement::enabled)
+		Features::DirectionalMovement::Enable();
+	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_omniMovement", &Features::DirectionalMovement::omniMovement);
+	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_step", &Features::DirectionalMovement::step);
+	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_delay", &Features::DirectionalMovement::delay);
+}
+
+void Features::Config::Save()
+{
+	ConfigInstance featuresConfig(PATH_CONFIG_FEATURES);
+
+	featuresConfig.Set("Features_DirectionalMovement_enabled", Features::DirectionalMovement::enabled);
+	featuresConfig.Set("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
+	featuresConfig.Set("Features_DirectionalMovement_step", Features::DirectionalMovement::step);
+	featuresConfig.Set("Features_DirectionalMovement_delay", Features::DirectionalMovement::delay);
+
+	featuresConfig.Save();
+}
+
+
+
+
 void Features::Debug::Update()
 {
 	SDK::UEngine* engine = Unreal::Engine::Get();
@@ -5469,60 +5473,98 @@ void Features::DirectionalMovement::Worker()
 {
 	while (GetThread())
 	{
-		/* See if we have a Player Controller alongside the Camera Manager. */
-		SDK::APlayerController* playerController = Unreal::PlayerController::Get();
-		if (playerController == nullptr || playerController->PlayerCameraManager == nullptr)
-			continue;
-
-		/* See if we have a Character under control and verify that Character is cheat flying. */
-		SDK::ACharacter* character = playerController->Character;
-		if (character == nullptr || character->CharacterMovement == nullptr || character->CharacterMovement->bCheatFlying != true)
-			continue;
-
-		/* Get Character velocity and see if we have any horizontal movement. */
-		SDK::FVector characterVelocity = character->CharacterMovement->Velocity;
-		if (characterVelocity.X == 0.0 && characterVelocity.Y == 0.0)
-			continue;
-
-		/* Normalize Character velocity (-1.0 to 1.0) and get Camera forward vector. */
-		SDK::FVector characterVelocityNormalized = Math::Vector_Normal(characterVelocity);
-		SDK::FVector cameraForwardVector = playerController->PlayerCameraManager->GetActorForwardVector();
-
-		/*
-			Compute the dot product of the normalized character velocity and the camera's forward vector.
-			Result interpretation:
-			  +1.0 -> character moves exactly forward,
-			  -1.0 -> character moves exactly backward,
-			   0.0 -> movement is perpendicular to the camera.
-		*/
-		double dotProduct = Math::Vector_Dot(characterVelocityNormalized, cameraForwardVector);
-		if (dotProduct > 0.5) // Character is mostly targeting forward direction.
+		__try
 		{
-			SDK::FVector currentLocation = character->K2_GetActorLocation();
-			SDK::FVector finalLocation = Math::Vector_Add(currentLocation, cameraForwardVector * Features::DirectionalMovement::step);
+			/* See if we have a Player Controller alongside the Camera Manager. */
+			SDK::APlayerController* playerController = Unreal::PlayerController::Get();
+			if (playerController == nullptr || playerController->PlayerCameraManager == nullptr)
+				continue;
 
-			SDK::FHitResult hitResult;
-			character->K2_SetActorLocation(finalLocation, true, &hitResult, false);
+			/* See if we have a Character under control and verify that Character is cheat flying. */
+			SDK::ACharacter* character = playerController->Character;
+			if (character == nullptr || character->CharacterMovement == nullptr || character->CharacterMovement->bCheatFlying != true)
+				continue;
+
+			/* Get Character velocity and see if we have any horizontal movement. */
+			SDK::FVector characterVelocity = character->CharacterMovement->Velocity;
+			if (characterVelocity.X == 0.0 && characterVelocity.Y == 0.0)
+				continue;
+
+			/* Normalize Character velocity (-1.0 to 1.0) and get Camera forward vector. */
+			SDK::FVector characterVelocityNormalized = Math::Vector_Normal(characterVelocity);
+			SDK::FVector cameraForwardVector = playerController->PlayerCameraManager->GetActorForwardVector();
+
+			bool movementExpected = false;
+			SDK::FVector movementDirection = { 0.0f, 0.0f, 0.0f };
+
+			/*
+				Compute the dot product of the normalized character velocity and the camera's forward vector.
+				Result interpretation:
+				  +1.0 -> character moves exactly forward,
+				  -1.0 -> character moves exactly backward,
+				   0.0 -> movement is perpendicular to the camera.
+			*/
+			double dotForward = Math::Vector_Dot(characterVelocityNormalized, cameraForwardVector);
+			if (dotForward > 0.5f) // Check if Ñharacter is attempting to move forward relative to the camera.
+			{
+				movementExpected = true;
+				movementDirection = cameraForwardVector;
+			}
+
+			/* Handle multi-directional movement (Backward, Left, Right) if Omni-Movement is enabled. */
+			if (Features::DirectionalMovement::omniMovement)
+			{
+				if (movementExpected == false && dotForward < -0.5f) // Check for backward movement (dot product is negative) if not already moving forward.
+				{
+					movementExpected = true;
+					movementDirection = cameraForwardVector * -1.0f;
+				}
+
+				/* Retrieve the Camera right vector to calculate strafing. */
+				SDK::FVector cameraRightVector = playerController->PlayerCameraManager->GetActorRightVector();
+				double dotRight = Math::Vector_Dot(characterVelocityNormalized, cameraRightVector);
+
+				if (dotRight > 0.5f) // Check if Character is strafing right.
+				{
+					movementExpected = true;
+					movementDirection = Math::Vector_Add(movementDirection, cameraRightVector);
+				}
+				else if (dotRight < -0.5f) // Check if Character is strafing left
+				{
+					movementExpected = true;
+					movementDirection = Math::Vector_Add(movementDirection, cameraRightVector * -1.0f);
+				}
+			}
+
+			if (movementExpected)
+			{
+				/* Normalize the final accumulated direction vector to ensure consistent speed (account for forward/backward and strafing movement double speed). */
+				SDK::FVector finalDirection = Math::Vector_Normal(movementDirection);
+
+				/* Calculate the target location based on the current location, direction, and step size. */
+				SDK::FVector currentLocation = character->K2_GetActorLocation();
+				SDK::FVector finalLocation = Math::Vector_Add(currentLocation, finalDirection * Features::DirectionalMovement::step);
+
+				SDK::FHitResult hitResult;
+				character->K2_SetActorLocation(finalLocation, true, &hitResult, false);
+			}
 		}
+		__except (Features::ExceptionLogger::Log(GetExceptionInformation(), "Directional Movement")) {}
 
+		/* Sleep for a defined delay to control the update rate (tick) of the movement logic. */
 		Sleep(Math::Seconds_ToMilliseconds(Features::DirectionalMovement::delay));
 	}
 }
 
+
 bool Features::DirectionalMovement::StartThread()
 {
-	if (thread)
-		return false;
-
 	thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Features::DirectionalMovement::Worker, 0, 0, 0);
 	return thread;
 }
 
 bool Features::DirectionalMovement::InvalidateThread()
 {
-	if (thread == nullptr)
-		return false;
-
 	if (CloseHandle(thread))
 	{
 		thread = nullptr;
@@ -5530,6 +5572,19 @@ bool Features::DirectionalMovement::InvalidateThread()
 	}
 	else
 		return false;
+}
+
+
+void Features::DirectionalMovement::Enable()
+{
+	if (thread == nullptr)
+		StartThread();
+}
+
+void Features::DirectionalMovement::Disable()
+{
+	if (thread)
+		InvalidateThread();
 }
 
 
@@ -5606,6 +5661,122 @@ bool Features::ActorTrace::Trace()
 
 	Features::ActorTrace::traceCast = true;
 	return true;
+}
+#endif
+
+
+
+
+#ifdef COLLISION_VISUALIZER
+void Features::CollisionVisualizer::Draw()
+{
+	/* UGameplayStatics::ProjectWorldToScreen() verify Player Controller reference within its code. */
+	SDK::APlayerController* playerController = Unreal::PlayerController::Get();
+	if (playerController)
+	{
+		SDK::FVector playerLocation = Unreal::PlayerController::GetLocation(0);
+	
+		for (Unreal::Actor::DataStructure& actor : Features::ActorsList::filteredActors) // <-- Reference!
+		{
+			if (actor.reference == nullptr)
+				continue;
+	
+			if (actor.reference->IsA(SDK::AVolume::StaticClass()))
+			{
+				if (actor.reference->IsA(SDK::APhysicsVolume::StaticClass()))
+				{
+					DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_PhysicsVolume), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				if (actor.reference->IsA(SDK::ABlockingVolume::StaticClass()))
+				{
+					DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_BlockingVolume), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				if (actor.reference->IsA(SDK::ATriggerVolume::StaticClass()))
+				{
+					DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_TriggerVolume), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				if (actor.reference->IsA(SDK::APostProcessVolume::StaticClass()))
+				{
+					DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_PostProcessVolume), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				DebugDraw::DrawVolume(static_cast<SDK::AVolume*>(actor.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Other), Features::CollisionVisualizer::thickness);
+				continue;
+			}
+	
+	
+			for (Unreal::ActorComponent::DataStructure& actorComponent : actor.components) // <-- Reference!
+			{
+				if (actorComponent.reference == nullptr)
+					continue;
+	
+				/* #1 Static Mesh. */
+				if (actorComponent.reference->IsA(SDK::UStaticMeshComponent::StaticClass()))
+				{
+					DebugDraw::DrawStaticMeshComponent(static_cast<SDK::UStaticMeshComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_StaticMesh), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #2 Instanced Static Mesh. */
+				if (actorComponent.reference->IsA(SDK::UInstancedStaticMeshComponent::StaticClass()))
+				{
+					DebugDraw::DrawInstancedStaticMeshComponent(static_cast<SDK::UInstancedStaticMeshComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_StaticMesh), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #3 Skeletal Mesh. */
+				if (actorComponent.reference->IsA(SDK::USkeletalMeshComponent::StaticClass()))
+				{
+					DebugDraw::DrawSkeletalMeshComponent(static_cast<SDK::USkeletalMeshComponent*>(actorComponent.reference), false, Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Other), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #4 Capsule Component. */
+				if (actorComponent.reference->IsA(SDK::UCapsuleComponent::StaticClass()))
+				{
+					DebugDraw::DrawCapsuleComponent(static_cast<SDK::UCapsuleComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #5 Sphere Component. */
+				if (actorComponent.reference->IsA(SDK::USphereComponent::StaticClass()))
+				{
+					DebugDraw::DrawSphereComponent(static_cast<SDK::USphereComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #6 Box Component. */
+				if (actorComponent.reference->IsA(SDK::UBoxComponent::StaticClass()))
+				{
+					DebugDraw::DrawBoxComponent(static_cast<SDK::UBoxComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+	
+				/* #1 Spline Component. */
+				if (actorComponent.reference->IsA(SDK::USplineComponent::StaticClass()))
+				{
+					DebugDraw::DrawSplineComponent(static_cast<SDK::USplineComponent*>(actorComponent.reference), Math::ColorFloat4_ToU32(Features::CollisionVisualizer::color_Primitive), Features::CollisionVisualizer::thickness);
+					continue;
+				}
+			}
+		}
+	}
+}
+
+void Features::CollisionVisualizer::ThreadSafeDraw()
+{
+	__try
+	{
+		Features::CollisionVisualizer::Draw();
+	}
+	__except (Features::ExceptionLogger::Log(GetExceptionInformation(), "Collision Visualizer")) {}
 }
 #endif
 
@@ -5783,7 +5954,7 @@ bool Features::FreeCamera::TeleportPlayerToCamera()
 
 
 
-void Keybindings::ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding)
+void Inputs::Config::ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding)
 {
 	if (keybindingsConfig == nullptr || keyBinding == nullptr)
 		return;
@@ -5794,21 +5965,21 @@ void Keybindings::ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, co
 	keyBinding->key = static_cast<ImGuiKey>(keybindingsConfig->Get<int>(entryName).value_or((int)keyBinding->key));
 }
 
-void Keybindings::LoadConfig()
+void Inputs::Config::Load()
 {
 	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
 	if (keybindingsConfig.Load() == false)
 	{
-		Keybindings::SaveConfig(); // If config doesn't exist yet, create it with values specified in .h class declaration.
+		Inputs::Config::Save(); // If config doesn't exist yet, create it with values specified in .h class declaration.
 		keybindingsConfig.Load();
 	}
 
-	ReadKeyBindingFromConfig(&keybindingsConfig, "general_MenuOpenClose", &Keybindings::general_MenuOpenClose);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "general_MenuOpenClose", &Inputs::Keybindings::general_MenuOpenClose);
 
 #ifdef ACTOR_TRACE
 	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorTrace", &Keybindings::debug_ActorTrace);
 #endif
-	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListUpdate", &Keybindings::debug_ActorsListUpdate);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListUpdate", &Inputs::Keybindings::debug_ActorsListUpdate);
 #ifdef ACTORS_TRACKING
 	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListTracking", &Keybindings::debug_ActorsListTracking);
 #endif
@@ -5816,15 +5987,15 @@ void Keybindings::LoadConfig()
 	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListCollisionDraw", &Keybindings::debug_ActorsListCollisionDraw);
 #endif
 
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Ghost", &Keybindings::characterMovement_Ghost);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Fly", &Keybindings::characterMovement_Fly);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Walk", &Keybindings::characterMovement_Walk);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Jump", &Keybindings::characterMovement_Jump);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Launch", &Keybindings::characterMovement_Launch);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Dash", &Keybindings::characterMovement_Dash);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Ghost", &Inputs::Keybindings::characterMovement_Ghost);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Fly", &Inputs::Keybindings::characterMovement_Fly);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Walk", &Inputs::Keybindings::characterMovement_Walk);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Jump", &Inputs::Keybindings::characterMovement_Jump);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Launch", &Inputs::Keybindings::characterMovement_Launch);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Dash", &Inputs::Keybindings::characterMovement_Dash);
 	
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StartFade", &Keybindings::characterCamera_StartFade);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StopFade", &Keybindings::characterCamera_StopFade);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StartFade", &Inputs::Keybindings::characterCamera_StartFade);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StopFade", &Inputs::Keybindings::characterCamera_StopFade);
 
 #ifdef FREE_CAMERA
 	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportCameraToPlayer", &Keybindings::freeCamera_TeleportCameraToPlayer);
@@ -5843,16 +6014,16 @@ void Keybindings::LoadConfig()
 #endif
 }
 
-void Keybindings::SaveConfig()
+void Inputs::Config::Save()
 {
 	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
 	
-	keybindingsConfig.Set("general_MenuOpenClose", static_cast<int>(Keybindings::general_MenuOpenClose.key));
+	keybindingsConfig.Set("general_MenuOpenClose", static_cast<int>(Inputs::Keybindings::general_MenuOpenClose.key));
 
 #ifdef ACTOR_TRACE
 	keybindingsConfig.Set("debug_ActorTrace", static_cast<int>(Keybindings::debug_ActorTrace.key));
 #endif
-	keybindingsConfig.Set("debug_ActorsListUpdate", static_cast<int>(Keybindings::debug_ActorsListUpdate.key));
+	keybindingsConfig.Set("debug_ActorsListUpdate", static_cast<int>(Inputs::Keybindings::debug_ActorsListUpdate.key));
 #ifdef ACTORS_TRACKING
 	keybindingsConfig.Set("debug_ActorsListTracking", static_cast<int>(Keybindings::debug_ActorsListTracking.key));
 #endif
@@ -5860,14 +6031,14 @@ void Keybindings::SaveConfig()
 	keybindingsConfig.Set("debug_ActorsListCollisionDraw", static_cast<int>(Keybindings::debug_ActorsListCollisionDraw.key));
 #endif
 
-	keybindingsConfig.Set("characterMovement_Ghost", static_cast<int>(Keybindings::characterMovement_Ghost.key));
-	keybindingsConfig.Set("characterMovement_Fly", static_cast<int>(Keybindings::characterMovement_Fly.key));
-	keybindingsConfig.Set("characterMovement_Walk", static_cast<int>(Keybindings::characterMovement_Walk.key));
-	keybindingsConfig.Set("characterMovement_Launch", static_cast<int>(Keybindings::characterMovement_Launch.key));
-	keybindingsConfig.Set("characterMovement_Dash", static_cast<int>(Keybindings::characterMovement_Dash.key));
+	keybindingsConfig.Set("characterMovement_Ghost", static_cast<int>(Inputs::Keybindings::characterMovement_Ghost.key));
+	keybindingsConfig.Set("characterMovement_Fly", static_cast<int>(Inputs::Keybindings::characterMovement_Fly.key));
+	keybindingsConfig.Set("characterMovement_Walk", static_cast<int>(Inputs::Keybindings::characterMovement_Walk.key));
+	keybindingsConfig.Set("characterMovement_Launch", static_cast<int>(Inputs::Keybindings::characterMovement_Launch.key));
+	keybindingsConfig.Set("characterMovement_Dash", static_cast<int>(Inputs::Keybindings::characterMovement_Dash.key));
 
-	keybindingsConfig.Set("characterCamera_StartFade", static_cast<int>(Keybindings::characterCamera_StartFade.key));
-	keybindingsConfig.Set("characterCamera_StopFade", static_cast<int>(Keybindings::characterCamera_StopFade.key));
+	keybindingsConfig.Set("characterCamera_StartFade", static_cast<int>(Inputs::Keybindings::characterCamera_StartFade.key));
+	keybindingsConfig.Set("characterCamera_StopFade", static_cast<int>(Inputs::Keybindings::characterCamera_StopFade.key));
 
 #ifdef FREE_CAMERA
 	keybindingsConfig.Set("freeCamera_TeleportCameraToPlayer", static_cast<int>(Keybindings::freeCamera_TeleportCameraToPlayer.key));
@@ -5891,9 +6062,9 @@ void Keybindings::SaveConfig()
 
 
 
-void Keybindings::Process()
+void Inputs::Keybindings::Process()
 {
-	if (ImGui::IsKeyBindingPressed(&Keybindings::general_MenuOpenClose))
+	if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::general_MenuOpenClose))
 		GUI::ToggleIsMenuActive();
 
 
@@ -5902,14 +6073,14 @@ void Keybindings::Process()
 #ifdef ACTOR_TRACE
 		if (Features::ActorTrace::enabled)
 		{
-			if (ImGui::IsKeyBindingPressed(&Keybindings::debug_ActorTrace))
+			if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorTrace))
 			{
 				GUI::PlayActionSound(Features::ActorTrace::Trace());
 			}
 		}
 #endif
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::debug_ActorsListUpdate))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListUpdate))
 		{
 			Features::ActorsList::Update();
 			Features::ActorsList::Filter();
@@ -5918,7 +6089,7 @@ void Keybindings::Process()
 		}
 
 #ifdef ACTORS_TRACKING
-		if (ImGui::IsKeyBindingPressed(&Keybindings::debug_ActorsListTracking))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListTracking))
 		{
 			if (Features::ActorsTracker::enabled)
 				Features::ActorsTracker::enabled = false;
@@ -5939,7 +6110,7 @@ void Keybindings::Process()
 #endif
 
 #ifdef COLLISION_VISUALIZER
-		if (ImGui::IsKeyBindingPressed(&Keybindings::debug_ActorsListCollisionDraw))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListCollisionDraw))
 		{
 			if (Features::CollisionVisualizer::enabled)
 				Features::CollisionVisualizer::enabled = false;
@@ -5962,32 +6133,32 @@ void Keybindings::Process()
 
 
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Ghost))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Ghost))
 		{
 			Features::CharacterMovement::Ghost();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Fly))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Fly))
 		{
 			Features::CharacterMovement::Fly();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Walk))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Walk))
 		{
 			Features::CharacterMovement::Walk();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Jump))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Jump))
 		{
 			Features::CharacterMovement::Jump();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Launch))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Launch))
 		{
 			Features::CharacterMovement::Launch();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterMovement_Dash))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Dash))
 		{
 			Features::CharacterMovement::Dash();
 		}
@@ -5995,12 +6166,12 @@ void Keybindings::Process()
 
 
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterCamera_StartFade))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StartFade))
 		{
 			Features::Camera::StartFade();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::characterCamera_StopFade))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StopFade))
 		{
 			Features::Camera::StopFade();
 		}

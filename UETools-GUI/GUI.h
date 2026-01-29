@@ -354,6 +354,29 @@ public:
 
 namespace Features
 {
+	class ExceptionLogger
+	{
+	public:
+		static LONG Log(LPEXCEPTION_POINTERS exceptionInfo, const char* title);
+	};
+
+
+
+
+	class Config
+	{
+	private:
+		template <typename T>
+		static void ReadFeatureFromConfig(ConfigInstance* featuresConfig, const std::string& entryName, T* featureValue);
+
+	public:
+		static void Load();
+		static void Save();
+	};
+
+
+
+
 	class Menu
 	{
 	public:
@@ -572,6 +595,10 @@ namespace Features
 
 
 		static inline float thickness = 0.5f;
+
+
+		static void Draw();
+		static void ThreadSafeDraw();
 	};
 #endif
 
@@ -686,20 +713,29 @@ namespace Features
 	public:
 		static inline bool enabled = false;
 
-		static inline double step = 45.0;
-		static inline double delay = 0.05;
+		static inline bool omniMovement = true;
+
+		static inline float step = 30.0;
+		static inline float delay = 0.1;
 
 
 	private:
 		static inline HANDLE thread = nullptr;
-		static void Worker();
-	public:
 		static HANDLE GetThread()
 		{
 			return thread;
 		}
+
+		static void Worker();
+
+
 		static bool StartThread();
 		static bool InvalidateThread();
+
+
+	public:
+		static void Enable();
+		static void Disable();
 	};
 
 
@@ -746,52 +782,63 @@ namespace Features
 
 
 
-class Keybindings
+namespace Inputs
 {
-public:
-	static inline ImGui::KeyBinding general_MenuOpenClose{ ImGuiKey_Insert };
+	class Config
+	{
+	private:
+		static void ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding);
+
+	public:
+		static void Load();
+		static void Save();
+	};
+
+
+
+
+	class Keybindings
+	{
+	public:
+		static inline ImGui::KeyBinding general_MenuOpenClose{ ImGuiKey_Insert };
 
 #ifdef ACTOR_TRACE
-	static inline ImGui::KeyBinding debug_ActorTrace;
+		static inline ImGui::KeyBinding debug_ActorTrace;
 #endif
-	static inline ImGui::KeyBinding debug_ActorsListUpdate;
+		static inline ImGui::KeyBinding debug_ActorsListUpdate;
 #ifdef ACTORS_TRACKING
-	static inline ImGui::KeyBinding debug_ActorsListTracking;
+		static inline ImGui::KeyBinding debug_ActorsListTracking;
 #endif
 #ifdef COLLISION_VISUALIZER
-	static inline ImGui::KeyBinding debug_ActorsListCollisionDraw;
+		static inline ImGui::KeyBinding debug_ActorsListCollisionDraw;
 #endif
 
-	static inline ImGui::KeyBinding characterMovement_Ghost;
-	static inline ImGui::KeyBinding characterMovement_Fly;
-	static inline ImGui::KeyBinding characterMovement_Walk;
-	static inline ImGui::KeyBinding characterMovement_Jump;
-	static inline ImGui::KeyBinding characterMovement_Launch;
-	static inline ImGui::KeyBinding characterMovement_Dash;
+		static inline ImGui::KeyBinding characterMovement_Ghost;
+		static inline ImGui::KeyBinding characterMovement_Fly;
+		static inline ImGui::KeyBinding characterMovement_Walk;
+		static inline ImGui::KeyBinding characterMovement_Jump;
+		static inline ImGui::KeyBinding characterMovement_Launch;
+		static inline ImGui::KeyBinding characterMovement_Dash;
 
-	static inline ImGui::KeyBinding characterCamera_StartFade;
-	static inline ImGui::KeyBinding characterCamera_StopFade;
+		static inline ImGui::KeyBinding characterCamera_StartFade;
+		static inline ImGui::KeyBinding characterCamera_StopFade;
 
 #ifdef FREE_CAMERA
-	static inline ImGui::KeyBinding freeCamera_TeleportCameraToPlayer;
-	static inline ImGui::KeyBinding freeCamera_Toggle;
-	static inline ImGui::KeyBinding freeCamera_TeleportPlayerToCamera;
-	static inline ImGui::KeyBinding freeCamera_MoveForward{ ImGuiKey_W };
-	static inline ImGui::KeyBinding freeCamera_MoveBackward{ ImGuiKey_S };
-	static inline ImGui::KeyBinding freeCamera_MoveLeft{ ImGuiKey_A };
-	static inline ImGui::KeyBinding freeCamera_MoveRight{ ImGuiKey_D };
-	static inline ImGui::KeyBinding freeCamera_MoveUp{ ImGuiKey_E };
-	static inline ImGui::KeyBinding freeCamera_MoveDown{ ImGuiKey_Q };
-	static inline ImGui::KeyBinding freeCamera_RotateUp{ ImGuiKey_UpArrow };
-	static inline ImGui::KeyBinding freeCamera_RotateDown{ ImGuiKey_DownArrow };
-	static inline ImGui::KeyBinding freeCamera_RotateLeft{ ImGuiKey_LeftArrow };
-	static inline ImGui::KeyBinding freeCamera_RotateRight{ ImGuiKey_RightArrow };
+		static inline ImGui::KeyBinding freeCamera_TeleportCameraToPlayer;
+		static inline ImGui::KeyBinding freeCamera_Toggle;
+		static inline ImGui::KeyBinding freeCamera_TeleportPlayerToCamera;
+		static inline ImGui::KeyBinding freeCamera_MoveForward{ ImGuiKey_W };
+		static inline ImGui::KeyBinding freeCamera_MoveBackward{ ImGuiKey_S };
+		static inline ImGui::KeyBinding freeCamera_MoveLeft{ ImGuiKey_A };
+		static inline ImGui::KeyBinding freeCamera_MoveRight{ ImGuiKey_D };
+		static inline ImGui::KeyBinding freeCamera_MoveUp{ ImGuiKey_E };
+		static inline ImGui::KeyBinding freeCamera_MoveDown{ ImGuiKey_Q };
+		static inline ImGui::KeyBinding freeCamera_RotateUp{ ImGuiKey_UpArrow };
+		static inline ImGui::KeyBinding freeCamera_RotateDown{ ImGuiKey_DownArrow };
+		static inline ImGui::KeyBinding freeCamera_RotateLeft{ ImGuiKey_LeftArrow };
+		static inline ImGui::KeyBinding freeCamera_RotateRight{ ImGuiKey_RightArrow };
 #endif
 
-
-	static void ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig, const std::string& entryName, ImGui::KeyBinding* keyBinding);
-	static void LoadConfig();
-	static void SaveConfig();
-
-	static void Process();
+		static void Process();
+	};
 };
