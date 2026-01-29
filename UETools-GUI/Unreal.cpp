@@ -1732,7 +1732,12 @@ Unreal::Class::Hierarchy Unreal::Class::GetClassHierarchy(SDK::UObject* objectRe
 	outHierarchy.derivedClass = actorClass;
 	while (actorClass)
 	{
-		if (SDK::UStruct* superStruct = actorClass->SuperStruct)
+#ifdef UE5
+		SDK::UStruct* superStruct = actorClass->Super;
+#else
+		SDK::UStruct* superStruct = actorClass->SuperStruct;
+#endif
+		if (superStruct)
 		{
 			actorClass = static_cast<SDK::UClass*>(superStruct);
 			outHierarchy.superClasses.push_back(actorClass);
