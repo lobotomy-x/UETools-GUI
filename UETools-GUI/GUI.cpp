@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.7b)");
+			ImGui::Text("UETools GUI (v3.7c)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -4018,7 +4018,10 @@ void GUI::Draw()
 					
 					ImGui::Text("Movement Step:");
 					ImGui::SameLine();
-					ImGui::InputFloat("##MovementStep", &Features::FreeCamera::cameraMovementStep, 0.1f, 1.0f);
+					if (ImGui::InputFloat("##MovementStep", &Features::FreeCamera::cameraMovementStep, 0.1f, 1.0f))
+					{
+						Features::Config::Save();
+					}
 					ImGui::KeyBindingInput("Move Forward: ", &Inputs::Keybindings::freeCamera_MoveForward);
 					ImGui::KeyBindingInput("Move Backward:", &Inputs::Keybindings::freeCamera_MoveBackward);
 					ImGui::KeyBindingInput("Move Left:    ", &Inputs::Keybindings::freeCamera_MoveLeft);
@@ -4030,7 +4033,10 @@ void GUI::Draw()
 
 					ImGui::Text("Rotation Step:");
 					ImGui::SameLine();
-					ImGui::InputFloat("##RotationStep", &Features::FreeCamera::cameraRotationStep, 0.1f, 1.0f);
+					if (ImGui::InputFloat("##RotationStep", &Features::FreeCamera::cameraRotationStep, 0.1f, 1.0f))
+					{
+						Features::Config::Save();
+					}
 					ImGui::KeyBindingInput("Rotate Up:    ", &Inputs::Keybindings::freeCamera_RotateUp);
 					ImGui::KeyBindingInput("Rotate Down:  ", &Inputs::Keybindings::freeCamera_RotateDown);
 					ImGui::KeyBindingInput("Rotate Left:  ", &Inputs::Keybindings::freeCamera_RotateLeft);
@@ -4868,6 +4874,11 @@ void Features::Config::Load()
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_omniMovement", &Features::DirectionalMovement::omniMovement);
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_step", &Features::DirectionalMovement::step);
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_delay", &Features::DirectionalMovement::delay);
+
+#ifdef FREE_CAMERA
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraMovementStep", &Features::FreeCamera::cameraMovementStep);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraRotationStep", &Features::FreeCamera::cameraRotationStep);
+#endif
 }
 
 void Features::Config::Save()
@@ -4878,6 +4889,11 @@ void Features::Config::Save()
 	featuresConfig.Set("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
 	featuresConfig.Set("Features_DirectionalMovement_step", Features::DirectionalMovement::step);
 	featuresConfig.Set("Features_DirectionalMovement_delay", Features::DirectionalMovement::delay);
+
+#ifdef FREE_CAMERA
+	featuresConfig.Set("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
+	featuresConfig.Set("Features_FreeCamera_cameraRotationStep", Features::FreeCamera::cameraRotationStep);
+#endif
 
 	featuresConfig.Save();
 }
