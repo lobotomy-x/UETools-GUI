@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.7c)");
+			ImGui::Text("UETools GUI (v3.7d)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -5487,7 +5487,7 @@ void Features::Camera::StopFade()
 
 void Features::DirectionalMovement::Worker()
 {
-	while (GetThread())
+	while (Features::DirectionalMovement::enabled)
 	{
 		__try
 		{
@@ -5573,34 +5573,23 @@ void Features::DirectionalMovement::Worker()
 }
 
 
-bool Features::DirectionalMovement::StartThread()
-{
-	thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Features::DirectionalMovement::Worker, 0, 0, 0);
-	return thread;
-}
-
-bool Features::DirectionalMovement::InvalidateThread()
-{
-	if (CloseHandle(thread))
-	{
-		thread = nullptr;
-		return true;
-	}
-	else
-		return false;
-}
-
-
 void Features::DirectionalMovement::Enable()
 {
 	if (thread == nullptr)
-		StartThread();
+	{
+		thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Features::DirectionalMovement::Worker, 0, 0, 0);
+	}
 }
 
 void Features::DirectionalMovement::Disable()
 {
 	if (thread)
-		InvalidateThread();
+	{
+		WaitForSingleObject(thread, INFINITE);
+		CloseHandle(thread);
+
+		thread = nullptr;
+	}
 }
 
 

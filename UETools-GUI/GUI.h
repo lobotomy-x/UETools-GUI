@@ -721,17 +721,9 @@ namespace Features
 
 	private:
 		static inline HANDLE thread = nullptr;
-		static HANDLE GetThread()
-		{
-			return thread;
-		}
+
 
 		static void Worker();
-
-
-		static bool StartThread();
-		static bool InvalidateThread();
-
 
 	public:
 		static void Enable();
