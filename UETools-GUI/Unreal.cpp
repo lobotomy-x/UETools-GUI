@@ -1806,41 +1806,99 @@ std::vector<SDK::FString> Unreal::String::Split(const std::wstring& wideString, 
 
 
 
-SDK::FString Unreal::String::FModelObjectPath_ToUnreal(const SDK::FString& objectPath)
+SDK::FString Unreal::String::NormalizeObjectPath(const SDK::FString& objectPath)
 {
 	const std::wstring contentKey = L"/Content/";
 	const std::wstring pluginsKey = L"/Plugins/";
 	const std::wstring engineContentKey = L"Engine/Content/";
+	const std::wstring engineContentMidKey = L"/Engine/Content/";
 
 	std::wstring wObjectPath = objectPath.ToWString();
-	if (wObjectPath.find(engineContentKey) == 0)
+	size_t wObjectPathLength = wObjectPath.length();
+	if (wObjectPathLength == 0)
 	{
-		std::wstring outputWString = L"/Engine/" + wObjectPath.substr(engineContentKey.length());
-		return SDK::FString(outputWString.c_str());
+		return objectPath;
 	}
 
-	size_t contentPos = wObjectPath.find(contentKey);
-	if (contentPos != std::wstring::npos)
+	std::replace(wObjectPath.begin(), wObjectPath.end(), L'\\', L'/');
+
+	/*
+		0 = NONE,
+		1 = -- (Object),
+		2 = .. (Actor)
+	*/
+	short objectPathSuffixType = 0;
+	if (wObjectPathLength >= 2)
 	{
-		std::wstring relativePath = wObjectPath.substr(contentPos, contentKey.length());
-		std::wstring rootPath = wObjectPath.substr(0, contentPos);
+		size_t wObjectPathLengthNoSuffixLength = wObjectPathLength - 2;
 
-		size_t pluginsPos = rootPath.find(pluginsKey);
-		if (pluginsPos != std::wstring::npos)
+		std::wstring objectPathEndChars = wObjectPath.substr(wObjectPathLengthNoSuffixLength);
+		if (objectPathEndChars == L"--")
 		{
-			size_t lastSlash = rootPath.find_last_of('/');
-			if (lastSlash != std::wstring::npos)
-			{
-				std::wstring pluginName = rootPath.substr(lastSlash + 1);
-
-				std::wstring outputWString = L"/" + pluginName + L"/" + relativePath;
-				return SDK::FString(outputWString.c_str());
-			}
+			objectPathSuffixType = 1;
+		}
+		if (objectPathEndChars == L"..")
+		{
+			objectPathSuffixType = 2;
 		}
 
-		std::wstring outputWString = L"/Game/" + relativePath;
-		return SDK::FString(outputWString.c_str());
+		if (objectPathSuffixType != 0)
+			wObjectPath = wObjectPath.substr(0, wObjectPathLengthNoSuffixLength);
 	}
 
-	return objectPath;
+	std::wstring convertedObjectPath = wObjectPath;
+	bool wasObjectPathConverted = false;
+
+	if (wObjectPath.find(engineContentKey) == 0)
+	{
+		convertedObjectPath = L"/Engine/" + wObjectPath.substr(engineContentKey.length());
+		wasObjectPathConverted = true;
+	}
+	else
+	{
+		size_t contentPos = wObjectPath.find(contentKey);
+		if (contentPos != std::wstring::npos)
+		{
+			std::wstring relativePath = wObjectPath.substr(contentPos + contentKey.length());
+			std::wstring rootPath = wObjectPath.substr(0, contentPos);
+
+			size_t pluginsPos = rootPath.find(pluginsKey);
+			if (pluginsPos != std::wstring::npos)
+			{
+				size_t lastSlash = rootPath.find_last_of('/');
+				if (lastSlash != std::wstring::npos)
+				{
+					std::wstring pluginName = rootPath.substr(lastSlash + 1);
+
+					convertedObjectPath = L"/" + pluginName + L"/" + relativePath;
+					wasObjectPathConverted = true;
+				}
+			}
+
+			if (wasObjectPathConverted == false)
+			{
+				convertedObjectPath = L"/Game/" + relativePath;
+				wasObjectPathConverted = true;
+			}
+		}
+	}
+
+	if (objectPathSuffixType != 0)
+	{
+		size_t lastSlash = convertedObjectPath.find_last_of(L'/');
+		if (lastSlash != std::wstring::npos)
+		{
+			std::wstring assetName = convertedObjectPath.substr(lastSlash + 1);
+			if (objectPathSuffixType == 1)
+			{
+				convertedObjectPath = convertedObjectPath + L"." + assetName;
+			}
+			if (objectPathSuffixType == 2)
+			{
+				convertedObjectPath = convertedObjectPath + L"." + assetName + L"_C";
+			}
+		}
+	}
+
+	return wasObjectPathConverted ? SDK::FString(convertedObjectPath.c_str()) : SDK::FString(wObjectPath.c_str());
 }

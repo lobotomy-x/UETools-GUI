@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.7e)");
+			ImGui::Text("UETools GUI (v3.8)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1804,7 +1804,7 @@ void GUI::Draw()
 	
 										for (SDK::FString& actorPath : actorPathCollection) // <-- Reference!
 										{
-											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(Unreal::String::FModelObjectPath_ToUnreal(actorPath), spawnTransform))
+											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(Unreal::String::NormalizeObjectPath(actorPath), spawnTransform))
 												anyActorSpawned = true;
 										}
 
@@ -3150,7 +3150,7 @@ void GUI::Draw()
 
 									for (SDK::FString& widgetPath : widgetPathCollection) // <-- Reference!
 									{
-										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(Unreal::String::FModelObjectPath_ToUnreal(widgetPath)))
+										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(Unreal::String::NormalizeObjectPath(widgetPath)))
 										{
 											widgetReference->AddToViewport(Features::WidgetConstruct::zOrder);
 											anyWidgetConstructed = true;
@@ -3460,7 +3460,7 @@ void GUI::Draw()
 
 								for (SDK::FString levelPath : levelPathCollection)
 								{
-									if (Unreal::LevelStreaming::LoadLevelInstance(Unreal::String::FModelObjectPath_ToUnreal(levelPath), locationOffset, rotationOffset))
+									if (Unreal::LevelStreaming::LoadLevelInstance(Unreal::String::NormalizeObjectPath(levelPath), locationOffset, rotationOffset))
 										anyLevelLoaded = true;
 								}
 
@@ -3510,7 +3510,7 @@ void GUI::Draw()
 
 								for (SDK::FString levelSequencePath : levelSequencePathCollection)
 								{
-									if (Unreal::Level::CreateLevelSequence(Unreal::String::FModelObjectPath_ToUnreal(levelSequencePath), Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
+									if (Unreal::Level::CreateLevelSequence(Unreal::String::NormalizeObjectPath(levelSequencePath), Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
 										anySequenceCreated = true;
 								}
 

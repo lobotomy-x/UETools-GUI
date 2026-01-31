@@ -925,7 +925,7 @@ namespace Unreal
 		}
 
 
-		static SDK::FString FModelObjectPath_ToUnreal(const SDK::FString& objectPath);
+		static SDK::FString NormalizeObjectPath(const SDK::FString& objectPath);
 	};
 };
 
