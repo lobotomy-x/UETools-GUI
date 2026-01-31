@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.8)");
+			ImGui::Text("UETools GUI (v3.8b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -4063,8 +4063,22 @@ void GUI::Draw()
 
 			if (ImGui::BeginMenu("Settings"))
 			{
-				ImGui::Checkbox("Enable Sound", &Features::Menu::enableSound);
-				ImGui::Checkbox("Enable Console Output", &Features::Menu::enableConsoleOutput);
+				if (ImGui::Checkbox("Enable Sound", &Features::Menu::enableSound))
+				{
+					Features::Config::Save();
+				}
+				ImGui::NewLine();
+				if (ImGui::Checkbox("Construct Console Automatically", &Features::Menu::autoConstructConsole))
+				{
+					if (Features::Menu::autoConstructConsole)
+						Unreal::Console::Construct();
+
+					Features::Config::Save();
+				}
+				if (ImGui::Checkbox("Enable Console Output", &Features::Menu::enableConsoleOutput))
+				{
+					Features::Config::Save();
+				}
 
 				ImGui::EndMenu();
 			}
@@ -4826,6 +4840,12 @@ void Features::Config::Load()
 		featuresConfig.Load();
 	}
 
+	ReadFeatureFromConfig(&featuresConfig, "Features_Menu_enableSound", &Features::Menu::enableSound);
+	ReadFeatureFromConfig(&featuresConfig, "Features_Menu_autoConstructConsole", &Features::Menu::autoConstructConsole);
+	if (Features::Menu::autoConstructConsole)
+		Unreal::Console::Construct();
+	ReadFeatureFromConfig(&featuresConfig, "Features_Menu_enableConsoleOutput", &Features::Menu::enableConsoleOutput);
+
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_enabled", &Features::DirectionalMovement::enabled);
 	if (Features::DirectionalMovement::enabled)
 		Features::DirectionalMovement::Enable();
@@ -4842,6 +4862,10 @@ void Features::Config::Load()
 void Features::Config::Save()
 {
 	ConfigInstance featuresConfig(PATH_CONFIG_FEATURES);
+
+	featuresConfig.Set("Features_Menu_enableSound", Features::Menu::enableSound);
+	featuresConfig.Set("Features_Menu_autoConstructConsole", Features::Menu::autoConstructConsole);
+	featuresConfig.Set("Features_Menu_enableConsoleOutput", Features::Menu::enableConsoleOutput);
 
 	featuresConfig.Set("Features_DirectionalMovement_enabled", Features::DirectionalMovement::enabled);
 	featuresConfig.Set("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
@@ -5342,32 +5366,17 @@ void Features::ObjectsList::Filter()
 // ========================================================
 void Features::CharacterMovement::Ghost()
 {
-	bool success = Unreal::Character::Ghost(0);
-
-	if (Features::Menu::enableConsoleOutput)
-		Unreal::Console::Print(success ? "[Character Movement] Ghost" : "[Character Movement] Switch to Ghost failed");
-
-	GUI::PlayActionSound(success);
+	GUI::PlayActionSound(Unreal::Character::Ghost(0));
 }
 
 void Features::CharacterMovement::Fly()
 {
-	bool success = Unreal::Character::Fly(0);
-
-	if (Features::Menu::enableConsoleOutput)
-		Unreal::Console::Print(success ? "[Character Movement] Fly" : "[Character Movement] Switch to Fly failed");
-
-	GUI::PlayActionSound(success);
+	GUI::PlayActionSound(Unreal::Character::Fly(0));
 }
 
 void Features::CharacterMovement::Walk()
 {
-	bool success = Unreal::Character::Walk(0);
-
-	if (Features::Menu::enableConsoleOutput)
-		Unreal::Console::Print(success ? "[Character Movement] Walk" : "[Character Movement] Switch to Walk failed");
-
-	GUI::PlayActionSound(success);
+	GUI::PlayActionSound(Unreal::Character::Walk(0));
 }
 
 
