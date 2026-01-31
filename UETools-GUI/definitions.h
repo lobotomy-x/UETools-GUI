@@ -77,6 +77,13 @@
 */
 
 /*
+	#define SOFT_LOAD_FREEMEMORY
+
+	WARNING: Use with caution.
+	In titles with active/aggressive Garbage Collection, Object would be unloaded too early in the process resulting in a game crash.
+*/
+
+/*
 	#define ACTORS_TRACKING
 
 	Enables everything related to Actors tracking (e.g. Enable Tracking).

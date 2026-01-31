@@ -88,3 +88,47 @@ std::string Utilities::String::ToUpperCase(const std::string& str)
 
     return outString;
 }
+
+
+
+
+
+
+LONG Utilities::Exception::Handle(LPEXCEPTION_POINTERS exceptionInfo, const char* title)
+{
+#ifdef _DEBUG
+    void* crashAddress = exceptionInfo->ExceptionRecord->ExceptionAddress;
+
+    HMODULE hModule = GetModuleHandle(nullptr);
+    uintptr_t baseAddress = (uintptr_t)hModule;
+    uintptr_t relativeOffset = (uintptr_t)crashAddress - baseAddress;
+
+    std::string stringTitle = title != nullptr ? std::string(title) : "FAILED TO READ TITLE";
+    std::stringstream stringStream;
+    stringStream << "[" << stringTitle << "]" << "\n";
+    stringStream << "Exception Code: 0x" << std::hex << std::uppercase << exceptionInfo->ExceptionRecord->ExceptionCode << "\n";
+    stringStream << "Absolute Address: 0x" << crashAddress << "\n";
+    stringStream << "Module Base:      0x" << (void*)baseAddress << "\n";
+    stringStream << "Relative Offset:  +0x" << relativeOffset << "\n";
+    stringStream << "--------------------------------------------------\n";
+
+    std::string logEntry = stringStream.str();
+    FileInstance exceptionsFile(PATH_LOG_EXCEPTIONS);
+    std::string fileContents = std::string();
+
+    if (exceptionsFile.DoesFileExist())
+    {
+        exceptionsFile.LoadText(&fileContents);
+
+        if (fileContents.empty() == false && fileContents.back() != '\n')
+        {
+            fileContents += "\n";
+        }
+    }
+
+    fileContents += logEntry;
+    exceptionsFile.SaveText(fileContents);
+#endif
+
+    return EXCEPTION_EXECUTE_HANDLER;
+}

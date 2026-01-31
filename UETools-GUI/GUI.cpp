@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.7d)");
+			ImGui::Text("UETools GUI (v3.7e)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1804,7 +1804,7 @@ void GUI::Draw()
 	
 										for (SDK::FString& actorPath : actorPathCollection) // <-- Reference!
 										{
-											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(actorPath, spawnTransform))
+											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(Unreal::String::FModelObjectPath_ToUnreal(actorPath), spawnTransform))
 												anyActorSpawned = true;
 										}
 
@@ -3150,7 +3150,7 @@ void GUI::Draw()
 
 									for (SDK::FString& widgetPath : widgetPathCollection) // <-- Reference!
 									{
-										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(widgetPath))
+										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(Unreal::String::FModelObjectPath_ToUnreal(widgetPath)))
 										{
 											widgetReference->AddToViewport(Features::WidgetConstruct::zOrder);
 											anyWidgetConstructed = true;
@@ -3460,7 +3460,7 @@ void GUI::Draw()
 
 								for (SDK::FString levelPath : levelPathCollection)
 								{
-									if (Unreal::LevelStreaming::LoadLevelInstance(levelPath, locationOffset, rotationOffset))
+									if (Unreal::LevelStreaming::LoadLevelInstance(Unreal::String::FModelObjectPath_ToUnreal(levelPath), locationOffset, rotationOffset))
 										anyLevelLoaded = true;
 								}
 
@@ -3510,7 +3510,7 @@ void GUI::Draw()
 
 								for (SDK::FString levelSequencePath : levelSequencePathCollection)
 								{
-									if (Unreal::Level::CreateLevelSequence(levelSequencePath, Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
+									if (Unreal::Level::CreateLevelSequence(Unreal::String::FModelObjectPath_ToUnreal(levelSequencePath), Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
 										anySequenceCreated = true;
 								}
 
@@ -4087,7 +4087,7 @@ void GUI::Draw()
 				SDK::FString command = Unreal::String::CString_ToFString(Features::Console::consoleBuffer);
 				if (command.Num() > 0)
 				{
-					GUI::PlayActionSound(Unreal::Console::Execute(command));
+					GUI::PlayActionSound(Unreal::Console::ExecuteConsoleCommand(command));
 				}
 				else
 					GUI::PlayActionSound(false);
@@ -4805,48 +4805,6 @@ void DebugDraw::DrawSplineComponent(SDK::USplineComponent* splineComponent, cons
 // ========================================================
 // |            #GUI #SHARED #CALLS #SHAREDCALLS          |
 // ========================================================
-LONG Features::ExceptionLogger::Log(LPEXCEPTION_POINTERS exceptionInfo, const char* title)
-{
-#ifdef _DEBUG
-	void* crashAddress = exceptionInfo->ExceptionRecord->ExceptionAddress;
-
-	HMODULE hModule = GetModuleHandle(nullptr);
-	uintptr_t baseAddress = (uintptr_t)hModule;
-	uintptr_t relativeOffset = (uintptr_t)crashAddress - baseAddress;
-
-	std::string stringTitle = title != nullptr ? std::string(title) : "FAILED TO READ TITLE";
-	std::stringstream stringStream;
-	stringStream << "[" << stringTitle << "]" << "\n";
-	stringStream << "Exception Code: 0x" << std::hex << std::uppercase << exceptionInfo->ExceptionRecord->ExceptionCode << "\n";
-	stringStream << "Absolute Address: 0x" << crashAddress << "\n";
-	stringStream << "Module Base:      0x" << (void*)baseAddress << "\n";
-	stringStream << "Relative Offset:  +0x" << relativeOffset << "\n";
-	stringStream << "--------------------------------------------------\n";
-
-	std::string logEntry = stringStream.str();
-	FileInstance exceptionsFile(PATH_LOG_EXCEPTIONS);
-	std::string fileContents = std::string();
-
-	if (exceptionsFile.DoesFileExist())
-	{
-		exceptionsFile.LoadText(&fileContents);
-
-		if (fileContents.empty() == false && fileContents.back() != '\n')
-		{
-			fileContents += "\n";
-		}
-	}
-
-	fileContents += logEntry;
-	exceptionsFile.SaveText(fileContents);
-#endif
-
-	return EXCEPTION_EXECUTE_HANDLER;
-}
-
-
-
-
 template<typename T>
 inline void Features::Config::ReadFeatureFromConfig(ConfigInstance* featuresConfig, const std::string& entryName, T* featureValue)
 {
@@ -5565,7 +5523,7 @@ void Features::DirectionalMovement::Worker()
 				character->K2_SetActorLocation(finalLocation, true, &hitResult, false);
 			}
 		}
-		__except (Features::ExceptionLogger::Log(GetExceptionInformation(), "Directional Movement")) {}
+		__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__)) {}
 
 		/* Sleep for a defined delay to control the update rate (tick) of the movement logic. */
 		Sleep(Math::Seconds_ToMilliseconds(Features::DirectionalMovement::delay));
@@ -5781,7 +5739,7 @@ void Features::CollisionVisualizer::ThreadSafeDraw()
 	{
 		Features::CollisionVisualizer::Draw();
 	}
-	__except (Features::ExceptionLogger::Log(GetExceptionInformation(), "Collision Visualizer")) {}
+	__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__)) {}
 }
 #endif
 

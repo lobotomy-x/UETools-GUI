@@ -100,14 +100,13 @@ bool Unreal::Console::Clear()
 	return Print(emptyLines);
 }
 
-bool Unreal::Console::Execute(const SDK::FString& command)
+bool Unreal::Console::ExecuteConsoleCommand(const SDK::FString& command)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
 		return false;
 
-	SDK::APlayerController* playerController = PlayerController::Get();
-	SDK::UKismetSystemLibrary::ExecuteConsoleCommand(world, command, playerController ? playerController : nullptr);
+	SDK::UKismetSystemLibrary::ExecuteConsoleCommand(world, command, PlayerController::Get());
 	return true;
 }
 
@@ -1647,12 +1646,14 @@ SDK::UClass* Unreal::Object::SoftLoadClass(const SDK::FString& objectPath)
 	SDK::FSoftClassPath softClassPath = SDK::UKismetSystemLibrary::MakeSoftClassPath(objectPath);
 	SDK::TSoftClassPtr<SDK::UClass> softClassPtr = SDK::UKismetSystemLibrary::Conv_SoftClassPathToSoftClassRef(softClassPath);
 	SDK::UClass* objectClass = SDK::UKismetSystemLibrary::Conv_SoftClassReferenceToClass(softClassPtr);
-	
+
 	if (objectClass)
 		return objectClass;
 	else
 	{
+#ifdef SOFT_LOAD_FREEMEMORY
 		int32_t initialStreamingLevelsNum = world->StreamingLevels.Num();
+#endif
 		Unreal::LevelStreaming::LoadLevelInstance(objectPath);
 
 		/*
@@ -1666,13 +1667,17 @@ SDK::UClass* Unreal::Object::SoftLoadClass(const SDK::FString& objectPath)
 			objectClass = SDK::UKismetSystemLibrary::Conv_SoftClassReferenceToClass(softClassPtr);
 		}
 
+#ifdef SOFT_LOAD_FREEMEMORY
 		int32_t streamingLevelsNum = world->StreamingLevels.Num();
 		if (streamingLevelsNum > initialStreamingLevelsNum)
 			world->StreamingLevels.Remove(streamingLevelsNum - 1); // Remove remnants of our dirty trick from streaming levels array.
+#endif
 
 		if (objectClass)
 			return objectClass;
 	}
+
+	return nullptr;
 }
 
 SDK::UObject* Unreal::Object::SoftLoadObject(const SDK::FString& objectPath)
@@ -1689,7 +1694,9 @@ SDK::UObject* Unreal::Object::SoftLoadObject(const SDK::FString& objectPath)
 		return objectReference;
 	else
 	{
+#ifdef SOFT_LOAD_FREEMEMORY
 		int32_t initialStreamingLevelsNum = world->StreamingLevels.Num();
+#endif
 		Unreal::LevelStreaming::LoadLevelInstance(objectPath);
 
 		/*
@@ -1703,13 +1710,17 @@ SDK::UObject* Unreal::Object::SoftLoadObject(const SDK::FString& objectPath)
 			objectReference = SDK::UKismetSystemLibrary::Conv_SoftObjectReferenceToObject(softObjectPtr);
 		}
 
+#ifdef SOFT_LOAD_FREEMEMORY
 		int32_t streamingLevelsNum = world->StreamingLevels.Num();
 		if (streamingLevelsNum > initialStreamingLevelsNum)
 			world->StreamingLevels.Remove(streamingLevelsNum - 1); // Remove remnants of our dirty trick from streaming levels array.
+#endif
 
 		if (objectReference)
 			return objectReference;
 	}
+
+	return nullptr;
 }
 #endif
 
@@ -1788,4 +1799,48 @@ std::vector<SDK::FString> Unreal::String::Split(const std::wstring& wideString, 
 	}
 
 	return outCollection;
+}
+
+
+
+
+
+
+SDK::FString Unreal::String::FModelObjectPath_ToUnreal(const SDK::FString& objectPath)
+{
+	const std::wstring contentKey = L"/Content/";
+	const std::wstring pluginsKey = L"/Plugins/";
+	const std::wstring engineContentKey = L"Engine/Content/";
+
+	std::wstring wObjectPath = objectPath.ToWString();
+	if (wObjectPath.find(engineContentKey) == 0)
+	{
+		std::wstring outputWString = L"/Engine/" + wObjectPath.substr(engineContentKey.length());
+		return SDK::FString(outputWString.c_str());
+	}
+
+	size_t contentPos = wObjectPath.find(contentKey);
+	if (contentPos != std::wstring::npos)
+	{
+		std::wstring relativePath = wObjectPath.substr(contentPos, contentKey.length());
+		std::wstring rootPath = wObjectPath.substr(0, contentPos);
+
+		size_t pluginsPos = rootPath.find(pluginsKey);
+		if (pluginsPos != std::wstring::npos)
+		{
+			size_t lastSlash = rootPath.find_last_of('/');
+			if (lastSlash != std::wstring::npos)
+			{
+				std::wstring pluginName = rootPath.substr(lastSlash + 1);
+
+				std::wstring outputWString = L"/" + pluginName + L"/" + relativePath;
+				return SDK::FString(outputWString.c_str());
+			}
+		}
+
+		std::wstring outputWString = L"/Game/" + relativePath;
+		return SDK::FString(outputWString.c_str());
+	}
+
+	return objectPath;
 }

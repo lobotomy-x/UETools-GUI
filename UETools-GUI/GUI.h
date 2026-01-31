@@ -354,15 +354,6 @@ public:
 
 namespace Features
 {
-	class ExceptionLogger
-	{
-	public:
-		static LONG Log(LPEXCEPTION_POINTERS exceptionInfo, const char* title);
-	};
-
-
-
-
 	class Config
 	{
 	private:

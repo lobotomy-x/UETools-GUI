@@ -123,7 +123,7 @@ namespace Unreal
 		static bool Clear();
 
 
-		static bool Execute(const SDK::FString& command);
+		static bool ExecuteConsoleCommand(const SDK::FString& command);
 	};
 
 
@@ -923,6 +923,9 @@ namespace Unreal
 		{
 			return Split(std::string(charString), separator, removeSeparatorSpaces);
 		}
+
+
+		static SDK::FString FModelObjectPath_ToUnreal(const SDK::FString& objectPath);
 	};
 };
 
