@@ -772,7 +772,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.8b)");
+			ImGui::Text("UETools GUI (v3.8c)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -3848,7 +3848,14 @@ void GUI::Draw()
 								Features::Config::Save();
 							}
 							ImGui::SameLine();
-							ImGui::TextHint("Allows movement in all directions (Backward, Left, Right) relative to where you are looking.");
+							ImGui::TextHint("Allows movement in all directions (Backward, Left, Right, Up & Down).");
+							ImGui::BeginDisabled(Features::DirectionalMovement::omniMovement == false);
+							ImGui::KeyBindingInput("Move Up  ", &Inputs::Keybindings::characterOmniMovement_Up);
+							ImGui::KeyBindingInput("Move Down", &Inputs::Keybindings::characterOmniMovement_Down);
+							ImGui::EndDisabled();
+
+							ImGui::NewLine();
+
 							if (ImGui::InputFloat("Movement Step##DirectionalMovement", &Features::DirectionalMovement::step, 0.1, 1.0))
 							{
 								Features::Config::Save();
@@ -5470,9 +5477,12 @@ void Features::DirectionalMovement::Worker()
 
 			/* Get Character velocity and see if we have any horizontal movement. */
 			SDK::FVector characterVelocity = character->CharacterMovement->Velocity;
-			if (characterVelocity.X == 0.0 && characterVelocity.Y == 0.0)
-				continue;
-
+			if (Features::DirectionalMovement::omniMovement == false) // For Omni-Movement Up & Down Keybindings we need to get past that check.
+			{
+				if (characterVelocity.X == 0.0 && characterVelocity.Y == 0.0)
+					continue;
+			}
+			
 			/* Normalize Character velocity (-1.0 to 1.0) and get Camera forward vector. */
 			SDK::FVector characterVelocityNormalized = Math::Vector_Normal(characterVelocity);
 			SDK::FVector cameraForwardVector = playerController->PlayerCameraManager->GetActorForwardVector();
@@ -5516,6 +5526,21 @@ void Features::DirectionalMovement::Worker()
 				{
 					movementExpected = true;
 					movementDirection = Math::Vector_Add(movementDirection, cameraRightVector * -1.0f);
+				}
+
+				if (GUI::GetIsMenuActive() == false)
+				{
+					SDK::FVector characterUpVector = character->GetActorUpVector();
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Up))
+					{
+						movementExpected = true;
+						movementDirection = Math::Vector_Add(movementDirection, characterUpVector);
+					}
+					else if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Down))
+					{
+						movementExpected = true;
+						movementDirection = Math::Vector_Add(movementDirection, characterUpVector * -1.0f);
+					}
 				}
 			}
 
@@ -5949,14 +5974,14 @@ void Inputs::Config::Load()
 	ReadKeyBindingFromConfig(&keybindingsConfig, "general_MenuOpenClose", &Inputs::Keybindings::general_MenuOpenClose);
 
 #ifdef ACTOR_TRACE
-	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorTrace", &Keybindings::debug_ActorTrace);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorTrace", &Inputs::Keybindings::debug_ActorTrace);
 #endif
 	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListUpdate", &Inputs::Keybindings::debug_ActorsListUpdate);
 #ifdef ACTORS_TRACKING
-	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListTracking", &Keybindings::debug_ActorsListTracking);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListTracking", &Inputs::Keybindings::debug_ActorsListTracking);
 #endif
 #ifdef COLLISION_VISUALIZER
-	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListCollisionDraw", &Keybindings::debug_ActorsListCollisionDraw);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "debug_ActorsListCollisionDraw", &Inputs::Keybindings::debug_ActorsListCollisionDraw);
 #endif
 
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Ghost", &Inputs::Keybindings::characterMovement_Ghost);
@@ -5965,24 +5990,27 @@ void Inputs::Config::Load()
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Jump", &Inputs::Keybindings::characterMovement_Jump);
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Launch", &Inputs::Keybindings::characterMovement_Launch);
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterMovement_Dash", &Inputs::Keybindings::characterMovement_Dash);
+
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterOmniMovement_Up", &Inputs::Keybindings::characterOmniMovement_Up);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "characterOmniMovement_Down", &Inputs::Keybindings::characterOmniMovement_Down);
 	
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StartFade", &Inputs::Keybindings::characterCamera_StartFade);
 	ReadKeyBindingFromConfig(&keybindingsConfig, "characterCamera_StopFade", &Inputs::Keybindings::characterCamera_StopFade);
 
 #ifdef FREE_CAMERA
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportCameraToPlayer", &Keybindings::freeCamera_TeleportCameraToPlayer);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_Toggle", &Keybindings::freeCamera_Toggle);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportPlayerToCamera", &Keybindings::freeCamera_TeleportPlayerToCamera);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveForward", &Keybindings::freeCamera_MoveForward);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveBackward", &Keybindings::freeCamera_MoveBackward);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveLeft", &Keybindings::freeCamera_MoveLeft);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveRight", &Keybindings::freeCamera_MoveRight);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveUp", &Keybindings::freeCamera_MoveUp);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveDown", &Keybindings::freeCamera_MoveDown);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateUp", &Keybindings::freeCamera_RotateUp);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateDown", &Keybindings::freeCamera_RotateDown);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateLeft", &Keybindings::freeCamera_RotateLeft);
-	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateRight", &Keybindings::freeCamera_RotateRight);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportCameraToPlayer", &Inputs::Keybindings::freeCamera_TeleportCameraToPlayer);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_Toggle", &Inputs::Keybindings::freeCamera_Toggle);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_TeleportPlayerToCamera", &Inputs::Keybindings::freeCamera_TeleportPlayerToCamera);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveForward", &Inputs::Keybindings::freeCamera_MoveForward);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveBackward", &Inputs::Keybindings::freeCamera_MoveBackward);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveLeft", &Inputs::Keybindings::freeCamera_MoveLeft);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveRight", &Inputs::Keybindings::freeCamera_MoveRight);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveUp", &Inputs::Keybindings::freeCamera_MoveUp);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_MoveDown", &Inputs::Keybindings::freeCamera_MoveDown);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateUp", &Inputs::Keybindings::freeCamera_RotateUp);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateDown", &Inputs::Keybindings::freeCamera_RotateDown);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateLeft", &Inputs::Keybindings::freeCamera_RotateLeft);
+	ReadKeyBindingFromConfig(&keybindingsConfig, "freeCamera_RotateRight", &Inputs::Keybindings::freeCamera_RotateRight);
 #endif
 }
 
@@ -6008,6 +6036,9 @@ void Inputs::Config::Save()
 	keybindingsConfig.Set("characterMovement_Walk", static_cast<int>(Inputs::Keybindings::characterMovement_Walk.key));
 	keybindingsConfig.Set("characterMovement_Launch", static_cast<int>(Inputs::Keybindings::characterMovement_Launch.key));
 	keybindingsConfig.Set("characterMovement_Dash", static_cast<int>(Inputs::Keybindings::characterMovement_Dash.key));
+
+	keybindingsConfig.Set("characterOmniMovement_Up", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Up.key));
+	keybindingsConfig.Set("characterOmniMovement_Down", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Down.key));
 
 	keybindingsConfig.Set("characterCamera_StartFade", static_cast<int>(Inputs::Keybindings::characterCamera_StartFade.key));
 	keybindingsConfig.Set("characterCamera_StopFade", static_cast<int>(Inputs::Keybindings::characterCamera_StopFade.key));
@@ -6152,69 +6183,69 @@ void Inputs::Keybindings::Process()
 
 
 #ifdef FREE_CAMERA
-		if (ImGui::IsKeyBindingPressed(&Keybindings::freeCamera_TeleportCameraToPlayer))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportCameraToPlayer))
 		{
 			GUI::PlayActionSound(Features::FreeCamera::TeleportCameraToPlayer());
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::freeCamera_Toggle))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_Toggle))
 		{
 			Features::FreeCamera::Toggle();
 		}
 
-		if (ImGui::IsKeyBindingPressed(&Keybindings::freeCamera_TeleportPlayerToCamera))
+		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportPlayerToCamera))
 		{
 			GUI::PlayActionSound(Features::FreeCamera::TeleportPlayerToCamera());
 		}
 
 		if (Features::FreeCamera::cameraReference)
 		{
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveForward))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveForward))
 			{
 				Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep, 0.0f, 0.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveBackward))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveBackward))
 			{
 				Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f, 0.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveLeft))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveLeft))
 			{
 				Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveRight))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveRight))
 			{
 				Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep, 0.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveUp))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveUp))
 			{
 				Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_MoveDown))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveDown))
 			{
 				Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep * -1.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_RotateUp))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateUp))
 			{
 				Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_RotateDown))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateDown))
 			{
 				Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep * -1.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_RotateLeft))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateLeft))
 			{
 				Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep * -1.0f, 0.0f);
 			}
 
-			if (ImGui::IsKeyBindingDown(&Keybindings::freeCamera_RotateRight))
+			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateRight))
 			{
 				Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep, 0.0f);
 			}

@@ -805,6 +805,9 @@ namespace Inputs
 		static inline ImGui::KeyBinding characterMovement_Launch;
 		static inline ImGui::KeyBinding characterMovement_Dash;
 
+		static inline ImGui::KeyBinding characterOmniMovement_Up;
+		static inline ImGui::KeyBinding characterOmniMovement_Down;
+
 		static inline ImGui::KeyBinding characterCamera_StartFade;
 		static inline ImGui::KeyBinding characterCamera_StopFade;
 
