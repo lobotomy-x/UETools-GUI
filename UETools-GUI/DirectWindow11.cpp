@@ -371,11 +371,7 @@ void DirectWindow11::Create()
         static bool lastIsMenuActive = !isMenuActive; // Small trick to encourage initial SetWindowLong(). W/o it game wouldn't receive any inputs.
 
         bool isInFocus = IsWindowFocus(hwnd) && bTargetSet;
-        if (isInFocus)
-        {
-            /* External: Keybindings processing lives here. */
-            Inputs::Keybindings::Process();
-        }
+        GUI::SetIsTitleInFocus(isInFocus); /* External: Notify GUI about focus status. */
 
         /* Move the window on top of the targeted window and handle resize. */
         if (hTargetWindow != nullptr)

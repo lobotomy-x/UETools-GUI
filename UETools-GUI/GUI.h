@@ -201,23 +201,6 @@ namespace ImGui
 class GUI
 {
 private:
-	static inline bool isMenuActive = false;
-public:
-	static bool GetIsMenuActive()
-	{
-		return isMenuActive;
-	}
-	static void SetIsMenuActive(const bool& isActive)
-	{
-		isMenuActive = isActive;
-	}
-	static void ToggleIsMenuActive()
-	{
-		isMenuActive = !isMenuActive;
-	}
-
-
-private:
 	static inline HANDLE windowThread = nullptr;
 public:
 	static HANDLE GetWindowThread()
@@ -225,6 +208,36 @@ public:
 		return windowThread;
 	}
 	static bool StartWindowThread();
+
+
+private:
+	static inline bool isTitleInFocus = false;
+public:
+	static bool GetIsTitleInFocus()
+	{
+		return isTitleInFocus;
+	}
+	static void SetIsTitleInFocus(const bool& newIsInFocus)
+	{
+		isTitleInFocus = newIsInFocus;
+	}
+
+
+private:
+	static inline bool isMenuActive = false;
+public:
+	static bool GetIsMenuActive()
+	{
+		return isMenuActive;
+	}
+	static void SetIsMenuActive(const bool& newIsActive)
+	{
+		isMenuActive = newIsActive;
+	}
+	static void ToggleIsMenuActive()
+	{
+		isMenuActive = !isMenuActive;
+	}
 
 
 #ifdef _DEBUG
@@ -387,8 +400,8 @@ namespace Features
 
 		static inline double lastUpdateTime;
 
-		static inline bool autoUpdate;
-		static inline float autoUpdateDelay = 0.01f;
+		static inline bool autoUpdate = false;
+		static inline float autoUpdateDelay = 0.25f;
 
 		static inline Unreal::Engine::DataStructure engine;
 
@@ -421,6 +434,7 @@ namespace Features
 
 
 		static void Update();
+		static void ThreadSafeUpdate();
 	};
 
 
@@ -707,17 +721,16 @@ namespace Features
 		static inline bool enabled = false;
 
 		static inline bool omniMovement = true;
+		static inline bool isUpMovementExpected = false;
+		static inline bool isDownMovementExpected = false;
 
-		static inline float step = 30.0;
-		static inline float delay = 0.1;
+		static inline float step = 50.0;
+		static inline float delay = 0.05;
 
 
 	private:
 		static inline HANDLE thread = nullptr;
-
-
 		static void Worker();
-
 	public:
 		static void Enable();
 		static void Disable();
@@ -827,6 +840,13 @@ namespace Inputs
 		static inline ImGui::KeyBinding freeCamera_RotateRight{ ImGuiKey_RightArrow };
 #endif
 
-		static void Process();
+
+	private:
+		static inline HANDLE thread = nullptr;
+		static inline bool isProcessing = false;
+		static void Worker();
+	public:
+		static void EnableProcessing();
+		static void DisableProcessing();
 	};
 };

@@ -751,6 +751,8 @@ void GUI::Init(const HMODULE& applicationModule)
 
 	Features::Config::Load();
 	Inputs::Config::Load();
+
+	Inputs::Keybindings::EnableProcessing();
 }
 
 #ifdef WAIT_FOR_TITLE_INIT
@@ -772,7 +774,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.8c)");
+			ImGui::Text("UETools GUI (v3.9)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -834,7 +836,7 @@ void GUI::Draw()
 					if (ImGui::Button("Start"))
 					{
 						if (Features::Debug::autoUpdate == false)
-							Features::Debug::Update();
+							Features::Debug::ThreadSafeUpdate();
 
 						Features::Debug::enabled = true;
 						PlayActionSound(true);
@@ -871,13 +873,15 @@ void GUI::Draw()
 						{
 							if (Features::Debug::autoUpdateDelay < 0.01f)
 								Features::Debug::autoUpdateDelay = 0.01f;
+
+							Features::Config::Save();
 						}
 
 						const double now = ImGui::GetTime();
 						const double elapsed = now - Features::Debug::lastUpdateTime;
 
 						if (elapsed >= Features::Debug::autoUpdateDelay)
-							Features::Debug::Update();
+							Features::Debug::ThreadSafeUpdate();
 					}
 					else
 					{
@@ -909,12 +913,15 @@ void GUI::Draw()
 					ImGui::BeginDisabled(Features::Debug::autoUpdate);
 					if (ImGui::Button("Update##DebugInformation"))
 					{
-						Features::Debug::Update();
+						Features::Debug::ThreadSafeUpdate();
 						PlayActionSound(true);
 					}
 					ImGui::EndDisabled();
 					ImGui::SameLine();
-					ImGui::Checkbox("Auto", &Features::Debug::autoUpdate);
+					if (ImGui::Checkbox("Auto", &Features::Debug::autoUpdate))
+					{
+						Features::Config::Save();
+					}
 					if (ImGui::Button("Stop"))
 					{
 						Features::Debug::enabled = false;
@@ -969,7 +976,7 @@ void GUI::Draw()
 										{
 											bool wasConstructed = Unreal::Console::Construct() && Unreal::InputSettings::AssignConsoleBindings();
 											if (wasConstructed) // Only gather debug information if we're aware of changes.
-												Features::Debug::Update();
+												Features::Debug::ThreadSafeUpdate();
 
 											PlayActionSound(wasConstructed);
 										}
@@ -1422,7 +1429,7 @@ void GUI::Draw()
 								{
 									bool wasConstructed = Unreal::CheatManager::Construct();
 									if (wasConstructed) // Only gather debug information if we're aware of changes.
-										Features::Debug::Update();
+										Features::Debug::ThreadSafeUpdate();
 
 									PlayActionSound(wasConstructed);
 								}
@@ -1867,7 +1874,7 @@ void GUI::Draw()
 						ImGui::SameLine();
 						if (ImGui::InputFloat("##FilterDistance##Actors", &Features::ActorsList::filterDistance, 100.0f, 1000.0f))
 						{
-							Features::ActorsList::filterDistance = std::clamp(Features::ActorsList::filterDistance, 0.0f, 100000.0f);
+							Features::ActorsList::filterDistance = std::clamp(Features::ActorsList::filterDistance, 0.0f, 1000000.0f);
 						}
 						ImGui::SameLine();
 						ImGui::TextHint("Maximum Actor distance from Player in centimetres. Calculations doesn't update in background!\n\nThat allows to return to the game while keeping needed Actors filtered.");
@@ -4853,6 +4860,9 @@ void Features::Config::Load()
 		Unreal::Console::Construct();
 	ReadFeatureFromConfig(&featuresConfig, "Features_Menu_enableConsoleOutput", &Features::Menu::enableConsoleOutput);
 
+	ReadFeatureFromConfig(&featuresConfig, "Features_Debug_autoUpdate", &Features::Debug::autoUpdate);
+	ReadFeatureFromConfig(&featuresConfig, "Features_Debug_autoUpdateDelay", &Features::Debug::autoUpdateDelay);
+
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_enabled", &Features::DirectionalMovement::enabled);
 	if (Features::DirectionalMovement::enabled)
 		Features::DirectionalMovement::Enable();
@@ -4873,6 +4883,9 @@ void Features::Config::Save()
 	featuresConfig.Set("Features_Menu_enableSound", Features::Menu::enableSound);
 	featuresConfig.Set("Features_Menu_autoConstructConsole", Features::Menu::autoConstructConsole);
 	featuresConfig.Set("Features_Menu_enableConsoleOutput", Features::Menu::enableConsoleOutput);
+
+	featuresConfig.Set("Features_Debug_autoUpdate", Features::Debug::autoUpdate);
+	featuresConfig.Set("Features_Debug_autoUpdateDelay", Features::Debug::autoUpdateDelay);
 
 	featuresConfig.Set("Features_DirectionalMovement_enabled", Features::DirectionalMovement::enabled);
 	featuresConfig.Set("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
@@ -5194,6 +5207,15 @@ void Features::Debug::Update()
 	Features::Debug::lastUpdateTime = ImGui::GetTime();
 }
 
+void Features::Debug::ThreadSafeUpdate()
+{
+	__try
+	{
+		Features::Debug::Update();
+	}
+	__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__)) {}
+}
+
 
 
 
@@ -5477,7 +5499,7 @@ void Features::DirectionalMovement::Worker()
 
 			/* Get Character velocity and see if we have any horizontal movement. */
 			SDK::FVector characterVelocity = character->CharacterMovement->Velocity;
-			if (Features::DirectionalMovement::omniMovement == false) // For Omni-Movement Up & Down Keybindings we need to get past that check.
+			if (Features::DirectionalMovement::omniMovement == false)  // For Omni-Movement Up & Down Keybindings we need to get past that check.
 			{
 				if (characterVelocity.X == 0.0 && characterVelocity.Y == 0.0)
 					continue;
@@ -5528,15 +5550,15 @@ void Features::DirectionalMovement::Worker()
 					movementDirection = Math::Vector_Add(movementDirection, cameraRightVector * -1.0f);
 				}
 
-				if (GUI::GetIsMenuActive() == false)
+				if (Features::DirectionalMovement::isUpMovementExpected || Features::DirectionalMovement::isDownMovementExpected)
 				{
 					SDK::FVector characterUpVector = character->GetActorUpVector();
-					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Up))
+					if (Features::DirectionalMovement::isUpMovementExpected)
 					{
 						movementExpected = true;
 						movementDirection = Math::Vector_Add(movementDirection, characterUpVector);
 					}
-					else if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Down))
+					else if (Features::DirectionalMovement::isDownMovementExpected)
 					{
 						movementExpected = true;
 						movementDirection = Math::Vector_Add(movementDirection, characterUpVector * -1.0f);
@@ -6065,191 +6087,227 @@ void Inputs::Config::Save()
 
 
 
-void Inputs::Keybindings::Process()
+void Inputs::Keybindings::EnableProcessing()
 {
-	if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::general_MenuOpenClose))
-		GUI::ToggleIsMenuActive();
-
-
-	if (GUI::GetIsMenuActive() == false)
+	if (thread == nullptr)
 	{
-#ifdef ACTOR_TRACE
-		if (Features::ActorTrace::enabled)
+		thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Inputs::Keybindings::Worker, 0, 0, 0);
+		isProcessing = thread;
+	}
+}
+
+void Inputs::Keybindings::DisableProcessing()
+{
+	if (thread)
+	{
+		WaitForSingleObject(thread, INFINITE);
+		CloseHandle(thread);
+
+		thread = nullptr;
+		isProcessing = false;
+	}
+}
+
+void Inputs::Keybindings::Worker()
+{
+	while (isProcessing)
+	{
+		/* Following inputs are only processed while title window is in focus. */
+		if (GUI::GetIsTitleInFocus())
 		{
-			if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorTrace))
+			if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::general_MenuOpenClose))
+				GUI::ToggleIsMenuActive();
+
+			if (GUI::GetIsMenuActive() == false)
 			{
-				GUI::PlayActionSound(Features::ActorTrace::Trace());
-			}
-		}
+#ifdef ACTOR_TRACE
+				if (Features::ActorTrace::enabled)
+				{
+					if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorTrace))
+					{
+						GUI::PlayActionSound(Features::ActorTrace::Trace());
+					}
+				}
 #endif
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListUpdate))
-		{
-			Features::ActorsList::Update();
-			Features::ActorsList::Filter();
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListUpdate))
+				{
+					Features::ActorsList::Update();
+					Features::ActorsList::Filter();
 
-			GUI::PlayActionSound(true);
-		}
+					GUI::PlayActionSound(true);
+				}
 
 #ifdef ACTORS_TRACKING
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListTracking))
-		{
-			if (Features::ActorsTracker::enabled)
-				Features::ActorsTracker::enabled = false;
-			else
-			{
-				Features::ActorsList::Update();
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListTracking))
+				{
+					if (Features::ActorsTracker::enabled)
+						Features::ActorsTracker::enabled = false;
+					else
+					{
+						Features::ActorsList::Update();
 
-				if (Features::ActorsList::filterDistance == 0.0f)
-					Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
+						if (Features::ActorsList::filterDistance == 0.0f)
+							Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
 
-				Features::ActorsList::Filter();
+						Features::ActorsList::Filter();
 
-				Features::ActorsTracker::enabled = true;
-			}
+						Features::ActorsTracker::enabled = true;
+					}
 
-			GUI::PlayActionSound(true);
-		}
+					GUI::PlayActionSound(true);
+				}
 #endif
 
 #ifdef COLLISION_VISUALIZER
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListCollisionDraw))
-		{
-			if (Features::CollisionVisualizer::enabled)
-				Features::CollisionVisualizer::enabled = false;
-			else
-			{
-				Features::ActorsList::Update();
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorsListCollisionDraw))
+				{
+					if (Features::CollisionVisualizer::enabled)
+						Features::CollisionVisualizer::enabled = false;
+					else
+					{
+						Features::ActorsList::Update();
 
-				if (Features::ActorsList::filterDistance == 0.0f)
-					Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
+						if (Features::ActorsList::filterDistance == 0.0f)
+							Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
 
-				Features::ActorsList::Filter();
+						Features::ActorsList::Filter();
 
-				Features::CollisionVisualizer::enabled = true;
-			}
+						Features::CollisionVisualizer::enabled = true;
+					}
 
-			GUI::PlayActionSound(true);
-		}
+					GUI::PlayActionSound(true);
+				}
 #endif
 
 
 
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Ghost))
-		{
-			Features::CharacterMovement::Ghost();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Ghost))
+				{
+					Features::CharacterMovement::Ghost();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Fly))
-		{
-			Features::CharacterMovement::Fly();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Fly))
+				{
+					Features::CharacterMovement::Fly();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Walk))
-		{
-			Features::CharacterMovement::Walk();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Walk))
+				{
+					Features::CharacterMovement::Walk();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Jump))
-		{
-			Features::CharacterMovement::Jump();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Jump))
+				{
+					Features::CharacterMovement::Jump();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Launch))
-		{
-			Features::CharacterMovement::Launch();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Launch))
+				{
+					Features::CharacterMovement::Launch();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Dash))
-		{
-			Features::CharacterMovement::Dash();
-		}
-
-
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterMovement_Dash))
+				{
+					Features::CharacterMovement::Dash();
+				}
 
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StartFade))
-		{
-			Features::Camera::StartFade();
-		}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StopFade))
-		{
-			Features::Camera::StopFade();
-		}
+
+				if (Features::DirectionalMovement::omniMovement)
+				{
+					Features::DirectionalMovement::isUpMovementExpected = ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Up);
+					Features::DirectionalMovement::isDownMovementExpected = ImGui::IsKeyBindingDown(&Inputs::Keybindings::characterOmniMovement_Down);
+				}
+
+
+
+
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StartFade))
+				{
+					Features::Camera::StartFade();
+				}
+
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::characterCamera_StopFade))
+				{
+					Features::Camera::StopFade();
+				}
 
 
 
 
 #ifdef FREE_CAMERA
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportCameraToPlayer))
-		{
-			GUI::PlayActionSound(Features::FreeCamera::TeleportCameraToPlayer());
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportCameraToPlayer))
+				{
+					GUI::PlayActionSound(Features::FreeCamera::TeleportCameraToPlayer());
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_Toggle))
-		{
-			Features::FreeCamera::Toggle();
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_Toggle))
+				{
+					Features::FreeCamera::Toggle();
+				}
 
-		if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportPlayerToCamera))
-		{
-			GUI::PlayActionSound(Features::FreeCamera::TeleportPlayerToCamera());
-		}
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::freeCamera_TeleportPlayerToCamera))
+				{
+					GUI::PlayActionSound(Features::FreeCamera::TeleportPlayerToCamera());
+				}
 
-		if (Features::FreeCamera::cameraReference)
-		{
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveForward))
-			{
-				Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep, 0.0f, 0.0f);
-			}
+				if (Features::FreeCamera::cameraReference)
+				{
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveForward))
+					{
+						Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep, 0.0f, 0.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveBackward))
-			{
-				Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f, 0.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveBackward))
+					{
+						Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f, 0.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveLeft))
-			{
-				Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveLeft))
+					{
+						Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep * -1.0f, 0.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveRight))
-			{
-				Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep, 0.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveRight))
+					{
+						Features::FreeCamera::Move(0.0f, Features::FreeCamera::cameraMovementStep, 0.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveUp))
-			{
-				Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveUp))
+					{
+						Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveDown))
-			{
-				Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep * -1.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveDown))
+					{
+						Features::FreeCamera::Move(0.0f, 0.0f, Features::FreeCamera::cameraMovementStep * -1.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateUp))
-			{
-				Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateUp))
+					{
+						Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateDown))
-			{
-				Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep * -1.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateDown))
+					{
+						Features::FreeCamera::Rotate(0.0f, Features::FreeCamera::cameraRotationStep * -1.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateLeft))
-			{
-				Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep * -1.0f, 0.0f);
-			}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateLeft))
+					{
+						Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep * -1.0f, 0.0f);
+					}
 
-			if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateRight))
-			{
-				Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep, 0.0f);
-			}
-		}
+					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_RotateRight))
+					{
+						Features::FreeCamera::Rotate(Features::FreeCamera::cameraRotationStep, 0.0f);
+					}
+				}
 #endif
+			}
+		}
 	}
 }
