@@ -774,7 +774,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.9)");
+			ImGui::Text("UETools GUI (v3.9b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -5846,7 +5846,12 @@ bool Features::FreeCamera::Enable()
 		Features::FreeCamera::cameraReference->K2_SetActorLocationAndRotation(playerCameraTransform.location, playerCameraTransform.rotation, false, &hitResult, true);
 	}
 
-	Features::FreeCamera::lastViewTarget = playerController->GetViewTarget();
+	if (Features::FreeCamera::lastViewTarget = playerController->GetViewTarget())
+	{
+		Features::FreeCamera::lastViewTargetCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
+		Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
+	}
+
 	Unreal::PlayerController::SetViewTarget(Features::FreeCamera::cameraReference);
 	return true;
 }
@@ -5859,7 +5864,9 @@ bool Features::FreeCamera::Disable()
 
 	if (Features::FreeCamera::lastViewTarget != nullptr)
 	{
+		Features::FreeCamera::lastViewTarget->CustomTimeDilation = Features::FreeCamera::lastViewTargetCustomTimeDilation;
 		Unreal::PlayerController::SetViewTarget(Features::FreeCamera::lastViewTarget);
+
 		Features::FreeCamera::lastViewTarget = nullptr;
 		return true;
 	}
@@ -5917,7 +5924,10 @@ bool Features::FreeCamera::Rotate(const float& horizontalStep, const float& vert
 
 	SDK::FRotator freeCameraRotation = Features::FreeCamera::cameraReference->K2_GetActorRotation();
 	freeCameraRotation.Yaw += horizontalStep;
-	freeCameraRotation.Pitch += verticalStep;
+
+	float newPitch = freeCameraRotation.Pitch + verticalStep;
+	freeCameraRotation.Pitch = std::clamp(newPitch, -89.0f, 89.0f);
+
 	freeCameraRotation.Roll = 0.0f;
 
 	Features::FreeCamera::cameraReference->K2_SetActorRotation(freeCameraRotation, false);
@@ -6309,5 +6319,7 @@ void Inputs::Keybindings::Worker()
 #endif
 			}
 		}
+
+		Sleep(1);
 	}
 }

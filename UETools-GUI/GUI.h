@@ -744,7 +744,9 @@ namespace Features
 	{
 	public:
 		static inline SDK::ACameraActor* cameraReference;
+
 		static inline SDK::AActor* lastViewTarget;
+		static inline float lastViewTargetCustomTimeDilation;
 
 		static inline float cameraMovementStep = 3.0f;
 		static inline float cameraRotationStep = 0.25f;
