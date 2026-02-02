@@ -47,14 +47,14 @@ bool Unreal::Console::Construct(const bool& ignorePresence)
 }
 
 
-bool Unreal::Console::Print(const std::wstring& wideString)
+bool Unreal::Console::Print(const std::wstring& wString)
 {
-	const wchar_t* wCharString = wideString.c_str();
-	wprintf(L"%ls\n", wCharString); // Print to std::cout (if present).
+	const wchar_t* wcString = wString.c_str();
+	wprintf(L"%ls\n", wcString); // Print to std::cout (if present).
 
 	if (SDK::APlayerController* playerController = PlayerController::Get())
 	{
-		playerController->ClientMessage(SDK::FString(wCharString), SDK::UKismetStringLibrary::Conv_StringToName(L"None"), 0);
+		playerController->ClientMessage(SDK::FString(wcString), SDK::UKismetStringLibrary::Conv_StringToName(L"None"), 0);
 		return true;
 	}
 	else
@@ -100,13 +100,13 @@ bool Unreal::Console::Clear()
 	return Print(emptyLines);
 }
 
-bool Unreal::Console::ExecuteConsoleCommand(const SDK::FString& command)
+bool Unreal::Console::ExecuteConsoleCommand(const std::wstring& command)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
 		return false;
 
-	SDK::UKismetSystemLibrary::ExecuteConsoleCommand(world, command, PlayerController::Get());
+	SDK::UKismetSystemLibrary::ExecuteConsoleCommand(world, SDK::FString(command.c_str()), PlayerController::Get());
 	return true;
 }
 
@@ -244,7 +244,7 @@ bool Unreal::Level::CreateLevelSequence(SDK::ULevelSequence* levelSequenceAsset,
 }
 
 #ifdef SOFT_PATH
-bool Unreal::Level::CreateLevelSequence(const SDK::FString& levelSequencePath, const float& startTime, const float& playRate, const int32_t& loopCount)
+bool Unreal::Level::CreateLevelSequence(const std::wstring& levelSequencePath, const float& startTime, const float& playRate, const int32_t& loopCount)
 {
 	SDK::UObject* objectReference = Object::SoftLoadObject(levelSequencePath);
 	if (objectReference == nullptr || objectReference->IsA(SDK::ULevelSequence::StaticClass()) == false)
@@ -299,7 +299,7 @@ std::vector<Unreal::LevelStreaming::DataStructure> Unreal::LevelStreaming::Filte
 
 
 #ifdef SOFT_PATH
-bool Unreal::LevelStreaming::LoadLevelInstance(const SDK::FString& levelPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset)
+bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
@@ -309,10 +309,10 @@ bool Unreal::LevelStreaming::LoadLevelInstance(const SDK::FString& levelPath, co
 #ifdef UE5
 	static const SDK::FString optionalLevelNameOverride;
 	static SDK::TSubclassOf<SDK::ULevelStreamingDynamic> optionalLevelStreamingClass;
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, levelPath, locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride, optionalLevelStreamingClass, false);
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride, optionalLevelStreamingClass, false);
 #else
 	static const SDK::FString optionalLevelNameOverride;
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, levelPath, locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride);
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride);
 #endif
 
 	return outSuccess;
@@ -367,7 +367,7 @@ bool Unreal::Pawn::PlayAnimationMontage(SDK::APawn* pawnReference, SDK::UAnimMon
 }
 
 #ifdef SOFT_PATH
-bool Unreal::Pawn::PlayAnimationMontage(SDK::APawn* pawnReference, const SDK::FString& animationMontagePath, const float& startAt, const float& playRate, const bool& stopAllMontages)
+bool Unreal::Pawn::PlayAnimationMontage(SDK::APawn* pawnReference, const std::wstring& animationMontagePath, const float& startAt, const float& playRate, const bool& stopAllMontages)
 {
 	SDK::UObject* objectReference = Object::SoftLoadObject(animationMontagePath);
 	if (objectReference == nullptr || objectReference->IsA(SDK::UAnimMontage::StaticClass()) == false)
@@ -394,7 +394,7 @@ bool Unreal::Pawn::PlayAnimation(SDK::APawn* pawnReference, SDK::UAnimationAsset
 }
 
 #ifdef SOFT_PATH
-bool Unreal::Pawn::PlayAnimation(SDK::APawn* pawnReference, const SDK::FString& animationPath, const bool& looping)
+bool Unreal::Pawn::PlayAnimation(SDK::APawn* pawnReference, const std::wstring& animationPath, const bool& looping)
 {
 	SDK::UObject* objectReference = Object::SoftLoadObject(animationPath);
 	if (objectReference == nullptr || objectReference->IsA(SDK::UAnimationAsset::StaticClass()) == false)
@@ -441,7 +441,9 @@ bool Unreal::CheatManager::Summon(SDK::UCheatManager* cheatManagerReference, SDK
 	if (actorClass == nullptr)
 		return false;
 
-	cheatManagerReference->Summon(Unreal::String::String_ToFString(actorClass->GetName()));
+	std::string className = actorClass->GetName();
+	std::wstring wClassName = Utilities::String::ToWString(className);
+	cheatManagerReference->Summon(SDK::FString(wClassName.c_str()));
 	return true;
 }
 
@@ -460,7 +462,7 @@ bool Unreal::CheatManager::Summon(const SDK::TSubclassOf<SDK::AActor>& actorClas
 
 
 #ifdef SOFT_PATH
-bool Unreal::CheatManager::SoftSummon(SDK::UCheatManager* cheatManagerReference, const SDK::FString& actorPath)
+bool Unreal::CheatManager::SoftSummon(SDK::UCheatManager* cheatManagerReference, const std::wstring& actorPath)
 {
 	if (cheatManagerReference == nullptr)
 		return false;
@@ -470,18 +472,17 @@ bool Unreal::CheatManager::SoftSummon(SDK::UCheatManager* cheatManagerReference,
 	if (actorClass == nullptr)
 		return false;
 
-	std::wstring wActorPath = actorPath.ToWString();
-	size_t dotPos = wActorPath.find_last_of(L'.');
+	size_t dotPos = actorPath.find_last_of(L'.');
 	if (dotPos == std::wstring::npos)
 		return false;
 
-	std::wstring actorName = wActorPath.substr(dotPos + 1);
-	cheatManagerReference->Summon(Unreal::String::WString_ToFString(actorName));
+	std::wstring actorName = actorPath.substr(dotPos + 1);
+	cheatManagerReference->Summon(SDK::FString(actorName.c_str()));
 
 	return true;
 }
 
-bool Unreal::CheatManager::SoftSummon(const SDK::FString& actorPath)
+bool Unreal::CheatManager::SoftSummon(const std::wstring& actorPath)
 {
 	SDK::APlayerController* playerController = PlayerController::Get();
 	if (playerController == nullptr)
@@ -1120,7 +1121,7 @@ SDK::AActor* Unreal::Actor::Summon(const SDK::TSubclassOf<SDK::AActor>& actorCla
 
 
 #ifdef SOFT_PATH
-SDK::AActor* Unreal::Actor::SoftSummon(const SDK::FString& actorPath, const Unreal::Transform& transform)
+SDK::AActor* Unreal::Actor::SoftSummon(const std::wstring& actorPath, const Unreal::Transform& transform)
 {
 	SDK::UClass* actorClass = Object::SoftLoadClass(actorPath);
 	if (actorClass == nullptr)
@@ -1344,7 +1345,7 @@ SDK::UUserWidget* Unreal::UserWidget::Construct(const SDK::TSubclassOf<SDK::UUse
 
 
 #ifdef SOFT_PATH
-SDK::UUserWidget* Unreal::UserWidget::SoftConstruct(const SDK::FString& widgetPath)
+SDK::UUserWidget* Unreal::UserWidget::SoftConstruct(const std::wstring& widgetPath)
 {
 	SDK::UClass* widgetClass = Object::SoftLoadClass(widgetPath);
 	if (widgetClass == nullptr)
@@ -1637,13 +1638,13 @@ std::vector<Unreal::Object::DataStructure> Unreal::Object::FilterByClassAndObjec
 
 
 #ifdef SOFT_PATH
-SDK::UClass* Unreal::Object::SoftLoadClass(const SDK::FString& objectPath)
+SDK::UClass* Unreal::Object::SoftLoadClass(const std::wstring& objectPath)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
 		return nullptr;
 
-	SDK::FSoftClassPath softClassPath = SDK::UKismetSystemLibrary::MakeSoftClassPath(objectPath);
+	SDK::FSoftClassPath softClassPath = SDK::UKismetSystemLibrary::MakeSoftClassPath(SDK::FString(objectPath.c_str()));
 	SDK::TSoftClassPtr<SDK::UClass> softClassPtr = SDK::UKismetSystemLibrary::Conv_SoftClassPathToSoftClassRef(softClassPath);
 	SDK::UClass* objectClass = SDK::UKismetSystemLibrary::Conv_SoftClassReferenceToClass(softClassPtr);
 
@@ -1680,13 +1681,13 @@ SDK::UClass* Unreal::Object::SoftLoadClass(const SDK::FString& objectPath)
 	return nullptr;
 }
 
-SDK::UObject* Unreal::Object::SoftLoadObject(const SDK::FString& objectPath)
+SDK::UObject* Unreal::Object::SoftLoadObject(const std::wstring& objectPath)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
 		return nullptr;
 
-	SDK::FSoftObjectPath softObjectPath = SDK::UKismetSystemLibrary::MakeSoftObjectPath(objectPath);
+	SDK::FSoftObjectPath softObjectPath = SDK::UKismetSystemLibrary::MakeSoftObjectPath(SDK::FString(objectPath.c_str()));
 	SDK::TSoftObjectPtr<SDK::UObject> softObjectPtr = SDK::UKismetSystemLibrary::Conv_SoftObjPathToSoftObjRef(softObjectPath);
 	SDK::UObject* objectReference = SDK::UKismetSystemLibrary::Conv_SoftObjectReferenceToObject(softObjectPtr);
 
@@ -1753,152 +1754,4 @@ Unreal::Class::Hierarchy Unreal::Class::GetClassHierarchy(SDK::UObject* objectRe
 	}
 
 	return outHierarchy;
-}
-
-
-
-
-
-
-std::vector<SDK::FString> Unreal::String::Split(const std::wstring& wideString, const wchar_t& separator, const bool& removeSeparatorSpaces)
-{
-	std::vector<SDK::FString> outCollection;
-
-	if (wideString.empty())
-		return outCollection;
-
-	size_t position = 0;
-	while (true)
-	{
-		const size_t separatorPosition = wideString.find(separator, position);
-
-		std::wstring token = (separatorPosition == std::wstring::npos)
-							 ? wideString.substr(position)
-							 : wideString.substr(position, separatorPosition - position);
-
-		if (removeSeparatorSpaces)
-		{
-			size_t first = 0;
-			while (first < token.size() && std::iswspace(token[first]))
-				++first;
-
-			size_t last = token.size();
-			while (last > first && std::iswspace(token[last - 1]))
-				--last;
-
-			token = token.substr(first, last - first);
-		}
-
-		if (token.empty() == false)
-			outCollection.push_back(SDK::FString(token.c_str()));
-
-		if (separatorPosition == std::wstring::npos)
-			break;
-
-		position = separatorPosition + 1;
-	}
-
-	return outCollection;
-}
-
-
-
-
-
-
-SDK::FString Unreal::String::NormalizeObjectPath(const SDK::FString& objectPath)
-{
-	const std::wstring contentKey = L"/Content/";
-	const std::wstring pluginsKey = L"/Plugins/";
-	const std::wstring engineContentKey = L"Engine/Content/";
-	const std::wstring engineContentMidKey = L"/Engine/Content/";
-
-	std::wstring wObjectPath = objectPath.ToWString();
-	size_t wObjectPathLength = wObjectPath.length();
-	if (wObjectPathLength == 0)
-	{
-		return objectPath;
-	}
-
-	std::replace(wObjectPath.begin(), wObjectPath.end(), L'\\', L'/');
-
-	/*
-		0 = NONE,
-		1 = -- (Object),
-		2 = .. (Actor)
-	*/
-	short objectPathSuffixType = 0;
-	if (wObjectPathLength >= 2)
-	{
-		size_t wObjectPathLengthNoSuffixLength = wObjectPathLength - 2;
-
-		std::wstring objectPathEndChars = wObjectPath.substr(wObjectPathLengthNoSuffixLength);
-		if (objectPathEndChars == L"--")
-		{
-			objectPathSuffixType = 1;
-		}
-		if (objectPathEndChars == L"..")
-		{
-			objectPathSuffixType = 2;
-		}
-
-		if (objectPathSuffixType != 0)
-			wObjectPath = wObjectPath.substr(0, wObjectPathLengthNoSuffixLength);
-	}
-
-	std::wstring convertedObjectPath = wObjectPath;
-	bool wasObjectPathConverted = false;
-
-	if (wObjectPath.find(engineContentKey) == 0)
-	{
-		convertedObjectPath = L"/Engine/" + wObjectPath.substr(engineContentKey.length());
-		wasObjectPathConverted = true;
-	}
-	else
-	{
-		size_t contentPos = wObjectPath.find(contentKey);
-		if (contentPos != std::wstring::npos)
-		{
-			std::wstring relativePath = wObjectPath.substr(contentPos + contentKey.length());
-			std::wstring rootPath = wObjectPath.substr(0, contentPos);
-
-			size_t pluginsPos = rootPath.find(pluginsKey);
-			if (pluginsPos != std::wstring::npos)
-			{
-				size_t lastSlash = rootPath.find_last_of('/');
-				if (lastSlash != std::wstring::npos)
-				{
-					std::wstring pluginName = rootPath.substr(lastSlash + 1);
-
-					convertedObjectPath = L"/" + pluginName + L"/" + relativePath;
-					wasObjectPathConverted = true;
-				}
-			}
-
-			if (wasObjectPathConverted == false)
-			{
-				convertedObjectPath = L"/Game/" + relativePath;
-				wasObjectPathConverted = true;
-			}
-		}
-	}
-
-	if (objectPathSuffixType != 0)
-	{
-		size_t lastSlash = convertedObjectPath.find_last_of(L'/');
-		if (lastSlash != std::wstring::npos)
-		{
-			std::wstring assetName = convertedObjectPath.substr(lastSlash + 1);
-			if (objectPathSuffixType == 1)
-			{
-				convertedObjectPath = convertedObjectPath + L"." + assetName;
-			}
-			if (objectPathSuffixType == 2)
-			{
-				convertedObjectPath = convertedObjectPath + L"." + assetName + L"_C";
-			}
-		}
-	}
-
-	return wasObjectPathConverted ? SDK::FString(convertedObjectPath.c_str()) : SDK::FString(wObjectPath.c_str());
 }

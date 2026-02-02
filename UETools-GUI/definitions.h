@@ -10,6 +10,7 @@
 // =======================
 
 #define PATH_CONFIG_FEATURES "UETools\\Features.cfg"
+#define PATH_CONFIG_POSITIONS "UETools\\Positions.cfg"
 #define PATH_CONFIG_KEYBINDINGS "UETools\\Keybindings.cfg"
 
 #ifdef _DEBUG

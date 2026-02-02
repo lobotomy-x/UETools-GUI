@@ -750,6 +750,7 @@ void GUI::Init(const HMODULE& applicationModule)
 	StartWindowThread();
 
 	Features::Config::Load();
+	Features::Positions::Load();
 	Inputs::Config::Load();
 
 	Inputs::Keybindings::EnableProcessing();
@@ -774,7 +775,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v3.9b)");
+			ImGui::Text("UETools GUI (v4.0)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1804,14 +1805,16 @@ void GUI::Draw()
 										}
 									}
 									
-									std::vector<SDK::FString> actorPathCollection = Unreal::String::Split(Features::ActorSpawn::actorPathBuffer, '|');
+									std::vector<std::wstring> actorPathCollection = Utilities::String::Split(Features::ActorSpawn::actorPathBuffer, L'|');
 									if (actorPathCollection.size() > 0)
 									{
 										bool anyActorSpawned = false;
 	
-										for (SDK::FString& actorPath : actorPathCollection) // <-- Reference!
+										for (std::wstring& actorPath : actorPathCollection) // <-- Reference!
 										{
-											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(Unreal::String::NormalizeObjectPath(actorPath), spawnTransform))
+											std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(actorPath);
+
+											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(normalizedPath, spawnTransform))
 												anyActorSpawned = true;
 										}
 
@@ -2894,7 +2897,9 @@ void GUI::Draw()
 
 													if (ImGui::Button("Play##PawnAnimationMontage"))
 													{
-														PlayActionSound(Unreal::Pawn::PlayAnimationMontage(pawn, Unreal::String::CString_ToFString(Features::PawnAnimation::animationMontagePathBuffer), Features::PawnAnimation::animationMontageStartAt, Features::PawnAnimation::animationMontagePlayRate, Features::PawnAnimation::animationMontageStopAllMontages));
+														std::wstring assetPath = Utilities::String::ToWString(Features::PawnAnimation::animationPathBuffer);
+														std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(assetPath);
+														PlayActionSound(Unreal::Pawn::PlayAnimationMontage(pawn, normalizedPath, Features::PawnAnimation::animationMontageStartAt, Features::PawnAnimation::animationMontagePlayRate, Features::PawnAnimation::animationMontageStopAllMontages));
 													}
 
 													ImGui::NewLine();
@@ -2910,7 +2915,9 @@ void GUI::Draw()
 
 													if (ImGui::Button("Play##PawnAnimation"))
 													{
-														PlayActionSound(Unreal::Pawn::PlayAnimation(pawn, Unreal::String::CString_ToFString(Features::PawnAnimation::animationPathBuffer), Features::PawnAnimation::animationLooping));
+														std::wstring assetPath = Utilities::String::ToWString(Features::PawnAnimation::animationPathBuffer);
+														std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(assetPath);
+														PlayActionSound(Unreal::Pawn::PlayAnimation(pawn, normalizedPath.c_str(), Features::PawnAnimation::animationLooping));
 													}
 
 													ImGui::TreePop();
@@ -3150,14 +3157,15 @@ void GUI::Draw()
 
 							if (ImGui::Button("Construct Widget##WidgetConstruct"))
 							{
-								std::vector<SDK::FString> widgetPathCollection = Unreal::String::Split(Features::WidgetConstruct::widgetPathBuffer, '|');
+								std::vector<std::wstring> widgetPathCollection = Utilities::String::Split(Features::WidgetConstruct::widgetPathBuffer, L'|');
 								if (widgetPathCollection.size() > 0)
 								{
 									bool anyWidgetConstructed = false;
 
-									for (SDK::FString& widgetPath : widgetPathCollection) // <-- Reference!
+									for (std::wstring& widgetPath : widgetPathCollection) // <-- Reference!
 									{
-										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(Unreal::String::NormalizeObjectPath(widgetPath)))
+										std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(widgetPath);
+										if (SDK::UUserWidget* widgetReference = Unreal::UserWidget::SoftConstruct(normalizedPath))
 										{
 											widgetReference->AddToViewport(Features::WidgetConstruct::zOrder);
 											anyWidgetConstructed = true;
@@ -3458,16 +3466,17 @@ void GUI::Draw()
 
 						if (ImGui::Button("Load Level##LoadLevelInstance"))
 						{
-							std::vector<SDK::FString> levelPathCollection = Unreal::String::Split(Features::LoadLevelInstance::levelPathBuffer, '|');
+							std::vector<std::wstring> levelPathCollection = Utilities::String::Split(Features::LoadLevelInstance::levelPathBuffer, L'|');
 							if (levelPathCollection.size() > 0)
 							{
 								bool anyLevelLoaded = false;
 								SDK::FVector locationOffset = SDK::FVector(Features::LoadLevelInstance::locationOffset[0], Features::LoadLevelInstance::locationOffset[1], Features::LoadLevelInstance::locationOffset[2]);
 								SDK::FRotator rotationOffset = SDK::FRotator(Features::LoadLevelInstance::rotationOffset[0], Features::LoadLevelInstance::rotationOffset[1], Features::LoadLevelInstance::rotationOffset[2]);
 
-								for (SDK::FString levelPath : levelPathCollection)
+								for (std::wstring levelPath : levelPathCollection)
 								{
-									if (Unreal::LevelStreaming::LoadLevelInstance(Unreal::String::NormalizeObjectPath(levelPath), locationOffset, rotationOffset))
+									std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(levelPath);
+									if (Unreal::LevelStreaming::LoadLevelInstance(normalizedPath, locationOffset, rotationOffset))
 										anyLevelLoaded = true;
 								}
 
@@ -3510,14 +3519,15 @@ void GUI::Draw()
 
 						if (ImGui::Button("Create Level Sequence##PlayLevelSequence"))
 						{
-							std::vector<SDK::FString> levelSequencePathCollection = Unreal::String::Split(Features::PlayLevelSequence::levelSequencePathBuffer, '|');
+							std::vector<std::wstring> levelSequencePathCollection = Utilities::String::Split(Features::PlayLevelSequence::levelSequencePathBuffer, L'|');
 							if (levelSequencePathCollection.size() > 0)
 							{
 								bool anySequenceCreated = false;
 
-								for (SDK::FString levelSequencePath : levelSequencePathCollection)
+								for (std::wstring levelSequencePath : levelSequencePathCollection)
 								{
-									if (Unreal::Level::CreateLevelSequence(Unreal::String::NormalizeObjectPath(levelSequencePath), Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
+									std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(levelSequencePath);
+									if (Unreal::Level::CreateLevelSequence(normalizedPath, Features::PlayLevelSequence::startTime, Features::PlayLevelSequence::playRate, Features::PlayLevelSequence::loopCount))
 										anySequenceCreated = true;
 								}
 
@@ -3680,6 +3690,127 @@ void GUI::Draw()
 						}
 						else
 							PlayActionSound(false);
+					}
+
+					ImGui::NewLine();
+
+					ImGui::SetFontTitle();
+					ImGui::Text("Positions");
+					ImGui::SetFontRegular();
+					if (ImGui::TreeNode("Details##Positions"))
+					{
+						static int selectedPositionIndex = -1;
+
+						ImGui::Columns(2, "PositionsColumns", false);
+						ImGui::SetColumnWidth(0, 800.0f);
+
+						/* LEFT SIDE - Table. */
+						ImGui::Text("Stored Positions:");
+						if (ImGui::BeginChild("PositionsList", ImVec2(0, 800), true))
+						{
+							/* 5 columns: ID, Title, X, Y, Z. */
+							if (ImGui::BeginTable("PositionsTable", 5, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable))
+							{
+								ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 30.0f);
+								ImGui::TableSetupColumn("Title", ImGuiTableColumnFlags_WidthStretch);
+								ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, 150.0f);
+								ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, 150.0f);
+								ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, 150.0f);
+								ImGui::TableHeadersRow();
+
+								for (size_t i = 0; i < Features::Positions::entries.size(); i++)
+								{
+									ImGui::TableNextRow();
+
+									// ID + Selectable
+									ImGui::TableSetColumnIndex(0);
+
+									char positionIdLabel[Features::Positions::newEntryTitleBufferSize];
+									sprintf_s(positionIdLabel, "%d", (int)i);
+
+									/* Make line highlighted by clicking on ID. */
+									if (ImGui::Selectable(positionIdLabel, selectedPositionIndex == i, ImGuiSelectableFlags_SpanAllColumns))
+									{
+										selectedPositionIndex = (int)i;
+									}
+
+									/* Title */
+									ImGui::TableSetColumnIndex(1);
+									ImGui::TextUnformatted(Features::Positions::entries[i].title.c_str());
+
+									/* Location */
+									ImGui::TableSetColumnIndex(2);
+									ImGui::Text("%.0f", Features::Positions::entries[i].location.X);
+									ImGui::TableSetColumnIndex(3);
+									ImGui::Text("%.0f", Features::Positions::entries[i].location.Y);
+									ImGui::TableSetColumnIndex(4);
+									ImGui::Text("%.0f", Features::Positions::entries[i].location.Z);
+								}
+
+								ImGui::EndTable();
+							}
+						}
+						ImGui::EndChild();
+
+						ImGui::NextColumn();
+
+						/* RIGHT SIDE - Buttons. */
+						ImGui::Text("Actions:");
+
+						/* Entry title input. */
+						ImGui::PushItemWidth(-1);
+						ImGui::InputTextWithHint("##PositionTitle", "Position Title", Features::Positions::newEntryTitleBuffer, Features::Positions::newEntryTitleBufferSize);
+						ImGui::PopItemWidth();
+
+						if (ImGui::Button("Store Current Position"))
+						{
+							if (Features::Positions::entries.size() < Features::Positions::entriesLimit)
+							{
+								Features::Positions::PositionEntry newPositionEntry;
+								newPositionEntry.title = Utilities::String::ToString(Features::Positions::newEntryTitleBuffer);
+								newPositionEntry.location = characterTransform.location;;
+								Features::Positions::entries.push_back(newPositionEntry);
+
+								Features::Positions::Save();
+								PlayActionSound(true);
+							}
+							else
+								PlayActionSound(false);
+						}
+
+						ImGui::NewLine();
+
+						ImGui::BeginDisabled(selectedPositionIndex < 0 || selectedPositionIndex >= Features::Positions::entries.size());
+						if (ImGui::Button("Teleport To Selected"))
+						{
+							if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+							{
+								SDK::FHitResult hitResult;
+								bool wasSuccessful = character->K2_SetActorLocation(Features::Positions::entries[selectedPositionIndex].location, false, &hitResult, true);
+
+								PlayActionSound(wasSuccessful);
+							}
+							else
+								PlayActionSound(false);
+						}
+						ImGui::SameLine();
+						if (ImGui::Button("Remove Selected"))
+						{
+							if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+							{
+								Features::Positions::entries.erase(Features::Positions::entries.begin() + selectedPositionIndex);
+								selectedPositionIndex = -1;
+
+								Features::Positions::Save();
+								PlayActionSound(true);
+							}
+							else
+								PlayActionSound(false);
+						}
+						ImGui::EndDisabled();
+
+						ImGui::Columns(1);
+						ImGui::TreePop();
 					}
 
 					ImGui::NewLine();
@@ -4112,8 +4243,8 @@ void GUI::Draw()
 			ImGui::SameLine();
 			if (ImGui::Button("Execute"))
 			{
-				SDK::FString command = Unreal::String::CString_ToFString(Features::Console::consoleBuffer);
-				if (command.Num() > 0)
+				std::wstring command = Utilities::String::ToWString(Features::Console::consoleBuffer);
+				if (command.size() > 0)
 				{
 					GUI::PlayActionSound(Unreal::Console::ExecuteConsoleCommand(command));
 				}
@@ -4850,7 +4981,7 @@ void Features::Config::Load()
 	ConfigInstance featuresConfig(PATH_CONFIG_FEATURES);
 	if (featuresConfig.Load() == false)
 	{
-		Features::Config::Save(); // If config doesn't exist yet, create it with values specified in .h class declaration.
+		Features::Config::Save();
 		featuresConfig.Load();
 	}
 
@@ -5609,6 +5740,67 @@ void Features::DirectionalMovement::Disable()
 
 
 
+bool Features::Positions::ReadPositionFromConfig(ConfigInstance* positionsConfig, const int& positionId, Positions::PositionEntry* positionEntry)
+{
+	if (positionsConfig == nullptr || positionEntry == nullptr)
+		return false;
+
+	std::string entryName_Base = Positions::entryPrefix + std::to_string(positionId);
+	std::string entryName_Title = entryName_Base + Positions::entryTitleSuffix;
+	std::string entryName_Location = entryName_Base + Positions::entryLocationSuffix;
+
+	if (positionsConfig->HasKey(entryName_Title) == false || positionsConfig->HasKey(entryName_Location) == false)
+		return false;
+
+	positionEntry->title = positionsConfig->Get<std::string>(entryName_Title).value_or(std::string());
+	positionEntry->location = positionsConfig->Get<SDK::FVector>(entryName_Location).value_or(SDK::FVector());
+
+	return true;
+}
+
+void Features::Positions::Load()
+{
+	ConfigInstance positionsConfig(PATH_CONFIG_POSITIONS);
+	if (positionsConfig.Load() == false)
+	{
+		Features::Positions::Save();
+		positionsConfig.Load();
+	}
+
+	std::vector<Positions::PositionEntry> outVector;
+	for (int32_t i = 0; i < Features::Positions::entriesLimit; i++)
+	{
+		Positions::PositionEntry entry{};
+		if (ReadPositionFromConfig(&positionsConfig, i, &entry) == false)
+			break;
+
+		outVector.push_back(entry);
+	}
+
+	Positions::entries = outVector;
+}
+
+void Features::Positions::Save()
+{
+	ConfigInstance positionsConfig(PATH_CONFIG_POSITIONS);
+
+	int32_t entriesCount = Positions::entries.size();
+	for (int32_t i = 0; i < entriesCount; i++)
+	{
+		std::string entryName_Base = Positions::entryPrefix + std::to_string(i);
+		std::string entryName_Title = entryName_Base + Positions::entryTitleSuffix;
+		std::string entryName_Location = entryName_Base + Positions::entryLocationSuffix;
+
+		positionsConfig.Set(entryName_Title, entries[i].title);
+		positionsConfig.Set(entryName_Location, entries[i].location);
+	}
+
+	positionsConfig.Save();
+}
+
+
+
+
 #ifdef ACTOR_TRACE
 bool Features::ActorTrace::Trace()
 {
@@ -5999,7 +6191,7 @@ void Inputs::Config::Load()
 	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
 	if (keybindingsConfig.Load() == false)
 	{
-		Inputs::Config::Save(); // If config doesn't exist yet, create it with values specified in .h class declaration.
+		Inputs::Config::Save();
 		keybindingsConfig.Load();
 	}
 

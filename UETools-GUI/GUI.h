@@ -739,6 +739,36 @@ namespace Features
 
 
 
+	class Positions
+	{
+	private:
+		static inline std::string entryPrefix = "position_";
+		static inline std::string entryTitleSuffix = "_Title";
+		static inline std::string entryLocationSuffix = "_Location";
+
+	public:
+		static const int32_t entriesLimit = 100;
+
+		static inline const size_t newEntryTitleBufferSize = 255;
+		static inline char newEntryTitleBuffer[newEntryTitleBufferSize] = {};
+
+	public:
+		struct PositionEntry
+		{
+			std::string title;
+			SDK::FVector location;
+		};
+		static inline std::vector<Positions::PositionEntry> entries;
+		static bool ReadPositionFromConfig(ConfigInstance* positionsConfig, const int& positionId, Positions::PositionEntry* positionEntry);
+
+	public:
+		static void Load();
+		static void Save();
+	};
+
+
+
+
 #ifdef FREE_CAMERA
 	class FreeCamera
 	{

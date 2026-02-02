@@ -9,9 +9,6 @@
 
 #include "Windows.h"
 
-#include <vector>
-#include <cwctype>
-
 
 
 
@@ -102,7 +99,7 @@ namespace Unreal
 		* @param Empty line
 		* @return 'True' if the value was successfully printed; 'False' otherwise.
 		*/
-		static bool Print(const std::wstring& wideString);
+		static bool Print(const std::wstring& wString);
 		static bool Print(const std::string& string);
 
 		static bool Print(const int32_t& integer);
@@ -123,7 +120,7 @@ namespace Unreal
 		static bool Clear();
 
 
-		static bool ExecuteConsoleCommand(const SDK::FString& command);
+		static bool ExecuteConsoleCommand(const std::wstring& command);
 	};
 
 
@@ -366,7 +363,7 @@ namespace Unreal
 #ifdef LEVEL_SEQUENCE
 		static bool CreateLevelSequence(SDK::ULevelSequence* levelSequenceAsset, const float& startTime, const float& playRate, const int32_t& loopCount);
 #ifdef SOFT_PATH
-		static bool CreateLevelSequence(const SDK::FString& levelSequencePath, const float& startTime, const float& playRate, const int32_t& loopCount);
+		static bool CreateLevelSequence(const std::wstring& levelSequencePath, const float& startTime, const float& playRate, const int32_t& loopCount);
 #endif
 #endif
 	};
@@ -390,7 +387,7 @@ namespace Unreal
 
 
 #ifdef SOFT_PATH
-		static bool LoadLevelInstance(const SDK::FString& levelPath, const SDK::FVector& locationOffset = { 0.0f, 0.0f, 0.0f }, const SDK::FRotator& rotationOffset = { 0.0f, 0.0f, 0.0f });
+		static bool LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset = { 0.0f, 0.0f, 0.0f }, const SDK::FRotator& rotationOffset = { 0.0f, 0.0f, 0.0f });
 #endif
 	};
 
@@ -471,13 +468,13 @@ namespace Unreal
 
 		static bool PlayAnimationMontage(SDK::APawn* pawnReference, SDK::UAnimMontage* animationMontageAsset, const float& startAt, const float& playRate, const bool& stopAllMontages);
 #ifdef SOFT_PATH
-		static bool PlayAnimationMontage(SDK::APawn* pawnReference, const SDK::FString& animationMontagePath, const float& startAt, const float& playRate, const bool& stopAllMontages);
+		static bool PlayAnimationMontage(SDK::APawn* pawnReference, const std::wstring& animationMontagePath, const float& startAt, const float& playRate, const bool& stopAllMontages);
 #endif
 
 
 		static bool PlayAnimation(SDK::APawn* pawnReference, SDK::UAnimationAsset* animationAsset, const bool& looping);
 #ifdef SOFT_PATH
-		static bool PlayAnimation(SDK::APawn* pawnReference, const SDK::FString& animationPath, const bool& looping);
+		static bool PlayAnimation(SDK::APawn* pawnReference, const std::wstring& animationPath, const bool& looping);
 #endif
 	};
 
@@ -539,7 +536,7 @@ namespace Unreal
 		* @param actorPath - Class of the Actor to be summoned.
 		* @return 'True' if Actor was attempted to be spawned; 'False' otherwise.
 		*/
-		static bool SoftSummon(SDK::UCheatManager* cheatManagerReference, const SDK::FString& actorPath);
+		static bool SoftSummon(SDK::UCheatManager* cheatManagerReference, const std::wstring& actorPath);
 		/*
 		* @brief Creates new Cheat Manager and calls Summon() function in it.
 		* Function exist as a workaround and is not recommended to be used
@@ -547,7 +544,7 @@ namespace Unreal
 		* @param actorPath - Soft path leading to an Actor, for example: "/Game/Blueprints/BP_SentryGun.BP_SentryGun_C".
 		* @return 'True' if Actor was attempted to be spawned; 'False' otherwise.
 		*/
-		static bool SoftSummon(const SDK::FString& actorPath);
+		static bool SoftSummon(const std::wstring& actorPath);
 #endif
 	};
 
@@ -738,7 +735,7 @@ namespace Unreal
 
 
 #ifdef SOFT_PATH
-		static SDK::AActor* SoftSummon(const SDK::FString& actorPath, const Unreal::Transform& transform);
+		static SDK::AActor* SoftSummon(const std::wstring& actorPath, const Unreal::Transform& transform);
 #endif
 
 
@@ -792,7 +789,7 @@ namespace Unreal
 
 
 #ifdef SOFT_PATH
-		static SDK::UUserWidget* SoftConstruct(const SDK::FString& widgetPath);
+		static SDK::UUserWidget* SoftConstruct(const std::wstring& widgetPath);
 #endif
 	};
 	
@@ -855,8 +852,8 @@ namespace Unreal
 		/*
 		* @brief Loads Object Class in to the game memory.
 		*/
-		static SDK::UClass* SoftLoadClass(const SDK::FString& objectPath);
-		static SDK::UObject* SoftLoadObject(const SDK::FString& objectPath);
+		static SDK::UClass* SoftLoadClass(const std::wstring& objectPath);
+		static SDK::UObject* SoftLoadObject(const std::wstring& objectPath);
 #endif
 	};
 
@@ -876,56 +873,6 @@ namespace Unreal
 
 
 		static Hierarchy GetClassHierarchy(SDK::UObject* objectReference);
-	};
-
-
-
-
-
-
-	class String
-	{
-	public:
-		static SDK::FString WString_ToFString(const std::wstring& wideString)
-		{
-			return SDK::FString(wideString.c_str());
-		}
-		static SDK::FString String_ToFString(const std::string& string)
-		{
-			return WString_ToFString(std::wstring(string.begin(), string.end()));
-		}
-		static SDK::FString CString_ToFString(const char* charString)
-		{
-			return String_ToFString(std::string(charString));
-		}
-
-
-		static std::vector<SDK::FString> Split(const std::wstring& wideString, const wchar_t& separator, const bool& removeSeparatorSpaces = true);
-		static std::vector<SDK::FString> Split(const std::wstring& wideString, const char& separator, const bool& removeSeparatorSpaces = true)
-		{
-			return Split(wideString, (wchar_t)separator, removeSeparatorSpaces);
-		}
-
-		static std::vector<SDK::FString> Split(const std::string& string, const wchar_t& separator, const bool& removeSeparatorSpaces = true)
-		{
-			return Split(std::wstring(string.begin(), string.end()), separator, removeSeparatorSpaces);
-		}
-		static std::vector<SDK::FString> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true)
-		{
-			return Split(std::wstring(string.begin(), string.end()), separator, removeSeparatorSpaces);
-		}
-
-		static std::vector<SDK::FString> Split(const char* charString, const wchar_t& separator, const bool& removeSeparatorSpaces = true)
-		{
-			return Split(std::string(charString), separator, removeSeparatorSpaces);
-		}
-		static std::vector<SDK::FString> Split(const char* charString, const char& separator, const bool& removeSeparatorSpaces = true)
-		{
-			return Split(std::string(charString), separator, removeSeparatorSpaces);
-		}
-
-
-		static SDK::FString NormalizeObjectPath(const SDK::FString& objectPath);
 	};
 };
 
