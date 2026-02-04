@@ -1755,3 +1755,81 @@ Unreal::Class::Hierarchy Unreal::Class::GetClassHierarchy(SDK::UObject* objectRe
 
 	return outHierarchy;
 }
+
+
+
+
+
+
+std::vector<Unreal::Function::DataStructure> Unreal::Function::GetFunctions(SDK::UObject* objectReference)
+{
+	std::vector<Function::DataStructure> outCollection;
+
+	if (objectReference == nullptr || objectReference->Class == nullptr)
+		return outCollection;
+
+	SDK::UStruct* currentClass = objectReference->Class;
+	while (currentClass)
+	{
+		for (SDK::UField* uField = currentClass->Children; uField != nullptr; uField = uField->Next)
+		{
+			if (uField->IsA(SDK::UFunction::StaticClass()))
+			{
+				SDK::UFunction* uFunction = static_cast<SDK::UFunction*>(uField);
+
+				Function::DataStructure function;
+				function.name = uFunction->GetName();
+				function.reference = uFunction;
+
+				outCollection.push_back(function);
+			}
+		}
+
+		currentClass = currentClass->SuperStruct;
+	}
+
+	return outCollection;
+}
+
+bool Unreal::Function::CallFunction(SDK::UObject* objectReference, SDK::UFunction* functionReference)
+{
+	__try
+	{
+		if (objectReference == nullptr || functionReference == nullptr)
+			return false;
+
+		objectReference->ProcessEvent(functionReference, nullptr);
+		return true;
+	}
+	__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__))
+	{
+		return false;
+	}
+}
+
+std::vector<Unreal::Function::DataStructure> Unreal::Function::FilterByName(const std::vector<Function::DataStructure>& functionsCollection, const std::string& filter, const bool& caseSensitive)
+{
+	std::vector<Function::DataStructure> outCollection;
+	size_t filterLength = filter.length();
+
+	for (Function::DataStructure function : functionsCollection)
+	{
+		bool matchFilters = filterLength == 0;
+
+		if (matchFilters == false)
+		{
+			if (caseSensitive)
+				matchFilters = function.name.find(filter) != std::string::npos;
+			else
+			{
+				std::string filterLowerCase = Utilities::String::ToLowerCase(filter);
+				matchFilters = Utilities::String::ToLowerCase(function.name).find(filterLowerCase) != std::string::npos;
+			}
+		}
+
+		if (matchFilters)
+			outCollection.push_back(function);
+	}
+
+	return outCollection;
+}

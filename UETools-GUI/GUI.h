@@ -66,6 +66,12 @@ namespace ImGui
 	void ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton);
 
 
+#ifdef SOFT_PATH
+	void Template_SoftPathDescription(const char* typeName, const char* examplePath);
+#endif
+	void Template_Functions(SDK::UObject* objectReference);
+
+
 	enum E_ObjectFilterMode
 	{
 		ClassName,
@@ -444,7 +450,6 @@ namespace Features
 	class ActorSpawn
 	{
 	public:
-		/* Allocate large buffer to account for combined paths (e.g: "/Game/Blueprints/Watermelon.Watermelon_C | /Game/Blueprints/Cookie.Cookie_C") */
 		static inline const size_t actorPathBufferSize = 2048;
 		static inline char actorPathBuffer[actorPathBufferSize] = {};
 
@@ -457,6 +462,19 @@ namespace Features
 		static inline std::vector<SDK::FString> loadedClasses;
 	};
 #endif
+
+
+
+
+	class Functions
+	{
+	public:
+		static inline std::vector<Unreal::Function::DataStructure> functions;
+		static inline SDK::UObject* functionsOwner;
+		static inline const size_t functionsFilterBufferSize = 255;
+		static inline char functionsFilterBuffer[functionsFilterBufferSize] = {};
+		static inline bool functionsFilterCaseSensitive = true;
+	};
 
 
 
@@ -507,6 +525,16 @@ namespace Features
 
 		static void Update();
 		static void Filter();
+	};
+
+
+
+
+	class ObjectConstruct
+	{
+	public:
+		static inline const size_t objectPathBufferSize = 2048;
+		static inline char objectPathBuffer[objectPathBufferSize] = {};
 	};
 
 

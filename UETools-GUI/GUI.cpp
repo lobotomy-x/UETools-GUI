@@ -382,6 +382,69 @@ void ImGui::ReadOnlyInputText(const char* label, const char* text, const bool& s
 
 
 
+#ifdef SOFT_PATH
+void ImGui::Template_SoftPathDescription(const char* typeName, const char* examplePath)
+{
+	ImGui::SetFontSmall();
+	ImGui::Text("Dynamic %s loading by soft path, for example \"%s\".", typeName ? typeName : "#TYPE#", examplePath ? examplePath : "#EXAMPLEPATH#");
+	ImGui::SameLine();
+	ImGui::TextHint("Format: Automatically converts FModel/Windows paths to UE-native.\nShortcut: Use '--' (.{name}) or '..' (.{name}_C) suffixes to complete the path.\nMulti-input: Use '|' as a separator between paths.");
+	ImGui::SetFontRegular();
+}
+#endif
+
+void ImGui::Template_Functions(SDK::UObject* objectReference)
+{
+	ImGui::SetFontTitle();
+	ImGui::Text("Functions");
+	ImGui::SetFontRegular();
+	if (ImGui::TreeNode("Details##Functions"))
+	{
+		if (ImGui::Button("Update##Functions"))
+		{
+			Features::Functions::functions = Unreal::Function::GetFunctions(objectReference);
+			Features::Functions::functionsOwner = objectReference;
+			GUI::PlayActionSound(true);
+		}
+		ImGui::SameLine();
+		ImGui::Spacing();
+		ImGui::SameLine();
+		ImGui::InputText("Search Filter##Functions", Features::Functions::functionsFilterBuffer, Features::Functions::functionsFilterBufferSize);
+		ImGui::SameLine();
+		ImGui::Spacing();
+		ImGui::SameLine();
+		ImGui::Checkbox("Case Sensitive##Functions", &Features::Functions::functionsFilterCaseSensitive);
+
+		ImGui::NewLine();
+
+		if (objectReference == Features::Functions::functionsOwner)
+		{
+			std::vector<Unreal::Function::DataStructure> filteredFunctions = Unreal::Function::FilterByName(Features::Functions::functions, Features::Functions::functionsFilterBuffer, Features::Functions::functionsFilterCaseSensitive);
+			for (Unreal::Function::DataStructure function : filteredFunctions)
+			{
+				std::string functionAddress = std::format("{:p}", (void*)function.reference);
+				ImGui::PushID(functionAddress.c_str());
+				if (ImGui::TreeNode(function.name.c_str()))
+				{
+					ImGui::Text("Address: %s", functionAddress);
+					if (ImGui::Button("Call"))
+					{
+						bool wasSuccessful = Unreal::Function::CallFunction(objectReference, function.reference);
+						GUI::PlayActionSound(wasSuccessful);
+					}
+					ImGui::TreePop();
+				}
+				ImGui::PopID();
+			}
+		}
+
+		ImGui::TreePop();
+	}
+}
+
+
+
+
 void ImGui::ObjectFilterModeComboBox(const char* label, E_ObjectFilterMode* v)
 {
 	ImGui::PushID(label);
@@ -775,7 +838,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.0)");
+			ImGui::Text("UETools GUI (v4.1)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1718,15 +1781,13 @@ void GUI::Draw()
 
 						ImGui::SetFontTitle();
 						ImGui::Text("Actor Spawn");
-						ImGui::SetFontSmall();
 #ifdef SOFT_PATH
-						ImGui::Text("Dynamic Actor spawning from ready to go presets");
-						ImGui::Text("and by soft path, for example \"/Game/Blueprints/Watermelon.Watermelon_C\".");
-						ImGui::Text("Feature supports combined input using the '|' separator between paths.");
+						ImGui::Template_SoftPathDescription("Actor", "/Game/Blueprints/BP_CoinPickable.BP_CoinPickable_C");
 #else
+						ImGui::SetFontSmall();
 						ImGui::Text("Dynamic Actor spawning from ready to go presets.");
-#endif
 						ImGui::SetFontRegular();
+#endif
 
 						if (ImGui::TreeNode("Details##ActorSpawn"))
 						{
@@ -1813,7 +1874,6 @@ void GUI::Draw()
 										for (std::wstring& actorPath : actorPathCollection) // <-- Reference!
 										{
 											std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(actorPath);
-
 											if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(normalizedPath, spawnTransform))
 												anyActorSpawned = true;
 										}
@@ -3024,13 +3084,15 @@ void GUI::Draw()
 
 								ImGui::NewLine();
 #endif
+								ImGui::Template_Functions(actor.reference);
+
+								ImGui::NewLine();
 
 								ImGui::SetFontTitle();
 								ImGui::Text("Components");
 								ImGui::SetFontRegular();
 								if (ImGui::TreeNode("Details##Components"))
 								{
-
 									ImGui::InputText("Search Filter##Components", Features::ActorsList::componentsFilterBuffer, Features::ActorsList::componentsFilterBufferSize);
 									ImGui::SameLine();
 									ImGui::Spacing();
@@ -3117,6 +3179,11 @@ void GUI::Draw()
 
 											ImGui::Text("Creation Method: %d", component.creationMethod);
 
+											ImGui::NewLine();
+
+											ImGui::Template_Functions(component.reference);
+
+											ImGui::NewLine();
 											ImGui::TreePop();
 										}
 									}
@@ -3124,6 +3191,7 @@ void GUI::Draw()
 									ImGui::TreePop();
 								}
 
+								ImGui::NewLine();
 								ImGui::PopID();
 								ImGui::TreePop();
 							}
@@ -3140,10 +3208,7 @@ void GUI::Draw()
 #ifdef SOFT_PATH
 						ImGui::SetFontTitle();
 						ImGui::Text("Widget Construct");
-						ImGui::SetFontSmall();
-						ImGui::Text("Dynamic Widget construction by soft path, for example \"/Game/Widgets/WBP_MainMenu.WBP_MainMenu_C\".");
-						ImGui::Text("Feature supports combined input using the '|' separator between paths.");
-						ImGui::SetFontRegular();
+						ImGui::Template_SoftPathDescription("Widget", "/Game/Widgets/WBP_Credits.WBP_Credits_C");
 
 						if (ImGui::TreeNode("Details##WidgetConstruct"))
 						{
@@ -3335,6 +3400,11 @@ void GUI::Draw()
 										PlayActionSound(false);
 								}
 
+								ImGui::NewLine();
+
+								ImGui::Template_Functions(widget.reference);
+
+								ImGui::NewLine();
 								ImGui::PopID();
 								ImGui::TreePop();
 							}
@@ -3348,6 +3418,50 @@ void GUI::Draw()
 					ImGui::SetFontRegular();
 					if (ImGui::CollapsingHeader("Details##Objects"))
 					{
+#ifdef SOFT_PATH
+						ImGui::SetFontTitle();
+						ImGui::Text("Object Construct");
+						ImGui::Template_SoftPathDescription("Object", "/Game/Subsystems/WeatherController.WeatherController");
+
+						if (ImGui::TreeNode("Details##ObjectConstruct"))
+						{
+							ImGui::Text("Object Path:");
+							ImGui::SameLine();
+							ImGui::InputText("##ObjectConstruct", Features::ObjectConstruct::objectPathBuffer, Features::ObjectConstruct::objectPathBufferSize);
+
+							if (ImGui::Button("Construct Object##ObjectConstruct"))
+							{
+								std::vector<std::wstring> objectPathCollection = Utilities::String::Split(Features::ObjectConstruct::objectPathBuffer, L'|');
+								if (objectPathCollection.size() > 0)
+								{
+									bool anyObjectConstructed = false;
+
+									for (std::wstring& objectPath : objectPathCollection) // <-- Reference!
+									{
+										std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(objectPath);
+										if (SDK::UObject* objectReference = Unreal::Object::SoftLoadObject(normalizedPath))
+										{
+											SDK::UClass* objectClass = objectReference->Class;
+
+											if (SDK::UObject* objectInstance = SDK::UGameplayStatics::SpawnObject(objectClass, objectReference))
+											{
+												anyObjectConstructed = true;
+											}
+										}
+									}
+
+									PlayActionSound(anyObjectConstructed);
+								}
+								else
+									PlayActionSound(false);
+							}
+
+							ImGui::TreePop();
+						}
+
+						ImGui::NewLine();
+#endif
+
 						if (ImGui::Button("Update##Objects"))
 						{
 							Features::ObjectsList::Update();
@@ -3401,6 +3515,11 @@ void GUI::Draw()
 
 								ImGui::Text("Object: %s", object.objectName.c_str());
 
+								ImGui::NewLine();
+
+								ImGui::Template_Functions(object.reference);
+
+								ImGui::NewLine();
 								ImGui::PopID();
 								ImGui::TreePop();
 							}
@@ -3445,10 +3564,7 @@ void GUI::Draw()
 #ifdef SOFT_PATH
 					ImGui::SetFontTitle();
 					ImGui::Text("Level Instance");
-					ImGui::SetFontSmall();
-					ImGui::Text("Dynamic level loading by Level path, for example \"/Game/OpenWorld/Tile_X2Y8.Tile_X2Y8\".");
-					ImGui::Text("Feature supports combined input using the '|' separator between paths.");
-					ImGui::SetFontRegular();
+					ImGui::Template_SoftPathDescription("Level", "/Game/OpenWorld/Tile_X2Y8");
 					
 					if (ImGui::TreeNode("Details##LoadLevelInstance"))
 					{
@@ -3489,8 +3605,8 @@ void GUI::Draw()
 						ImGui::TreePop();
 					}
 
-#ifdef LEVEL_SEQUENCE
 					ImGui::NewLine();
+#ifdef LEVEL_SEQUENCE
 
 					ImGui::SetFontTitle();
 					ImGui::Text("Level Sequence");

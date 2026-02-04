@@ -874,5 +874,27 @@ namespace Unreal
 
 		static Hierarchy GetClassHierarchy(SDK::UObject* objectReference);
 	};
+
+
+
+
+
+
+	class Function
+	{
+	public:
+		struct DataStructure
+		{
+			std::string name;
+			SDK::UFunction* reference;
+		};
+
+
+		static std::vector<Function::DataStructure> GetFunctions(SDK::UObject* objectReference);
+		static bool CallFunction(SDK::UObject* objectReference, SDK::UFunction* functionReference);
+
+
+		static std::vector<Function::DataStructure> FilterByName(const std::vector<Function::DataStructure>& functionsCollection, const std::string& filter, const bool& caseSensitive);
+	};
 };
 
