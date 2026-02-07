@@ -227,31 +227,45 @@ SDK::AGameStateBase* Unreal::GameState::Get()
 #ifdef LEVEL_SEQUENCE
 bool Unreal::Level::CreateLevelSequence(SDK::ULevelSequence* levelSequenceAsset, const float& startTime, const float& playRate, const int32_t& loopCount)
 {
-	SDK::UWorld* world = World::Get();
-	if (world == nullptr || levelSequenceAsset == nullptr)
+	__try
+	{
+		SDK::UWorld* world = World::Get();
+		if (world == nullptr || levelSequenceAsset == nullptr)
+			return false;
+
+		SDK::FMovieSceneSequencePlaybackSettings sequencePlaybackSettings;
+		sequencePlaybackSettings.bAutoPlay = true;
+		sequencePlaybackSettings.StartTime = startTime;
+		sequencePlaybackSettings.PlayRate = playRate;
+		SDK::FMovieSceneSequenceLoopCount sequenceLoopCount{ loopCount };
+		sequencePlaybackSettings.LoopCount = sequenceLoopCount;
+		SDK::ALevelSequenceActor* levelSequenceActor;
+		SDK::ULevelSequencePlayer::CreateLevelSequencePlayer(world, levelSequenceAsset, sequencePlaybackSettings, &levelSequenceActor);
+
+		return levelSequenceActor;
+	}
+	__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__))
+	{
 		return false;
-
-	SDK::FMovieSceneSequencePlaybackSettings sequencePlaybackSettings;
-	sequencePlaybackSettings.bAutoPlay = true;
-	sequencePlaybackSettings.StartTime = startTime;
-	sequencePlaybackSettings.PlayRate = playRate;
-	SDK::FMovieSceneSequenceLoopCount sequenceLoopCount{ loopCount };
-	sequencePlaybackSettings.LoopCount = sequenceLoopCount;
-	SDK::ALevelSequenceActor* levelSequenceActor;
-	SDK::ULevelSequencePlayer::CreateLevelSequencePlayer(world, levelSequenceAsset, sequencePlaybackSettings, &levelSequenceActor);
-
-	return levelSequenceActor;
+	}
 }
 
 #ifdef SOFT_PATH
 bool Unreal::Level::CreateLevelSequence(const std::wstring& levelSequencePath, const float& startTime, const float& playRate, const int32_t& loopCount)
 {
-	SDK::UObject* objectReference = Object::SoftLoadObject(levelSequencePath);
-	if (objectReference == nullptr || objectReference->IsA(SDK::ULevelSequence::StaticClass()) == false)
-		return false;
+	__try
+	{
+		SDK::UObject* objectReference = Object::SoftLoadObject(levelSequencePath);
+		if (objectReference == nullptr || objectReference->IsA(SDK::ULevelSequence::StaticClass()) == false)
+			return false;
 
-	SDK::ULevelSequence* levelSequenceAsset = static_cast<SDK::ULevelSequence*>(objectReference);
-	return CreateLevelSequence(levelSequenceAsset, startTime, playRate, loopCount);
+		SDK::ULevelSequence* levelSequenceAsset = static_cast<SDK::ULevelSequence*>(objectReference);
+		return CreateLevelSequence(levelSequenceAsset, startTime, playRate, loopCount);
+	}
+	__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__))
+	{
+		return false;
+	}
 }
 #endif
 #endif
@@ -1052,6 +1066,77 @@ std::vector<Unreal::Actor::DataStructure> Unreal::Actor::FilterByClassAndObjectN
 }
 
 
+bool Unreal::Actor::SetActorLocationAndRotation(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation, const bool& sweep)
+{
+	if (actorReference == nullptr || actorReference->RootComponent == nullptr)
+		return false;
+
+	SDK::EComponentMobility initialMobility = actorReference->RootComponent->Mobility;
+	bool isStatic = initialMobility != SDK::EComponentMobility::Movable;
+	if (isStatic)
+		actorReference->RootComponent->Mobility = SDK::EComponentMobility::Movable;
+
+	bool isRough = sweep == false;
+
+	SDK::FHitResult hitResult;
+	bool isLocationSuccess = actorReference->K2_SetActorLocation(location, sweep, &hitResult, isRough);
+	bool isRotationSuccess = actorReference->K2_SetActorRotation(rotation, isRough);
+
+	if (isStatic)
+		actorReference->RootComponent->Mobility = initialMobility;
+
+	return isLocationSuccess && isRotationSuccess;
+}
+
+
+bool Unreal::Actor::TeleportTo(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation)
+{
+	return SetActorLocationAndRotation(actorReference, location, rotation, false);
+}
+
+bool Unreal::Actor::TeleportTo(SDK::AActor* actorReference, const SDK::FVector& location)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	SDK::FRotator rotation = actorReference->K2_GetActorRotation();
+	return TeleportTo(actorReference, location, rotation);
+}
+
+bool Unreal::Actor::TeleportTo(SDK::AActor* actorReference, const SDK::FRotator& rotation)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	SDK::FVector location = actorReference->K2_GetActorLocation();
+	return TeleportTo(actorReference, location, rotation);
+}
+
+
+bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation)
+{
+	return SetActorLocationAndRotation(actorReference, location, rotation, true);
+}
+
+bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FVector& location)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	SDK::FRotator rotation = actorReference->K2_GetActorRotation();
+	return SweepTo(actorReference, location, rotation);
+}
+
+bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FRotator& rotation)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	SDK::FVector location = actorReference->K2_GetActorLocation();
+	return SweepTo(actorReference, location, rotation);
+}
+
+
 void Unreal::Actor::SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible, const bool& propagateToComponents)
 {
 	if (actorReference == nullptr)
@@ -1780,6 +1865,7 @@ std::vector<Unreal::Function::DataStructure> Unreal::Function::GetFunctions(SDK:
 				Function::DataStructure function;
 				function.name = uFunction->GetName();
 				function.reference = uFunction;
+				function.address = std::format("{:p}", static_cast<void*>(uFunction));
 
 				outCollection.push_back(function);
 			}

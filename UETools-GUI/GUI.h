@@ -752,7 +752,7 @@ namespace Features
 		static inline bool isUpMovementExpected = false;
 		static inline bool isDownMovementExpected = false;
 
-		static inline float step = 50.0;
+		static inline float step = 15.0;
 		static inline float delay = 0.05;
 
 
@@ -773,6 +773,7 @@ namespace Features
 		static inline std::string entryPrefix = "position_";
 		static inline std::string entryTitleSuffix = "_Title";
 		static inline std::string entryLocationSuffix = "_Location";
+		static inline std::string entryRotationSuffix = "_Rotation";
 
 	public:
 		static const int32_t entriesLimit = 100;
@@ -785,6 +786,7 @@ namespace Features
 		{
 			std::string title;
 			SDK::FVector location;
+			SDK::FRotator rotation;
 		};
 		static inline std::vector<Positions::PositionEntry> entries;
 		static bool ReadPositionFromConfig(ConfigInstance* positionsConfig, const int& positionId, Positions::PositionEntry* positionEntry);

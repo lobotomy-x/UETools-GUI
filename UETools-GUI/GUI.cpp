@@ -422,11 +422,10 @@ void ImGui::Template_Functions(SDK::UObject* objectReference)
 			std::vector<Unreal::Function::DataStructure> filteredFunctions = Unreal::Function::FilterByName(Features::Functions::functions, Features::Functions::functionsFilterBuffer, Features::Functions::functionsFilterCaseSensitive);
 			for (Unreal::Function::DataStructure function : filteredFunctions)
 			{
-				std::string functionAddress = std::format("{:p}", (void*)function.reference);
-				ImGui::PushID(functionAddress.c_str());
+				ImGui::PushID(function.address.c_str());
 				if (ImGui::TreeNode(function.name.c_str()))
 				{
-					ImGui::Text("Address: %s", functionAddress);
+					ImGui::Text("Address: %s", function.address);
 					if (ImGui::Button("Call"))
 					{
 						bool wasSuccessful = Unreal::Function::CallFunction(objectReference, function.reference);
@@ -838,7 +837,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.1)");
+			ImGui::Text("UETools GUI (v4.2)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -2098,8 +2097,8 @@ void GUI::Draw()
 								{
 									if (actor.reference)
 									{
-										actor.reference->K2_TeleportTo({ customLocation[0], customLocation[1], customLocation[2] }, actor.reference->K2_GetActorRotation());
-										PlayActionSound(true);
+										bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, SDK::FVector(customLocation[0], customLocation[1], customLocation[2]));
+										PlayActionSound(isSuccess);
 
 										Features::ActorsList::Update();
 									}
@@ -2123,8 +2122,8 @@ void GUI::Draw()
 								{
 									if (actor.reference)
 									{
-										actor.reference->K2_TeleportTo(actor.reference->K2_GetActorLocation(), SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
-										PlayActionSound(true);
+										bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
+										PlayActionSound(isSuccess);
 
 										Features::ActorsList::Update();
 									}
@@ -2246,8 +2245,8 @@ void GUI::Draw()
 									SDK::ACharacter* character = Unreal::Character::Get();
 									if (character)
 									{
-										SDK::FHitResult hitResult;
-										PlayActionSound(character->K2_SetActorLocation(actor.transform.location, false, &hitResult, true));
+										bool isSuccess = Unreal::Actor::TeleportTo(character, actor.transform.location);
+										PlayActionSound(isSuccess);
 									}
 									else
 										PlayActionSound(false);
@@ -2262,8 +2261,8 @@ void GUI::Draw()
 										{
 											SDK::FVector location = character->K2_GetActorLocation();
 
-											SDK::FHitResult hitResult;
-											PlayActionSound(actor.reference->K2_SetActorLocation(location, false, &hitResult, true));
+											bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, location);
+											PlayActionSound(isSuccess);
 										}
 										else
 											PlayActionSound(false);
@@ -3778,8 +3777,8 @@ void GUI::Draw()
 					{
 						if (character)
 						{
-							character->K2_TeleportTo({ customLocation[0], customLocation[1], customLocation[2] }, characterTransform.rotation);
-							PlayActionSound(true);
+							bool isSuccess = Unreal::Actor::TeleportTo(character, SDK::FVector(customLocation[0], customLocation[1], customLocation[2]), characterTransform.rotation);
+							PlayActionSound(isSuccess);
 						}
 						else
 							PlayActionSound(false);
@@ -3801,8 +3800,8 @@ void GUI::Draw()
 					{
 						if (character)
 						{
-							character->K2_TeleportTo(characterTransform.location, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
-							PlayActionSound(true);
+							bool isSuccess = Unreal::Actor::TeleportTo(character, characterTransform.location, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
+							PlayActionSound(isSuccess);
 						}
 						else
 							PlayActionSound(false);
@@ -3815,23 +3814,26 @@ void GUI::Draw()
 					ImGui::SetFontRegular();
 					if (ImGui::TreeNode("Details##Positions"))
 					{
+						if (ImGui::Button("Reload"))
+						{
+							Features::Positions::Load();
+							GUI::PlayActionSound(true);
+						}
+
 						static int selectedPositionIndex = -1;
 
 						ImGui::Columns(2, "PositionsColumns", false);
-						ImGui::SetColumnWidth(0, 800.0f);
+						ImGui::SetColumnWidth(0, 400.0f);
 
 						/* LEFT SIDE - Table. */
 						ImGui::Text("Stored Positions:");
-						if (ImGui::BeginChild("PositionsList", ImVec2(0, 800), true))
+						if (ImGui::BeginChild("PositionsList", ImVec2(0, 600), true))
 						{
-							/* 5 columns: ID, Title, X, Y, Z. */
-							if (ImGui::BeginTable("PositionsTable", 5, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable))
+							/* 2 columns: ID, Title */
+							if (ImGui::BeginTable("PositionsTable", 2, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable))
 							{
 								ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 30.0f);
 								ImGui::TableSetupColumn("Title", ImGuiTableColumnFlags_WidthStretch);
-								ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, 150.0f);
-								ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, 150.0f);
-								ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, 150.0f);
 								ImGui::TableHeadersRow();
 
 								for (size_t i = 0; i < Features::Positions::entries.size(); i++)
@@ -3853,14 +3855,6 @@ void GUI::Draw()
 									/* Title */
 									ImGui::TableSetColumnIndex(1);
 									ImGui::TextUnformatted(Features::Positions::entries[i].title.c_str());
-
-									/* Location */
-									ImGui::TableSetColumnIndex(2);
-									ImGui::Text("%.0f", Features::Positions::entries[i].location.X);
-									ImGui::TableSetColumnIndex(3);
-									ImGui::Text("%.0f", Features::Positions::entries[i].location.Y);
-									ImGui::TableSetColumnIndex(4);
-									ImGui::Text("%.0f", Features::Positions::entries[i].location.Z);
 								}
 
 								ImGui::EndTable();
@@ -3873,6 +3867,8 @@ void GUI::Draw()
 						/* RIGHT SIDE - Buttons. */
 						ImGui::Text("Actions:");
 
+						bool isPositionsListFull = Features::Positions::entries.size() >= Features::Positions::entriesLimit;
+						ImGui::BeginDisabled(isPositionsListFull);
 						/* Entry title input. */
 						ImGui::PushItemWidth(-1);
 						ImGui::InputTextWithHint("##PositionTitle", "Position Title", Features::Positions::newEntryTitleBuffer, Features::Positions::newEntryTitleBufferSize);
@@ -3880,11 +3876,12 @@ void GUI::Draw()
 
 						if (ImGui::Button("Store Current Position"))
 						{
-							if (Features::Positions::entries.size() < Features::Positions::entriesLimit)
+							if (isPositionsListFull == false)
 							{
 								Features::Positions::PositionEntry newPositionEntry;
 								newPositionEntry.title = Utilities::String::ToString(Features::Positions::newEntryTitleBuffer);
-								newPositionEntry.location = characterTransform.location;;
+								newPositionEntry.location = characterTransform.location;
+								newPositionEntry.rotation = characterTransform.rotation;
 								Features::Positions::entries.push_back(newPositionEntry);
 
 								Features::Positions::Save();
@@ -3893,37 +3890,41 @@ void GUI::Draw()
 							else
 								PlayActionSound(false);
 						}
+						ImGui::EndDisabled();
 
 						ImGui::NewLine();
 
-						ImGui::BeginDisabled(selectedPositionIndex < 0 || selectedPositionIndex >= Features::Positions::entries.size());
-						if (ImGui::Button("Teleport To Selected"))
+						bool isPositionEntrySelected = (selectedPositionIndex >= 0) && (selectedPositionIndex < Features::Positions::entries.size());
+						if (isPositionEntrySelected)
 						{
-							if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+							ImGui::TextVectorColored("Location:", Features::Positions::entries[selectedPositionIndex].location);
+							ImGui::TextRotatorColored("Rotation:", Features::Positions::entries[selectedPositionIndex].rotation);
+							if (ImGui::Button("Teleport To Selected"))
 							{
-								SDK::FHitResult hitResult;
-								bool wasSuccessful = character->K2_SetActorLocation(Features::Positions::entries[selectedPositionIndex].location, false, &hitResult, true);
-
-								PlayActionSound(wasSuccessful);
+								if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+								{
+									bool isSuccess = Unreal::Actor::TeleportTo(character, Features::Positions::entries[selectedPositionIndex].location, Features::Positions::entries[selectedPositionIndex].rotation);
+									PlayActionSound(isSuccess);
+								}
+								else
+									PlayActionSound(false);
 							}
-							else
-								PlayActionSound(false);
-						}
-						ImGui::SameLine();
-						if (ImGui::Button("Remove Selected"))
-						{
-							if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+							ImGui::SameLine();
+							if (ImGui::Button("Remove Selected"))
 							{
-								Features::Positions::entries.erase(Features::Positions::entries.begin() + selectedPositionIndex);
-								selectedPositionIndex = -1;
+								if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+								{
+									Features::Positions::entries.erase(Features::Positions::entries.begin() + selectedPositionIndex);
+									selectedPositionIndex = -1;
 
-								Features::Positions::Save();
-								PlayActionSound(true);
+									Features::Positions::Save();
+									PlayActionSound(true);
+								}
+								else
+									PlayActionSound(false);
 							}
-							else
-								PlayActionSound(false);
 						}
-						ImGui::EndDisabled();
+						
 
 						ImGui::Columns(1);
 						ImGui::TreePop();
@@ -5822,8 +5823,7 @@ void Features::DirectionalMovement::Worker()
 				SDK::FVector currentLocation = character->K2_GetActorLocation();
 				SDK::FVector finalLocation = Math::Vector_Add(currentLocation, finalDirection * Features::DirectionalMovement::step);
 
-				SDK::FHitResult hitResult;
-				character->K2_SetActorLocation(finalLocation, true, &hitResult, false);
+				Unreal::Actor::SweepTo(character, finalLocation);
 			}
 		}
 		__except (Utilities::Exception::Handle(GetExceptionInformation(), __FUNCSIG__)) {}
@@ -5864,12 +5864,15 @@ bool Features::Positions::ReadPositionFromConfig(ConfigInstance* positionsConfig
 	std::string entryName_Base = Positions::entryPrefix + std::to_string(positionId);
 	std::string entryName_Title = entryName_Base + Positions::entryTitleSuffix;
 	std::string entryName_Location = entryName_Base + Positions::entryLocationSuffix;
+	std::string entryName_Rotation = entryName_Base + Positions::entryRotationSuffix;
 
 	if (positionsConfig->HasKey(entryName_Title) == false || positionsConfig->HasKey(entryName_Location) == false)
 		return false;
 
 	positionEntry->title = positionsConfig->Get<std::string>(entryName_Title).value_or(std::string());
 	positionEntry->location = positionsConfig->Get<SDK::FVector>(entryName_Location).value_or(SDK::FVector());
+	SDK::FVector vRotation = positionsConfig->Get<SDK::FVector>(entryName_Rotation).value_or(SDK::FVector());
+	positionEntry->rotation = SDK::FRotator(vRotation.X, vRotation.Y, vRotation.Z);
 
 	return true;
 }
@@ -5906,9 +5909,12 @@ void Features::Positions::Save()
 		std::string entryName_Base = Positions::entryPrefix + std::to_string(i);
 		std::string entryName_Title = entryName_Base + Positions::entryTitleSuffix;
 		std::string entryName_Location = entryName_Base + Positions::entryLocationSuffix;
+		std::string entryName_Rotation = entryName_Base + Positions::entryRotationSuffix;
 
 		positionsConfig.Set(entryName_Title, entries[i].title);
 		positionsConfig.Set(entryName_Location, entries[i].location);
+		SDK::FRotator rotation = entries[i].rotation;
+		positionsConfig.Set(entryName_Rotation, SDK::FVector(rotation.Pitch, rotation.Yaw, rotation.Roll));
 	}
 
 	positionsConfig.Save();
@@ -6150,8 +6156,7 @@ bool Features::FreeCamera::Enable()
 		Features::FreeCamera::cameraReference->SetActorEnableCollision(false);
 		Features::FreeCamera::cameraReference->FOVAngle = 83.0f;
 
-		SDK::FHitResult hitResult;
-		Features::FreeCamera::cameraReference->K2_SetActorLocationAndRotation(playerCameraTransform.location, playerCameraTransform.rotation, false, &hitResult, true);
+		Unreal::Actor::TeleportTo(Features::FreeCamera::cameraReference, playerCameraTransform.location, playerCameraTransform.rotation);
 	}
 
 	if (Features::FreeCamera::lastViewTarget = playerController->GetViewTarget())
@@ -6218,11 +6223,7 @@ bool Features::FreeCamera::Move(const float& forwardStep, const float& rightStep
 	locationOffset = Math::Vector_Add(locationOffset, Math::Vector_Multiply(upVector, upStep));
 
 	SDK::FVector newLocation = Math::Vector_Add(freeCameraTransform.location, locationOffset);
-
-	SDK::FHitResult hitResult;
-	Features::FreeCamera::cameraReference->K2_SetActorLocation(newLocation, true, &hitResult, false);
-
-	return true;
+	return Unreal::Actor::SweepTo(Features::FreeCamera::cameraReference, newLocation);
 }
 
 bool Features::FreeCamera::Rotate(const float& horizontalStep, const float& verticalStep)
@@ -6238,9 +6239,7 @@ bool Features::FreeCamera::Rotate(const float& horizontalStep, const float& vert
 
 	freeCameraRotation.Roll = 0.0f;
 
-	Features::FreeCamera::cameraReference->K2_SetActorRotation(freeCameraRotation, false);
-
-	return true;
+	return Unreal::Actor::TeleportTo(Features::FreeCamera::cameraReference, freeCameraRotation);
 }
 
 
@@ -6261,10 +6260,7 @@ bool Features::FreeCamera::TeleportCameraToPlayer()
 	else
 		return false;
 
-	SDK::FHitResult hitResult;
-	Features::FreeCamera::cameraReference->K2_SetActorLocation(playerLocation, false, &hitResult, true);
-
-	return true;
+	return Unreal::Actor::TeleportTo(Features::FreeCamera::cameraReference, playerLocation);
 }
 
 bool Features::FreeCamera::TeleportPlayerToCamera()
@@ -6273,16 +6269,11 @@ bool Features::FreeCamera::TeleportPlayerToCamera()
 		return false;
 
 	SDK::APlayerController* playerController = Unreal::PlayerController::Get();
-	if (playerController == nullptr)
+	if (playerController == nullptr || playerController->Pawn == nullptr)
 		return false;
 
-	if (playerController->Pawn == nullptr)
-		return false;
-
-	SDK::FHitResult hitResult;
-	playerController->Pawn->K2_SetActorLocation(Features::FreeCamera::cameraReference->K2_GetActorLocation(), false, &hitResult, true);
-
-	return true;
+	SDK::FVector cameraLocation = Features::FreeCamera::cameraReference->K2_GetActorLocation();
+	return Unreal::Actor::TeleportTo(playerController->Pawn, cameraLocation);
 }
 #endif
 

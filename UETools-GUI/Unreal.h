@@ -727,6 +727,17 @@ namespace Unreal
 		static std::vector<Actor::DataStructure> FilterByClassAndObjectName(const std::vector<Actor::DataStructure>& actorsCollection, const std::string& filter, const bool& caseSensitive, const float& inDistance = 0.0f);
 
 
+		static bool SetActorLocationAndRotation(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation, const bool& sweep);
+
+		static bool TeleportTo(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation);
+		static bool TeleportTo(SDK::AActor* actorReference, const SDK::FVector& location);
+		static bool TeleportTo(SDK::AActor* actorReference, const SDK::FRotator& rotation);
+
+		static bool SweepTo(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation);
+		static bool SweepTo(SDK::AActor* actorReference, const SDK::FVector& location);
+		static bool SweepTo(SDK::AActor* actorReference, const SDK::FRotator& rotation);
+
+
 		static void SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible, const bool& propagateToComponents = false);
 
 
@@ -887,6 +898,7 @@ namespace Unreal
 		{
 			std::string name;
 			SDK::UFunction* reference;
+			std::string address;
 		};
 
 
