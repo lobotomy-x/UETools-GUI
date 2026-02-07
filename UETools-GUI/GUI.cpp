@@ -837,7 +837,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.2)");
+			ImGui::Text("UETools GUI (v4.2b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -3822,100 +3822,69 @@ void GUI::Draw()
 
 						static int selectedPositionIndex = -1;
 
-						ImGui::Columns(2, "PositionsColumns", false);
-						ImGui::SetColumnWidth(0, 400.0f);
-
-						/* LEFT SIDE - Table. */
-						ImGui::Text("Stored Positions:");
-						if (ImGui::BeginChild("PositionsList", ImVec2(0, 600), true))
+						if (ImGui::BeginTable("PositionsLayout", 2, ImGuiTableFlags_SizingFixedFit))
 						{
-							/* 2 columns: ID, Title */
-							if (ImGui::BeginTable("PositionsTable", 2, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable))
+							ImGui::TableSetupColumn("PositionsLeftSide", ImGuiTableColumnFlags_WidthFixed, 400.0f);
+							ImGui::TableSetupColumn("PositionsRightSide", ImGuiTableColumnFlags_WidthFixed);
+
+							ImGui::TableNextRow();
+							ImGui::TableSetColumnIndex(0);
+
+							/* LEFT SIDE - Table. */
+							ImGui::Text("Stored Positions:");
+							if (ImGui::BeginChild("PositionsList", ImVec2(0, 600), true, ImGuiWindowFlags_HorizontalScrollbar))
 							{
-								ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 30.0f);
-								ImGui::TableSetupColumn("Title", ImGuiTableColumnFlags_WidthStretch);
-								ImGui::TableHeadersRow();
-
-								for (size_t i = 0; i < Features::Positions::entries.size(); i++)
+								/* 2 columns: ID, Title */
+								if (ImGui::BeginTable("PositionsTable", 2, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit))
 								{
-									ImGui::TableNextRow();
+									ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 30.0f);
+									ImGui::TableSetupColumn("Title", ImGuiTableColumnFlags_WidthStretch);
+									ImGui::TableHeadersRow();
 
-									// ID + Selectable
-									ImGui::TableSetColumnIndex(0);
-
-									char positionIdLabel[Features::Positions::newEntryTitleBufferSize];
-									sprintf_s(positionIdLabel, "%d", (int)i);
-
-									/* Make line highlighted by clicking on ID. */
-									if (ImGui::Selectable(positionIdLabel, selectedPositionIndex == i, ImGuiSelectableFlags_SpanAllColumns))
+									for (size_t i = 0; i < Features::Positions::entries.size(); i++)
 									{
-										selectedPositionIndex = (int)i;
+										ImGui::TableNextRow();
+
+										// ID + Selectable
+										ImGui::TableSetColumnIndex(0);
+
+										char positionIdLabel[Features::Positions::newEntryTitleBufferSize];
+										sprintf_s(positionIdLabel, "%d", (int)i);
+
+										/* Make line highlighted by clicking on ID. */
+										if (ImGui::Selectable(positionIdLabel, selectedPositionIndex == i, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											selectedPositionIndex = (int)i;
+										}
+
+										/* Title */
+										ImGui::TableSetColumnIndex(1);
+										ImGui::TextUnformatted(Features::Positions::entries[i].title.c_str());
 									}
 
-									/* Title */
-									ImGui::TableSetColumnIndex(1);
-									ImGui::TextUnformatted(Features::Positions::entries[i].title.c_str());
+									ImGui::EndTable();
 								}
-
-								ImGui::EndTable();
 							}
-						}
-						ImGui::EndChild();
+							ImGui::EndChild();
 
-						ImGui::NextColumn();
+							ImGui::TableSetColumnIndex(1);
 
-						/* RIGHT SIDE - Buttons. */
-						ImGui::Text("Actions:");
+							/* RIGHT SIDE - Buttons. */
+							ImGui::Text("Actions:");
 
-						bool isPositionsListFull = Features::Positions::entries.size() >= Features::Positions::entriesLimit;
-						ImGui::BeginDisabled(isPositionsListFull);
-						/* Entry title input. */
-						ImGui::PushItemWidth(-1);
-						ImGui::InputTextWithHint("##PositionTitle", "Position Title", Features::Positions::newEntryTitleBuffer, Features::Positions::newEntryTitleBufferSize);
-						ImGui::PopItemWidth();
+							bool isPositionsListFull = Features::Positions::entries.size() >= Features::Positions::entriesLimit;
+							ImGui::BeginDisabled(isPositionsListFull);
+							ImGui::InputTextWithHint("##PositionTitle", "Position Title", Features::Positions::newEntryTitleBuffer, Features::Positions::newEntryTitleBufferSize);
 
-						if (ImGui::Button("Store Current Position"))
-						{
-							if (isPositionsListFull == false)
+							if (ImGui::Button("Store Current Position"))
 							{
-								Features::Positions::PositionEntry newPositionEntry;
-								newPositionEntry.title = Utilities::String::ToString(Features::Positions::newEntryTitleBuffer);
-								newPositionEntry.location = characterTransform.location;
-								newPositionEntry.rotation = characterTransform.rotation;
-								Features::Positions::entries.push_back(newPositionEntry);
-
-								Features::Positions::Save();
-								PlayActionSound(true);
-							}
-							else
-								PlayActionSound(false);
-						}
-						ImGui::EndDisabled();
-
-						ImGui::NewLine();
-
-						bool isPositionEntrySelected = (selectedPositionIndex >= 0) && (selectedPositionIndex < Features::Positions::entries.size());
-						if (isPositionEntrySelected)
-						{
-							ImGui::TextVectorColored("Location:", Features::Positions::entries[selectedPositionIndex].location);
-							ImGui::TextRotatorColored("Rotation:", Features::Positions::entries[selectedPositionIndex].rotation);
-							if (ImGui::Button("Teleport To Selected"))
-							{
-								if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+								if (isPositionsListFull == false)
 								{
-									bool isSuccess = Unreal::Actor::TeleportTo(character, Features::Positions::entries[selectedPositionIndex].location, Features::Positions::entries[selectedPositionIndex].rotation);
-									PlayActionSound(isSuccess);
-								}
-								else
-									PlayActionSound(false);
-							}
-							ImGui::SameLine();
-							if (ImGui::Button("Remove Selected"))
-							{
-								if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
-								{
-									Features::Positions::entries.erase(Features::Positions::entries.begin() + selectedPositionIndex);
-									selectedPositionIndex = -1;
+									Features::Positions::PositionEntry newPositionEntry;
+									newPositionEntry.title = Utilities::String::ToString(Features::Positions::newEntryTitleBuffer);
+									newPositionEntry.location = characterTransform.location;
+									newPositionEntry.rotation = characterTransform.rotation;
+									Features::Positions::entries.push_back(newPositionEntry);
 
 									Features::Positions::Save();
 									PlayActionSound(true);
@@ -3923,10 +3892,44 @@ void GUI::Draw()
 								else
 									PlayActionSound(false);
 							}
-						}
-						
+							ImGui::EndDisabled();
 
-						ImGui::Columns(1);
+							ImGui::NewLine();
+
+							bool isPositionEntrySelected = (selectedPositionIndex >= 0) && (selectedPositionIndex < Features::Positions::entries.size());
+							if (isPositionEntrySelected)
+							{
+								ImGui::TextVectorColored("Location:", Features::Positions::entries[selectedPositionIndex].location);
+								ImGui::TextRotatorColored("Rotation:", Features::Positions::entries[selectedPositionIndex].rotation);
+								if (ImGui::Button("Teleport To Selected"))
+								{
+									if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+									{
+										bool isSuccess = Unreal::Actor::TeleportTo(character, Features::Positions::entries[selectedPositionIndex].location, Features::Positions::entries[selectedPositionIndex].rotation);
+										PlayActionSound(isSuccess);
+									}
+									else
+										PlayActionSound(false);
+								}
+								ImGui::SameLine();
+								if (ImGui::Button("Remove Selected"))
+								{
+									if (selectedPositionIndex >= 0 && selectedPositionIndex < Features::Positions::entries.size())
+									{
+										Features::Positions::entries.erase(Features::Positions::entries.begin() + selectedPositionIndex);
+										selectedPositionIndex = -1;
+
+										Features::Positions::Save();
+										PlayActionSound(true);
+									}
+									else
+										PlayActionSound(false);
+								}
+							}
+
+							ImGui::EndTable();
+						}
+
 						ImGui::TreePop();
 					}
 
