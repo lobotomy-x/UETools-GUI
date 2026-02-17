@@ -1220,7 +1220,7 @@ SDK::AActor* Unreal::Actor::SoftSummon(const std::wstring& actorPath, const Unre
 Unreal::Transform Unreal::Actor::GetTransform(SDK::AActor* actorReference)
 {
 	if (actorReference == nullptr)
-		return Transform();
+		return Unreal::Transform();
 
 	return Math::F_ToUnrealTransform(actorReference->GetTransform());
 }

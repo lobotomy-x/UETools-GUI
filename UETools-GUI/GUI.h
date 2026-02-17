@@ -66,12 +66,6 @@ namespace ImGui
 	void ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton);
 
 
-#ifdef SOFT_PATH
-	void Template_SoftPathDescription(const char* typeName, const char* examplePath);
-#endif
-	void Template_Functions(SDK::UObject* objectReference);
-
-
 	enum E_ObjectFilterMode
 	{
 		ClassName,
@@ -347,30 +341,6 @@ public:
 
 
 
-class DebugDraw
-{
-public:
-#ifdef COLLISION_VISUALIZER
-	static void DrawBodySetup(SDK::UBodySetup* bodySetup, const Unreal::Transform& componentTransform, const uint32_t& drawColor, const float& drawThickness);
-	static void DrawVolume(SDK::AVolume* volume, const uint32_t& drawColor, const float& drawThickness);
-
-	static void DrawStaticMeshComponent(SDK::UStaticMeshComponent* staticMeshComponent, const uint32_t& drawColor, const float& drawThickness);
-	static void DrawInstancedStaticMeshComponent(SDK::UInstancedStaticMeshComponent* instancedStaticMeshComponent, const uint32_t& drawColor, const float& drawThickness);
-
-	static void DrawSkeletalMeshComponent(SDK::USkeletalMeshComponent* skeletalMeshComponent, const bool& drawAllSockets, const uint32_t& drawColor, const float& drawThickness);
-
-	static void DrawCapsuleComponent(SDK::UCapsuleComponent* capsuleComponent, const uint32_t& drawColor, const float& drawThickness);
-	static void DrawSphereComponent(SDK::USphereComponent* sphereComponent, const uint32_t& drawColor, const float& drawThickness);
-	static void DrawBoxComponent(SDK::UBoxComponent* boxComponent, const uint32_t& drawColor, const float& drawThickness);
-	static void DrawSplineComponent(SDK::USplineComponent* splineComponent, const uint32_t& drawColor, const float& drawThickness);
-#endif
-};
-
-
-
-
-
-
 namespace Features
 {
 	class Config
@@ -584,6 +554,9 @@ namespace Features
 
 
 		static bool Trace();
+
+		static void Draw();
+		static void ThreadSafeDraw();
 	};
 #endif
 
@@ -595,6 +568,10 @@ namespace Features
 	{
 	public:
 		static inline bool enabled = false;
+
+
+		static void Draw();
+		static void ThreadSafeDraw();
 	};
 #endif
 
@@ -912,3 +889,109 @@ namespace Inputs
 		static void DisableProcessing();
 	};
 };
+
+
+
+
+
+
+#ifdef COLLISION_VISUALIZER
+class DebugDraw
+{
+public:
+	static void DrawBodySetup(SDK::UBodySetup* bodySetup, const Unreal::Transform& componentTransform, const uint32_t& drawColor, const float& drawThickness);
+	static void DrawVolume(SDK::AVolume* volume, const uint32_t& drawColor, const float& drawThickness);
+
+	static void DrawStaticMeshComponent(SDK::UStaticMeshComponent* staticMeshComponent, const uint32_t& drawColor, const float& drawThickness);
+	static void DrawInstancedStaticMeshComponent(SDK::UInstancedStaticMeshComponent* instancedStaticMeshComponent, const uint32_t& drawColor, const float& drawThickness);
+
+	static void DrawSkeletalMeshComponent(SDK::USkeletalMeshComponent* skeletalMeshComponent, const bool& drawAllSockets, const uint32_t& drawColor, const float& drawThickness);
+
+	static void DrawCapsuleComponent(SDK::UCapsuleComponent* capsuleComponent, const uint32_t& drawColor, const float& drawThickness);
+	static void DrawSphereComponent(SDK::USphereComponent* sphereComponent, const uint32_t& drawColor, const float& drawThickness);
+	static void DrawBoxComponent(SDK::UBoxComponent* boxComponent, const uint32_t& drawColor, const float& drawThickness);
+	static void DrawSplineComponent(SDK::USplineComponent* splineComponent, const uint32_t& drawColor, const float& drawThickness);
+};
+#endif
+
+
+
+
+
+
+namespace Templates
+{
+	class Functions
+	{
+	public:
+		static void Draw(SDK::UObject* objectReference);
+	};
+
+	class Console
+	{
+	public:
+		static void Draw();
+	};
+
+	namespace Descriptions
+	{
+		class HDR
+		{
+		public:
+			static void Draw();
+		};
+
+#ifdef SOFT_PATH
+		class SoftPath
+		{
+		public:
+			static void Draw(const char* typeName, const char* examplePath);
+		};
+#endif
+	}
+
+	namespace Menus
+	{
+		class Debug
+		{
+		private:
+			static void Sub_Engine();
+			static void Sub_GameInstance();
+			static void Sub_GameMode();
+			static void Sub_PlayerController();
+			static void Sub_World();
+			static void Sub_Actors();
+			static void Sub_Widgets();
+			static void Sub_Objects();
+
+		public:
+			static void Draw();
+		};
+
+		class World
+		{
+		public:
+			static void Draw();
+		};
+
+		class Character
+		{
+		public:
+			static void Draw();
+		};
+
+#ifdef FREE_CAMERA
+		class FreeCamera
+		{
+		public:
+			static void Draw();
+		};
+#endif
+
+		class Settings
+		{
+		public:
+			static void Draw();
+		};
+	};
+}
