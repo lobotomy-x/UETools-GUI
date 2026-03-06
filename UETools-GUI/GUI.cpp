@@ -815,7 +815,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.3)");
+			ImGui::Text("UETools GUI (v4.3b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -6206,7 +6206,7 @@ void Templates::Menus::Character::Draw()
 			if (ImGui::Button("Copy##Location"))
 			{
 				customLocation[0] = characterTransform.location.X;
-				customLocation[1] = characterTransform.location.X;
+				customLocation[1] = characterTransform.location.Y;
 				customLocation[2] = characterTransform.location.Z;
 				GUI::PlayActionSound(true);
 			}
