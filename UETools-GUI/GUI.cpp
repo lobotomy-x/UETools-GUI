@@ -839,7 +839,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.5)");
+			ImGui::Text("UETools GUI (v4.5b)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1028,6 +1028,8 @@ void Features::Config::Load()
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlXInverted", &Features::FreeCamera::mouseControlXInverted);
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlYInverted", &Features::FreeCamera::mouseControlYInverted);
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlSensitivity", &Features::FreeCamera::mouseControlSensitivity);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlLimitMaximumDelta", &Features::FreeCamera::mouseControlLimitMaximumDelta);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlMaximumDelta", &Features::FreeCamera::mouseControlMaximumDelta);
 #endif
 }
 
@@ -1056,6 +1058,8 @@ void Features::Config::Save()
 	featuresConfig.Set("Features_FreeCamera_mouseControlXInverted", Features::FreeCamera::mouseControlXInverted);
 	featuresConfig.Set("Features_FreeCamera_mouseControlYInverted", Features::FreeCamera::mouseControlYInverted);
 	featuresConfig.Set("Features_FreeCamera_mouseControlSensitivity", Features::FreeCamera::mouseControlSensitivity);
+	featuresConfig.Set("Features_FreeCamera_mouseControlLimitMaximumDelta", Features::FreeCamera::mouseControlLimitMaximumDelta);
+	featuresConfig.Set("Features_FreeCamera_mouseControlMaximumDelta", Features::FreeCamera::mouseControlMaximumDelta);
 #endif
 
 	featuresConfig.Save();
@@ -2646,7 +2650,7 @@ void Inputs::Keybindings::Worker()
 				if (Features::FreeCamera::cameraReference)
 				{
 					static bool wasMouseControlActive = false;
-					if (Features::FreeCamera::useMouseControl)
+					if (Features::FreeCamera::useMouseControl && Features::FreeCamera::IsEnabled())
 					{
 						bool mouseControlExpected = true;
 						if (Features::FreeCamera::mouseControlOnHold)
@@ -2675,7 +2679,18 @@ void Inputs::Keybindings::Worker()
 									float mouseDeltaX = static_cast<float>(currentMousePos.x - screenCenter.x);
 									float mouseDeltaY = static_cast<float>(currentMousePos.y - screenCenter.y);
 
-									if (mouseDeltaX != 0.0f || mouseDeltaY != 0.0f)
+									/* 
+										Some users have reported erratic mouse behavior
+										after interacting with the menu until they press LMB.
+
+										While the exact cause of this inconsistency is unknown,
+										following code tries to resolve the issue.
+									*/
+									if (Features::FreeCamera::mouseControlLimitMaximumDelta && (std::abs(mouseDeltaX) > Features::FreeCamera::mouseControlMaximumDelta || std::abs(mouseDeltaY) > Features::FreeCamera::mouseControlMaximumDelta))
+									{
+										SetCursorPos(screenCenter.x, screenCenter.y);
+									}
+									else if (mouseDeltaX != 0.0f || mouseDeltaY != 0.0f)
 									{
 										/* X -> Yaw (horizontal). */
 										float horizontalStep = mouseDeltaX * Features::FreeCamera::mouseControlSensitivity;
@@ -6900,7 +6915,17 @@ void Templates::Menus::FreeCamera::Draw()
 				}
 				ImGui::Text("Mouse Sensitivity:");
 				ImGui::SameLine();
-				if (ImGui::InputFloat("##MouseSensitivity", &Features::FreeCamera::mouseControlSensitivity, 0.1f, 1.0f))
+				if (ImGui::InputFloat("##MouseControl##Sensitivity", &Features::FreeCamera::mouseControlSensitivity, 0.1f, 1.0f))
+				{
+					Features::Config::Save();
+				}
+				if (ImGui::Checkbox("Limit Maximum Delta", &Features::FreeCamera::mouseControlLimitMaximumDelta))
+				{
+					Features::Config::Save();
+				}
+				ImGui::Text("Maximum Delta:");
+				ImGui::SameLine();
+				if (ImGui::InputFloat("##MouseControl##MaximumDelta", &Features::FreeCamera::mouseControlMaximumDelta, 1.0f, 10.0f))
 				{
 					Features::Config::Save();
 				}

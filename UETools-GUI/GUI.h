@@ -814,10 +814,12 @@ namespace Features
 		static inline float cameraRotationStep = 0.25f;
 
 		static inline bool useMouseControl = true;
-		static inline bool mouseControlOnHold = true;
+		static inline bool mouseControlOnHold = false;
 		static inline bool mouseControlXInverted = false;
 		static inline bool mouseControlYInverted = true;
 		static inline float mouseControlSensitivity = 0.1f;
+		static inline bool mouseControlLimitMaximumDelta = false;
+		static inline float mouseControlMaximumDelta = 25.0f;
 
 
 		static bool IsEnabled();
