@@ -766,6 +766,30 @@ bool ImGui::IsKeyBindingReleased(KeyBinding* binding)
 
 
 
+bool ImGui::IsMouseButtonDown(const E_MouseButton& mouseButton)
+{
+	int32_t virtualKey = 0;
+	switch (mouseButton)
+	{
+		case E_MouseButton::Left:
+			virtualKey = VK_LBUTTON;
+			break;
+		case E_MouseButton::Middle:
+			virtualKey = VK_MBUTTON;
+			break;
+		case E_MouseButton::Right:
+			virtualKey = VK_RBUTTON;
+			break;
+		default:
+			return false;
+	}
+
+	return (GetAsyncKeyState(virtualKey) & 0x8000) != 0;
+}
+
+
+
+
 
 
 // ==============================
@@ -815,7 +839,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.4)");
+			ImGui::Text("UETools GUI (v4.5)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -998,6 +1022,12 @@ void Features::Config::Load()
 #ifdef FREE_CAMERA
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraMovementStep", &Features::FreeCamera::cameraMovementStep);
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraRotationStep", &Features::FreeCamera::cameraRotationStep);
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_useMouseControl", &Features::FreeCamera::useMouseControl);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlOnHold", &Features::FreeCamera::mouseControlOnHold);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlXInverted", &Features::FreeCamera::mouseControlXInverted);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlYInverted", &Features::FreeCamera::mouseControlYInverted);
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_mouseControlSensitivity", &Features::FreeCamera::mouseControlSensitivity);
 #endif
 }
 
@@ -1020,6 +1050,12 @@ void Features::Config::Save()
 #ifdef FREE_CAMERA
 	featuresConfig.Set("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
 	featuresConfig.Set("Features_FreeCamera_cameraRotationStep", Features::FreeCamera::cameraRotationStep);
+
+	featuresConfig.Set("Features_FreeCamera_useMouseControl", Features::FreeCamera::useMouseControl);
+	featuresConfig.Set("Features_FreeCamera_mouseControlOnHold", Features::FreeCamera::mouseControlOnHold);
+	featuresConfig.Set("Features_FreeCamera_mouseControlXInverted", Features::FreeCamera::mouseControlXInverted);
+	featuresConfig.Set("Features_FreeCamera_mouseControlYInverted", Features::FreeCamera::mouseControlYInverted);
+	featuresConfig.Set("Features_FreeCamera_mouseControlSensitivity", Features::FreeCamera::mouseControlSensitivity);
 #endif
 
 	featuresConfig.Save();
@@ -1607,6 +1643,11 @@ void Features::DirectionalMovement::Worker()
 	{
 		__try
 		{
+#ifdef FREE_CAMERA
+			if (Features::FreeCamera::IsEnabled())
+				continue;
+#endif
+
 			/* See if we have a Player Controller alongside the Camera Manager. */
 			SDK::APlayerController* playerController = Unreal::PlayerController::Get();
 			if (playerController == nullptr || playerController->PlayerCameraManager == nullptr)
@@ -1672,11 +1713,6 @@ void Features::DirectionalMovement::Worker()
 
 				if (Features::DirectionalMovement::isUpMovementExpected || Features::DirectionalMovement::isDownMovementExpected)
 				{
-#ifdef FREE_CAMERA
-					if (Features::FreeCamera::IsEnabled())
-						continue;
-#endif
-
 					SDK::FVector characterUpVector = character->GetActorUpVector();
 					if (Features::DirectionalMovement::isUpMovementExpected)
 					{
@@ -2609,6 +2645,62 @@ void Inputs::Keybindings::Worker()
 
 				if (Features::FreeCamera::cameraReference)
 				{
+					static bool wasMouseControlActive = false;
+					if (Features::FreeCamera::useMouseControl)
+					{
+						bool mouseControlExpected = true;
+						if (Features::FreeCamera::mouseControlOnHold)
+						{
+							mouseControlExpected = ImGui::IsMouseButtonDown(ImGui::E_MouseButton::Right);
+						}
+
+						if (mouseControlExpected)
+						{
+							int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+							int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+							POINT screenCenter;
+							screenCenter.x = screenWidth / 2;
+							screenCenter.y = screenHeight / 2;
+
+							if (wasMouseControlActive == false)
+							{
+								SetCursorPos(screenCenter.x, screenCenter.y);
+							}
+							else
+							{
+								POINT currentMousePos;
+								if (GetCursorPos(&currentMousePos))
+								{
+									float mouseDeltaX = static_cast<float>(currentMousePos.x - screenCenter.x);
+									float mouseDeltaY = static_cast<float>(currentMousePos.y - screenCenter.y);
+
+									if (mouseDeltaX != 0.0f || mouseDeltaY != 0.0f)
+									{
+										/* X -> Yaw (horizontal). */
+										float horizontalStep = mouseDeltaX * Features::FreeCamera::mouseControlSensitivity;
+										if (Features::FreeCamera::mouseControlXInverted)
+											horizontalStep *= -1.0f;
+
+										/* Y -> Pitch (vertical). */
+										float verticalStep = mouseDeltaY * Features::FreeCamera::mouseControlSensitivity;
+										if (Features::FreeCamera::mouseControlYInverted)
+											verticalStep *= -1.0f;
+
+										Features::FreeCamera::Rotate(horizontalStep, verticalStep);
+										SetCursorPos(screenCenter.x, screenCenter.y);
+									}
+								}
+							}
+						}
+
+						wasMouseControlActive = mouseControlExpected;
+					}
+					else
+					{
+						wasMouseControlActive = false;
+					}
+
 					if (ImGui::IsKeyBindingDown(&Inputs::Keybindings::freeCamera_MoveForward))
 					{
 						Features::FreeCamera::Move(Features::FreeCamera::cameraMovementStep, 0.0f, 0.0f);
@@ -6782,6 +6874,39 @@ void Templates::Menus::FreeCamera::Draw()
 			ImGui::KeyBindingInput("Rotate Down:  ", &Inputs::Keybindings::freeCamera_RotateDown);
 			ImGui::KeyBindingInput("Rotate Left:  ", &Inputs::Keybindings::freeCamera_RotateLeft);
 			ImGui::KeyBindingInput("Rotate Right: ", &Inputs::Keybindings::freeCamera_RotateRight);
+
+			ImGui::NewLine();
+
+			ImGui::SetFontTitle();
+			ImGui::Text("Mouse Control");
+			ImGui::SetFontRegular();
+			if (ImGui::TreeNode("Details##MouseControl"))
+			{
+				if (ImGui::Checkbox("Use Mouse Control", &Features::FreeCamera::useMouseControl))
+				{
+					Features::Config::Save();
+				}
+				if (ImGui::Checkbox("Hold RMB To Rotate", &Features::FreeCamera::mouseControlOnHold))
+				{
+					Features::Config::Save();
+				}
+				if (ImGui::Checkbox("Invert X Axis", &Features::FreeCamera::mouseControlXInverted))
+				{
+					Features::Config::Save();
+				}
+				if (ImGui::Checkbox("Invert Y Axis", &Features::FreeCamera::mouseControlYInverted))
+				{
+					Features::Config::Save();
+				}
+				ImGui::Text("Mouse Sensitivity:");
+				ImGui::SameLine();
+				if (ImGui::InputFloat("##MouseSensitivity", &Features::FreeCamera::mouseControlSensitivity, 0.1f, 1.0f))
+				{
+					Features::Config::Save();
+				}
+
+				ImGui::TreePop();
+			}
 
 			ImGui::NewLine();
 

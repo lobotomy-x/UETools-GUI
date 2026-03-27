@@ -109,6 +109,15 @@ namespace ImGui
 	bool IsKeyBindingPressed(KeyBinding* binding, const bool& waitForRelease = true);
 	bool IsKeyBindingDown(KeyBinding* binding);
 	bool IsKeyBindingReleased(KeyBinding* binding);
+	
+
+	enum E_MouseButton
+	{
+		Left,
+		Middle,
+		Right
+	};
+	bool IsMouseButtonDown(const E_MouseButton& mouseButton);
 
 
 	/*
@@ -803,6 +812,12 @@ namespace Features
 
 		static inline float cameraMovementStep = 3.0f;
 		static inline float cameraRotationStep = 0.25f;
+
+		static inline bool useMouseControl = true;
+		static inline bool mouseControlOnHold = true;
+		static inline bool mouseControlXInverted = false;
+		static inline bool mouseControlYInverted = true;
+		static inline float mouseControlSensitivity = 0.1f;
 
 
 		static bool IsEnabled();
