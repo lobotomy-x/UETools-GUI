@@ -815,7 +815,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.3b)");
+			ImGui::Text("UETools GUI (v4.4)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1672,6 +1672,11 @@ void Features::DirectionalMovement::Worker()
 
 				if (Features::DirectionalMovement::isUpMovementExpected || Features::DirectionalMovement::isDownMovementExpected)
 				{
+#ifdef FREE_CAMERA
+					if (Features::FreeCamera::IsEnabled())
+						continue;
+#endif
+
 					SDK::FVector characterUpVector = character->GetActorUpVector();
 					if (Features::DirectionalMovement::isUpMovementExpected)
 					{
@@ -4640,6 +4645,33 @@ void Templates::Menus::Debug::Sub_Actors()
 					else
 						GUI::PlayActionSound(false);
 				}
+
+#ifdef SOFT_PATH
+				ImGui::NewLine();
+
+				ImGui::SetFontTitle();
+				ImGui::Text("Actor Material");
+				ImGui::SetFontSmall();
+				ImGui::Text("Create dynamic Material Instance and apply it on Actor.");
+				ImGui::SetFontRegular();
+
+				if (ImGui::TreeNode("Details##ActorMaterial"))
+				{
+					ImGui::Text("Material Path: ");
+					ImGui::SameLine();
+					ImGui::InputText("##ActorMaterial", Features::ActorMaterial::materialInstancePathBuffer, Features::ActorMaterial::materialInstancePathBufferSize);
+					
+					if (ImGui::Button("Set##ActorMaterial"))
+					{
+						std::wstring materialPath = Utilities::String::ToWString(Features::ActorMaterial::materialInstancePathBuffer);
+						std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(materialPath);
+
+						GUI::PlayActionSound(Unreal::Actor::SetMaterial(actor.reference, normalizedPath));
+					}
+
+					ImGui::TreePop();
+				}
+#endif
 
 #ifdef ACTOR_KIND
 				if (actor.kind != Unreal::Actor::E_ActorKind::General)

@@ -1149,6 +1149,40 @@ void Unreal::Actor::SetIsVisible(SDK::AActor* actorReference, const bool& newIsV
 }
 
 
+bool Unreal::Actor::SetMaterial(SDK::AActor* actorReference, SDK::UMaterialInterface* materialInterfaceReference)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	if (materialInterfaceReference == nullptr)
+		return false;
+
+	std::vector<SDK::UActorComponent*> foundComponents = Unreal::ActorComponent::GetAllOfClass(actorReference, SDK::UPrimitiveComponent::StaticClass());
+	for (SDK::UActorComponent* component : foundComponents)
+	{
+		SDK::UPrimitiveComponent* primitiveComponent = static_cast<SDK::UPrimitiveComponent*>(component);
+		for (int8_t i = 0; i < 8; i++)
+		{
+			primitiveComponent->CreateDynamicMaterialInstance(i, materialInterfaceReference, SDK::FName());
+		}
+	}
+
+	return true;
+}
+
+#ifdef SOFT_PATH
+bool Unreal::Actor::SetMaterial(SDK::AActor* actorReference, const std::wstring& materialInterfacePath)
+{
+	SDK::UObject* objectReference = Object::SoftLoadObject(materialInterfacePath);
+	if (objectReference == nullptr || objectReference->IsA(SDK::UMaterialInstance::StaticClass()) == false)
+		return false;
+
+	SDK::UMaterialInterface* materialInterfaceAsset = static_cast<SDK::UMaterialInterface*>(objectReference);
+	return SetMaterial(actorReference, materialInterfaceAsset);
+}
+#endif
+
+
 SDK::AActor* Unreal::Actor::Summon(const SDK::TSubclassOf<SDK::AActor>& actorClass, const Unreal::Transform& transform)
 {
 	SDK::UWorld* world = World::Get();

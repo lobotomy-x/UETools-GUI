@@ -618,6 +618,18 @@ namespace Features
 
 
 #ifdef SOFT_PATH
+	class ActorMaterial
+	{
+	public:
+		static inline const size_t materialInstancePathBufferSize = 255;
+		static inline char materialInstancePathBuffer[materialInstancePathBufferSize] = {};
+	};
+#endif
+
+
+
+
+#ifdef SOFT_PATH
 	class PawnAnimation
 	{
 	public:
@@ -631,10 +643,12 @@ namespace Features
 		static inline char animationPathBuffer[animationPathBufferSize] = {};
 		static inline bool animationLooping = false;
 	};
+#endif
 
 
 
 
+#ifdef SOFT_PATH
 	class WidgetConstruct
 	{
 	public:
@@ -660,9 +674,12 @@ namespace Features
 		static inline float locationOffset[3];
 		static inline float rotationOffset[3];
 	};
+#endif
 
 
-#ifdef LEVEL_SEQUENCE
+
+
+#if defined(SOFT_PATH) && defined(LEVEL_SEQUENCE)
 	class PlayLevelSequence
 	{
 	public:
@@ -674,7 +691,6 @@ namespace Features
 		static inline float playRate = 1.0f;
 		static inline int32_t loopCount = 1;
 	};
-#endif
 #endif
 
 

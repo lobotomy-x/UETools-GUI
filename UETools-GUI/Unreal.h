@@ -741,6 +741,12 @@ namespace Unreal
 		static void SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible, const bool& propagateToComponents = false);
 
 
+		static bool SetMaterial(SDK::AActor* actorReference, SDK::UMaterialInterface* materialInterfaceReference);
+#ifdef SOFT_PATH
+		static bool SetMaterial(SDK::AActor* actorReference, const std::wstring& materialInterfacePath);
+#endif
+
+
 		static SDK::AActor* Summon(const SDK::TSubclassOf<SDK::AActor>& actorClass, const Unreal::Transform& transform);
 		static SDK::AActor* Summon(const SDK::TSubclassOf<SDK::AActor>& actorClass);
 
