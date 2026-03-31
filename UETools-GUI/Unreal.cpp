@@ -313,7 +313,7 @@ std::vector<Unreal::LevelStreaming::DataStructure> Unreal::LevelStreaming::Filte
 
 
 #ifdef SOFT_PATH
-bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset, const bool& useInstancedName = false)
+bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset, const bool& useInstancedName)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
