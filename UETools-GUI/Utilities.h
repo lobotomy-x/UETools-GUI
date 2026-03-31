@@ -78,4 +78,3 @@ namespace Utilities
 		static LONG Handle(LPEXCEPTION_POINTERS exceptionInfo, const char* title);
 	};
 };
-

@@ -387,7 +387,7 @@ namespace Unreal
 
 
 #ifdef SOFT_PATH
-		static bool LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset = { 0.0f, 0.0f, 0.0f }, const SDK::FRotator& rotationOffset = { 0.0f, 0.0f, 0.0f });
+		static bool LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset = { 0.0f, 0.0f, 0.0f }, const SDK::FRotator& rotationOffset = { 0.0f, 0.0f, 0.0f }, const bool& useInstancedName = false);
 #endif
 	};
 
@@ -915,4 +915,3 @@ namespace Unreal
 		static std::vector<Function::DataStructure> FilterByName(const std::vector<Function::DataStructure>& functionsCollection, const std::string& filter, const bool& caseSensitive);
 	};
 };
-

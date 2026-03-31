@@ -839,7 +839,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.6b)");
+			ImGui::Text("UETools GUI (v4.6c)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -6167,7 +6167,7 @@ void Templates::Menus::World::Draw()
 						for (std::wstring levelPath : levelPathCollection)
 						{
 							std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(levelPath);
-							if (Unreal::LevelStreaming::LoadLevelInstance(normalizedPath, locationOffset, rotationOffset))
+							if (Unreal::LevelStreaming::LoadLevelInstance(normalizedPath, locationOffset, rotationOffset, true))
 								anyLevelLoaded = true;
 						}
 

@@ -313,7 +313,7 @@ std::vector<Unreal::LevelStreaming::DataStructure> Unreal::LevelStreaming::Filte
 
 
 #ifdef SOFT_PATH
-bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset)
+bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, const SDK::FVector& locationOffset, const SDK::FRotator& rotationOffset, const bool& useInstancedName = false)
 {
 	SDK::UWorld* world = World::Get();
 	if (world == nullptr)
@@ -321,19 +321,20 @@ bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, c
 
 	bool outSuccess;
 
-	static int levelInstanceCounter = 0;
-	/* locationOffset & rotationOffset would both be ignored when an Level Instance of same name is already present. */
-	std::wstring uniqueLevelName = Utilities::String::GetObjectNameFromPath(objectPath) + L"_" + std::to_wstring(levelInstanceCounter);
+	std::wstring instancedNameOverride = std::wstring();
+	if (useInstancedName)
+	{
+		static int instanceCounter = -1;
+		/* locationOffset & rotationOffset would both be ignored when an Level Instance of same name is already present. */
+		instancedNameOverride = Utilities::String::GetObjectNameFromPath(objectPath) + L"_" + std::to_wstring(instanceCounter++);
+	}
 
 #ifdef UE5
 	static SDK::TSubclassOf<SDK::ULevelStreamingDynamic> optionalLevelStreamingClass;
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(uniqueLevelName.c_str()), optionalLevelStreamingClass, false);
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(instancedNameOverride.c_str()), optionalLevelStreamingClass, false);
 #else
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(uniqueLevelName.c_str()));
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(instancedNameOverride.c_str()));
 #endif
-
-	if (outSuccess)
-		levelInstanceCounter++;
 
 	return outSuccess;
 }
