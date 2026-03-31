@@ -397,7 +397,7 @@ namespace Features
 		static inline Unreal::PlayerController::DataStructure playerController;
 
 		static inline Unreal::World::DataStructure world;
-		static inline const size_t streamingLevelsFilterBufferSize = 255;
+		static inline const size_t streamingLevelsFilterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char streamingLevelsFilterBuffer[streamingLevelsFilterBufferSize] = {};
 		static inline bool streamingLevelsFilterCaseSensitive = true;
 		static inline bool streamingLevelsEditorColors = false;
@@ -429,7 +429,7 @@ namespace Features
 	class ActorSpawn
 	{
 	public:
-		static inline const size_t actorPathBufferSize = 2048;
+		static inline const size_t actorPathBufferSize = SIZE_BUFFER_MULTIOBJECTPATH;
 		static inline char actorPathBuffer[actorPathBufferSize] = {};
 
 		static inline float location[3];
@@ -450,7 +450,7 @@ namespace Features
 	public:
 		static inline std::vector<Unreal::Function::DataStructure> functions;
 		static inline SDK::UObject* functionsOwner;
-		static inline const size_t functionsFilterBufferSize = 255;
+		static inline const size_t functionsFilterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char functionsFilterBuffer[functionsFilterBufferSize] = {};
 		static inline bool functionsFilterCaseSensitive = true;
 	};
@@ -461,7 +461,7 @@ namespace Features
 	class ActorsList
 	{
 	public:
-		static inline const size_t filterBufferSize = 255;
+		static inline const size_t filterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char filterBuffer[filterBufferSize] = {};
 		static inline bool filterCaseSensitive = true;
 		static inline ImGui::E_ObjectFilterMode filterMode = ImGui::E_ObjectFilterMode::All;
@@ -474,7 +474,7 @@ namespace Features
 		static inline std::vector<Unreal::Actor::DataStructure> actors;
 		static inline std::vector<Unreal::Actor::DataStructure> filteredActors;
 
-		static inline const size_t componentsFilterBufferSize = 255;
+		static inline const size_t componentsFilterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char componentsFilterBuffer[componentsFilterBufferSize] = {};
 		static inline bool componentsFilterCaseSensitive = true;
 		static inline ImGui::E_ObjectFilterMode componentsFilterMode = ImGui::E_ObjectFilterMode::All;
@@ -490,7 +490,7 @@ namespace Features
 	class WidgetsList
 	{
 	public:
-		static inline const size_t filterBufferSize = 255;
+		static inline const size_t filterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char filterBuffer[filterBufferSize] = {};
 		static inline bool filterCaseSensitive = true;
 		static inline ImGui::E_ObjectFilterMode filterMode = ImGui::E_ObjectFilterMode::All;
@@ -512,7 +512,7 @@ namespace Features
 	class ObjectConstruct
 	{
 	public:
-		static inline const size_t objectPathBufferSize = 2048;
+		static inline const size_t objectPathBufferSize = SIZE_BUFFER_MULTIOBJECTPATH;
 		static inline char objectPathBuffer[objectPathBufferSize] = {};
 	};
 
@@ -522,7 +522,7 @@ namespace Features
 	class ObjectsList
 	{
 	public:
-		static inline const size_t filterBufferSize = 255;
+		static inline const size_t filterBufferSize = SIZE_BUFFER_SEARCHFILTER;
 		static inline char filterBuffer[filterBufferSize] = {};
 		static inline bool filterCaseSensitive = true;
 		static inline ImGui::E_ObjectFilterMode filterMode = ImGui::E_ObjectFilterMode::All;
@@ -630,7 +630,7 @@ namespace Features
 	class ActorMaterial
 	{
 	public:
-		static inline const size_t materialInstancePathBufferSize = 255;
+		static inline const size_t materialInstancePathBufferSize = SIZE_BUFFER_SINGLEOBJECTPATH;
 		static inline char materialInstancePathBuffer[materialInstancePathBufferSize] = {};
 	};
 #endif
@@ -642,13 +642,13 @@ namespace Features
 	class PawnAnimation
 	{
 	public:
-		static inline const size_t animationMontagePathBufferSize = 255;
+		static inline const size_t animationMontagePathBufferSize = SIZE_BUFFER_SINGLEOBJECTPATH;
 		static inline char animationMontagePathBuffer[animationMontagePathBufferSize] = {};
 		static inline float animationMontageStartAt = 0.0f;
 		static inline float animationMontagePlayRate = 1.0f;
 		static inline bool animationMontageStopAllMontages = true;
 
-		static inline const size_t animationPathBufferSize = 255;
+		static inline const size_t animationPathBufferSize = SIZE_BUFFER_SINGLEOBJECTPATH;
 		static inline char animationPathBuffer[animationPathBufferSize] = {};
 		static inline bool animationLooping = false;
 	};
@@ -662,7 +662,7 @@ namespace Features
 	{
 	public:
 		/* Allocate large buffer to account for combined paths (e.g: "/Game/Blueprints/Watermelon.Watermelon_C | /Game/Blueprints/Cookie.Cookie_C") */
-		static inline const size_t widgetPathBufferSize = 2048;
+		static inline const size_t widgetPathBufferSize = SIZE_BUFFER_MULTIOBJECTPATH;
 		static inline char widgetPathBuffer[widgetPathBufferSize] = {};
 
 		static inline int32_t zOrder = 0;
@@ -677,7 +677,7 @@ namespace Features
 	{
 	public:
 		/* Allocate large buffer to account for combined paths (e.g: "/Game/OpenWorld/Tile_X2Y8.Tile_X2Y8 | /Game/OpenWorld/Tile_X4Y6.Tile_X4Y6") */
-		static inline const size_t levelPathBufferSize = 2048;
+		static inline const size_t levelPathBufferSize = SIZE_BUFFER_MULTIOBJECTPATH;
 		static inline char levelPathBuffer[levelPathBufferSize] = {};
 
 		static inline float locationOffset[3];
@@ -693,7 +693,7 @@ namespace Features
 	{
 	public:
 		/* Allocate large buffer to account for combined paths (e.g: "/Game/OpenWorld/Sequences/LS_TowerExplosion.LS_TowerExplosion | /Game/OpenWorld/Sequences/LS_CrowdRunning.LS_CrowdRunning") */
-		static inline const size_t levelSequencePathBufferSize = 2048;
+		static inline const size_t levelSequencePathBufferSize = SIZE_BUFFER_MULTIOBJECTPATH;
 		static inline char levelSequencePathBuffer[levelSequencePathBufferSize] = {};
 
 		static inline float startTime = 0.0f;
@@ -780,7 +780,7 @@ namespace Features
 	public:
 		static const int32_t entriesLimit = 100;
 
-		static inline const size_t newEntryTitleBufferSize = 255;
+		static inline const size_t newEntryTitleBufferSize = SIZE_BUFFER_POSITIONSENTRY;
 		static inline char newEntryTitleBuffer[newEntryTitleBufferSize] = {};
 
 	public:
@@ -842,7 +842,7 @@ namespace Features
 	{
 	public:
 		/* Allocate large buffer to account for combined console commands (e.g: "stat fps | stat unit") */
-		static inline const size_t consoleBufferSize = 2048;
+		static inline const size_t consoleBufferSize = SIZE_BUFFER_CONSOLE;
 		static inline char consoleBuffer[consoleBufferSize] = {};
 	};
 };

@@ -50,6 +50,34 @@
 	Note: This will block the initialization thread (but not the main title thread) until the title is ready.
 */
 
+/*
+	#define LARGE_BUFFER_OBJECTPATH
+
+	Expands the character limit for asset paths inputs. Can be found useful when dealing with large scale open worlds levels loading and etc.
+*/
+#ifdef LARGE_BUFFER_OBJECTPATH
+	#define SIZE_BUFFER_SINGLEOBJECTPATH 2048
+	#define SIZE_BUFFER_MULTIOBJECTPATH 16384
+#else
+	#define SIZE_BUFFER_SINGLEOBJECTPATH 255
+	#define SIZE_BUFFER_MULTIOBJECTPATH 2048
+#endif
+
+/*
+	#define LARGE_BUFFER_SEARCHFILTER
+
+	Expands the character limit for search filter inputs.
+*/
+#ifdef LARGE_BUFFER_SEARCHFILTER
+	#define SIZE_BUFFER_SEARCHFILTER 2048
+#else
+	#define SIZE_BUFFER_SEARCHFILTER 255
+#endif
+
+#define SIZE_BUFFER_POSITIONSENTRY 255
+
+#define SIZE_BUFFER_CONSOLE 2048
+
 
 
 
