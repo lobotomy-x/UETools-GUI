@@ -167,50 +167,114 @@ std::wstring Utilities::String::ToWString(const wchar_t* wcString)
 
 
 
-std::string Utilities::String::ToLowerCase(const std::string& string)
+std::string Utilities::String::ToLowerCase(std::string string)
 {
-    std::string outString = string;
-    std::transform(outString.begin(), outString.end(), outString.begin(), [](unsigned char c)
+    std::transform(string.begin(), string.end(), string.begin(), [](unsigned char c)
     {
         return std::tolower(c);
     });
 
-    return outString;
+    return string;
 }
 
-std::wstring Utilities::String::ToLowerCase(const std::wstring& wString)
+std::wstring Utilities::String::ToLowerCase(std::wstring wString)
 {
-	std::wstring outString = wString;
-	std::transform(outString.begin(), outString.end(), outString.begin(), [](wchar_t c)
+	std::transform(wString.begin(), wString.end(), wString.begin(), [](wchar_t c)
 	{
 		return std::towlower(c);
 	});
 
-	return outString;
+	return wString;
 }
 
 
 
-std::string Utilities::String::ToUpperCase(const std::string& string)
+std::string Utilities::String::ToUpperCase(std::string string)
 {
-    std::string outString = string;
-    std::transform(outString.begin(), outString.end(), outString.begin(), [](unsigned char c) 
+    std::transform(string.begin(), string.end(), string.begin(), [](unsigned char c)
     { 
         return std::toupper(c); 
     });
 
-    return outString;
+    return string;
 }
 
-std::wstring Utilities::String::ToUpperCase(const std::wstring& wString)
+std::wstring Utilities::String::ToUpperCase(std::wstring wString)
 {
-	std::wstring outString = wString;
-	std::transform(outString.begin(), outString.end(), outString.begin(), [](wchar_t c)
+	std::transform(wString.begin(), wString.end(), wString.begin(), [](wchar_t c)
 	{
 		return std::towupper(c);
 	});
 
-	return outString;
+	return wString;
+}
+
+
+
+
+std::string Utilities::String::Replace(std::string string, const std::string& from, const std::string& to)
+{
+	if (from.empty())
+	{
+		return string;
+	}
+
+	size_t start_pos = 0;
+	while ((start_pos = string.find(from, start_pos)) != std::string::npos)
+	{
+		string.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+
+	return string;
+}
+
+std::string Utilities::String::Replace(const std::string& string, const std::string& from, const std::wstring& to)
+{
+	return Replace(string, from, ToString(to));
+}
+
+std::string Utilities::String::Replace(const std::string& string, const std::wstring& from, const std::string& to)
+{
+	return Replace(string, ToString(from), to);
+}
+
+std::string Utilities::String::Replace(const std::string& string, const std::wstring& from, const std::wstring& to)
+{
+	return Replace(string, ToString(from), ToString(to));
+}
+
+
+std::wstring Utilities::String::Replace(std::wstring wString, const std::wstring& from, const std::wstring& to)
+{
+	if (from.empty())
+	{
+		return wString;
+	}
+
+	size_t start_pos = 0;
+	while ((start_pos = wString.find(from, start_pos)) != std::wstring::npos)
+	{
+		wString.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+
+	return wString;
+}
+
+std::wstring Utilities::String::Replace(const std::wstring& wString, const std::wstring& from, const std::string& to)
+{
+	return Replace(wString, from, ToWString(to));
+}
+
+std::wstring Utilities::String::Replace(const std::wstring& wString, const std::string& from, const std::wstring& to)
+{
+	return Replace(wString, ToWString(from), to);
+}
+
+std::wstring Utilities::String::Replace(const std::wstring& wString, const std::string& from, const std::string& to)
+{
+	return Replace(wString, ToWString(from), ToWString(to));
 }
 
 
@@ -345,20 +409,28 @@ std::wstring Utilities::String::NormalizeObjectPath(std::wstring objectPath)
 	const std::wstring engineContentKey = L"Engine/Content/";
 	const std::wstring engineContentMidKey = L"/Engine/Content/";
 
-	size_t objectPathLength = objectPath.length();
-	if (objectPathLength == 0)
+	if (objectPath.empty())
 	{
 		return objectPath;
 	}
 
-	std::replace(objectPath.begin(), objectPath.end(), L'\\', L'/');
+	static const std::vector<std::wstring> unrealFileExtensions = { L".uasset", L".umap", L".uexp", L".ubulk" };
+	for (const std::wstring& fileExtension : unrealFileExtensions)
+	{
+		objectPath = String::Replace(objectPath, fileExtension, std::wstring());
+	}
+	objectPath = String::Replace(objectPath, "\\", "/");
 
-	/*
-		0 = NONE,
-		1 = -- (Object),
-		2 = .. (Actor)
-	*/
-	short objectPathSuffixType = 0;
+	enum E_ObjectPathSuffixType
+	{
+		None,
+		Object,
+		Actor
+
+	};
+	E_ObjectPathSuffixType objectPathSuffixType = E_ObjectPathSuffixType::None;
+
+	size_t objectPathLength = objectPath.length();
 	if (objectPathLength >= 2)
 	{
 		size_t objectPathNoSuffixLength = objectPathLength - 2;
@@ -366,14 +438,14 @@ std::wstring Utilities::String::NormalizeObjectPath(std::wstring objectPath)
 		std::wstring objectPathEndChars = objectPath.substr(objectPathNoSuffixLength);
 		if (objectPathEndChars == L"--")
 		{
-			objectPathSuffixType = 1;
+			objectPathSuffixType = E_ObjectPathSuffixType::Object;
 		}
 		if (objectPathEndChars == L"..")
 		{
-			objectPathSuffixType = 2;
+			objectPathSuffixType = E_ObjectPathSuffixType::Actor;
 		}
 
-		if (objectPathSuffixType != 0)
+		if (objectPathSuffixType != E_ObjectPathSuffixType::None)
 			objectPath = objectPath.substr(0, objectPathNoSuffixLength);
 	}
 
@@ -414,24 +486,42 @@ std::wstring Utilities::String::NormalizeObjectPath(std::wstring objectPath)
 		}
 	}
 
-	if (objectPathSuffixType != 0)
+	if (objectPathSuffixType != E_ObjectPathSuffixType::None)
 	{
-		size_t lastSlash = normalizedObjectPath.find_last_of(L'/');
-		if (lastSlash != std::wstring::npos)
+		std::wstring assetName = GetObjectNameFromPath(normalizedObjectPath);
+		if (objectPathSuffixType == E_ObjectPathSuffixType::Object)
 		{
-			std::wstring assetName = normalizedObjectPath.substr(lastSlash + 1);
-			if (objectPathSuffixType == 1)
-			{
-				normalizedObjectPath = normalizedObjectPath + L"." + assetName;
-			}
-			if (objectPathSuffixType == 2)
-			{
-				normalizedObjectPath = normalizedObjectPath + L"." + assetName + L"_C";
-			}
+			normalizedObjectPath = normalizedObjectPath + L"." + assetName;
+		}
+		else
+		{
+			normalizedObjectPath = normalizedObjectPath + L"." + assetName + L"_C";
 		}
 	}
 
 	return wasObjectPathNormalized ? normalizedObjectPath : objectPath;
+}
+
+std::wstring Utilities::String::GetObjectNameFromPath(std::wstring objectPath)
+{
+	if (objectPath.empty())
+	{
+		return std::wstring();
+	}
+
+	size_t lastDotPos = objectPath.find_last_of(L'.');
+	if (lastDotPos != std::wstring::npos)
+	{
+		return objectPath.substr(lastDotPos + 1);
+	}
+
+	size_t lastSlashPos = objectPath.find_last_of(L"/\\");
+	if (lastSlashPos != std::wstring::npos)
+	{
+		return objectPath.substr(lastSlashPos + 1);
+	}
+
+	return objectPath;
 }
 
 

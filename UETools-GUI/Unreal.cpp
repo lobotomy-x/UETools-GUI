@@ -320,14 +320,20 @@ bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, c
 		return false;
 
 	bool outSuccess;
+
+	static int levelInstanceCounter = 0;
+	/* locationOffset & rotationOffset would both be ignored when an Level Instance of same name is already present. */
+	std::wstring uniqueLevelName = Utilities::String::GetObjectNameFromPath(objectPath) + L"_" + std::to_wstring(levelInstanceCounter);
+
 #ifdef UE5
-	static const SDK::FString optionalLevelNameOverride;
 	static SDK::TSubclassOf<SDK::ULevelStreamingDynamic> optionalLevelStreamingClass;
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride, optionalLevelStreamingClass, false);
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(uniqueLevelName.c_str()), optionalLevelStreamingClass, false);
 #else
-	static const SDK::FString optionalLevelNameOverride;
-	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, optionalLevelNameOverride);
+	SDK::ULevelStreamingDynamic::LoadLevelInstance(world, SDK::FString(objectPath.c_str()), locationOffset, rotationOffset, &outSuccess, SDK::FString(uniqueLevelName.c_str()));
 #endif
+
+	if (outSuccess)
+		levelInstanceCounter++;
 
 	return outSuccess;
 }

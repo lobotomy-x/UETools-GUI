@@ -36,15 +36,22 @@ namespace Utilities
 		static std::wstring ToWString(const wchar_t* wcString);
 
 
+		static std::string ToLowerCase(std::string string);
+		static std::wstring ToLowerCase(std::wstring wString);
+
+		static std::string ToUpperCase(std::string string);
+		static std::wstring ToUpperCase(std::wstring wString);
 
 
-		static std::string ToLowerCase(const std::string& string);
-		static std::wstring ToLowerCase(const std::wstring& wString);
+		static std::string Replace(std::string string, const std::string& from, const std::string& to);
+		static std::string Replace(const std::string& string, const std::string& from, const std::wstring& to);
+		static std::string Replace(const std::string& string, const std::wstring& from, const std::string& to);
+		static std::string Replace(const std::string& string, const std::wstring& from, const std::wstring& to);
 
-		static std::string ToUpperCase(const std::string& string);
-		static std::wstring ToUpperCase(const std::wstring& wString);
-
-
+		static std::wstring Replace(std::wstring wString, const std::wstring& from, const std::wstring& to);
+		static std::wstring Replace(const std::wstring& wString, const std::wstring& from, const std::string& to);
+		static std::wstring Replace(const std::wstring& wString, const std::string& from, const std::wstring& to);
+		static std::wstring Replace(const std::wstring& wString, const std::string& from, const std::string& to);
 
 
 		static std::vector<std::string> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true);
@@ -58,9 +65,8 @@ namespace Utilities
 		static std::vector<std::wstring> Split(const wchar_t* wcString, const wchar_t& separator, const bool& removeSeparatorSpaces = true);
 
 
-
-
 		static std::wstring NormalizeObjectPath(std::wstring objectPath);
+		static std::wstring GetObjectNameFromPath(std::wstring objectPath);
 	};
 
 
