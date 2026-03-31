@@ -324,7 +324,7 @@ bool Unreal::LevelStreaming::LoadLevelInstance(const std::wstring& objectPath, c
 	std::wstring instancedNameOverride = std::wstring();
 	if (useInstancedName)
 	{
-		static int instanceCounter = -1;
+		static int instanceCounter = 0;
 		/* locationOffset & rotationOffset would both be ignored when an Level Instance of same name is already present. */
 		instancedNameOverride = Utilities::String::GetObjectNameFromPath(objectPath) + L"_" + std::to_wstring(instanceCounter++);
 	}
