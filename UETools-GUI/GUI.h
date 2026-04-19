@@ -60,7 +60,12 @@ namespace ImGui
 	void TextRotatorColored(const char* label, const SDK::FRotator& value);
 
 
-	void TextHint(const char* hint);
+	void AddHint(const char* hint);
+	void AddHint_OnItemHovered(const char* hint);
+	void AddHint_OnItemFocused(const char* hint);
+	void AddHint_OnItemActive(const char* hint);
+	void AddHint_OnItemEdited(const char* hint);
+	void QuestionMarkHint(const char* hint);
 
 
 	void ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton);

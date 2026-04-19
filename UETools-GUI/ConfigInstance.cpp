@@ -54,6 +54,11 @@ bool ConfigInstance::Load()
         if (value.has_value() == false) // Skip entries with invalid typed values.
             continue;
 
+        if (_values.find(key) == _values.end())
+        {
+            _keysOrder.push_back(key);
+        }
+
         _values[key] = *value; // Last occurrence of entry (key) wins.
     }
 
@@ -65,9 +70,11 @@ bool ConfigInstance::Save()
     std::vector<std::string> lines;
     lines.reserve(_values.size());
 
-    /* Serialize in "key = type:value" form. */
-    for (const auto& value : _values)
-        lines.push_back(Value_ToLine(value.first, value.second));
+    /* Serialize in "key = type:value" form following the original insertion order. */
+    for (const std::string& key : _keysOrder)
+    {
+        lines.push_back(Value_ToLine(key, _values[key]));
+    }
 
     return SaveLines(lines);
 }
@@ -120,6 +127,9 @@ void ConfigInstance::Set(const std::string& key, const T& value)
     if (key.empty() == true) // Ignore invalid key.
         return;
 
+    if (_values.find(key) == _values.end())
+        _keysOrder.push_back(key);
+
     _values[key] = value;
 }
 void ConfigInstance::Set(const std::string& key, const char* value)
@@ -127,12 +137,18 @@ void ConfigInstance::Set(const std::string& key, const char* value)
     if (key.empty() == true || value == nullptr) // Ignore invalid key/value.
         return;
 
+    if (_values.find(key) == _values.end())
+        _keysOrder.push_back(key);
+
     _values[key] = std::string(value);
 }
 void ConfigInstance::Set(const std::string& key, const SDK::FVector& value)
 {
     if (key.empty() == true) // Ignore invalid key.
         return;
+
+    if (_values.find(key) == _values.end())
+        _keysOrder.push_back(key);
 
     _values[key] = value;
 }
@@ -147,12 +163,17 @@ bool ConfigInstance::HasKey(const std::string& key)
 
 void ConfigInstance::Remove(const std::string& key)
 {
-    _values.erase(key);
+    if (_values.find(key) != _values.end())
+    {
+        _values.erase(key);
+        _keysOrder.erase(std::remove(_keysOrder.begin(), _keysOrder.end(), key), _keysOrder.end());
+    }
 }
 
 void ConfigInstance::Clear()
 {
     _values.clear();
+    _keysOrder.clear();
 }
 
 
@@ -437,4 +458,3 @@ template void ConfigInstance::Set<int>(const std::string& key, const int& value)
 template void ConfigInstance::Set<float>(const std::string& key, const float& value);
 template void ConfigInstance::Set<SDK::FVector>(const std::string& key, const SDK::FVector& value);
 template void ConfigInstance::Set<std::string>(const std::string& key, const std::string& value);
-

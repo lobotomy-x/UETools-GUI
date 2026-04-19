@@ -38,6 +38,7 @@ public:
 private:
     using Value = std::variant<bool, int, float, SDK::FVector, std::string>;
     std::unordered_map<std::string, Value> _values;
+    std::vector<std::string> _keysOrder;
 
     static std::string Trim(const std::string& text);
     static bool IsLineCommentOrEmpty(const std::string& line);

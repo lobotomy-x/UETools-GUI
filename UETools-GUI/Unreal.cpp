@@ -741,6 +741,40 @@ std::vector<SDK::UActorComponent*> Unreal::ActorComponent::GetAll(SDK::AActor* a
 }
 
 
+
+SDK::EComponentMobility Unreal::ActorComponent::GetMobility(SDK::USceneComponent* sceneComponentReference)
+{
+	if (sceneComponentReference == nullptr)
+		return SDK::EComponentMobility::Static;
+
+	return sceneComponentReference->Mobility;
+}
+
+bool Unreal::ActorComponent::SetMobility(SDK::USceneComponent* sceneComponentReference, SDK::EComponentMobility newMobility)
+{
+	if (sceneComponentReference == nullptr)
+		return false;
+
+	sceneComponentReference->Mobility = newMobility;
+	return true;
+}
+
+bool Unreal::ActorComponent::MakeStatic(SDK::USceneComponent* sceneComponentReference)
+{
+	return SetMobility(sceneComponentReference, SDK::EComponentMobility::Static);
+}
+
+bool Unreal::ActorComponent::MakeStationary(SDK::USceneComponent* sceneComponentReference)
+{
+	return SetMobility(sceneComponentReference, SDK::EComponentMobility::Stationary);
+}
+
+bool Unreal::ActorComponent::MakeMovable(SDK::USceneComponent* sceneComponentReference)
+{
+	return SetMobility(sceneComponentReference, SDK::EComponentMobility::Movable);
+}
+
+
 Unreal::Transform Unreal::ActorComponent::GetTransform(SDK::USceneComponent* sceneComponentReference)
 {
 	if (sceneComponentReference == nullptr)
@@ -871,6 +905,38 @@ Unreal::Actor::E_ActorKind Unreal::Actor::GetActorKind(SDK::AActor* actorReferen
 	return E_ActorKind::General;
 }
 #endif
+
+
+SDK::EComponentMobility Unreal::Actor::GetMobility(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr || actorReference->RootComponent == nullptr)
+		return SDK::EComponentMobility::Static;
+
+	return ActorComponent::GetMobility(actorReference->RootComponent);
+}
+
+bool Unreal::Actor::SetMobility(SDK::AActor* actorReference, SDK::EComponentMobility newMobility)
+{
+	if (actorReference == nullptr || actorReference->RootComponent == nullptr)
+		return false;
+
+	return ActorComponent::SetMobility(actorReference->RootComponent, newMobility);
+}
+
+bool Unreal::Actor::MakeStatic(SDK::AActor* actorReference)
+{
+	return SetMobility(actorReference, SDK::EComponentMobility::Static);
+}
+
+bool Unreal::Actor::MakeStationary(SDK::AActor* actorReference)
+{
+	return SetMobility(actorReference, SDK::EComponentMobility::Stationary);
+}
+
+bool Unreal::Actor::MakeMovable(SDK::AActor* actorReference)
+{
+	return SetMobility(actorReference, SDK::EComponentMobility::Movable);
+}
 
 
 std::vector<SDK::AActor*> Unreal::Actor::GetAllDefaultOfClass(const SDK::TSubclassOf<SDK::AActor>& actorClass)
@@ -1075,13 +1141,13 @@ std::vector<Unreal::Actor::DataStructure> Unreal::Actor::FilterByClassAndObjectN
 
 bool Unreal::Actor::SetActorLocationAndRotation(SDK::AActor* actorReference, const SDK::FVector& location, const SDK::FRotator& rotation, const bool& sweep)
 {
-	if (actorReference == nullptr || actorReference->RootComponent == nullptr)
+	if (actorReference == nullptr)
 		return false;
 
-	SDK::EComponentMobility initialMobility = actorReference->RootComponent->Mobility;
-	bool isStatic = initialMobility != SDK::EComponentMobility::Movable;
-	if (isStatic)
-		actorReference->RootComponent->Mobility = SDK::EComponentMobility::Movable;
+	SDK::EComponentMobility actorMobility = Actor::GetMobility(actorReference);
+	bool isUnableToMove = actorMobility != SDK::EComponentMobility::Movable;
+	if (isUnableToMove)
+		Actor::MakeMovable(actorReference);
 
 	bool isRough = sweep == false;
 
@@ -1089,8 +1155,8 @@ bool Unreal::Actor::SetActorLocationAndRotation(SDK::AActor* actorReference, con
 	bool isLocationSuccess = actorReference->K2_SetActorLocation(location, sweep, &hitResult, isRough);
 	bool isRotationSuccess = actorReference->K2_SetActorRotation(rotation, isRough);
 
-	if (isStatic)
-		actorReference->RootComponent->Mobility = initialMobility;
+	if (isUnableToMove)
+		Actor::SetMobility(actorReference, actorMobility);
 
 	return isLocationSuccess && isRotationSuccess;
 }
@@ -1144,15 +1210,57 @@ bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FRotator& ro
 }
 
 
-void Unreal::Actor::SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible, const bool& propagateToComponents)
+bool Unreal::Actor::GetIsCollisionEnabled(SDK::AActor* actorReference)
 {
 	if (actorReference == nullptr)
-		return;
+		return false;
 
-	actorReference->SetActorHiddenInGame(!newIsVisible);
+	return actorReference->bActorEnableCollision;
+}
+
+bool Unreal::Actor::SetIsCollisionEnabled(SDK::AActor* actorReference, const bool& newIsCollisionEnabled)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	actorReference->SetActorEnableCollision(newIsCollisionEnabled);
+	return true;
+}
+
+
+bool Unreal::Actor::GetIsVisible(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	return actorReference->bHidden == false;
+}
+
+bool Unreal::Actor::SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible)
+{
+	if (actorReference == nullptr)
+		return false;
 	
-	if (propagateToComponents && actorReference->RootComponent)
-		actorReference->RootComponent->SetVisibility(newIsVisible, true);
+	actorReference->SetActorHiddenInGame(newIsVisible == false);
+	return true;
+}
+
+
+float Unreal::Actor::GetCustomTimeDilation(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr)
+		return 0.0f;
+
+	return actorReference->CustomTimeDilation;
+}
+
+bool Unreal::Actor::SetCustomTimeDilation(SDK::AActor* actorReference, const float& newCustomTimeDilation)
+{
+	if (actorReference == nullptr)
+		return false;
+
+	actorReference->CustomTimeDilation = newCustomTimeDilation;
+	return true;
 }
 
 
@@ -1906,7 +2014,7 @@ std::vector<Unreal::Function::DataStructure> Unreal::Function::GetFunctions(SDK:
 				Function::DataStructure function;
 				function.name = uFunction->GetName();
 				function.reference = uFunction;
-				function.address = std::format("{:p}", static_cast<void*>(uFunction));
+				function.memoryAddress = std::format("{:p}", static_cast<void*>(uFunction));
 
 				outCollection.push_back(function);
 			}

@@ -655,6 +655,13 @@ namespace Unreal
 		static std::vector<SDK::UActorComponent*> GetAll(SDK::AActor* actorReference);
 
 
+		static SDK::EComponentMobility GetMobility(SDK::USceneComponent* sceneComponentReference);
+		static bool SetMobility(SDK::USceneComponent* sceneComponentReference, SDK::EComponentMobility newMobility);
+		static bool MakeStatic(SDK::USceneComponent* sceneComponentReference);
+		static bool MakeStationary(SDK::USceneComponent* sceneComponentReference);
+		static bool MakeMovable(SDK::USceneComponent* sceneComponentReference);
+
+
 		static Unreal::Transform GetTransform(SDK::USceneComponent* sceneComponentReference);
 
 
@@ -690,8 +697,23 @@ namespace Unreal
 
 			Transform transform;
 
+			SDK::EComponentMobility mobility;
+
+			bool isCollisionEnabled;
+
+			bool isVisible;
+
+			float customTimeDilation;
+
 			std::vector<ActorComponent::DataStructure> components;
 		};
+
+
+		static SDK::EComponentMobility GetMobility(SDK::AActor* actorReference);
+		static bool SetMobility(SDK::AActor* actorReference, SDK::EComponentMobility newMobility);
+		static bool MakeStatic(SDK::AActor* actorReference);
+		static bool MakeStationary(SDK::AActor* actorReference);
+		static bool MakeMovable(SDK::AActor* actorReference);
 
 
 		/*
@@ -738,7 +760,16 @@ namespace Unreal
 		static bool SweepTo(SDK::AActor* actorReference, const SDK::FRotator& rotation);
 
 
-		static void SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible, const bool& propagateToComponents = false);
+		static bool GetIsCollisionEnabled(SDK::AActor* actorReference);
+		static bool SetIsCollisionEnabled(SDK::AActor* actorReference, const bool& newIsCollisionEnabled);
+
+
+		static bool GetIsVisible(SDK::AActor* actorReference);
+		static bool SetIsVisible(SDK::AActor* actorReference, const bool& newIsVisible);
+
+
+		static float GetCustomTimeDilation(SDK::AActor* actorReference);
+		static bool SetCustomTimeDilation(SDK::AActor* actorReference, const float& newCustomTimeDilation);
 
 
 		static bool SetMaterial(SDK::AActor* actorReference, SDK::UMaterialInterface* materialInterfaceReference);
@@ -904,7 +935,7 @@ namespace Unreal
 		{
 			std::string name;
 			SDK::UFunction* reference;
-			std::string address;
+			std::string memoryAddress;
 		};
 
 

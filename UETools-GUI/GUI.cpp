@@ -329,15 +329,41 @@ void ImGui::TextRotatorColored(const char* label, const SDK::FRotator& value)
 
 
 
-void ImGui::TextHint(const char* hint)
+void ImGui::AddHint(const char* hint)
+{
+	ImGui::BeginTooltip();
+	ImGui::TextUnformatted(hint);
+	ImGui::EndTooltip();
+}
+
+void ImGui::AddHint_OnItemHovered(const char* hint)
+{
+	if (ImGui::IsItemHovered())
+		AddHint(hint);
+}
+
+void ImGui::AddHint_OnItemFocused(const char* hint)
+{
+	if (ImGui::IsItemFocused())
+		AddHint(hint);
+}
+
+void ImGui::AddHint_OnItemActive(const char* hint)
+{
+	if (ImGui::IsItemActive())
+		AddHint(hint);
+}
+
+void ImGui::AddHint_OnItemEdited(const char* hint)
+{
+	if (ImGui::IsItemEdited())
+		AddHint(hint);
+}
+
+void ImGui::QuestionMarkHint(const char* hint)
 {
 	ImGui::TextDisabled("(?)");
-	if (ImGui::IsItemHovered())
-	{
-		ImGui::BeginTooltip();
-		ImGui::TextUnformatted(hint);
-		ImGui::EndTooltip();
-	}
+	AddHint_OnItemHovered(hint);
 }
 
 
@@ -839,7 +865,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.6c)");
+			ImGui::Text("UETools GUI (v4.7)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1409,6 +1435,15 @@ void Features::ActorsList::Update()
 #endif
 
 		actorData.transform = Unreal::Actor::GetTransform(actor);
+
+		actorData.mobility = Unreal::Actor::GetMobility(actor);
+
+		actorData.isCollisionEnabled = Unreal::Actor::GetIsCollisionEnabled(actor);
+
+		actorData.isVisible = Unreal::Actor::GetIsVisible(actor);
+
+		actorData.customTimeDilation = Unreal::Actor::GetCustomTimeDilation(actor);
+
 
 		std::vector<SDK::UActorComponent*> foundComponents = Unreal::ActorComponent::GetAll(actor);
 		for (SDK::UActorComponent* component : foundComponents)
@@ -2240,14 +2275,29 @@ bool Features::FreeCamera::Enable()
 		Unreal::Actor::TeleportTo(Features::FreeCamera::cameraReference, playerCameraTransform.location, playerCameraTransform.rotation);
 	}
 
-	if (Features::FreeCamera::lastViewTarget = playerController->GetViewTarget())
+	/* Save current view target before attempting to switch. */
+	SDK::AActor* currentViewTarget = playerController->GetViewTarget();
+
+	/* Attempt to switch the camera first. */
+	Unreal::PlayerController::SetViewTarget(Features::FreeCamera::cameraReference);
+
+	/* Verify that the view target actually changed to our FreeCamera. */
+	if (playerController->GetViewTarget() == Features::FreeCamera::cameraReference)
 	{
-		Features::FreeCamera::lastViewTargetCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
-		Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
+		Features::FreeCamera::lastViewTarget = currentViewTarget;
+
+		/* Apply custom time dilation only after a successful camera switch. */
+		if (Features::FreeCamera::lastViewTarget != nullptr)
+		{
+			Features::FreeCamera::lastViewTargetCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
+			Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
+		}
+
+		return true;
 	}
 
-	Unreal::PlayerController::SetViewTarget(Features::FreeCamera::cameraReference);
-	return true;
+	/* If ViewTarget failed to switch, do not freeze the player and return False. */
+	return false;
 }
 
 bool Features::FreeCamera::Disable()
@@ -3304,10 +3354,10 @@ void Templates::Functions::Draw(SDK::UObject* objectReference)
 			std::vector<Unreal::Function::DataStructure> filteredFunctions = Unreal::Function::FilterByName(Features::Functions::functions, Features::Functions::functionsFilterBuffer, Features::Functions::functionsFilterCaseSensitive);
 			for (Unreal::Function::DataStructure function : filteredFunctions)
 			{
-				ImGui::PushID(function.address.c_str());
+				ImGui::PushID(function.memoryAddress.c_str());
 				if (ImGui::TreeNode(function.name.c_str()))
 				{
-					ImGui::Text("Address: %s", function.address);
+					ImGui::Text("Address: %s", function.memoryAddress);
 					if (ImGui::Button("Call"))
 					{
 						bool wasSuccessful = Unreal::Function::CallFunction(objectReference, function.reference);
@@ -3560,7 +3610,7 @@ void Templates::Menus::Debug::Sub_Engine()
 					if (Features::Debug::engine.gameViewportClient.console.reference)
 					{
 						ImGui::SameLine();
-						ImGui::TextHint("Press ~ (Tilde) or F10 to open. Second press will switch console to detailed mode.");
+						ImGui::QuestionMarkHint("Press ~ (Tilde) or F10 to open. Second press will switch console to detailed mode.");
 
 						if (ImGui::TreeNode("Details##Console"))
 						{
@@ -4348,11 +4398,11 @@ void Templates::Menus::Debug::Sub_Actors()
 			Features::ActorsList::filterDistance = std::clamp(Features::ActorsList::filterDistance, 0.0f, 1000000.0f);
 		}
 		ImGui::SameLine();
-		ImGui::TextHint("Maximum Actor distance from Player in centimetres. Calculations doesn't update in background!\n\nThat allows to return to the game while keeping needed Actors filtered.");
+		ImGui::QuestionMarkHint("Maximum Actor distance from Player in centimetres. Calculations doesn't update in background!\n\nThat allows to return to the game while keeping needed Actors filtered.");
 
 		ImGui::KeyBindingInput("Update & Re-Filter Actors List:", &Inputs::Keybindings::debug_ActorsListUpdate);
 		ImGui::SameLine();
-		ImGui::TextHint("Can be found useful when tracking/drawing while filtering Actors In Distance, allowing to update dataset w/o opening the menu.");
+		ImGui::QuestionMarkHint("Can be found useful when tracking/drawing while filtering Actors In Distance, allowing to update dataset w/o opening the menu.");
 #ifdef ACTORS_TRACKING
 		ImGui::KeyBindingInput("Toggle Actors Tracking:        ", &Inputs::Keybindings::debug_ActorsListTracking);
 #endif
@@ -4567,88 +4617,6 @@ void Templates::Menus::Debug::Sub_Actors()
 
 				ImGui::NewLine();
 
-				if (ImGui::Button("Make Static"))
-				{
-					if (actor.reference && actor.reference->RootComponent)
-					{
-						actor.reference->RootComponent->Mobility = SDK::EComponentMobility::Static;
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				if (ImGui::Button("Make Stationary"))
-				{
-					if (actor.reference && actor.reference->RootComponent)
-					{
-						actor.reference->RootComponent->Mobility = SDK::EComponentMobility::Stationary;
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				if (ImGui::Button("Make Movable"))
-				{
-					if (actor.reference && actor.reference->RootComponent)
-					{
-						actor.reference->RootComponent->Mobility = SDK::EComponentMobility::Movable;
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				ImGui::TextHint("Static - Never moves and relies entirely on baked lightmaps and shadows for lighting.\nLowest performance cost, ideal for architecture and environment pieces.\n\nStationary - Cannot move but allows changes to materials and visibility, and combines baked lighting with some dynamic shadow interactions.\nSlightly higher cost than Static, good for objects that stay in place but need minor runtime variations.\n\nMovable - Can move, rotate, scale, or animate and uses fully dynamic lighting and shadows.\nHighest performance cost, suited for characters, doors, vehicles, and interactive gameplay objects.");
-
-				if (ImGui::Button("Enable Collision"))
-				{
-					if (actor.reference)
-					{
-						actor.reference->SetActorEnableCollision(true);
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				if (ImGui::Button("Disable Collision"))
-				{
-					if (actor.reference)
-					{
-						actor.reference->SetActorEnableCollision(false);
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-
-				static bool visibilityPropagateToComponents = false;
-				if (ImGui::Button("Set Visible"))
-				{
-					if (actor.reference)
-					{
-						Unreal::Actor::SetIsVisible(actor.reference, true, visibilityPropagateToComponents);
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				if (ImGui::Button("Set Hidden"))
-				{
-					if (actor.reference)
-					{
-						Unreal::Actor::SetIsVisible(actor.reference, false, visibilityPropagateToComponents);
-						GUI::PlayActionSound(true);
-					}
-					else
-						GUI::PlayActionSound(false);
-				}
-				ImGui::SameLine();
-				ImGui::Checkbox("Propagate To Components", &visibilityPropagateToComponents);
-
 				if (ImGui::Button("Teleport To Actor"))
 				{
 					SDK::ACharacter* character = Unreal::Character::Get();
@@ -4680,11 +4648,81 @@ void Templates::Menus::Debug::Sub_Actors()
 						GUI::PlayActionSound(false);
 				}
 
-				if (ImGui::Button("Destroy"))
+				ImGui::NewLine();
+
+				switch (actor.mobility)
 				{
-					if (actor.reference)
+					case SDK::EComponentMobility::Static:
+						ImGui::Text("Mobility: Static");
+						break;
+
+					case SDK::EComponentMobility::Stationary:
+						ImGui::Text("Mobility: Stationary");
+						break;
+
+					case SDK::EComponentMobility::Movable:
+						ImGui::Text("Mobility: Movable");
+						break;
+
+					default:
+						ImGui::Text("Mobility: Unknown");
+						break;
+				}
+				
+				if (ImGui::Button("Make Static"))
+				{
+					if (Unreal::Actor::MakeStatic(actor.reference))
 					{
-						actor.reference->K2_DestroyActor();
+						Features::ActorsList::Update();
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Make Stationary"))
+				{
+					if (Unreal::Actor::MakeStationary(actor.reference))
+					{
+						Features::ActorsList::Update();
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Make Movable"))
+				{
+					if (Unreal::Actor::MakeMovable(actor.reference))
+					{
+						Features::ActorsList::Update();
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+				ImGui::SameLine();
+				ImGui::QuestionMarkHint("Static - Never moves and relies entirely on baked lightmaps and shadows for lighting.\nLowest performance cost, ideal for architecture and environment pieces.\n\nStationary - Cannot move but allows changes to materials and visibility, and combines baked lighting with some dynamic shadow interactions.\nSlightly higher cost than Static, good for objects that stay in place but need minor runtime variations.\n\nMovable - Can move, rotate, scale, or animate and uses fully dynamic lighting and shadows.\nHighest performance cost, suited for characters, doors, vehicles, and interactive gameplay objects.");
+
+				ImGui::NewLine();
+
+				ImGui::Text("Collision is %s", actor.isCollisionEnabled ? "Enabled" : "Disabled");
+				if (ImGui::Button("Enable Collision"))
+				{
+					if (Unreal::Actor::SetIsCollisionEnabled(actor.reference, true))
+					{
+						Features::ActorsList::Update();
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Disable Collision"))
+				{
+					if (Unreal::Actor::SetIsCollisionEnabled(actor.reference, false))
+					{
+						Features::ActorsList::Update();
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4693,28 +4731,43 @@ void Templates::Menus::Debug::Sub_Actors()
 
 				ImGui::NewLine();
 
-				ImGui::Text("Custom Time Dilation");
-				static float customTimeDilation = 1.0f;
-				if (ImGui::Button("Get##CustomTimeDilation"))
+				ImGui::Text("Is %s", actor.isVisible ? "Visible" : "not Visible");
+				if (ImGui::Button("Make Visible"))
 				{
-					if (actor.reference)
+					if (Unreal::Actor::SetIsVisible(actor.reference, true))
 					{
-						customTimeDilation = actor.reference->CustomTimeDilation;
+						Features::ActorsList::Update();
 						GUI::PlayActionSound(true);
 					}
 					else
 						GUI::PlayActionSound(false);
 				}
 				ImGui::SameLine();
+				if (ImGui::Button("Make Hidden"))
+				{
+					if (Unreal::Actor::SetIsVisible(actor.reference, false))
+					{
+						Features::ActorsList::Update();
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+
+				ImGui::NewLine();
+
+				ImGui::Text("Custom Time Dilation: %.3f", actor.customTimeDilation);
+				static float customTimeDilation = 1.0f;
 				ImGui::InputFloat("##CustomTimeDilation", &customTimeDilation, 0.1f, 1.0f);
 				ImGui::SameLine();
 				if (ImGui::Button("Set##CustomTimeDilation"))
 				{
-					if (actor.reference)
+					if (Unreal::Actor::SetCustomTimeDilation(actor.reference, customTimeDilation))
 					{
-						actor.reference->CustomTimeDilation = customTimeDilation;
+						Features::ActorsList::Update();
 						GUI::PlayActionSound(true);
 					}
+						
 					else
 						GUI::PlayActionSound(false);
 				}
@@ -4747,6 +4800,19 @@ void Templates::Menus::Debug::Sub_Actors()
 					if (actor.reference)
 					{
 						Unreal::PlayerController::SetViewTarget(actor.reference, SDK::EViewTargetBlendFunction::VTBlend_Cubic, viewTargetBlendTime, viewTargetBlendExponent);
+						GUI::PlayActionSound(true);
+					}
+					else
+						GUI::PlayActionSound(false);
+				}
+
+				ImGui::NewLine();
+
+				if (ImGui::Button("Destroy"))
+				{
+					if (actor.reference)
+					{
+						actor.reference->K2_DestroyActor();
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -5797,7 +5863,7 @@ void Templates::Menus::Debug::Sub_Widgets()
 				ImGui::TextBoolColored("Is Top Level:", widget.isInViewport);
 				ImGui::Text("Visibility: %d", widget.visibility);
 				ImGui::SameLine();
-				ImGui::TextHint("ESlateVisibility\n\n0 - Visible\n1 - Collapsed\n2 - Hidden\n3 - HitTestInvisible\n4 - SelfHitTestInvisible");
+				ImGui::QuestionMarkHint("ESlateVisibility\n\n0 - Visible\n1 - Collapsed\n2 - Hidden\n3 - HitTestInvisible\n4 - SelfHitTestInvisible");
 				static int32_t customVisibility = 0;
 				ImGui::SliderInt("##CustomVisibility", &customVisibility, 0, 4);
 				ImGui::SameLine();
@@ -6685,7 +6751,7 @@ void Templates::Menus::Character::Draw()
 						Features::Config::Save();
 					}
 					ImGui::SameLine();
-					ImGui::TextHint("Allows movement in all directions (Backward, Left, Right, Up & Down).");
+					ImGui::QuestionMarkHint("Allows movement in all directions (Backward, Left, Right, Up & Down).");
 					ImGui::BeginDisabled(Features::DirectionalMovement::omniMovement == false);
 					ImGui::KeyBindingInput("Move Up  ", &Inputs::Keybindings::characterOmniMovement_Up);
 					ImGui::KeyBindingInput("Move Down", &Inputs::Keybindings::characterOmniMovement_Down);
@@ -6850,7 +6916,7 @@ void Templates::Menus::FreeCamera::Draw()
 {
 	SDK::APlayerController* playerController = Unreal::PlayerController::Get();
 	ImGui::BeginDisabled(playerController == nullptr);
-	if (ImGui::BeginMenu("FreeCamera"))
+	if (ImGui::BeginMenu("FCamera"))
 	{
 		if (playerController)
 		{
@@ -6860,7 +6926,7 @@ void Templates::Menus::FreeCamera::Draw()
 			{
 				Features::FreeCamera::Toggle();
 			}
-			ImGui::KeyBindingInput("Toggle:       ", &Inputs::Keybindings::freeCamera_Toggle);
+			ImGui::KeyBindingInput("Key Binding:  ##Toggle", &Inputs::Keybindings::freeCamera_Toggle);
 
 			ImGui::NewLine();
 
@@ -6935,8 +7001,19 @@ void Templates::Menus::FreeCamera::Draw()
 
 			ImGui::NewLine();
 
-			ImGui::KeyBindingInput("Teleport Camera To Player:", &Inputs::Keybindings::freeCamera_TeleportCameraToPlayer);
-			ImGui::KeyBindingInput("Teleport Player To Camera:", &Inputs::Keybindings::freeCamera_TeleportPlayerToCamera);
+			if (ImGui::Button("Teleport FCamera To Player"))
+			{
+				GUI::PlayActionSound(Features::FreeCamera::TeleportCameraToPlayer());
+			}
+			ImGui::KeyBindingInput("Key Binding:####TeleportFCameraToPlayer", &Inputs::Keybindings::freeCamera_TeleportCameraToPlayer);
+
+			ImGui::NewLine();
+
+			if (ImGui::Button("Teleport Player To FCamera"))
+			{
+				GUI::PlayActionSound(Features::FreeCamera::TeleportPlayerToCamera());
+			}
+			ImGui::KeyBindingInput("Key Binding:##TeleportPlayerToFCamera", &Inputs::Keybindings::freeCamera_TeleportPlayerToCamera);
 
 			ImGui::PopID();
 			ImGui::MenuSpacer();
