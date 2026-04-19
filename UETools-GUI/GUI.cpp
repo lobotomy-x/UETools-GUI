@@ -3570,7 +3570,7 @@ void Templates::Descriptions::SoftPath::Draw(const char* typeName, const char* e
 	ImGui::SetFontSmall();
 	ImGui::Text("Dynamic %s loading by soft path, for example \"%s\".", typeName ? typeName : "#TYPE#", examplePath ? examplePath : "#EXAMPLEPATH#");
 	ImGui::SameLine();
-	ImGui::TextHint("Format: Automatically converts FModel/Windows paths to UE-native.\nShortcut: Use '--' (.{name}) or '..' (.{name}_C) suffixes to complete the path.\nMulti-input: Use '|' as a separator between paths.");
+	ImGui::QuestionMarkHint("Format: Automatically converts FModel/Windows paths to UE-native.\nShortcut: Use '--' (.{name}) or '..' (.{name}_C) suffixes to complete the path.\nMulti-input: Use '|' as a separator between paths.");
 	ImGui::SetFontRegular();
 }
 #endif
@@ -4376,7 +4376,7 @@ void Templates::Menus::Debug::Sub_Actors()
 #ifdef COLLISION_VISUALIZER
 		ImGui::Checkbox("Draw Collision##Actors", &Features::CollisionVisualizer::enabled);
 		ImGui::SameLine();
-		ImGui::TextHint("Draws polygonal wireframe color of which depends on collision type:\n\nBlueish - Collision/Physics.\n* Static Mesh.\n* Primitive (Capsule/Sphere/Box/Spline).\n* Physics Volume.\n\nReddish - Damage/Restriction.\n* Blocking Volume.\n\nGreenish - Event.\n* Trigger Volume.\n\nPinkish - Post Processing.\n* Post Process Volume.\n\nWhite - Unknown/Other.");
+		ImGui::QuestionMarkHint("Draws polygonal wireframe color of which depends on collision type:\n\nBlueish - Collision/Physics.\n* Static Mesh.\n* Primitive (Capsule/Sphere/Box/Spline).\n* Physics Volume.\n\nReddish - Damage/Restriction.\n* Blocking Volume.\n\nGreenish - Event.\n* Trigger Volume.\n\nPinkish - Post Processing.\n* Post Process Volume.\n\nWhite - Unknown/Other.");
 		ImGui::SameLine();
 		ImGui::Spacing();
 		ImGui::SameLine();
@@ -4385,7 +4385,7 @@ void Templates::Menus::Debug::Sub_Actors()
 #ifdef ACTORS_TRACKING
 		ImGui::Checkbox("Enable Tracking##Actors", &Features::ActorsTracker::enabled);
 		ImGui::SameLine();
-		ImGui::TextHint("Draws circle at root location alongside Actor technical name.\n\nExtremely useful when it's needed to find an specific Actor in 3D space.");
+		ImGui::QuestionMarkHint("Draws circle at root location alongside Actor technical name.\n\nExtremely useful when it's needed to find an specific Actor in 3D space.");
 		ImGui::SameLine();
 		ImGui::Spacing();
 		ImGui::SameLine();
