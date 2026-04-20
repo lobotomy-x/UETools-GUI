@@ -1353,7 +1353,6 @@ SDK::AActor* Unreal::Actor::Summon(const SDK::TSubclassOf<SDK::AActor>& actorCla
 		return Unreal::Actor::Summon(actorClass, Unreal::Transform());
 }
 
-
 #ifdef SOFT_PATH
 SDK::AActor* Unreal::Actor::SoftSummon(const std::wstring& actorPath, const Unreal::Transform& transform)
 {
@@ -1431,6 +1430,120 @@ bool Unreal::Actor::IsValid(SDK::AActor* actorReference)
 
 	return false;
 }
+
+
+
+
+
+
+SDK::AStaticMeshActor* Unreal::StaticMeshActor::Summon(SDK::UStaticMesh* staticMeshReference, const Unreal::Transform& transform)
+{
+	if (staticMeshReference == nullptr)
+		return nullptr;
+
+	SDK::UWorld* world = World::Get();
+	if (world == nullptr)
+		return nullptr;
+
+	static SDK::FTransform spawnTransform;
+	spawnTransform.Translation = transform.location;
+	spawnTransform.Rotation = transform.Quat();
+	spawnTransform.Scale3D = transform.scale;
+#ifdef UE5
+	SDK::AActor* actorReference = SDK::UGameplayStatics::BeginDeferredActorSpawnFromClass(world, SDK::AStaticMeshActor::StaticClass(), spawnTransform, SDK::ESpawnActorCollisionHandlingMethod::AlwaysSpawn, nullptr, SDK::ESpawnActorScaleMethod::SelectDefaultAtRuntime);
+#else
+	SDK::AActor* actorReference = SDK::UGameplayStatics::BeginDeferredActorSpawnFromClass(world, SDK::AStaticMeshActor::StaticClass(), spawnTransform, SDK::ESpawnActorCollisionHandlingMethod::AlwaysSpawn, nullptr);
+#endif
+	if (actorReference == nullptr)
+		return nullptr;
+
+	SDK::AStaticMeshActor* staticMeshActorReference = static_cast<SDK::AStaticMeshActor*>(actorReference);
+	if (staticMeshActorReference->StaticMeshComponent == nullptr)
+		return nullptr;
+
+	Unreal::Actor::SetMobility(staticMeshActorReference, SDK::EComponentMobility::Movable);
+	staticMeshActorReference->StaticMeshComponent->SetStaticMesh(staticMeshReference);
+
+#ifdef UE5
+	SDK::UGameplayStatics::FinishSpawningActor(staticMeshActorReference, spawnTransform, SDK::ESpawnActorScaleMethod::SelectDefaultAtRuntime);
+#else
+	SDK::UGameplayStatics::FinishSpawningActor(staticMeshActorReference, spawnTransform);
+#endif
+
+	return staticMeshActorReference;
+}
+
+#ifdef SOFT_PATH
+SDK::AStaticMeshActor* Unreal::StaticMeshActor::SoftSummon(const std::wstring& staticMeshPath, const Unreal::Transform& transform)
+{
+	SDK::UObject* objectReference = Object::SoftLoadObject(staticMeshPath);
+	if (objectReference == nullptr)
+		return nullptr;
+
+	if (objectReference->IsA(SDK::UStaticMesh::StaticClass()) == false)
+		return nullptr;
+
+	SDK::UStaticMesh* staticMesh = static_cast<SDK::UStaticMesh*>(objectReference);
+	return Unreal::StaticMeshActor::Summon(staticMesh, transform);
+}
+#endif
+
+
+
+
+
+
+SDK::ASkeletalMeshActor* Unreal::SkeletalMeshActor::Summon(SDK::USkeletalMesh* skeletalMeshReference, const Unreal::Transform& transform)
+{
+	if (skeletalMeshReference == nullptr)
+		return nullptr;
+
+	SDK::UWorld* world = World::Get();
+	if (world == nullptr)
+		return nullptr;
+
+	static SDK::FTransform spawnTransform;
+	spawnTransform.Translation = transform.location;
+	spawnTransform.Rotation = transform.Quat();
+	spawnTransform.Scale3D = transform.scale;
+#ifdef UE5
+	SDK::AActor* actorReference = SDK::UGameplayStatics::BeginDeferredActorSpawnFromClass(world, SDK::ASkeletalMeshActor::StaticClass(), spawnTransform, SDK::ESpawnActorCollisionHandlingMethod::AlwaysSpawn, nullptr, SDK::ESpawnActorScaleMethod::SelectDefaultAtRuntime);
+#else
+	SDK::AActor* actorReference = SDK::UGameplayStatics::BeginDeferredActorSpawnFromClass(world, SDK::ASkeletalMeshActor::StaticClass(), spawnTransform, SDK::ESpawnActorCollisionHandlingMethod::AlwaysSpawn, nullptr);
+#endif
+	if (actorReference == nullptr)
+		return nullptr;
+
+	SDK::ASkeletalMeshActor* skeletalMeshActorReference = static_cast<SDK::ASkeletalMeshActor*>(actorReference);
+	if (skeletalMeshActorReference->SkeletalMeshComponent == nullptr)
+		return nullptr;
+
+	Unreal::Actor::SetMobility(skeletalMeshActorReference, SDK::EComponentMobility::Movable);
+	skeletalMeshActorReference->SkeletalMeshComponent->SetSkeletalMesh(skeletalMeshReference, true);
+
+#ifdef UE5
+	SDK::UGameplayStatics::FinishSpawningActor(skeletalMeshActorReference, spawnTransform, SDK::ESpawnActorScaleMethod::SelectDefaultAtRuntime);
+#else
+	SDK::UGameplayStatics::FinishSpawningActor(skeletalMeshActorReference, spawnTransform);
+#endif
+
+	return skeletalMeshActorReference;
+}
+
+#ifdef SOFT_PATH
+SDK::ASkeletalMeshActor* Unreal::SkeletalMeshActor::SoftSummon(const std::wstring& skeletalMeshPath, const Unreal::Transform& transform)
+{
+	SDK::UObject* objectReference = Object::SoftLoadObject(skeletalMeshPath);
+	if (objectReference == nullptr)
+		return nullptr;
+
+	if (objectReference->IsA(SDK::USkeletalMesh::StaticClass()) == false)
+		return nullptr;
+
+	SDK::USkeletalMesh* skeletalMesh = static_cast<SDK::USkeletalMesh*>(objectReference);
+	return Unreal::SkeletalMeshActor::Summon(skeletalMesh, transform);
+}
+#endif
 
 
 

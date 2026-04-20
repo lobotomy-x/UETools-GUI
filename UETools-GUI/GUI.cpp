@@ -865,7 +865,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.7)");
+			ImGui::Text("UETools GUI (v4.8)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -4240,7 +4240,7 @@ void Templates::Menus::Debug::Sub_Actors()
 		ImGui::SetFontTitle();
 		ImGui::Text("Actor Spawn");
 #ifdef SOFT_PATH
-		Templates::Descriptions::SoftPath::Draw("Actor", "/Game/Blueprints/BP_CoinPickable.BP_CoinPickable_C");
+		Templates::Descriptions::SoftPath::Draw("Actor, Static or Skeletal Mesh", "/Game/Blueprints/BP_CoinPickable.BP_CoinPickable_C | /Game/Models/SM_Cookie.SM_Cookie");
 #else
 		ImGui::SetFontSmall();
 		ImGui::Text("Dynamic Actor spawning from ready to go presets.");
@@ -4332,7 +4332,9 @@ void Templates::Menus::Debug::Sub_Actors()
 						for (std::wstring& actorPath : actorPathCollection) // <-- Reference!
 						{
 							std::wstring normalizedPath = Utilities::String::NormalizeObjectPath(actorPath);
-							if (SDK::AActor* actorReference = Unreal::Actor::SoftSummon(normalizedPath, spawnTransform))
+							if (Unreal::Actor::SoftSummon(normalizedPath, spawnTransform) 
+							 || Unreal::StaticMeshActor::SoftSummon(normalizedPath, spawnTransform)
+							 || Unreal::SkeletalMeshActor::SoftSummon(normalizedPath, spawnTransform))
 								anyActorSpawned = true;
 						}
 

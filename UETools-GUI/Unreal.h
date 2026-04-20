@@ -781,7 +781,6 @@ namespace Unreal
 		static SDK::AActor* Summon(const SDK::TSubclassOf<SDK::AActor>& actorClass, const Unreal::Transform& transform);
 		static SDK::AActor* Summon(const SDK::TSubclassOf<SDK::AActor>& actorClass);
 
-
 #ifdef SOFT_PATH
 		static SDK::AActor* SoftSummon(const std::wstring& actorPath, const Unreal::Transform& transform);
 #endif
@@ -791,6 +790,48 @@ namespace Unreal
 
 
 		static bool IsValid(SDK::AActor* actorReference);
+	};
+
+
+
+
+
+
+	class StaticMeshActor
+	{
+	public:
+		struct DataStructure : DataStructureBase
+		{
+			SDK::AStaticMeshActor* reference;
+		};
+
+
+		static SDK::AStaticMeshActor* Summon(SDK::UStaticMesh* staticMeshReference, const Unreal::Transform& transform);
+
+#ifdef SOFT_PATH
+		static SDK::AStaticMeshActor* SoftSummon(const std::wstring& staticMeshPath, const Unreal::Transform& transform);
+#endif
+	};
+
+
+
+
+
+
+	class SkeletalMeshActor
+	{
+	public:
+		struct DataStructure : DataStructureBase
+		{
+			SDK::ASkeletalMeshActor* reference;
+		};
+
+
+		static SDK::ASkeletalMeshActor* Summon(SDK::USkeletalMesh* skeletalMeshReference, const Unreal::Transform& transform);
+
+#ifdef SOFT_PATH
+		static SDK::ASkeletalMeshActor* SoftSummon(const std::wstring& skeletalMeshPath, const Unreal::Transform& transform);
+#endif
 	};
 
 
