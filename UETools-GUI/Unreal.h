@@ -40,25 +40,6 @@ namespace Unreal
 	};
 
 
-#ifdef WAIT_FOR_TITLE_INIT
-	static bool IsTitleInitialized()
-	{
-		if (SDK::UObject::GObjects == nullptr || SDK::UObject::GObjects->Num() == 0)
-			return false;
-
-		SDK::UWorld* World = SDK::UWorld::GetWorld();
-		if (World == nullptr)
-			return false;
-
-		SDK::UGameInstance* GameInstance = SDK::UGameplayStatics::GetGameInstance(World);
-		if (GameInstance == nullptr)
-			return false;
-
-		return true;
-	}
-#endif
-
-
 
 
 
@@ -577,6 +558,12 @@ namespace Unreal
 
 		static SDK::FVector GetLocation(SDK::APlayerController* playerControllerReference);
 		static SDK::FVector GetLocation(const int32_t& playerIndex);
+		static SDK::FRotator GetRotation(SDK::APlayerController* playerControllerReference);
+		static SDK::FRotator GetRotation(const int32_t& playerIndex);
+		static SDK::FVector GetScale3D(SDK::APlayerController* playerControllerReference);
+		static SDK::FVector GetScale3D(const int32_t& playerIndex);
+		static Unreal::Transform GetTransform(SDK::APlayerController* playerControllerReference);
+		static Unreal::Transform GetTransform(const int32_t& playerIndex);
 
 
 		static void SetViewTarget(SDK::AActor* actorReference, const SDK::EViewTargetBlendFunction& blendFunction, const float& blendTime, const float& blendExponent);
@@ -744,8 +731,17 @@ namespace Unreal
 		static std::vector<SDK::AActor*> GetAll();
 
 
+		/*
+		* @param inDistance - Maximum distance from Player in Units.
+		*/
 		static std::vector<Actor::DataStructure> FilterByClassName(const std::vector<Actor::DataStructure>& actorsCollection, const std::string& filter, const bool& caseSensitive, const float& inDistance = 0.0f);
+		/*
+		* @param inDistance - Maximum distance from Player in Units.
+		*/
 		static std::vector<Actor::DataStructure> FilterByObjectName(const std::vector<Actor::DataStructure>& actorsCollection, const std::string& filter, const bool& caseSensitive, const float& inDistance = 0.0f);
+		/*
+		* @param inDistance - Maximum distance from Player in Units.
+		*/
 		static std::vector<Actor::DataStructure> FilterByClassAndObjectName(const std::vector<Actor::DataStructure>& actorsCollection, const std::string& filter, const bool& caseSensitive, const float& inDistance = 0.0f);
 
 
@@ -786,10 +782,16 @@ namespace Unreal
 #endif
 
 
+		static SDK::FVector GetLocation(SDK::AActor* actorReference);
+		static SDK::FRotator GetRotation(SDK::AActor* actorReference);
+		static SDK::FVector GetScale3D(SDK::AActor* actorReference);
 		static Unreal::Transform GetTransform(SDK::AActor* actorReference);
 
 
 		static bool IsValid(SDK::AActor* actorReference);
+
+
+		static bool Destroy(SDK::AActor* actorReference);
 	};
 
 
@@ -842,7 +844,7 @@ namespace Unreal
 	class UserWidget
 	{
 	public:
-		struct DataStructure : DataStructureBase
+		struct DataStructure : DataStructureBaseWithClassHierarchy
 		{
 			SDK::UUserWidget* reference;
 
@@ -986,4 +988,19 @@ namespace Unreal
 
 		static std::vector<Function::DataStructure> FilterByName(const std::vector<Function::DataStructure>& functionsCollection, const std::string& filter, const bool& caseSensitive);
 	};
+
+
+
+
+
+
+#ifdef WAIT_FOR_TITLE_INIT
+	static bool IsTitleInitialized()
+	{
+		if (SDK::UObject::GObjects == nullptr || SDK::UObject::GObjects->Num() == 0)
+			return false;
+
+		return Unreal::GameInstance::Get();
+	}
+#endif
 };

@@ -86,7 +86,7 @@ SDK::FRotator Math::Quat_ToRotator(const SDK::FQuat& quat)
     /* Ensure quaternion is normalized before conversion. */
     SDK::FQuat q = quat;
     const float normSq = (q.X * q.X) + (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W);
-    if (normSq > TINY)
+    if (normSq > TINY) // Check for nonsense input.
     {
         const float invLen = 1.0f / std::sqrt(normSq);
         q.X *= invLen;
@@ -153,19 +153,19 @@ SDK::FQuat Math::Rotator_ToQuat(const SDK::FRotator& rotator)
     /* Compose in Z(Yaw)->Y(Pitch)->X(Roll) order, matching Unreal's FRotator::Quaternion(). */
     SDK::FQuat quat;
     quat.W = cr * cp * cy + sr * sp * sy;
-    quat.X = sr * cp * cy - cr * sp * sy; // X corresponds to Roll contribution
-    quat.Y = cr * sp * cy + sr * cp * sy; // Y corresponds to Pitch contribution
-    quat.Z = cr * cp * sy - sr * sp * cy; // Z corresponds to Yaw contribution
+    quat.X = sr * cp * cy - cr * sp * sy; // X corresponds to Roll contribution.
+    quat.Y = cr * sp * cy + sr * cp * sy; // Y corresponds to Pitch contribution.
+    quat.Z = cr * cp * sy - sr * sp * cy; // Z corresponds to Yaw contribution.
 
     /* Normalize to ensure a unit quaternion (important for downstream use like rotation / matrix). */
     const float normSq = (quat.X * quat.X) + (quat.Y * quat.Y) + (quat.Z * quat.Z) + (quat.W * quat.W);
     if (normSq > TINY) // Check for nonsense input.
     {
         const float invLen = 1.0f / std::sqrt(normSq);
+        quat.W *= invLen;
         quat.X *= invLen;
         quat.Y *= invLen;
         quat.Z *= invLen;
-        quat.W *= invLen;
     }
     else
     {
@@ -261,4 +261,34 @@ uint32_t Math::ColorFloat4_ToU32(const float color[4])
 uint32_t Math::Seconds_ToMilliseconds(const double& seconds)
 {
     return static_cast<uint32_t>(std::lround(seconds * 1000.0));
+}
+
+
+
+
+float Math::Unit_ToMetre(const float& centimetres)
+{
+    return centimetres / 100.0f;
+}
+float Math::Unit_ToInch(const float& centimetres)
+{
+    return centimetres / 2.54f;
+}
+
+float Math::Metre_ToUnit(const float& metres)
+{
+    return metres * 100.0f;
+}
+float Math::Metre_ToInch(const float& metres)
+{
+    return Unit_ToInch(Metre_ToUnit(metres));
+}
+
+float Math::Inch_ToUnit(const float& inches)
+{
+    return inches * 2.54f;
+}
+float Math::Inch_ToMetre(const float& inches)
+{
+    return Unit_ToMetre(Inch_ToUnit(inches));
 }

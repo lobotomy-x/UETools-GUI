@@ -1,7 +1,7 @@
 #pragma once
 #include "FileInstance.h"
-#include "SDK\Engine_classes.hpp"
 
+#include <array>
 #include <unordered_map>
 #include <optional>
 #include <variant>
@@ -28,7 +28,9 @@ public:
     template <typename T>
     void Set(const std::string& key, const T& value);
     void Set(const std::string& key, const char* value);
-    void Set(const std::string& key, const SDK::FVector& value);
+    void Set(const std::string& key, const std::array<float, 2>& value);
+    void Set(const std::string& key, const std::array<float, 3>& value);
+    void Set(const std::string& key, const std::array<float, 4>& value);
 
     bool HasKey(const std::string& key);
     void Remove(const std::string& key);
@@ -36,7 +38,11 @@ public:
 
 
 private:
-    using Value = std::variant<bool, int, float, SDK::FVector, std::string>;
+    using Value = std::variant<bool, int, float, 
+                               std::array<float, 2>,
+                               std::array<float, 3>, 
+                               std::array<float, 4>, 
+                               std::string>;
     std::unordered_map<std::string, Value> _values;
     std::vector<std::string> _keysOrder;
 
@@ -55,6 +61,8 @@ private:
     static std::optional<bool> TryParseBool(const std::string& text);
     static std::optional<int> TryParseInt(const std::string& text);
     static std::optional<float> TryParseFloat(const std::string& text);
-    static std::optional<SDK::FVector> TryParseFVector(const std::string& text);
+    static std::optional<std::array<float, 2>> TryParseFloat2(const std::string& text);
+    static std::optional<std::array<float, 3>> TryParseFloat3(const std::string& text);
+    static std::optional<std::array<float, 4>> TryParseFloat4(const std::string& text);
 };
 

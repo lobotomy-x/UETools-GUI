@@ -23,11 +23,11 @@ bool FileInstance::DoesFileDirectoryExist()
     const std::filesystem::path parentPath = _filePath.parent_path();
 
     /* No parent directory specified -> use current working directory. */
-    if (parentPath.empty() == true)
+    if (parentPath.empty())
         return true;
 
     std::error_code errorCode;
-    if (std::filesystem::exists(parentPath, errorCode) == true)
+    if (std::filesystem::exists(parentPath, errorCode))
         return true;
 
     return std::filesystem::create_directories(parentPath, errorCode);
@@ -35,12 +35,12 @@ bool FileInstance::DoesFileDirectoryExist()
 
 bool FileInstance::DoesFileExist()
 {
-    if (_filePath.empty() == true)
+    if (_filePath.empty())
         return false;
 
     std::error_code errorCode;
-    return std::filesystem::exists(_filePath, errorCode) == true
-           && std::filesystem::is_regular_file(_filePath, errorCode) == true;
+    return std::filesystem::exists(_filePath, errorCode)
+           && std::filesystem::is_regular_file(_filePath, errorCode);
 }
 
 

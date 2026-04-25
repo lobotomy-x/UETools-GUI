@@ -20,7 +20,9 @@ struct IsSupportedConfigType
     static constexpr bool Value = std::is_same_v<T, bool>
                                   || std::is_same_v<T, int>
                                   || std::is_same_v<T, float>
-                                  || std::is_same_v<T, SDK::FVector>
+                                  || std::is_same_v<T, std::array<float, 2>>
+                                  || std::is_same_v<T, std::array<float, 3>>
+                                  || std::is_same_v<T, std::array<float, 4>>
                                   || std::is_same_v<T, std::string>;
 };
 
@@ -38,7 +40,7 @@ bool ConfigInstance::Load()
     for (const std::string& rawLine : lines)
     {
         const std::string line = Trim(rawLine);
-        if (IsLineCommentOrEmpty(line) == true) // Skip blank lines and full-line comments
+        if (IsLineCommentOrEmpty(line)) // Skip blank lines and full-line comments.
             continue;
 
         const std::optional<std::pair<std::string, std::string>> KeyValue = SplitKeyValue(line);
@@ -46,7 +48,7 @@ bool ConfigInstance::Load()
             continue;
 
         const std::string key = Trim(KeyValue->first);
-        if (key.empty() == true) // Skip entries with empty keys.
+        if (key.empty()) // Skip entries with empty keys.
             continue;
 
         const std::string rawValue = Trim(KeyValue->second);
@@ -85,18 +87,18 @@ bool ConfigInstance::Save()
 template <typename T>
 std::optional<T> ConfigInstance::Get(const std::string& key)
 {
-    static_assert(IsSupportedConfigType<T>::Value == true, "Unsupported config type.");
+    static_assert(IsSupportedConfigType<T>::Value, "Unsupported config type.");
 
     const auto value = _values.find(key);
     if (value == _values.end()) // Key not found.
         return std::nullopt;
 
     /* Fast path: exact type match in the variant. */
-    if (std::holds_alternative<T>(value->second) == true)
+    if (std::holds_alternative<T>(value->second))
         return std::get<T>(value->second);
 
     /* Backward/forward compatibility: allow reading typed values from stored strings. */
-    if (std::holds_alternative<std::string>(value->second) == true)
+    if (std::holds_alternative<std::string>(value->second))
     {
         const std::string& text = std::get<std::string>(value->second);
 
@@ -109,8 +111,14 @@ std::optional<T> ConfigInstance::Get(const std::string& key)
         if constexpr (std::is_same_v<T, float>)
             return TryParseFloat(text);
 
-        if constexpr (std::is_same_v<T, SDK::FVector>)
-            return TryParseFVector(text);
+        if constexpr (std::is_same_v<T, std::array<float, 2>>)
+            return TryParseFloat2(text);
+
+        if constexpr (std::is_same_v<T, std::array<float, 3>>)
+            return TryParseFloat3(text);
+
+        if constexpr (std::is_same_v<T, std::array<float, 4>>)
+            return TryParseFloat4(text);
 
         if constexpr (std::is_same_v<T, std::string>)
             return text;
@@ -122,9 +130,9 @@ std::optional<T> ConfigInstance::Get(const std::string& key)
 template <typename T>
 void ConfigInstance::Set(const std::string& key, const T& value)
 {
-    static_assert(IsSupportedConfigType<T>::Value == true, "Unsupported config type.");
+    static_assert(IsSupportedConfigType<T>::Value, "Unsupported config type.");
 
-    if (key.empty() == true) // Ignore invalid key.
+    if (key.empty()) // Ignore invalid key.
         return;
 
     if (_values.find(key) == _values.end())
@@ -134,7 +142,7 @@ void ConfigInstance::Set(const std::string& key, const T& value)
 }
 void ConfigInstance::Set(const std::string& key, const char* value)
 {
-    if (key.empty() == true || value == nullptr) // Ignore invalid key/value.
+    if (key.empty() || value == nullptr) // Ignore invalid key/value.
         return;
 
     if (_values.find(key) == _values.end())
@@ -142,9 +150,29 @@ void ConfigInstance::Set(const std::string& key, const char* value)
 
     _values[key] = std::string(value);
 }
-void ConfigInstance::Set(const std::string& key, const SDK::FVector& value)
+void ConfigInstance::Set(const std::string& key, const std::array<float, 2>& value)
 {
-    if (key.empty() == true) // Ignore invalid key.
+    if (key.empty())
+        return;
+
+    if (_values.find(key) == _values.end())
+        _keysOrder.push_back(key);
+
+    _values[key] = value;
+}
+void ConfigInstance::Set(const std::string& key, const std::array<float, 3>& value)
+{
+    if (key.empty()) 
+        return;
+
+    if (_values.find(key) == _values.end()) 
+        _keysOrder.push_back(key);
+
+    _values[key] = value;
+}
+void ConfigInstance::Set(const std::string& key, const std::array<float, 4>& value)
+{
+    if (key.empty())
         return;
 
     if (_values.find(key) == _values.end())
@@ -196,7 +224,7 @@ std::string ConfigInstance::Trim(const std::string& text)
 
 bool ConfigInstance::IsLineCommentOrEmpty(const std::string& line)
 {
-    if (line.empty() == true) // Empty line.
+    if (line.empty()) // Empty line.
         return true;
 
     if (line.rfind("#", 0) == 0) // Shell-style comment.
@@ -295,10 +323,28 @@ std::optional<ConfigInstance::Value> ConfigInstance::ParseValueWithOptionalType(
         return Value(*value);
     }
 
-    if (typePart == "fvector")
+    if (typePart == "float2")
     {
-        const std::optional<SDK::FVector> value = TryParseFVector(valuePart);
-        if (value.has_value() == false) // Invalid vector token.
+        const std::optional<std::array<float, 2>> value = TryParseFloat2(valuePart);
+        if (value.has_value() == false)
+            return std::nullopt;
+
+        return Value(*value);
+    }
+
+    if (typePart == "float3")
+    {
+        const std::optional<std::array<float, 3>> value = TryParseFloat3(valuePart);
+        if (value.has_value() == false)
+            return std::nullopt;
+
+        return Value(*value);
+    }
+
+    if (typePart == "float4")
+    {
+        const std::optional<std::array<float, 4>> value = TryParseFloat4(valuePart);
+        if (value.has_value() == false)
             return std::nullopt;
 
         return Value(*value);
@@ -335,25 +381,50 @@ std::string ConfigInstance::Float_ToString(const float& value)
 std::string ConfigInstance::Value_ToLine(const std::string& key, const Value& value)
 {
     /* Always write explicit type tags to preserve original types on reload. */
-    if (std::holds_alternative<bool>(value) == true)
+    if (std::holds_alternative<bool>(value))
         return key + " = bool:" + (std::get<bool>(value) ? "true" : "false");
 
-    if (std::holds_alternative<int>(value) == true)
+    if (std::holds_alternative<int>(value))
         return key + " = int:" + std::to_string(std::get<int>(value));
 
-    if (std::holds_alternative<float>(value) == true)
+    if (std::holds_alternative<float>(value))
         return key + " = float:" + Float_ToString(std::get<float>(value));
 
-    if (std::holds_alternative<SDK::FVector>(value) == true)
+    if (std::holds_alternative<std::array<float, 2>>(value)) 
     {
-        const SDK::FVector& fVector = std::get<SDK::FVector>(value);
+        const std::array<float, 2>& arr = std::get<std::array<float, 2>>(value);
 
-        /* Vector format: "X Y Z" (spaces). */
         std::ostringstream stringStream;
-        stringStream << key << " = fvector:"
-            << std::setprecision(9) << fVector.X << " "
-            << std::setprecision(9) << fVector.Y << " "
-            << std::setprecision(9) << fVector.Z;
+        stringStream << key << " = float3:"
+            << std::setprecision(9) << arr[0] << " "
+            << std::setprecision(9) << arr[1];
+
+        return stringStream.str();
+    }
+
+    if (std::holds_alternative<std::array<float, 3>>(value))
+    {
+        const std::array<float, 3>& arr = std::get<std::array<float, 3>>(value);
+
+        std::ostringstream stringStream;
+        stringStream << key << " = float3:"
+            << std::setprecision(9) << arr[0] << " "
+            << std::setprecision(9) << arr[1] << " "
+            << std::setprecision(9) << arr[2];
+
+        return stringStream.str();
+    }
+
+    if (std::holds_alternative<std::array<float, 4>>(value))
+    {
+        const std::array<float, 4>& arr = std::get<std::array<float, 4>>(value);
+
+        std::ostringstream stringStream;
+        stringStream << key << " = float4:"
+            << std::setprecision(9) << arr[0] << " "
+            << std::setprecision(9) << arr[1] << " "
+            << std::setprecision(9) << arr[2] << " "
+            << std::setprecision(9) << arr[3];
 
         return stringStream.str();
     }
@@ -380,7 +451,7 @@ std::optional<bool> ConfigInstance::TryParseBool(const std::string& text)
 std::optional<int> ConfigInstance::TryParseInt(const std::string& text)
 {
     const std::string token = Trim(text);
-    if (token.empty() == true)
+    if (token.empty())
         return std::nullopt;
 
     int value = 0;
@@ -399,7 +470,7 @@ std::optional<int> ConfigInstance::TryParseInt(const std::string& text)
 std::optional<float> ConfigInstance::TryParseFloat(const std::string& text)
 {
     const std::string token = Trim(text);
-    if (token.empty() == true) // Missing token.
+    if (token.empty()) // Missing token.
         return std::nullopt;
 
     float value = 0.0f;
@@ -415,32 +486,57 @@ std::optional<float> ConfigInstance::TryParseFloat(const std::string& text)
     return value;
 }
 
-std::optional<SDK::FVector> ConfigInstance::TryParseFVector(const std::string& text)
+std::optional<std::array<float, 2>> ConfigInstance::TryParseFloat2(const std::string& text) 
 {
     const std::string token = Trim(text);
-    if (token.empty() == true) // Missing token.
+    if (token.empty())
         return std::nullopt;
 
     size_t pos = 0;
-    float x = 0.0f;
-    float y = 0.0f;
-    float z = 0.0f;
+    std::array<float, 2> arr;
 
-    if (ReadFloat(token, pos, &pos, &x) == false)
+    for (int i = 0; i < 2; ++i) {
+        if (ReadFloat(token, pos, &pos, &arr[i]) == false) 
+            return std::nullopt;
+    }
+
+    return arr;
+}
+
+std::optional<std::array<float, 3>> ConfigInstance::TryParseFloat3(const std::string& text)
+{
+    const std::string token = Trim(text);
+    if (token.empty())
         return std::nullopt;
 
-    if (ReadFloat(token, pos, &pos, &y) == false)
+    size_t pos = 0;
+    std::array<float, 3> arr;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        if (ReadFloat(token, pos, &pos, &arr[i]) == false)
+            return std::nullopt;
+    }
+
+    return arr;
+}
+
+std::optional<std::array<float, 4>> ConfigInstance::TryParseFloat4(const std::string& text)
+{
+    const std::string token = Trim(text);
+    if (token.empty())
         return std::nullopt;
 
-    if (ReadFloat(token, pos, &pos, &z) == false)
-        return std::nullopt;
+    size_t pos = 0;
+    std::array<float, 4> arr;
 
-    SDK::FVector fVector;
-    fVector.X = x;
-    fVector.Y = y;
-    fVector.Z = z;
+    for (int i = 0; i < 4; ++i)
+    {
+        if (ReadFloat(token, pos, &pos, &arr[i]) == false)
+            return std::nullopt;
+    }
 
-    return fVector;
+    return arr;
 }
 
 
@@ -450,11 +546,15 @@ std::optional<SDK::FVector> ConfigInstance::TryParseFVector(const std::string& t
 template std::optional<bool> ConfigInstance::Get<bool>(const std::string& key);
 template std::optional<int> ConfigInstance::Get<int>(const std::string& key);
 template std::optional<float> ConfigInstance::Get<float>(const std::string& key);
-template std::optional<SDK::FVector> ConfigInstance::Get<SDK::FVector>(const std::string& key);
+template std::optional<std::array<float, 2>> ConfigInstance::Get<std::array<float, 2>>(const std::string& key);
+template std::optional<std::array<float, 3>> ConfigInstance::Get<std::array<float, 3>>(const std::string& key);
+template std::optional<std::array<float, 4>> ConfigInstance::Get<std::array<float, 4>>(const std::string& key);
 template std::optional<std::string> ConfigInstance::Get<std::string>(const std::string& key);
 
 template void ConfigInstance::Set<bool>(const std::string& key, const bool& value);
 template void ConfigInstance::Set<int>(const std::string& key, const int& value);
 template void ConfigInstance::Set<float>(const std::string& key, const float& value);
-template void ConfigInstance::Set<SDK::FVector>(const std::string& key, const SDK::FVector& value);
+template void ConfigInstance::Set<std::array<float, 2>>(const std::string& key, const std::array<float, 2>& value);
+template void ConfigInstance::Set<std::array<float, 3>>(const std::string& key, const std::array<float, 3>& value);
+template void ConfigInstance::Set<std::array<float, 4>>(const std::string& key, const std::array<float, 4>& value);
 template void ConfigInstance::Set<std::string>(const std::string& key, const std::string& value);

@@ -46,6 +46,16 @@ public:
 	static uint32_t Seconds_ToMilliseconds(const double& seconds);
 
 
+	static float Unit_ToMetre(const float& units);
+	static float Unit_ToInch(const float& units);
+
+	static float Metre_ToUnit(const float& metres);
+	static float Metre_ToInch(const float& metres);
+
+	static float Inch_ToUnit(const float& inches);
+	static float Inch_ToMetre(const float& inches);
+
+
 	static inline const float PI   = 3.14f;
 	static inline const float DTR  = PI / 180.0f; // Degrees-to-radians factor.
 	static inline const float RTD  = 180.0f / PI; // Radians-to-degrees factor.

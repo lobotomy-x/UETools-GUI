@@ -68,7 +68,14 @@ namespace ImGui
 	void QuestionMarkHint(const char* hint);
 
 
-	void ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton);
+	void TextCopyable(const char* fmt, ...);
+
+
+	void ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton = true);
+
+
+	bool ColorConfig3(const char* label, float col[3]);
+	bool ColorConfig4(const char* label, float col[4]);
 
 
 	enum E_ObjectFilterMode
@@ -485,7 +492,9 @@ namespace Features
 		static inline ImGui::E_ObjectFilterMode componentsFilterMode = ImGui::E_ObjectFilterMode::All;
 
 
+		static Unreal::Actor::DataStructure GetActorData(SDK::AActor* actorReference);
 		static void Update();
+		static void Update(const Unreal::Actor::DataStructure& actor);
 		static void Filter();
 	};
 
@@ -507,7 +516,9 @@ namespace Features
 		static inline std::vector<std::pair<SDK::UUserWidget*, SDK::ESlateVisibility>> storedWidgetsVisibility;
 
 
+		static Unreal::UserWidget::DataStructure GetWidgetData(SDK::UUserWidget* widgetReference);
 		static void Update();
+		static void Update(const Unreal::UserWidget::DataStructure& widget);
 		static void Filter();
 	};
 
@@ -536,7 +547,9 @@ namespace Features
 		static inline std::vector<Unreal::Object::DataStructure> filteredObjects;
 
 
+		static Unreal::Object::DataStructure GetObjectData(SDK::UObject* objectReference);
 		static void Update();
+		static void Update(const Unreal::Object::DataStructure& object);
 		static void Filter();
 	};
 
@@ -547,17 +560,15 @@ namespace Features
 	class ActorTrace
 	{
 	public:
-		static inline bool enabled = false;
 		static inline bool showOnScreen = true;
-		static inline bool showLineTrace = true;
 
 		static inline SDK::FVector traceStartLocation;
 		static inline SDK::FVector traceEndLocation;
-		static inline float traceColor[4] = { 0.118f, 1.0f, 0.0f, 0.5f };
+		static inline float traceColor[4] = { 0.118f, 1.0f, 0.0f, 1.0f };
 		static inline float traceThickness = 3.5f;
-		static inline float traceLength = 2048.0f;
+		static inline float traceDistance = 200.0f;
 
-		static inline bool traceCast; // When set to 'True', indicates that user have casted a ray; would render a dummy { 0.0, 0.0 } - { 0.0, 0.0 } line otherwise.
+		static inline bool traceCast; // When set to True, indicates that user have casted a ray; would render a dummy { 0.0, 0.0 } - { 0.0, 0.0 } line otherwise.
 		static inline bool traceHit;
 
 #ifdef UE5
@@ -583,6 +594,12 @@ namespace Features
 	public:
 		static inline bool enabled = false;
 
+		static inline float actorColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		static inline bool checkValidness = false;
+
+		static inline bool showDistance = false;
+
 
 		static void Draw();
 		static void ThreadSafeDraw();
@@ -598,29 +615,24 @@ namespace Features
 	public:
 		static inline bool enabled = false;
 
-
-		static inline float opacity = 0.5f;
-
-
 		/* Blueish - Collision/Physics related. */
-		static inline float color_StaticMesh[4] = { 0.0f, 0.5f, 1.0f, opacity };
-		static inline float color_Primitive[4] = { 0.0f, 0.8f, 1.0f, opacity };
-		static inline float color_PhysicsVolume[4] = { 0.3f, 0.25f, 0.85f, opacity };
+		static inline float color_StaticMesh[4] = { 0.0f, 0.5f, 1.0f, 1.0f };
+		static inline float color_Primitive[4] = { 0.0f, 0.8f, 1.0f, 1.0f };
+		static inline float color_PhysicsVolume[4] = { 0.3f, 0.25f, 0.85f, 1.0f };
 
 		/* Reddish - Damage/Restriction related. */
-		static inline float color_BlockingVolume[4] = { 1.0f, 0.25f, 0.2f, opacity };
+		static inline float color_BlockingVolume[4] = { 1.0f, 0.25f, 0.2f, 1.0f };
 
 		/* Greenish - Event related (e.g: trigger). */
-		static inline float color_TriggerVolume[4] = { 0.3f, 1.0f, 0.3f, opacity };
+		static inline float color_TriggerVolume[4] = { 0.3f, 1.0f, 0.3f, 1.0f };
 
 		/* Pinkish - Post Processing. */
-		static inline float color_PostProcessVolume[4] = { 0.8f, 0.2f, 0.8f, opacity };
+		static inline float color_PostProcessVolume[4] = { 0.8f, 0.2f, 0.8f, 1.0f };
 
 		/* White - Unknown/Other. */
-		static inline float color_Other[4] = { 1.0f, 1.0f, 1.0f, opacity };
+		static inline float color_Other[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-
-		static inline float thickness = 0.5f;
+		static inline float thickness = 1.0f;
 
 
 		static void Draw();
@@ -777,18 +789,17 @@ namespace Features
 	class Positions
 	{
 	private:
-		static inline std::string entryPrefix = "position_";
-		static inline std::string entryTitleSuffix = "_Title";
-		static inline std::string entryLocationSuffix = "_Location";
-		static inline std::string entryRotationSuffix = "_Rotation";
+		static inline const std::string entryPrefix = "position_";
+		static inline const std::string entryTitleSuffix = "_Title";
+		static inline const std::string entryLocationSuffix = "_Location";
+		static inline const std::string entryRotationSuffix = "_Rotation";
 
 	public:
-		static const int32_t entriesLimit = 100;
+		static const int32_t entriesLimit = 1000;
 
 		static inline const size_t newEntryTitleBufferSize = SIZE_BUFFER_POSITIONSENTRY;
 		static inline char newEntryTitleBuffer[newEntryTitleBufferSize] = {};
 
-	public:
 		struct PositionEntry
 		{
 			std::string title;
@@ -796,6 +807,8 @@ namespace Features
 			SDK::FRotator rotation;
 		};
 		static inline std::vector<Positions::PositionEntry> entries;
+
+	private:
 		static bool ReadPositionFromConfig(ConfigInstance* positionsConfig, const int& positionId, Positions::PositionEntry* positionEntry);
 
 	public:
@@ -814,6 +827,10 @@ namespace Features
 
 		static inline SDK::AActor* lastViewTarget;
 		static inline float lastViewTargetCustomTimeDilation;
+
+		static inline bool forceDisablePlayerInput = false;
+		static inline bool wasMoveInputIgnored;
+		static inline bool wasLookInputIgnored;
 
 		static inline float cameraMovementStep = 3.0f;
 		static inline float cameraRotationStep = 0.25f;

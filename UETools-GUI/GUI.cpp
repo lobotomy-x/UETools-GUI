@@ -369,6 +369,42 @@ void ImGui::QuestionMarkHint(const char* hint)
 
 
 
+void ImGui::TextCopyable(const char* fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+
+	char buffer[2048];
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+	va_end(args);
+
+	ImVec2 labelPos = ImGui::GetCursorScreenPos();
+	ImVec2 labelSize = ImGui::CalcTextSize(buffer);
+
+	static const ImVec2 bgPadding(2.0f, 1.0f);
+	ImVec2 bgMinPos = ImVec2(labelPos.x - bgPadding.x, labelPos.y - bgPadding.y);
+	ImVec2 bgMaxPos = ImVec2(labelPos.x + labelSize.x + bgPadding.x, labelPos.y + labelSize.y + bgPadding.y);
+	static const ImU32 bgColor = IM_COL32(0, 0, 20, 75);
+	ImGui::GetWindowDrawList()->AddRectFilled(bgMinPos, bgMaxPos, bgColor, 2.0f);
+
+	ImGui::TextUnformatted(buffer);
+	ImGui::PushID(buffer);
+
+	if (ImGui::BeginPopupContextItem("##CopyContextMenu"))
+	{
+		if (ImGui::Selectable("Copy"))
+		{
+			GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(buffer));
+		}
+		ImGui::EndPopup();
+	}
+
+	ImGui::PopID();
+}
+
+
+
+
 void ImGui::ReadOnlyInputText(const char* label, const char* text, const bool& showCopyButton)
 {
 	if (label)
@@ -406,6 +442,83 @@ void ImGui::ReadOnlyInputText(const char* label, const char* text, const bool& s
 }
 
 
+
+
+bool ImGui::ColorConfig3(const char* label, float col[3])
+{
+	bool valueChanged = false;
+
+	if (label)
+	{
+		const char* idPosition = std::strstr(label, "##");
+		if (idPosition)
+			ImGui::TextUnformatted(label, idPosition);
+		else
+			ImGui::TextUnformatted(label);
+
+		ImGui::SameLine();
+	}
+
+	ImGui::PushID(label);
+
+	ImVec4 colorVector(col[0], col[1], col[2], 1.0f);
+	ImVec2 buttonSize(40.0f, 0.0f);
+
+	if (ImGui::ColorButton("##ColorButton", colorVector, ImGuiColorEditFlags_NoAlpha, buttonSize))
+	{
+		ImGui::OpenPopup("ColorPicker3Popup");
+	}
+
+	if (ImGui::BeginPopup("ColorPicker3Popup"))
+	{
+		if (ImGui::ColorPicker3("##picker", col, ImGuiColorEditFlags_NoLabel))
+		{
+			valueChanged = true;
+		}
+		ImGui::EndPopup();
+	}
+
+	ImGui::PopID();
+	return valueChanged;
+}
+
+bool ImGui::ColorConfig4(const char* label, float col[4])
+{
+	bool valueChanged = false;
+
+	if (label)
+	{
+		const char* idPosition = std::strstr(label, "##");
+		if (idPosition)
+			ImGui::TextUnformatted(label, idPosition);
+		else
+			ImGui::TextUnformatted(label);
+
+		ImGui::SameLine();
+	}
+
+	ImGui::PushID(label);
+
+	ImVec4 colorVector(col[0], col[1], col[2], col[3]);
+	ImVec2 buttonSize(40.0f, 0.0f);
+
+	if (ImGui::ColorButton("##ColorButton", colorVector, ImGuiColorEditFlags_AlphaPreview, buttonSize))
+	{
+		ImGui::OpenPopup("ColorPicker4Popup");
+	}
+
+	if (ImGui::BeginPopup("ColorPicker4Popup"))
+	{
+		if (ImGui::ColorPicker4("##picker", col, ImGuiColorEditFlags_NoLabel))
+		{
+			valueChanged = true;
+		}
+		ImGui::EndPopup();
+	}
+
+	ImGui::PopID();
+	return valueChanged;
+}
 
 
 
@@ -865,7 +978,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v4.8)");
+			ImGui::Text("UETools GUI (v5.0)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -936,7 +1049,6 @@ void GUI::Draw()
 	}
 
 #ifdef ACTOR_TRACE
-	if (Features::ActorTrace::enabled)
 		Features::ActorTrace::ThreadSafeDraw();
 #endif
 
@@ -1008,7 +1120,7 @@ void GUI::PlayUISound(const E_Sound& soundToPlay)
 // ==============================
 // |        #Features			|
 // ==============================
-template<typename T>
+template <typename T>
 inline void Features::Config::ReadFeatureFromConfig(ConfigInstance* featuresConfig, const std::string& entryName, T* featureValue)
 {
 	if (featuresConfig == nullptr || featureValue == nullptr)
@@ -1045,7 +1157,105 @@ void Features::Config::Load()
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_step", &Features::DirectionalMovement::step);
 	ReadFeatureFromConfig(&featuresConfig, "Features_DirectionalMovement_delay", &Features::DirectionalMovement::delay);
 
+#ifdef ACTOR_TRACE
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorTrace_showOnScreen", &Features::ActorTrace::showOnScreen);
+
+	std::array<float, 4> traceColor = { Features::ActorTrace::traceColor[0], Features::ActorTrace::traceColor[1],
+										Features::ActorTrace::traceColor[2], Features::ActorTrace::traceColor[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorTrace_traceColor", &traceColor);
+	Features::ActorTrace::traceColor[0] = traceColor[0];
+	Features::ActorTrace::traceColor[1] = traceColor[1];
+	Features::ActorTrace::traceColor[2] = traceColor[2];
+	Features::ActorTrace::traceColor[3] = traceColor[3];
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorTrace_traceThickness", &Features::ActorTrace::traceThickness);
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorTrace_traceDistance", &Features::ActorTrace::traceDistance);
+#endif
+
+#ifdef COLLISION_VISUALIZER
+	std::array<float, 4> color_StaticMesh = { Features::CollisionVisualizer::color_StaticMesh[0], Features::CollisionVisualizer::color_StaticMesh[1],
+											  Features::CollisionVisualizer::color_StaticMesh[2], Features::CollisionVisualizer::color_StaticMesh[3]};
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_StaticMesh", &color_StaticMesh);
+	Features::CollisionVisualizer::color_StaticMesh[0] = color_StaticMesh[0];
+	Features::CollisionVisualizer::color_StaticMesh[1] = color_StaticMesh[1];
+	Features::CollisionVisualizer::color_StaticMesh[2] = color_StaticMesh[2];
+	Features::CollisionVisualizer::color_StaticMesh[3] = color_StaticMesh[3];
+
+
+	std::array<float, 4> color_Primitive = { Features::CollisionVisualizer::color_Primitive[0], Features::CollisionVisualizer::color_Primitive[1],
+											 Features::CollisionVisualizer::color_Primitive[2], Features::CollisionVisualizer::color_Primitive[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_Primitive", &color_Primitive);
+	Features::CollisionVisualizer::color_Primitive[0] = color_Primitive[0];
+	Features::CollisionVisualizer::color_Primitive[1] = color_Primitive[1];
+	Features::CollisionVisualizer::color_Primitive[2] = color_Primitive[2];
+	Features::CollisionVisualizer::color_Primitive[3] = color_Primitive[3];
+
+
+	std::array<float, 4> color_PhysicsVolume = { Features::CollisionVisualizer::color_PhysicsVolume[0], Features::CollisionVisualizer::color_PhysicsVolume[1],
+												 Features::CollisionVisualizer::color_PhysicsVolume[2], Features::CollisionVisualizer::color_PhysicsVolume[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_PhysicsVolume", &color_PhysicsVolume);
+	Features::CollisionVisualizer::color_PhysicsVolume[0] = color_PhysicsVolume[0];
+	Features::CollisionVisualizer::color_PhysicsVolume[1] = color_PhysicsVolume[1];
+	Features::CollisionVisualizer::color_PhysicsVolume[2] = color_PhysicsVolume[2];
+	Features::CollisionVisualizer::color_PhysicsVolume[3] = color_PhysicsVolume[3];
+
+
+	std::array<float, 4> color_BlockingVolume = { Features::CollisionVisualizer::color_BlockingVolume[0], Features::CollisionVisualizer::color_BlockingVolume[1],
+												  Features::CollisionVisualizer::color_BlockingVolume[2], Features::CollisionVisualizer::color_BlockingVolume[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_BlockingVolume", &color_BlockingVolume);
+	Features::CollisionVisualizer::color_BlockingVolume[0] = color_BlockingVolume[0];
+	Features::CollisionVisualizer::color_BlockingVolume[1] = color_BlockingVolume[1];
+	Features::CollisionVisualizer::color_BlockingVolume[2] = color_BlockingVolume[2];
+	Features::CollisionVisualizer::color_BlockingVolume[3] = color_BlockingVolume[3];
+
+
+	std::array<float, 4> color_TriggerVolume = { Features::CollisionVisualizer::color_TriggerVolume[0], Features::CollisionVisualizer::color_TriggerVolume[1],
+												 Features::CollisionVisualizer::color_TriggerVolume[2], Features::CollisionVisualizer::color_TriggerVolume[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_TriggerVolume", &color_TriggerVolume);
+	Features::CollisionVisualizer::color_TriggerVolume[0] = color_TriggerVolume[0];
+	Features::CollisionVisualizer::color_TriggerVolume[1] = color_TriggerVolume[1];
+	Features::CollisionVisualizer::color_TriggerVolume[2] = color_TriggerVolume[2];
+	Features::CollisionVisualizer::color_TriggerVolume[3] = color_TriggerVolume[3];
+
+
+	std::array<float, 4> color_PostProcessVolume = { Features::CollisionVisualizer::color_PostProcessVolume[0], Features::CollisionVisualizer::color_PostProcessVolume[1],
+													 Features::CollisionVisualizer::color_PostProcessVolume[2], Features::CollisionVisualizer::color_PostProcessVolume[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_PostProcessVolume", &color_PostProcessVolume);
+	Features::CollisionVisualizer::color_PostProcessVolume[0] = color_PostProcessVolume[0];
+	Features::CollisionVisualizer::color_PostProcessVolume[1] = color_PostProcessVolume[1];
+	Features::CollisionVisualizer::color_PostProcessVolume[2] = color_PostProcessVolume[2];
+	Features::CollisionVisualizer::color_PostProcessVolume[3] = color_PostProcessVolume[3];
+
+
+	std::array<float, 4> color_Other = { Features::CollisionVisualizer::color_Other[0], Features::CollisionVisualizer::color_Other[1],
+										 Features::CollisionVisualizer::color_Other[2], Features::CollisionVisualizer::color_Other[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_color_Other", &color_Other);
+	Features::CollisionVisualizer::color_Other[0] = color_Other[0];
+	Features::CollisionVisualizer::color_Other[1] = color_Other[1];
+	Features::CollisionVisualizer::color_Other[2] = color_Other[2];
+	Features::CollisionVisualizer::color_Other[3] = color_Other[3];
+
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_CollisionVisualizer_thickness", &Features::CollisionVisualizer::thickness);
+#endif
+
+#ifdef ACTORS_TRACKING
+	std::array<float, 4> actorColor = { Features::ActorsTracker::actorColor[0], Features::ActorsTracker::actorColor[1],
+										Features::ActorsTracker::actorColor[2], Features::ActorsTracker::actorColor[3] };
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorsTracker_actorColor", &actorColor);
+	Features::ActorsTracker::actorColor[0] = actorColor[0];
+	Features::ActorsTracker::actorColor[1] = actorColor[1];
+	Features::ActorsTracker::actorColor[2] = actorColor[2];
+	Features::ActorsTracker::actorColor[3] = actorColor[3];
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorsTracker_checkValidness", &Features::ActorsTracker::checkValidness);
+
+	ReadFeatureFromConfig(&featuresConfig, "Features_ActorsTracker_showDistance", &Features::ActorsTracker::showDistance);
+#endif
+
 #ifdef FREE_CAMERA
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_forceDisablePlayerInput", &Features::FreeCamera::forceDisablePlayerInput);
+
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraMovementStep", &Features::FreeCamera::cameraMovementStep);
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraRotationStep", &Features::FreeCamera::cameraRotationStep);
 
@@ -1075,7 +1285,69 @@ void Features::Config::Save()
 	featuresConfig.Set("Features_DirectionalMovement_step", Features::DirectionalMovement::step);
 	featuresConfig.Set("Features_DirectionalMovement_delay", Features::DirectionalMovement::delay);
 
+#ifdef ACTOR_TRACE
+	featuresConfig.Set("Features_ActorTrace_showOnScreen", Features::ActorTrace::showOnScreen);
+
+	std::array<float, 4> traceColor = { Features::ActorTrace::traceColor[0], Features::ActorTrace::traceColor[1],
+										 Features::ActorTrace::traceColor[2], Features::ActorTrace::traceColor[3] };
+	featuresConfig.Set("Features_ActorTrace_traceColor", traceColor);
+
+	featuresConfig.Set("Features_ActorTrace_traceThickness", Features::ActorTrace::traceThickness);
+	featuresConfig.Set("Features_ActorTrace_traceDistance", Features::ActorTrace::traceDistance);
+#endif
+
+#ifdef COLLISION_VISUALIZER
+	std::array<float, 4> color_StaticMesh = { Features::CollisionVisualizer::color_StaticMesh[0], Features::CollisionVisualizer::color_StaticMesh[1],
+											  Features::CollisionVisualizer::color_StaticMesh[2], Features::CollisionVisualizer::color_StaticMesh[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_StaticMesh", color_StaticMesh);
+
+
+	std::array<float, 4> color_Primitive = { Features::CollisionVisualizer::color_Primitive[0], Features::CollisionVisualizer::color_Primitive[1],
+											 Features::CollisionVisualizer::color_Primitive[2], Features::CollisionVisualizer::color_Primitive[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_Primitive", color_Primitive);
+
+
+	std::array<float, 4> color_PhysicsVolume = { Features::CollisionVisualizer::color_PhysicsVolume[0], Features::CollisionVisualizer::color_PhysicsVolume[1],
+												 Features::CollisionVisualizer::color_PhysicsVolume[2], Features::CollisionVisualizer::color_PhysicsVolume[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_PhysicsVolume", color_PhysicsVolume);
+
+
+	std::array<float, 4> color_BlockingVolume = { Features::CollisionVisualizer::color_BlockingVolume[0], Features::CollisionVisualizer::color_BlockingVolume[1],
+												  Features::CollisionVisualizer::color_BlockingVolume[2], Features::CollisionVisualizer::color_BlockingVolume[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_BlockingVolume", color_BlockingVolume);
+
+
+	std::array<float, 4> color_TriggerVolume = { Features::CollisionVisualizer::color_TriggerVolume[0], Features::CollisionVisualizer::color_TriggerVolume[1],
+												 Features::CollisionVisualizer::color_TriggerVolume[2], Features::CollisionVisualizer::color_TriggerVolume[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_TriggerVolume", color_TriggerVolume);
+
+
+	std::array<float, 4> color_PostProcessVolume = { Features::CollisionVisualizer::color_PostProcessVolume[0], Features::CollisionVisualizer::color_PostProcessVolume[1],
+													 Features::CollisionVisualizer::color_PostProcessVolume[2], Features::CollisionVisualizer::color_PostProcessVolume[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_PostProcessVolume", color_PostProcessVolume);
+
+
+	std::array<float, 4> color_Other = { Features::CollisionVisualizer::color_Other[0], Features::CollisionVisualizer::color_Other[1],
+										 Features::CollisionVisualizer::color_Other[2], Features::CollisionVisualizer::color_Other[3] };
+	featuresConfig.Set("Features_CollisionVisualizer_color_Other", color_Other);
+
+
+	featuresConfig.Set("Features_CollisionVisualizer_thickness", Features::CollisionVisualizer::thickness);
+#endif
+
+#ifdef ACTORS_TRACKING
+	std::array<float, 4> actorColor = { Features::ActorsTracker::actorColor[0], Features::ActorsTracker::actorColor[1],
+										Features::ActorsTracker::actorColor[2], Features::ActorsTracker::actorColor[3] };
+	featuresConfig.Set("Features_ActorsTracker_actorColor", actorColor);
+
+	featuresConfig.Set("Features_ActorsTracker_checkValidness", Features::ActorsTracker::checkValidness);
+
+	featuresConfig.Set("Features_ActorsTracker_showDistance", Features::ActorsTracker::showDistance);
+#endif
+
 #ifdef FREE_CAMERA
+	featuresConfig.Set("Features_FreeCamera_forceDisablePlayerInput", Features::FreeCamera::forceDisablePlayerInput);
+
 	featuresConfig.Set("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
 	featuresConfig.Set("Features_FreeCamera_cameraRotationStep", Features::FreeCamera::cameraRotationStep);
 
@@ -1410,6 +1682,63 @@ void Features::Debug::ThreadSafeUpdate()
 
 
 
+Unreal::Actor::DataStructure Features::ActorsList::GetActorData(SDK::AActor* actorReference)
+{
+	Unreal::Actor::DataStructure actorData = {};
+
+	if (actorReference == nullptr)
+		return actorData;
+
+	actorData.reference = actorReference;
+
+	Unreal::Class::Hierarchy classHierarchy = Unreal::Class::GetClassHierarchy(actorReference);
+	actorData.className = classHierarchy.derivedClass->GetFullName();
+	for (SDK::UClass* superClass : classHierarchy.superClasses)
+	{
+		actorData.superClassesNames.push_back(superClass->GetFullName());
+	}
+
+	actorData.objectName = actorReference->GetFullName();
+
+#ifdef ACTOR_KIND
+	actorData.kind = Unreal::Actor::GetActorKind(actor);
+#endif
+
+	actorData.transform = Unreal::Actor::GetTransform(actorReference);
+
+	actorData.mobility = Unreal::Actor::GetMobility(actorReference);
+
+	actorData.isCollisionEnabled = Unreal::Actor::GetIsCollisionEnabled(actorReference);
+
+	actorData.isVisible = Unreal::Actor::GetIsVisible(actorReference);
+
+	actorData.customTimeDilation = Unreal::Actor::GetCustomTimeDilation(actorReference);
+
+
+	std::vector<SDK::UActorComponent*> foundComponents = Unreal::ActorComponent::GetAll(actorReference);
+	for (SDK::UActorComponent* component : foundComponents)
+	{
+		Unreal::ActorComponent::DataStructure componentData = {};
+
+		componentData.reference = component;
+		componentData.className = component->Class->GetFullName();
+		componentData.objectName = component->GetFullName();
+
+		componentData.isActive = component->bIsActive;
+		componentData.autoActivate = component->bAutoActivate;
+		componentData.editorOnly = component->bIsEditorOnly;
+
+		componentData.netAddressible = component->bNetAddressable;
+		componentData.replicates = component->bReplicates;
+
+		componentData.creationMethod = component->CreationMethod;
+
+		actorData.components.push_back(componentData);
+	}
+
+	return actorData;
+}
+
 void Features::ActorsList::Update()
 {
 	Features::ActorsList::actors.clear();
@@ -1417,56 +1746,22 @@ void Features::ActorsList::Update()
 	std::vector<SDK::AActor*> foundActors = Unreal::Actor::GetAll();
 	for (SDK::AActor* actor : foundActors)
 	{
-		Unreal::Actor::DataStructure actorData = {};
+		Features::ActorsList::actors.push_back(GetActorData(actor));
+	}
+}
 
-		actorData.reference = actor;
+void Features::ActorsList::Update(const Unreal::Actor::DataStructure& actor)
+{
+	if (actor.reference == nullptr)
+		return;
 
-		Unreal::Class::Hierarchy classHierarchy = Unreal::Class::GetClassHierarchy(actor);
-		actorData.className = classHierarchy.derivedClass->GetFullName();
-		for (SDK::UClass* superClass : classHierarchy.superClasses)
+	for (Unreal::Actor::DataStructure& currentActor : Features::ActorsList::actors) // <-- Reference!
+	{
+		if (currentActor.reference == actor.reference)
 		{
-			actorData.superClassesNames.push_back(superClass->GetFullName());
+			currentActor = GetActorData(actor.reference);
+			return;
 		}
-
-		actorData.objectName = actor->GetFullName();
-
-#ifdef ACTOR_KIND
-		actorData.kind = Unreal::Actor::GetActorKind(actor);
-#endif
-
-		actorData.transform = Unreal::Actor::GetTransform(actor);
-
-		actorData.mobility = Unreal::Actor::GetMobility(actor);
-
-		actorData.isCollisionEnabled = Unreal::Actor::GetIsCollisionEnabled(actor);
-
-		actorData.isVisible = Unreal::Actor::GetIsVisible(actor);
-
-		actorData.customTimeDilation = Unreal::Actor::GetCustomTimeDilation(actor);
-
-
-		std::vector<SDK::UActorComponent*> foundComponents = Unreal::ActorComponent::GetAll(actor);
-		for (SDK::UActorComponent* component : foundComponents)
-		{
-			Unreal::ActorComponent::DataStructure componentData = {};
-
-			componentData.reference = component;
-			componentData.className = component->Class->GetFullName();
-			componentData.objectName = component->GetFullName();
-
-			componentData.isActive = component->bIsActive;
-			componentData.autoActivate = component->bAutoActivate;
-			componentData.editorOnly = component->bIsEditorOnly;
-
-			componentData.netAddressible = component->bNetAddressable;
-			componentData.replicates = component->bReplicates;
-
-			componentData.creationMethod = component->CreationMethod;
-
-			actorData.components.push_back(componentData);
-		}
-
-		Features::ActorsList::actors.push_back(actorData);
 	}
 }
 
@@ -1476,21 +1771,47 @@ void Features::ActorsList::Filter()
 	switch (Features::ActorsList::filterMode)
 	{
 		case ImGui::E_ObjectFilterMode::ClassName:
-			Features::ActorsList::filteredActors = Unreal::Actor::FilterByClassName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Features::ActorsList::filterDistance);
+			Features::ActorsList::filteredActors = Unreal::Actor::FilterByClassName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Math::Metre_ToUnit(Features::ActorsList::filterDistance));
 			break;
 
 		case ImGui::E_ObjectFilterMode::ObjectName:
-			Features::ActorsList::filteredActors = Unreal::Actor::FilterByObjectName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Features::ActorsList::filterDistance);
+			Features::ActorsList::filteredActors = Unreal::Actor::FilterByObjectName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Math::Metre_ToUnit(Features::ActorsList::filterDistance));
 			break;
 
 		case ImGui::E_ObjectFilterMode::All:
-			Features::ActorsList::filteredActors = Unreal::Actor::FilterByClassAndObjectName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Features::ActorsList::filterDistance);
+			Features::ActorsList::filteredActors = Unreal::Actor::FilterByClassAndObjectName(Features::ActorsList::actors, Features::ActorsList::filterBuffer, Features::ActorsList::filterCaseSensitive, Math::Metre_ToUnit(Features::ActorsList::filterDistance));
 			break;
 	}
 }
 
 
 
+
+Unreal::UserWidget::DataStructure Features::WidgetsList::GetWidgetData(SDK::UUserWidget* widgetReference)
+{
+	Unreal::UserWidget::DataStructure widgetData = {};
+
+	if (widgetReference == nullptr)
+		return widgetData;
+
+	widgetData.reference = widgetReference;
+
+	Unreal::Class::Hierarchy classHierarchy = Unreal::Class::GetClassHierarchy(widgetReference);
+	widgetData.className = classHierarchy.derivedClass->GetFullName();
+	for (SDK::UClass* superClass : classHierarchy.superClasses)
+	{
+		widgetData.superClassesNames.push_back(superClass->GetFullName());
+	}
+
+	widgetData.objectName = widgetReference->GetFullName();
+
+	widgetData.parent = widgetReference->GetParent();
+
+	widgetData.isInViewport = widgetReference->IsInViewport();
+	widgetData.visibility = widgetReference->Visibility;
+
+	return widgetData;
+}
 
 void Features::WidgetsList::Update()
 {
@@ -1499,18 +1820,22 @@ void Features::WidgetsList::Update()
 	std::vector<SDK::UUserWidget*> foundWidgets = Unreal::UserWidget::GetAll();
 	for (SDK::UUserWidget* widget : foundWidgets)
 	{
-		Unreal::UserWidget::DataStructure widgetData = {};
+		Features::WidgetsList::widgets.push_back(GetWidgetData(widget));
+	}
+}
 
-		widgetData.reference = widget;
-		widgetData.className = widget->Class->GetFullName();
-		widgetData.objectName = widget->GetFullName();
+void Features::WidgetsList::Update(const Unreal::UserWidget::DataStructure& widget)
+{
+	if (widget.reference == nullptr)
+		return;
 
-		widgetData.parent = widget->GetParent();
-
-		widgetData.isInViewport = widget->IsInViewport();
-		widgetData.visibility = widget->Visibility;
-
-		Features::WidgetsList::widgets.push_back(widgetData);
+	for (Unreal::UserWidget::DataStructure& currentWidget : Features::WidgetsList::widgets) // <-- Reference!
+	{
+		if (currentWidget.reference == widget.reference)
+		{
+			currentWidget = GetWidgetData(widget.reference);
+			return;
+		}
 	}
 }
 
@@ -1536,6 +1861,27 @@ void Features::WidgetsList::Filter()
 
 
 
+Unreal::Object::DataStructure Features::ObjectsList::GetObjectData(SDK::UObject* objectReference)
+{
+	Unreal::Object::DataStructure objectData = {};
+
+	if (objectReference == nullptr)
+		return objectData;
+
+	objectData.reference = objectReference;
+
+	Unreal::Class::Hierarchy classHierarchy = Unreal::Class::GetClassHierarchy(objectReference);
+	objectData.className = classHierarchy.derivedClass->GetFullName();
+	for (SDK::UClass* superClass : classHierarchy.superClasses)
+	{
+		objectData.superClassesNames.push_back(superClass->GetFullName());
+	}
+
+	objectData.objectName = objectReference->GetFullName();
+
+	return objectData;
+}
+
 void Features::ObjectsList::Update()
 {
 	Features::ObjectsList::objects.clear();
@@ -1549,20 +1895,22 @@ void Features::ObjectsList::Update()
 	std::vector<SDK::UObject*> foundObjects = Unreal::Object::GetAll(excludeClasses);
 	for (SDK::UObject* object : foundObjects)
 	{
-		Unreal::Object::DataStructure objectData = {};
+		Features::ObjectsList::objects.push_back(GetObjectData(object));
+	}
+}
 
-		objectData.reference = object;
+void Features::ObjectsList::Update(const Unreal::Object::DataStructure& object)
+{
+	if (object.reference == nullptr)
+		return;
 
-		Unreal::Class::Hierarchy classHierarchy = Unreal::Class::GetClassHierarchy(object);
-		objectData.className = classHierarchy.derivedClass->GetFullName();
-		for (SDK::UClass* superClass : classHierarchy.superClasses)
+	for (Unreal::Object::DataStructure& currentObject : Features::ObjectsList::objects) // <-- Reference!
+	{
+		if (currentObject.reference == object.reference)
 		{
-			objectData.superClassesNames.push_back(superClass->GetFullName());
+			currentObject = GetObjectData(object.reference);
+			return;
 		}
-
-		objectData.objectName = object->GetFullName();
-
-		Features::ObjectsList::objects.push_back(objectData);
 	}
 }
 
@@ -1772,7 +2120,7 @@ void Features::DirectionalMovement::Worker()
 				SDK::FVector finalDirection = Math::Vector_Normal(movementDirection);
 
 				/* Calculate the target location based on the current location, direction, and step size. */
-				SDK::FVector currentLocation = character->K2_GetActorLocation();
+				SDK::FVector currentLocation = Unreal::Actor::GetLocation(character);
 				SDK::FVector finalLocation = Math::Vector_Add(currentLocation, finalDirection * Features::DirectionalMovement::step);
 
 				Unreal::Actor::SweepTo(character, finalLocation);
@@ -1822,9 +2170,12 @@ bool Features::Positions::ReadPositionFromConfig(ConfigInstance* positionsConfig
 		return false;
 
 	positionEntry->title = positionsConfig->Get<std::string>(entryName_Title).value_or(std::string());
-	positionEntry->location = positionsConfig->Get<SDK::FVector>(entryName_Location).value_or(SDK::FVector());
-	SDK::FVector vRotation = positionsConfig->Get<SDK::FVector>(entryName_Rotation).value_or(SDK::FVector());
-	positionEntry->rotation = SDK::FRotator(vRotation.X, vRotation.Y, vRotation.Z);
+
+	std::array<float, 3> location = positionsConfig->Get<std::array<float, 3>>(entryName_Location).value_or({ 0.0f, 0.0f, 0.0f });
+	positionEntry->location = { location[0], location[1], location[2] };
+
+	std::array<float, 3> rotation = positionsConfig->Get<std::array<float, 3>>(entryName_Rotation).value_or({ 0.0f, 0.0f, 0.0f });
+	positionEntry->rotation = { rotation[0], rotation[1], rotation[2] };
 
 	return true;
 }
@@ -1864,9 +2215,12 @@ void Features::Positions::Save()
 		std::string entryName_Rotation = entryName_Base + Positions::entryRotationSuffix;
 
 		positionsConfig.Set(entryName_Title, entries[i].title);
-		positionsConfig.Set(entryName_Location, entries[i].location);
-		SDK::FRotator rotation = entries[i].rotation;
-		positionsConfig.Set(entryName_Rotation, SDK::FVector(rotation.Pitch, rotation.Yaw, rotation.Roll));
+
+		std::array<float, 3> location = { entries[i].location.X, entries[i].location.Y, entries[i].location.Z };
+		positionsConfig.Set(entryName_Location, location);
+
+		std::array<float, 3> rotation = { entries[i].rotation.Pitch, entries[i].rotation.Yaw, entries[i].rotation.Roll };
+		positionsConfig.Set(entryName_Rotation, rotation);
 	}
 
 	positionsConfig.Save();
@@ -1886,9 +2240,9 @@ bool Features::ActorTrace::Trace()
 	if (playerController == nullptr || playerController->PlayerCameraManager == nullptr)
 		return false;
 
-	SDK::FVector cameraLocation = playerController->PlayerCameraManager->K2_GetActorLocation();
+	SDK::FVector cameraLocation = Unreal::Actor::GetLocation(playerController->PlayerCameraManager);
 	SDK::FVector cameraForwardVector = playerController->PlayerCameraManager->GetActorForwardVector();
-	SDK::FVector traceEndLocation = cameraLocation + (cameraForwardVector * Features::ActorTrace::traceLength);
+	SDK::FVector traceEndLocation = cameraLocation + (cameraForwardVector * Math::Metre_ToUnit(Features::ActorTrace::traceDistance));
 
 	SDK::TArray<SDK::AActor*> actorsToIgnore;
 	if (SDK::ACharacter* character = Unreal::Character::Get())
@@ -1906,35 +2260,17 @@ bool Features::ActorTrace::Trace()
 		SDK::UObject* hitObject = hitResult.HitObjectHandle.ReferenceObject.Get();
 		if (hitObject)
 		{
-
 			Features::ActorTrace::object.reference = hitObject;
 			Features::ActorTrace::object.className = hitObject->Class->GetFullName();
 			Features::ActorTrace::object.objectName = hitObject->GetFullName();
-
-			if (Features::Menu::enableConsoleOutput)
-				Unreal::Console::Print("[Actor Trace] " + Features::ActorTrace::object.objectName);
-		}
-		else
-		{
-			if (Features::Menu::enableConsoleOutput)
-				Unreal::Console::Print("[Actor Trace] Didn't hit any object.");
 		}
 #else
 		SDK::AActor* hitActor = hitResult.Actor.Get();
 		if (hitActor)
 		{
-
 			Features::ActorTrace::actor.reference = hitActor;
 			Features::ActorTrace::actor.className = hitActor->Class->GetFullName();
 			Features::ActorTrace::actor.objectName = hitActor->GetFullName();
-
-			if (Features::Menu::enableConsoleOutput)
-				Unreal::Console::Print("[Actor Trace] " + Features::ActorTrace::actor.objectName);
-		}
-		else
-		{
-			if (Features::Menu::enableConsoleOutput)
-				Unreal::Console::Print("[Actor Trace] Didn't hit any actor.");
 		}
 #endif
 	}
@@ -1951,35 +2287,9 @@ bool Features::ActorTrace::Trace()
 
 void Features::ActorTrace::Draw()
 {
-	ImDrawList* drawList = ImGui::GetDrawList();
-	if (drawList)
+	if (ImDrawList* drawList = ImGui::GetDrawList())
 	{
-		if (Features::ActorTrace::showOnScreen)
-		{
-			ImGui::Viewport viewport = ImGui::GetViewport();
-
-#ifdef UE5
-			const char* labelText = Features::ActorTrace::traceHit ? Features::ActorTrace::object.objectName.c_str() : "No Object Traced";
-#else
-			const char* labelText = Features::ActorTrace::traceHit ? Features::ActorTrace::actor.objectName.c_str() : "No Actor Traced";
-#endif
-			ImVec2 labelSize = ImGui::CalcTextSize(labelText);
-			ImVec2 labelPosition = ImVec2
-			(
-				/*
-					Horizontal: ImGui Viewport center;
-					Vertical: ImGui Viewport bottom - 12 pixels.
-
-					Flooring the values allows to avoid potential subpixel conflicts.
-				*/
-				floorf(viewport.iViewportSize.x + (viewport.iViewportSize.x - labelSize.x) * 0.5f),
-				floorf(viewport.iViewportSize.y - labelSize.y - 12.0f)
-			);
-
-			drawList->AddText(labelPosition, ImGui::GetColorU32(ImGuiCol_Text), labelText);
-		}
-
-		if (Features::ActorTrace::showLineTrace && Features::ActorTrace::traceCast)
+		if (Features::ActorTrace::showOnScreen && Features::ActorTrace::traceCast)
 		{
 			SDK::FVector2D screenStartPosition;
 			SDK::FVector2D screenEndPosition;
@@ -2048,6 +2358,26 @@ void Features::ActorTrace::Draw()
 				else
 					drawList->AddCircleFilled(position, traceEndCircleRadius, color);
 			}
+
+
+			if (endPositionProjected)
+			{
+#ifdef UE5
+				const char* labelText = Features::ActorTrace::traceHit ? Features::ActorTrace::object.objectName.c_str() : "No Object Traced";
+#else
+				const char* labelText = Features::ActorTrace::traceHit ? Features::ActorTrace::actor.objectName.c_str() : "No Actor Traced";
+#endif
+				ImVec2 labelSize = ImGui::CalcTextSize(labelText);
+
+				ImVec2 labelPosition = 
+				{ 
+					/* Flooring the values allows to avoid potential subpixel conflicts. */
+					floorf(screenEndPosition.X - (labelSize.x * 0.5)),
+					floorf((float)screenEndPosition.Y - 36.0f)
+				};
+
+				drawList->AddText(labelPosition, color, labelText);
+			}
 		}
 	}
 }
@@ -2068,24 +2398,21 @@ void Features::ActorTrace::ThreadSafeDraw()
 #ifdef ACTORS_TRACKING
 void Features::ActorsTracker::Draw()
 {
-	SDK::APlayerController* playerController = Unreal::PlayerController::Get();
-	if (playerController)
+	if (SDK::APlayerController* playerController = Unreal::PlayerController::Get())
 	{
-		ImDrawList* drawList = ImGui::GetDrawList();
-		if (drawList)
+		if (ImDrawList* drawList = ImGui::GetDrawList())
 		{
 			for (Unreal::Actor::DataStructure& actor : Features::ActorsList::filteredActors) // <-- Reference!
 			{
 				SDK::FVector2D screenPosition;
 				if (SDK::UGameplayStatics::ProjectWorldToScreen(playerController, actor.transform.location, &screenPosition, false))
 				{
-					ImU32 color;
-					if (Features::ActorsList::filterCheckValidness)
-						color = Math::ColorFloat4_ToU32(Unreal::Actor::IsValid(actor.reference) ? Features::ActorsList::color_Valid : Features::ActorsList::color_Invalid);
-					else
-						color = IM_COL32(255, 255, 255, 255);
-
-					drawList->AddCircleFilled({ (float)screenPosition.X, (float)screenPosition.Y }, 8.0f, color);
+					ImU32 actorColor = Math::ColorFloat4_ToU32(Features::ActorsTracker::actorColor);
+					drawList->AddCircleFilled({ (float)screenPosition.X, (float)screenPosition.Y }, 8.0f, Features::ActorsTracker::checkValidness ? 
+																												(Unreal::Actor::IsValid(actor.reference) ? 
+																														Math::ColorFloat4_ToU32(Features::ActorsList::color_Valid) 
+																													  : Math::ColorFloat4_ToU32(Features::ActorsList::color_Invalid)) 
+																										  : actorColor);
 
 					const char* labelText = actor.objectName.c_str();
 					ImVec2 labelSize = ImGui::CalcTextSize(labelText);
@@ -2093,10 +2420,26 @@ void Features::ActorsTracker::Draw()
 					(
 						/* Flooring the values allows to avoid potential subpixel conflicts. */
 						floorf(screenPosition.X - (labelSize.x * 0.5)),
-						floorf(screenPosition.Y - 32.0f)
+						floorf(screenPosition.Y - 36.0f)
 					);
+					drawList->AddText(labelPosition, actorColor, labelText);
 
-					drawList->AddText(labelPosition, color, labelText);
+					if (Features::ActorsTracker::showDistance)
+					{
+						SDK::FVector playerLocation = Unreal::PlayerController::GetLocation(playerController);
+						float distance = Math::Vector_Distance(playerLocation, actor.transform.location);
+
+						std::string distanceString = std::format("{:.0f}m", Math::Unit_ToMetre(distance));
+						const char* distanceText = distanceString.c_str();
+						ImVec2 distanceSize = ImGui::CalcTextSize(distanceText);
+						ImVec2 distancePosition = ImVec2
+						(
+							/* Flooring the values allows to avoid potential subpixel conflicts. */
+							floorf(screenPosition.X - (distanceSize.x * 0.5)),
+							floorf(screenPosition.Y + 24.0f)
+						);
+						drawList->AddText(distancePosition, actorColor, distanceText);
+					}
 				}
 			}
 		}
@@ -2291,6 +2634,15 @@ bool Features::FreeCamera::Enable()
 		{
 			Features::FreeCamera::lastViewTargetCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
 			Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
+
+			if (Features::FreeCamera::forceDisablePlayerInput)
+			{
+				Features::FreeCamera::wasMoveInputIgnored = playerController->IsMoveInputIgnored();
+				playerController->SetIgnoreMoveInput(true);
+
+				Features::FreeCamera::wasLookInputIgnored = playerController->IsLookInputIgnored();
+				playerController->SetIgnoreLookInput(true);
+			}
 		}
 
 		return true;
@@ -2309,9 +2661,16 @@ bool Features::FreeCamera::Disable()
 	if (Features::FreeCamera::lastViewTarget != nullptr)
 	{
 		Features::FreeCamera::lastViewTarget->CustomTimeDilation = Features::FreeCamera::lastViewTargetCustomTimeDilation;
-		Unreal::PlayerController::SetViewTarget(Features::FreeCamera::lastViewTarget);
 
+		if (Features::FreeCamera::forceDisablePlayerInput)
+		{
+			playerController->SetIgnoreMoveInput(Features::FreeCamera::wasMoveInputIgnored);
+			playerController->SetIgnoreLookInput(Features::FreeCamera::wasLookInputIgnored);
+		}
+
+		Unreal::PlayerController::SetViewTarget(Features::FreeCamera::lastViewTarget);
 		Features::FreeCamera::lastViewTarget = nullptr;
+
 		return true;
 	}
 	else if (playerController->Pawn != nullptr)
@@ -2362,7 +2721,7 @@ bool Features::FreeCamera::Rotate(const float& horizontalStep, const float& vert
 	if (IsEnabled() == false)
 		return false;
 
-	SDK::FRotator freeCameraRotation = Features::FreeCamera::cameraReference->K2_GetActorRotation();
+	SDK::FRotator freeCameraRotation = Unreal::Actor::GetRotation(Features::FreeCamera::cameraReference);
 	freeCameraRotation.Yaw += horizontalStep;
 
 	float newPitch = freeCameraRotation.Pitch + verticalStep;
@@ -2385,9 +2744,9 @@ bool Features::FreeCamera::TeleportCameraToPlayer()
 
 	SDK::FVector playerLocation;
 	if (Features::FreeCamera::lastViewTarget != nullptr)
-		playerLocation = Features::FreeCamera::lastViewTarget->K2_GetActorLocation();
+		playerLocation = Unreal::Actor::GetLocation(Features::FreeCamera::lastViewTarget);
 	else if (playerController->Pawn != nullptr)
-		playerLocation = playerController->Pawn->K2_GetActorLocation();
+		playerLocation = Unreal::Actor::GetLocation(playerController->Pawn);
 	else
 		return false;
 
@@ -2403,7 +2762,7 @@ bool Features::FreeCamera::TeleportPlayerToCamera()
 	if (playerController == nullptr || playerController->Pawn == nullptr)
 		return false;
 
-	SDK::FVector cameraLocation = Features::FreeCamera::cameraReference->K2_GetActorLocation();
+	SDK::FVector cameraLocation = Unreal::Actor::GetLocation(Features::FreeCamera::cameraReference);
 	return Unreal::Actor::TeleportTo(playerController->Pawn, cameraLocation);
 }
 #endif
@@ -2564,12 +2923,9 @@ void Inputs::Keybindings::Worker()
 			if (GUI::GetIsMenuActive() == false)
 			{
 #ifdef ACTOR_TRACE
-				if (Features::ActorTrace::enabled)
+				if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorTrace))
 				{
-					if (ImGui::IsKeyBindingPressed(&Inputs::Keybindings::debug_ActorTrace))
-					{
-						GUI::PlayActionSound(Features::ActorTrace::Trace());
-					}
+					GUI::PlayActionSound(Features::ActorTrace::Trace());
 				}
 #endif
 
@@ -2591,7 +2947,7 @@ void Inputs::Keybindings::Worker()
 						Features::ActorsList::Update();
 
 						if (Features::ActorsList::filterDistance == 0.0f)
-							Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
+							Features::ActorsList::filterDistance = 20.0f;
 
 						Features::ActorsList::Filter();
 
@@ -2612,7 +2968,7 @@ void Inputs::Keybindings::Worker()
 						Features::ActorsList::Update();
 
 						if (Features::ActorsList::filterDistance == 0.0f)
-							Features::ActorsList::filterDistance = 2400.0f; // 24 meters.
+							Features::ActorsList::filterDistance = 20.0f;
 
 						Features::ActorsList::Filter();
 
@@ -3357,7 +3713,8 @@ void Templates::Functions::Draw(SDK::UObject* objectReference)
 				ImGui::PushID(function.memoryAddress.c_str());
 				if (ImGui::TreeNode(function.name.c_str()))
 				{
-					ImGui::Text("Address: %s", function.memoryAddress);
+					ImGui::TextCopyable("Name: %s", function.name.c_str());
+					ImGui::TextCopyable("Address: %s", function.memoryAddress.c_str());
 					if (ImGui::Button("Call"))
 					{
 						bool wasSuccessful = Unreal::Function::CallFunction(objectReference, function.reference);
@@ -3587,8 +3944,8 @@ void Templates::Menus::Debug::Sub_Engine()
 	{
 		if (ImGui::CollapsingHeader("Details##Engine"))
 		{
-			ImGui::Text("Engine Class: %s", Features::Debug::engine.className.c_str());
-			ImGui::Text("Engine Object: %s", Features::Debug::engine.objectName.c_str());
+			ImGui::TextCopyable("Engine Class: %s", Features::Debug::engine.className.c_str());
+			ImGui::TextCopyable("Engine Object: %s", Features::Debug::engine.objectName.c_str());
 
 			ImGui::NewLine();
 
@@ -3599,8 +3956,8 @@ void Templates::Menus::Debug::Sub_Engine()
 			{
 				if (ImGui::TreeNode("Details##GameViewportClient"))
 				{
-					ImGui::Text("Viewport Client Class: %s", Features::Debug::engine.gameViewportClient.className.c_str());
-					ImGui::Text("Viewport Client Object: %s", Features::Debug::engine.gameViewportClient.objectName.c_str());
+					ImGui::TextCopyable("Viewport Client Class: %s", Features::Debug::engine.gameViewportClient.className.c_str());
+					ImGui::TextCopyable("Viewport Client Object: %s", Features::Debug::engine.gameViewportClient.objectName.c_str());
 
 					ImGui::NewLine();
 
@@ -3614,8 +3971,8 @@ void Templates::Menus::Debug::Sub_Engine()
 
 						if (ImGui::TreeNode("Details##Console"))
 						{
-							ImGui::Text("Console Class: %s", Features::Debug::engine.gameViewportClient.console.className.c_str());
-							ImGui::Text("Console Object: %s", Features::Debug::engine.gameViewportClient.console.objectName.c_str());
+							ImGui::TextCopyable("Console Class: %s", Features::Debug::engine.gameViewportClient.console.className.c_str());
+							ImGui::TextCopyable("Console Object: %s", Features::Debug::engine.gameViewportClient.console.objectName.c_str());
 
 							ImGui::TreePop();
 						}
@@ -3739,8 +4096,8 @@ void Templates::Menus::Debug::Sub_GameInstance()
 	{
 		if (ImGui::CollapsingHeader("Details##GameInstance"))
 		{
-			ImGui::Text("Game Instance Class: %s", Features::Debug::gameInstance.className.c_str());
-			ImGui::Text("Game Instance Object: %s", Features::Debug::gameInstance.objectName.c_str());
+			ImGui::TextCopyable("Game Instance Class: %s", Features::Debug::gameInstance.className.c_str());
+			ImGui::TextCopyable("Game Instance Object: %s", Features::Debug::gameInstance.objectName.c_str());
 
 			ImGui::NewLine();
 
@@ -3751,8 +4108,8 @@ void Templates::Menus::Debug::Sub_GameInstance()
 			{
 				if (ImGui::TreeNode("Details##OnlineSession"))
 				{
-					ImGui::Text("Online Session Class: %s", Features::Debug::gameInstance.onlineSession.className.c_str());
-					ImGui::Text("Online Session Object: %s", Features::Debug::gameInstance.onlineSession.objectName.c_str());
+					ImGui::TextCopyable("Online Session Class: %s", Features::Debug::gameInstance.onlineSession.className.c_str());
+					ImGui::TextCopyable("Online Session Object: %s", Features::Debug::gameInstance.onlineSession.objectName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -3770,8 +4127,8 @@ void Templates::Menus::Debug::Sub_GameMode()
 	{
 		if (ImGui::CollapsingHeader("Details##GameMode"))
 		{
-			ImGui::Text("Game Mode Class: %s", Features::Debug::gameMode.className.c_str());
-			ImGui::Text("Game Mode Object: %s", Features::Debug::gameMode.objectName.c_str());
+			ImGui::TextCopyable("Game Mode Class: %s", Features::Debug::gameMode.className.c_str());
+			ImGui::TextCopyable("Game Mode Object: %s", Features::Debug::gameMode.objectName.c_str());
 
 			ImGui::NewLine();
 
@@ -3782,8 +4139,8 @@ void Templates::Menus::Debug::Sub_GameMode()
 			{
 				if (ImGui::TreeNode("Details##GameSession"))
 				{
-					ImGui::Text("Game Session Class: %s", Features::Debug::gameMode.gameSession.className.c_str());
-					ImGui::Text("Game Session Object: %s", Features::Debug::gameMode.gameSession.objectName.c_str());
+					ImGui::TextCopyable("Game Session Class: %s", Features::Debug::gameMode.gameSession.className.c_str());
+					ImGui::TextCopyable("Game Session Object: %s", Features::Debug::gameMode.gameSession.objectName.c_str());
 
 					ImGui::NewLine();
 
@@ -3826,7 +4183,7 @@ void Templates::Menus::Debug::Sub_GameMode()
 
 					ImGui::NewLine();
 
-					ImGui::ReadOnlyInputText("Session Name:", Features::Debug::gameMode.gameSession.sessionName.c_str(), true);
+					ImGui::ReadOnlyInputText("Session Name:", Features::Debug::gameMode.gameSession.sessionName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -3840,7 +4197,7 @@ void Templates::Menus::Debug::Sub_GameMode()
 			ImGui::NewLine();
 
 			ImGui::TextBoolColored("Start Players As Spectator:", Features::Debug::gameMode.startPlayersAsSpectators);
-			ImGui::ReadOnlyInputText("Default Player Name:", Features::Debug::gameMode.defaultPlayerName.c_str(), true);
+			ImGui::ReadOnlyInputText("Default Player Name:", Features::Debug::gameMode.defaultPlayerName.c_str());
 
 			ImGui::NewLine();
 
@@ -3865,7 +4222,7 @@ void Templates::Menus::Debug::Sub_GameMode()
 
 			ImGui::NewLine();
 
-			ImGui::ReadOnlyInputText("Options:", Features::Debug::gameMode.options.c_str(), true);
+			ImGui::ReadOnlyInputText("Options:", Features::Debug::gameMode.options.c_str());
 		}
 	}
 }
@@ -3879,8 +4236,8 @@ void Templates::Menus::Debug::Sub_PlayerController()
 	{
 		if (ImGui::CollapsingHeader("Details##PlayerController"))
 		{
-			ImGui::Text("Player Controller Class: %s", Features::Debug::playerController.className.c_str());
-			ImGui::Text("Player Controller Object: %s", Features::Debug::playerController.objectName.c_str());
+			ImGui::TextCopyable("Player Controller Class: %s", Features::Debug::playerController.className.c_str());
+			ImGui::TextCopyable("Player Controller Object: %s", Features::Debug::playerController.objectName.c_str());
 
 			ImGui::NewLine();
 
@@ -3891,8 +4248,8 @@ void Templates::Menus::Debug::Sub_PlayerController()
 			{
 				if (ImGui::TreeNode("Details##Pawn"))
 				{
-					ImGui::Text("Pawn Class: %s", Features::Debug::playerController.pawn.className.c_str());
-					ImGui::Text("Pawn Object: %s", Features::Debug::playerController.pawn.objectName.c_str());
+					ImGui::TextCopyable("Pawn Class: %s", Features::Debug::playerController.pawn.className.c_str());
+					ImGui::TextCopyable("Pawn Object: %s", Features::Debug::playerController.pawn.objectName.c_str());
 					ImGui::TextVectorColored("Location:", Features::Debug::playerController.pawn.transform.location);
 					ImGui::TextRotatorColored("Rotation:", Features::Debug::playerController.pawn.transform.rotation);
 					ImGui::TextVectorColored("Scale:", Features::Debug::playerController.pawn.transform.scale);
@@ -3918,8 +4275,8 @@ void Templates::Menus::Debug::Sub_PlayerController()
 			{
 				if (ImGui::TreeNode("Details##CameraManager"))
 				{
-					ImGui::Text("Camera Manager Class: %s", Features::Debug::playerController.cameraManager.className.c_str());
-					ImGui::Text("Camera Manager Object: %s", Features::Debug::playerController.cameraManager.objectName.c_str());
+					ImGui::TextCopyable("Camera Manager Class: %s", Features::Debug::playerController.cameraManager.className.c_str());
+					ImGui::TextCopyable("Camera Manager Object: %s", Features::Debug::playerController.cameraManager.objectName.c_str());
 					ImGui::TextVectorColored("Location:", Features::Debug::playerController.cameraManager.transform.location);
 					ImGui::TextRotatorColored("Rotation:", Features::Debug::playerController.cameraManager.transform.rotation);
 					ImGui::TextVectorColored("Scale:", Features::Debug::playerController.cameraManager.transform.scale);
@@ -3937,8 +4294,8 @@ void Templates::Menus::Debug::Sub_PlayerController()
 			{
 				if (ImGui::TreeNode("Details##CheatManager"))
 				{
-					ImGui::Text("Cheat Manager Class: %s", Features::Debug::playerController.cheatManager.className.c_str());
-					ImGui::Text("Cheat Manager Object: %s", Features::Debug::playerController.cheatManager.objectName.c_str());
+					ImGui::TextCopyable("Cheat Manager Class: %s", Features::Debug::playerController.cheatManager.className.c_str());
+					ImGui::TextCopyable("Cheat Manager Object: %s", Features::Debug::playerController.cheatManager.objectName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -3967,8 +4324,8 @@ void Templates::Menus::Debug::Sub_World()
 	{
 		if (ImGui::CollapsingHeader("Details##World"))
 		{
-			ImGui::Text("World Class: %s", Features::Debug::world.className.c_str());
-			ImGui::Text("World Object: %s", Features::Debug::world.objectName.c_str());
+			ImGui::TextCopyable("World Class: %s", Features::Debug::world.className.c_str());
+			ImGui::TextCopyable("World Object: %s", Features::Debug::world.objectName.c_str());
 
 			ImGui::NewLine();
 
@@ -3979,8 +4336,8 @@ void Templates::Menus::Debug::Sub_World()
 			{
 				if (ImGui::TreeNode("Details##GameState"))
 				{
-					ImGui::Text("Game State Class: %s", Features::Debug::world.gameState.className.c_str());
-					ImGui::Text("Game State Object: %s", Features::Debug::world.gameState.objectName.c_str());
+					ImGui::TextCopyable("Game State Class: %s", Features::Debug::world.gameState.className.c_str());
+					ImGui::TextCopyable("Game State Object: %s", Features::Debug::world.gameState.objectName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -3995,8 +4352,8 @@ void Templates::Menus::Debug::Sub_World()
 			{
 				if (ImGui::TreeNode("Details##NetDriver"))
 				{
-					ImGui::Text("Net Driver Class: %s", Features::Debug::world.netDriver.className.c_str());
-					ImGui::Text("Net Driver Object: %s", Features::Debug::world.netDriver.objectName.c_str());
+					ImGui::TextCopyable("Net Driver Class: %s", Features::Debug::world.netDriver.className.c_str());
+					ImGui::TextCopyable("Net Driver Object: %s", Features::Debug::world.netDriver.objectName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -4011,8 +4368,8 @@ void Templates::Menus::Debug::Sub_World()
 			{
 				if (ImGui::TreeNode("Details##DemoNetDriver"))
 				{
-					ImGui::Text("Demo Net Driver Class: %s", Features::Debug::world.demoNetDriver.className.c_str());
-					ImGui::Text("Demo Net Driver Object: %s", Features::Debug::world.demoNetDriver.objectName.c_str());
+					ImGui::TextCopyable("Demo Net Driver Class: %s", Features::Debug::world.demoNetDriver.className.c_str());
+					ImGui::TextCopyable("Demo Net Driver Object: %s", Features::Debug::world.demoNetDriver.objectName.c_str());
 
 					ImGui::TreePop();
 				}
@@ -4027,8 +4384,8 @@ void Templates::Menus::Debug::Sub_World()
 			{
 				if (ImGui::TreeNode("Details##PersistentLevel"))
 				{
-					ImGui::Text("Persistent Level Class: %s", Features::Debug::world.persistentLevel.className.c_str());
-					ImGui::Text("Persistent Level Object: %s", Features::Debug::world.persistentLevel.objectName.c_str());
+					ImGui::TextCopyable("Persistent Level Class: %s", Features::Debug::world.persistentLevel.className.c_str());
+					ImGui::TextCopyable("Persistent Level Object: %s", Features::Debug::world.persistentLevel.objectName.c_str());
 					ImGui::TextBoolColored("Is Visible:", Features::Debug::world.persistentLevel.isVisible);
 
 					ImGui::NewLine();
@@ -4039,8 +4396,8 @@ void Templates::Menus::Debug::Sub_World()
 					{
 						if (ImGui::TreeNode("World Settings"))
 						{
-							ImGui::Text("World Settings Class: %s", Features::Debug::world.persistentLevel.worldSettings.className.c_str());
-							ImGui::Text("World Settings Object: %s", Features::Debug::world.persistentLevel.worldSettings.objectName.c_str());
+							ImGui::TextCopyable("World Settings Class: %s", Features::Debug::world.persistentLevel.worldSettings.className.c_str());
+							ImGui::TextCopyable("World Settings Object: %s", Features::Debug::world.persistentLevel.worldSettings.objectName.c_str());
 
 							ImGui::NewLine();
 
@@ -4152,8 +4509,8 @@ void Templates::Menus::Debug::Sub_World()
 									{
 										if (ImGui::TreeNode("World Settings"))
 										{
-											ImGui::Text("World Settings Class: %s", streamingLevel.level.worldSettings.className.c_str());
-											ImGui::Text("World Settings Object: %s", streamingLevel.level.worldSettings.objectName.c_str());
+											ImGui::TextCopyable("World Settings Class: %s", streamingLevel.level.worldSettings.className.c_str());
+											ImGui::TextCopyable("World Settings Object: %s", streamingLevel.level.worldSettings.objectName.c_str());
 
 											ImGui::NewLine();
 
@@ -4212,26 +4569,64 @@ void Templates::Menus::Debug::Sub_Actors()
 		ImGui::Text("@ - Location at where trace has ended without a hit.");
 		ImGui::Text("O - Location at where trace has started.");
 		ImGui::SetFontRegular();
-		ImGui::Checkbox("Enabled##ActorTrace", &Features::ActorTrace::enabled);
-		ImGui::BeginDisabled(Features::ActorTrace::enabled == false);
-		if (ImGui::TreeNode("Settings##ActorTrace"))
+		if (ImGui::TreeNode("Details##ActorTrace"))
 		{
-			ImGui::KeyBindingInput("Key Binding:", &Inputs::Keybindings::debug_ActorTrace);
+			if (ImGui::Button("Trace"))
+			{
+				GUI::PlayActionSound(Features::ActorTrace::Trace());
+			}
+			if (ImGui::KeyBindingInput("Key Binding:##ActorTrace", &Inputs::Keybindings::debug_ActorTrace))
+			{
+				Features::Config::Save();
+			}
 
 			ImGui::NewLine();
 
-			ImGui::Checkbox("Show On Screen##ActorTrace", &Features::ActorTrace::showOnScreen);
-			ImGui::Checkbox("Show Line Trace##ActorTrace", &Features::ActorTrace::showLineTrace);
+			if (ImGui::Checkbox("Show On Screen##ActorTrace", &Features::ActorTrace::showOnScreen))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Trace Color##ActorTrace", Features::ActorTrace::traceColor))
+			{
+				Features::Config::Save();
+			}
+
+			ImGui::Text("Trace Thickness:");
+			ImGui::SameLine();
+			if (ImGui::InputFloat("##ActorTrace##TraceThickness", &Features::ActorTrace::traceThickness, 0.1f, 1.0f))
+			{
+				if (Features::ActorTrace::traceThickness < 1.0f)
+					Features::ActorTrace::traceThickness = 1.0f;
+
+				Features::Config::Save();
+			}
+
+			ImGui::Text("Trace Distance: ");
+			ImGui::SameLine();
+			if (ImGui::InputFloat("##ActorTrace##TraceDistance", &Features::ActorTrace::traceDistance, 1.0f, 10.0f, "%.1f"))
+			{
+				if (Features::ActorTrace::traceDistance < 0.0f)
+					Features::ActorTrace::traceDistance = 0.0f;
+
+				Features::Config::Save();
+			}
+			ImGui::SameLine();
+			std::string distanceHint = std::format("Determines maximum length of trace in metres.\n\n1m = {:.0f}units", Math::Metre_ToUnit(1.0f));
+			ImGui::QuestionMarkHint(distanceHint.c_str());
 
 			ImGui::NewLine();
 
-			ImGui::ColorPicker4("Trace Color", Features::ActorTrace::traceColor);
-			ImGui::InputFloat("Trace Thickness", &Features::ActorTrace::traceThickness, 0.1f, 1.0f);
-			ImGui::InputFloat("Trace Length", &Features::ActorTrace::traceLength, 1.0f, 10.0f);
+#ifdef UE5
+			const char* objectName = Features::ActorTrace::object.reference ? Features::ActorTrace::object.objectName.c_str() : "None";
+			ImGui::TextCopyable("Traced Object: %s", objectName);
+#else
+			const char* actorName = Features::ActorTrace::traceHit ? Features::ActorTrace::actor.objectName.c_str() : "None";
+			ImGui::TextCopyable("Traced Actor: %s", actorName);
+#endif
 
 			ImGui::TreePop();
 		}
-		ImGui::EndDisabled();
 
 		ImGui::NewLine();
 #endif
@@ -4255,15 +4650,26 @@ void Templates::Menus::Debug::Sub_Actors()
 
 			if (ImGui::Button("Point Light"))
 			{
-				SDK::AActor* actorReference = Unreal::Actor::Summon(SDK::APointLight::StaticClass());
-				GUI::PlayActionSound(actorReference);
+				GUI::PlayActionSound(Unreal::Actor::Summon(SDK::APointLight::StaticClass()));
 			}
 			ImGui::SameLine();
+			ImGui::QuestionMarkHint("Light source that emits light in all directions from a single point, similar to a light bulb.");
+
 			if (ImGui::Button("Spot Light"))
 			{
-				SDK::AActor* actorReference = Unreal::Actor::Summon(SDK::ASpotLight::StaticClass());
-				GUI::PlayActionSound(actorReference);
+				GUI::PlayActionSound(Unreal::Actor::Summon(SDK::ASpotLight::StaticClass()));
 			}
+			ImGui::SameLine();
+			ImGui::QuestionMarkHint("Light source that emits light in a specific cone shape from a single point, similar to a flashlight or stage light.");
+
+			ImGui::NewLine();
+
+			if (ImGui::Button("Target Point"))
+			{
+				GUI::PlayActionSound(Unreal::Actor::Summon(SDK::ATargetPoint::StaticClass()));
+			}
+			ImGui::SameLine();
+			ImGui::QuestionMarkHint("Simple marker Actor used as a precise world coordinate for spawning or teleportation.");
 
 #ifdef SOFT_PATH
 			ImGui::CategorySeparator();
@@ -4378,7 +4784,69 @@ void Templates::Menus::Debug::Sub_Actors()
 #ifdef COLLISION_VISUALIZER
 		ImGui::Checkbox("Draw Collision##Actors", &Features::CollisionVisualizer::enabled);
 		ImGui::SameLine();
-		ImGui::QuestionMarkHint("Draws polygonal wireframe color of which depends on collision type:\n\nBlueish - Collision/Physics.\n* Static Mesh.\n* Primitive (Capsule/Sphere/Box/Spline).\n* Physics Volume.\n\nReddish - Damage/Restriction.\n* Blocking Volume.\n\nGreenish - Event.\n* Trigger Volume.\n\nPinkish - Post Processing.\n* Post Process Volume.\n\nWhite - Unknown/Other.");
+		if (ImGui::Button("*##CollisionVisualizer"))
+		{
+			ImGui::OpenPopup("CollisionVisualizer");
+		}
+		if (ImGui::BeginPopup("CollisionVisualizer"))
+		{
+			ImGui::SetFontTitle();
+			ImGui::Text("Colors");
+			ImGui::SetFontRegular();
+
+			if (ImGui::ColorConfig4("Static Mesh        ", Features::CollisionVisualizer::color_StaticMesh))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Primitive          ", Features::CollisionVisualizer::color_Primitive))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Physics Volume     ", Features::CollisionVisualizer::color_PhysicsVolume))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Blocking Volume    ", Features::CollisionVisualizer::color_BlockingVolume))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Trigger Volume     ", Features::CollisionVisualizer::color_TriggerVolume))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Post Porcess Volume", Features::CollisionVisualizer::color_PostProcessVolume))
+			{
+				Features::Config::Save();
+			}
+
+			if (ImGui::ColorConfig4("Other              ", Features::CollisionVisualizer::color_Other))
+			{
+				Features::Config::Save();
+			}
+
+			ImGui::Separator();
+
+			ImGui::SetFontTitle();
+			ImGui::Text("Settings");
+			ImGui::SetFontRegular();
+
+			ImGui::Text("Line Thickness:");
+			ImGui::SameLine();
+			if (ImGui::InputFloat("##LineThickness", &Features::CollisionVisualizer::thickness, 0.1f, 1.0f))
+			{
+				if (Features::CollisionVisualizer::thickness < 1.0f)
+					Features::CollisionVisualizer::thickness = 1.0f;
+
+				Features::Config::Save();
+			}
+
+			ImGui::EndPopup();
+		}
 		ImGui::SameLine();
 		ImGui::Spacing();
 		ImGui::SameLine();
@@ -4387,7 +4855,45 @@ void Templates::Menus::Debug::Sub_Actors()
 #ifdef ACTORS_TRACKING
 		ImGui::Checkbox("Enable Tracking##Actors", &Features::ActorsTracker::enabled);
 		ImGui::SameLine();
-		ImGui::QuestionMarkHint("Draws circle at root location alongside Actor technical name.\n\nExtremely useful when it's needed to find an specific Actor in 3D space.");
+		if (ImGui::Button("*##ActorsTracking"))
+		{
+			ImGui::OpenPopup("ActorsTracking");
+		}
+		if (ImGui::BeginPopup("ActorsTracking"))
+		{
+			ImGui::SetFontSmall();
+			ImGui::Text("Draws circle at Actor root location alongside its technical name.\n\nExtremely helpful to locate an Actor within the world.");
+			ImGui::SetFontRegular();
+
+			ImGui::Separator();
+
+			ImGui::SetFontTitle();
+			ImGui::Text("Colors");
+			ImGui::SetFontRegular();
+
+			if (ImGui::ColorConfig4("Actor: ", Features::ActorsTracker::actorColor))
+			{
+				Features::Config::Save();
+			}
+
+			ImGui::Separator();
+
+			ImGui::SetFontTitle();
+			ImGui::Text("Settings");
+			ImGui::SetFontRegular();
+
+			if (ImGui::Checkbox("Check Validness", &Features::ActorsTracker::checkValidness))
+			{
+				Features::Config::Save();
+			}
+			if (ImGui::Checkbox("Show Distance", &Features::ActorsTracker::showDistance))
+			{
+				Features::Config::Save();
+			}
+
+			ImGui::EndPopup();
+		} 
+		
 		ImGui::SameLine();
 		ImGui::Spacing();
 		ImGui::SameLine();
@@ -4395,12 +4901,14 @@ void Templates::Menus::Debug::Sub_Actors()
 
 		ImGui::Text("In Distance:");
 		ImGui::SameLine();
-		if (ImGui::InputFloat("##FilterDistance##Actors", &Features::ActorsList::filterDistance, 100.0f, 1000.0f))
+		if (ImGui::InputFloat("##FilterDistance##Actors", &Features::ActorsList::filterDistance, 1.0f, 10.0f, "%.1f"))
 		{
-			Features::ActorsList::filterDistance = std::clamp(Features::ActorsList::filterDistance, 0.0f, 1000000.0f);
+			if (Features::ActorsList::filterDistance < 0.0f)
+				Features::ActorsList::filterDistance = 0.0f;
 		}
 		ImGui::SameLine();
-		ImGui::QuestionMarkHint("Maximum Actor distance from Player in centimetres. Calculations doesn't update in background!\n\nThat allows to return to the game while keeping needed Actors filtered.");
+		std::string distanceHint = std::format("Determines maximum distance from Player in metres.\n\n1m = {:.0f}units", Math::Metre_ToUnit(1.0f));
+		ImGui::QuestionMarkHint(distanceHint.c_str());
 
 		ImGui::KeyBindingInput("Update & Re-Filter Actors List:", &Inputs::Keybindings::debug_ActorsListUpdate);
 		ImGui::SameLine();
@@ -4426,6 +4934,9 @@ void Templates::Menus::Debug::Sub_Actors()
 				}
 			}
 
+			if (anyActorCollisionEnabled)
+				Features::ActorsList::Update();
+
 			GUI::PlayActionSound(anyActorCollisionEnabled);
 		}
 		ImGui::SameLine();
@@ -4443,6 +4954,9 @@ void Templates::Menus::Debug::Sub_Actors()
 				}
 			}
 
+			if (anyActorCollisionDisabled)
+				Features::ActorsList::Update();
+
 			GUI::PlayActionSound(anyActorCollisionDisabled);
 		}
 
@@ -4457,6 +4971,9 @@ void Templates::Menus::Debug::Sub_Actors()
 					anyActorShown = true;
 				}
 			}
+
+			if (anyActorShown)
+				Features::ActorsList::Update();
 
 			GUI::PlayActionSound(anyActorShown);
 		}
@@ -4475,6 +4992,9 @@ void Templates::Menus::Debug::Sub_Actors()
 				}
 			}
 
+			if (anyActorHidden)
+				Features::ActorsList::Update();
+
 			GUI::PlayActionSound(anyActorHidden);
 		}
 
@@ -4485,10 +5005,13 @@ void Templates::Menus::Debug::Sub_Actors()
 			{
 				if (actor.reference)
 				{
-					actor.reference->K2_DestroyActor();
-					anyActorDestroyed = true;
+					if (Unreal::Actor::Destroy(actor.reference))
+						anyActorDestroyed = true;
 				}
 			}
+
+			if (anyActorDestroyed)
+				Features::ActorsList::Update();
 
 			GUI::PlayActionSound(anyActorDestroyed);
 		}
@@ -4525,20 +5048,26 @@ void Templates::Menus::Debug::Sub_Actors()
 					GUI::PlayActionSound(true);
 				}
 				ImGui::EndDisabled();
+				ImGui::SameLine();
+				if (ImGui::Button("Refresh"))
+				{
+					Features::ActorsList::Update(actor);
+					GUI::PlayActionSound(true);
+				}
 
 				ImGui::NewLine();
 
-				ImGui::Text("Actor Class: %s", actor.className.c_str());
+				ImGui::TextCopyable("Actor Class: %s", actor.className.c_str());
 				if (ImGui::TreeNode("Class Hierarchy"))
 				{
 					for (std::string className : actor.superClassesNames)
 					{
-						ImGui::Text(("- " + className).c_str());
+						ImGui::TextCopyable(("- " + className).c_str());
 					}
 
 					ImGui::TreePop();
 				}
-				ImGui::Text("Actor Object: %s", actor.objectName.c_str());
+				ImGui::TextCopyable("Actor Object: %s", actor.objectName.c_str());
 
 				ImGui::NewLine();
 
@@ -4558,10 +5087,13 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (actor.reference)
 					{
-						bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, SDK::FVector(customLocation[0], customLocation[1], customLocation[2]));
-						GUI::PlayActionSound(isSuccess);
-
-						Features::ActorsList::Update();
+						if (Unreal::Actor::TeleportTo(actor.reference, SDK::FVector(customLocation[0], customLocation[1], customLocation[2])))
+						{
+							Features::ActorsList::Update(actor);
+							GUI::PlayActionSound(true);
+						}
+						else
+							GUI::PlayActionSound(false);
 					}
 					else
 						GUI::PlayActionSound(false);
@@ -4583,10 +5115,13 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (actor.reference)
 					{
-						bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2]));
-						GUI::PlayActionSound(isSuccess);
-
-						Features::ActorsList::Update();
+						if (Unreal::Actor::TeleportTo(actor.reference, SDK::FRotator(customRotation[0], customRotation[1], customRotation[2])))
+						{
+							Features::ActorsList::Update(actor);
+							GUI::PlayActionSound(true);
+						}
+						else
+							GUI::PlayActionSound(false);
 					}
 					else
 						GUI::PlayActionSound(false);
@@ -4609,9 +5144,8 @@ void Templates::Menus::Debug::Sub_Actors()
 					if (actor.reference)
 					{
 						actor.reference->SetActorScale3D(SDK::FVector(customScale[0], customScale[1], customScale[2]));
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
-
-						Features::ActorsList::Update();
 					}
 					else
 						GUI::PlayActionSound(false);
@@ -4624,8 +5158,7 @@ void Templates::Menus::Debug::Sub_Actors()
 					SDK::ACharacter* character = Unreal::Character::Get();
 					if (character)
 					{
-						bool isSuccess = Unreal::Actor::TeleportTo(character, actor.transform.location);
-						GUI::PlayActionSound(isSuccess);
+						GUI::PlayActionSound(Unreal::Actor::TeleportTo(character, actor.transform.location));
 					}
 					else
 						GUI::PlayActionSound(false);
@@ -4638,10 +5171,15 @@ void Templates::Menus::Debug::Sub_Actors()
 						SDK::ACharacter* character = Unreal::Character::Get();
 						if (character)
 						{
-							SDK::FVector location = character->K2_GetActorLocation();
+							SDK::FVector location = Unreal::Actor::GetLocation(character);
 
-							bool isSuccess = Unreal::Actor::TeleportTo(actor.reference, location);
-							GUI::PlayActionSound(isSuccess);
+							if (Unreal::Actor::TeleportTo(actor.reference, location))
+							{
+								Features::ActorsList::Update(actor);
+								GUI::PlayActionSound(true);
+							}
+							else
+								GUI::PlayActionSound(false);
 						}
 						else
 							GUI::PlayActionSound(false);
@@ -4675,7 +5213,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::MakeStatic(actor.reference))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4686,7 +5224,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::MakeStationary(actor.reference))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4697,7 +5235,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::MakeMovable(actor.reference))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4713,7 +5251,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::SetIsCollisionEnabled(actor.reference, true))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4724,7 +5262,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::SetIsCollisionEnabled(actor.reference, false))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4733,12 +5271,12 @@ void Templates::Menus::Debug::Sub_Actors()
 
 				ImGui::NewLine();
 
-				ImGui::Text("Is %s", actor.isVisible ? "Visible" : "not Visible");
+				ImGui::Text("Is %s", actor.isVisible ? "Visible" : "Hidden");
 				if (ImGui::Button("Make Visible"))
 				{
 					if (Unreal::Actor::SetIsVisible(actor.reference, true))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4749,7 +5287,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::SetIsVisible(actor.reference, false))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -4766,7 +5304,7 @@ void Templates::Menus::Debug::Sub_Actors()
 				{
 					if (Unreal::Actor::SetCustomTimeDilation(actor.reference, customTimeDilation))
 					{
-						Features::ActorsList::Update();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 						
@@ -4812,9 +5350,9 @@ void Templates::Menus::Debug::Sub_Actors()
 
 				if (ImGui::Button("Destroy"))
 				{
-					if (actor.reference)
+					if (Unreal::Actor::Destroy(actor.reference))
 					{
-						actor.reference->K2_DestroyActor();
+						Features::ActorsList::Update(actor);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -5629,8 +6167,8 @@ void Templates::Menus::Debug::Sub_Actors()
 					{
 						if (ImGui::TreeNode(component.objectName.c_str()))
 						{
-							ImGui::Text("Component Class: %s", component.className.c_str());
-							ImGui::Text("Component Object: %s", component.objectName.c_str());
+							ImGui::TextCopyable("Component Class: %s", component.className.c_str());
+							ImGui::TextCopyable("Component Object: %s", component.objectName.c_str());
 
 							ImGui::NewLine();
 
@@ -5793,6 +6331,9 @@ void Templates::Menus::Debug::Sub_Widgets()
 				anyWidgetAffected = true;
 			}
 
+			if (anyWidgetAffected)
+				Features::WidgetsList::Update();
+
 			GUI::PlayActionSound(anyWidgetAffected);
 		}
 		ImGui::SameLine();
@@ -5812,6 +6353,9 @@ void Templates::Menus::Debug::Sub_Widgets()
 				anyWidgetAffected = true;
 			}
 
+			if (anyWidgetAffected)
+				Features::WidgetsList::Update();
+
 			GUI::PlayActionSound(anyWidgetAffected);
 		}
 		ImGui::SameLine();
@@ -5827,6 +6371,9 @@ void Templates::Menus::Debug::Sub_Widgets()
 				widgetVisibility.first->SetVisibility(widgetVisibility.second);
 				anyWidgetAffected = true;
 			}
+
+			if (anyWidgetAffected)
+				Features::WidgetsList::Update();
 
 			GUI::PlayActionSound(anyWidgetAffected);
 		}
@@ -5850,15 +6397,30 @@ void Templates::Menus::Debug::Sub_Widgets()
 					GUI::PlayActionSound(true);
 				}
 				ImGui::EndDisabled();
+				ImGui::SameLine();
+				if (ImGui::Button("Refresh"))
+				{
+					Features::WidgetsList::Update(widget);
+					GUI::PlayActionSound(true);
+				}
 
 				ImGui::NewLine();
 
-				ImGui::Text("Widget Class: %s", widget.className.c_str());
-				ImGui::Text("Widget Object: %s", widget.objectName.c_str());
+				ImGui::TextCopyable("Widget Class: %s", widget.className.c_str());
+				if (ImGui::TreeNode("Class Hierarchy"))
+				{
+					for (std::string className : widget.superClassesNames)
+					{
+						ImGui::TextCopyable(("- " + className).c_str());
+					}
+
+					ImGui::TreePop();
+				}
+				ImGui::TextCopyable("Widget Object: %s", widget.objectName.c_str());
 
 				ImGui::NewLine();
 
-				ImGui::Text("Parent: %s", widget.parent ? widget.parent->GetFullName().c_str() : "None");
+				ImGui::TextCopyable("Parent: %s", widget.parent ? widget.parent->GetFullName().c_str() : "None");
 
 				ImGui::NewLine();
 
@@ -5874,6 +6436,7 @@ void Templates::Menus::Debug::Sub_Widgets()
 					if (widget.reference)
 					{
 						widget.reference->SetVisibility(static_cast<SDK::ESlateVisibility>(customVisibility));
+						Features::WidgetsList::Update(widget);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -5887,6 +6450,7 @@ void Templates::Menus::Debug::Sub_Widgets()
 					if (widget.reference)
 					{
 						widget.reference->RemoveFromParent();
+						Features::WidgetsList::Update(widget);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -5898,6 +6462,7 @@ void Templates::Menus::Debug::Sub_Widgets()
 					if (widget.reference)
 					{
 						widget.reference->RemoveFromViewport();
+						Features::WidgetsList::Update(widget);
 						GUI::PlayActionSound(true);
 					}
 					else
@@ -6004,21 +6569,26 @@ void Templates::Menus::Debug::Sub_Objects()
 					GUI::PlayActionSound(true);
 				}
 				ImGui::EndDisabled();
+				ImGui::SameLine();
+				if (ImGui::Button("Refresh"))
+				{
+					Features::ObjectsList::Update(object);
+					GUI::PlayActionSound(true);
+				}
 
 				ImGui::NewLine();
 
-				ImGui::Text("Class: %s", object.className.c_str());
+				ImGui::TextCopyable("Class: %s", object.className.c_str());
 				if (ImGui::TreeNode("Class Hierarchy"))
 				{
 					for (std::string className : object.superClassesNames)
 					{
-						ImGui::Text(("- " + className).c_str());
+						ImGui::TextCopyable(("- " + className).c_str());
 					}
 
 					ImGui::TreePop();
 				}
-
-				ImGui::Text("Object: %s", object.objectName.c_str());
+				ImGui::TextCopyable("Object: %s", object.objectName.c_str());
 
 				ImGui::NewLine();
 
@@ -6075,7 +6645,7 @@ void Templates::Menus::Debug::Draw()
 						}
 					}
 				}
-				if (ImGui::InputFloat("Auto Update Delay", &Features::Debug::autoUpdateDelay, 0.01f, 0.1f))
+				if (ImGui::InputFloat("Auto Update Delay", &Features::Debug::autoUpdateDelay, 0.01f, 0.1f, "%.2f"))
 				{
 					if (Features::Debug::autoUpdateDelay < 0.01f)
 						Features::Debug::autoUpdateDelay = 0.01f;
@@ -6169,17 +6739,17 @@ void Templates::Menus::Debug::Draw()
 			ImGui::CategorySeparator();
 
 			if (Features::Debug::wasProjectNameObtained)
-				ImGui::Text("Project Name: %s", Features::Debug::projectName.c_str());
+				ImGui::TextCopyable("Project Name: %s", Features::Debug::projectName.c_str());
 
 			if (Features::Debug::wasProjectPlatformObtained)
-				ImGui::Text("Project Platform: %s", Features::Debug::projectPlatform.c_str());
+				ImGui::TextCopyable("Project Platform: %s", Features::Debug::projectPlatform.c_str());
 
 			if (Features::Debug::wasUsernameObtained)
-				ImGui::Text("Username: %s", Features::Debug::username.c_str());
+				ImGui::TextCopyable("Username: %s", Features::Debug::username.c_str());
 
 			if (Features::Debug::wasCommandLineObtained)
 			{
-				ImGui::ReadOnlyInputText("Command Line:", Features::Debug::commandLine.c_str(), true);
+				ImGui::ReadOnlyInputText("Command Line:", Features::Debug::commandLine.c_str());
 			}
 
 			ImGui::MenuSpacer();
@@ -6406,7 +6976,7 @@ void Templates::Menus::Character::Draw()
 	{
 		if (characterObtained)
 		{
-			ImGui::Text("Character: %s", character->GetFullName().c_str());
+			ImGui::TextCopyable("Character: %s", character->GetFullName().c_str());
 			Unreal::Transform characterTransform = Unreal::Actor::GetTransform(character);
 			ImGui::TextVectorColored("Location:", characterTransform.location);
 			static float customLocation[3];
@@ -6484,7 +7054,7 @@ void Templates::Menus::Character::Draw()
 						/* 2 columns: ID, Title */
 						if (ImGui::BeginTable("PositionsTable", 2, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit))
 						{
-							ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 30.0f);
+							ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 40.0f);
 							ImGui::TableSetupColumn("Title", ImGuiTableColumnFlags_WidthStretch);
 							ImGui::TableHeadersRow();
 
@@ -6929,6 +7499,13 @@ void Templates::Menus::FreeCamera::Draw()
 				Features::FreeCamera::Toggle();
 			}
 			ImGui::KeyBindingInput("Key Binding:  ##Toggle", &Inputs::Keybindings::freeCamera_Toggle);
+
+			ImGui::NewLine();
+
+			if (ImGui::Checkbox("Force Disable Player Input", &Features::FreeCamera::forceDisablePlayerInput))
+			{
+				Features::Config::Save();
+			}
 
 			ImGui::NewLine();
 

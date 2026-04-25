@@ -542,9 +542,9 @@ SDK::FVector Unreal::PlayerController::GetLocation(SDK::APlayerController* playe
 		return SDK::FVector();
 
 	if (playerControllerReference->AcknowledgedPawn)
-		return playerControllerReference->AcknowledgedPawn->K2_GetActorLocation();
+		return Unreal::Actor::GetLocation(playerControllerReference->AcknowledgedPawn);
 	else if (playerControllerReference->PlayerCameraManager)
-		return playerControllerReference->PlayerCameraManager->K2_GetActorLocation();
+		return Unreal::Actor::GetLocation(playerControllerReference->PlayerCameraManager);
 	else
 		return SDK::FVector();
 }
@@ -552,7 +552,64 @@ SDK::FVector Unreal::PlayerController::GetLocation(SDK::APlayerController* playe
 SDK::FVector Unreal::PlayerController::GetLocation(const int32_t& playerIndex)
 {
 	SDK::APlayerController* playerController = PlayerController::Get(playerIndex);
-	return GetLocation(playerController);
+	return Unreal::PlayerController::GetLocation(playerController);
+}
+
+SDK::FRotator Unreal::PlayerController::GetRotation(SDK::APlayerController* playerControllerReference)
+{
+	if (playerControllerReference == nullptr)
+		return SDK::FRotator();
+
+	if (playerControllerReference->AcknowledgedPawn)
+		return Unreal::Actor::GetRotation(playerControllerReference->AcknowledgedPawn);
+	else if (playerControllerReference->PlayerCameraManager)
+		return Unreal::Actor::GetRotation(playerControllerReference->PlayerCameraManager);
+	else
+		return SDK::FRotator();
+}
+
+SDK::FRotator Unreal::PlayerController::GetRotation(const int32_t& playerIndex)
+{
+	SDK::APlayerController* playerController = PlayerController::Get(playerIndex);
+	return Unreal::PlayerController::GetRotation(playerController);
+}
+
+SDK::FVector Unreal::PlayerController::GetScale3D(SDK::APlayerController* playerControllerReference)
+{
+	if (playerControllerReference == nullptr)
+		return SDK::FVector();
+
+	if (playerControllerReference->AcknowledgedPawn)
+		return Unreal::Actor::GetScale3D(playerControllerReference->AcknowledgedPawn);
+	else if (playerControllerReference->PlayerCameraManager)
+		return Unreal::Actor::GetScale3D(playerControllerReference->PlayerCameraManager);
+	else
+		return SDK::FVector();
+}
+
+SDK::FVector Unreal::PlayerController::GetScale3D(const int32_t& playerIndex)
+{
+	SDK::APlayerController* playerController = PlayerController::Get(playerIndex);
+	return Unreal::PlayerController::GetScale3D(playerController);
+}
+
+Unreal::Transform Unreal::PlayerController::GetTransform(SDK::APlayerController* playerControllerReference)
+{
+	if (playerControllerReference == nullptr)
+		return Unreal::Transform();
+
+	if (playerControllerReference->AcknowledgedPawn)
+		return Unreal::Actor::GetTransform(playerControllerReference->AcknowledgedPawn);
+	else if (playerControllerReference->PlayerCameraManager)
+		return Unreal::Actor::GetTransform(playerControllerReference->PlayerCameraManager);
+	else
+		return Unreal::Transform();
+}
+
+Unreal::Transform Unreal::PlayerController::GetTransform(const int32_t& playerIndex)
+{
+	SDK::APlayerController* playerController = PlayerController::Get(playerIndex);
+	return Unreal::PlayerController::GetTransform(playerController);
 }
 
 
@@ -621,7 +678,7 @@ bool Unreal::Character::Jump(const int32_t& playerIndex)
 bool Unreal::Character::Launch(SDK::ACharacter* characterReference, const SDK::FVector& launchVelocity, const bool& overrideHorizontalVelocity, const bool& overrideVerticalVelocity)
 {
 	if (characterReference == nullptr || characterReference->CharacterMovement == nullptr
-									  || characterReference->CharacterMovement->bCheatFlying == true
+									  || characterReference->CharacterMovement->bCheatFlying
 									  || characterReference->CharacterMovement->MovementMode == SDK::EMovementMode::MOVE_None
 									  || characterReference->CharacterMovement->IsActive() == false)
 		return false;
@@ -1172,7 +1229,7 @@ bool Unreal::Actor::TeleportTo(SDK::AActor* actorReference, const SDK::FVector& 
 	if (actorReference == nullptr)
 		return false;
 
-	SDK::FRotator rotation = actorReference->K2_GetActorRotation();
+	SDK::FRotator rotation = Unreal::Actor::GetRotation(actorReference);
 	return TeleportTo(actorReference, location, rotation);
 }
 
@@ -1181,7 +1238,7 @@ bool Unreal::Actor::TeleportTo(SDK::AActor* actorReference, const SDK::FRotator&
 	if (actorReference == nullptr)
 		return false;
 
-	SDK::FVector location = actorReference->K2_GetActorLocation();
+	SDK::FVector location = Unreal::Actor::GetLocation(actorReference);
 	return TeleportTo(actorReference, location, rotation);
 }
 
@@ -1196,7 +1253,7 @@ bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FVector& loc
 	if (actorReference == nullptr)
 		return false;
 
-	SDK::FRotator rotation = actorReference->K2_GetActorRotation();
+	SDK::FRotator rotation = Unreal::Actor::GetRotation(actorReference);
 	return SweepTo(actorReference, location, rotation);
 }
 
@@ -1205,7 +1262,7 @@ bool Unreal::Actor::SweepTo(SDK::AActor* actorReference, const SDK::FRotator& ro
 	if (actorReference == nullptr)
 		return false;
 
-	SDK::FVector location = actorReference->K2_GetActorLocation();
+	SDK::FVector location = Unreal::Actor::GetLocation(actorReference);
 	return SweepTo(actorReference, location, rotation);
 }
 
@@ -1331,26 +1388,8 @@ SDK::AActor* Unreal::Actor::Summon(const SDK::TSubclassOf<SDK::AActor>& actorCla
 	if (playerController == nullptr)
 		return Unreal::Actor::Summon(actorClass, Unreal::Transform());
 
-	if (playerController->AcknowledgedPawn)
-	{
-		Unreal::Transform transform;
-		transform.location = playerController->AcknowledgedPawn->K2_GetActorLocation();
-		transform.rotation = playerController->AcknowledgedPawn->K2_GetActorRotation();
-		transform.scale = SDK::FVector();
-
-		return Unreal::Actor::Summon(actorClass, transform);
-	}
-	else if (playerController->PlayerCameraManager)
-	{
-		Unreal::Transform transform;
-		transform.location = playerController->PlayerCameraManager->K2_GetActorLocation();
-		transform.rotation = playerController->PlayerCameraManager->K2_GetActorRotation();
-		transform.scale = SDK::FVector();
-
-		return Unreal::Actor::Summon(actorClass, transform);
-	}
-	else
-		return Unreal::Actor::Summon(actorClass, Unreal::Transform());
+	Unreal::Transform transform = Unreal::PlayerController::GetTransform(playerController);
+	return Unreal::Actor::Summon(actorClass, transform);
 }
 
 #ifdef SOFT_PATH
@@ -1365,6 +1404,30 @@ SDK::AActor* Unreal::Actor::SoftSummon(const std::wstring& actorPath, const Unre
 #endif
 
 
+SDK::FVector Unreal::Actor::GetLocation(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr)
+		return SDK::FVector();
+
+	return actorReference->K2_GetActorLocation();
+}
+
+SDK::FRotator Unreal::Actor::GetRotation(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr)
+		return SDK::FRotator();
+
+	return actorReference->K2_GetActorRotation();
+}
+
+SDK::FVector Unreal::Actor::GetScale3D(SDK::AActor* actorReference)
+{
+	if (actorReference == nullptr)
+		return SDK::FVector();
+
+	return actorReference->GetActorScale3D();
+}
+
 Unreal::Transform Unreal::Actor::GetTransform(SDK::AActor* actorReference)
 {
 	if (actorReference == nullptr)
@@ -1376,59 +1439,67 @@ Unreal::Transform Unreal::Actor::GetTransform(SDK::AActor* actorReference)
 
 bool Unreal::Actor::IsValid(SDK::AActor* actorReference)
 {
-	if (actorReference)
+	if (actorReference == nullptr)
+		return false;
+
+	SDK::UWorld* world = World::Get();
+	if (world)
 	{
 		/*
 			Most of the Actors can be found within arrays of currently loaded game levels.
 
 			Walking through these small arrays, we can save up on performance and only
 			use full scan as our last resort - if neither of methods have found the Actor.
-			
 		*/
-		SDK::UWorld* world = World::Get();
-		if (world)
+
+		/* Check is Actor is present within current Persistent Level. */
+		if (world->PersistentLevel)
 		{
-			/* Check is Actor is present within current Persistent Level. */
-			if (world->PersistentLevel)
+			SDK::TArray<SDK::AActor*>& persistentLevelActors = world->PersistentLevel->Actors;
+			for (SDK::AActor* actor : persistentLevelActors)
 			{
-				SDK::TArray<SDK::AActor*>& persistentLevelActors = world->PersistentLevel->Actors;
-				for (SDK::AActor* actor : persistentLevelActors)
-				{
-					if (actor == actorReference)
-						return SDK::UKismetSystemLibrary::IsValid(actor);
-				}
+				if (actor == actorReference)
+					return SDK::UKismetSystemLibrary::IsValid(actor);
 			}
-			
-			/* Walk through all of the streaming levels. */
-			if (world->StreamingLevels.Num() > 0)
+		}
+
+		/* Walk through all of the streaming levels. */
+		if (world->StreamingLevels.Num() > 0)
+		{
+			for (SDK::ULevelStreaming* streamingLevel : world->StreamingLevels)
 			{
-				for (SDK::ULevelStreaming* streamingLevel : world->StreamingLevels)
+				if (streamingLevel->LoadedLevel)
 				{
-					if (streamingLevel->LoadedLevel)
+					SDK::TArray<SDK::AActor*>& streamingLevelActors = streamingLevel->LoadedLevel->Actors;
+					for (SDK::AActor* actor : streamingLevelActors)
 					{
-						SDK::TArray<SDK::AActor*>& streamingLevelActors = streamingLevel->LoadedLevel->Actors;
-						for (SDK::AActor* actor : streamingLevelActors)
-						{
-							if (actor == actorReference)
-								return SDK::UKismetSystemLibrary::IsValid(actor);
-						}
+						if (actor == actorReference)
+							return SDK::UKismetSystemLibrary::IsValid(actor);
 					}
 				}
 			}
 		}
-
-		/* Full scan. Extremely expensive to perform. */
-		int32_t objectsNum = SDK::UObject::GObjects->Num();
-		for (int i = 0; i < objectsNum; i++)
-		{
-			SDK::UObject* objectReference = SDK::UObject::GObjects->GetByIndex(i);
-
-			if (objectReference == actorReference)
-				return SDK::UKismetSystemLibrary::IsValid(objectReference);
-		}
 	}
 
-	return false;
+	/* Full scan. Extremely expensive to perform. */
+	int32_t objectsNum = SDK::UObject::GObjects->Num();
+	for (int i = 0; i < objectsNum; i++)
+	{
+		SDK::UObject* objectReference = SDK::UObject::GObjects->GetByIndex(i);
+
+		if (objectReference == actorReference)
+			return SDK::UKismetSystemLibrary::IsValid(objectReference);
+	}
+}
+
+
+bool Unreal::Actor::Destroy(SDK::AActor* actorReference)
+{
+	if (Unreal::Actor::IsValid(actorReference) == false)
+		return false;
+
+	actorReference->K2_DestroyActor();
+	return true;
 }
 
 
