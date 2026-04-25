@@ -1701,7 +1701,7 @@ Unreal::Actor::DataStructure Features::ActorsList::GetActorData(SDK::AActor* act
 	actorData.objectName = actorReference->GetFullName();
 
 #ifdef ACTOR_KIND
-	actorData.kind = Unreal::Actor::GetActorKind(actor);
+	actorData.kind = Unreal::Actor::GetActorKind(actorReference);
 #endif
 
 	actorData.transform = Unreal::Actor::GetTransform(actorReference);
