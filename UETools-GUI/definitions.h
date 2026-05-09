@@ -135,7 +135,7 @@
 
 	Enables everything related to Level Sequences.
 */
-#define FREE_CAMERA
+
 /*
 	#define FREE_CAMERA
 
