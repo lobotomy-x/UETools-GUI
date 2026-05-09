@@ -826,7 +826,9 @@ namespace Features
 		static inline SDK::ACameraActor* cameraReference;
 
 		static inline SDK::AActor* lastViewTarget;
-		static inline float lastViewTargetCustomTimeDilation;
+
+		static inline bool forceFreezePlayer = true;
+		static inline float storedCustomTimeDilation;
 
 		static inline bool forceDisablePlayerInput = false;
 		static inline bool wasMoveInputIgnored;

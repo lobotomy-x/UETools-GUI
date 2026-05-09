@@ -1590,7 +1590,11 @@ SDK::ASkeletalMeshActor* Unreal::SkeletalMeshActor::Summon(SDK::USkeletalMesh* s
 		return nullptr;
 
 	Unreal::Actor::SetMobility(skeletalMeshActorReference, SDK::EComponentMobility::Movable);
+#ifdef UE5
+	skeletalMeshActorReference->SkeletalMeshComponent->SetSkeletalMeshAsset(skeletalMeshReference);
+#else
 	skeletalMeshActorReference->SkeletalMeshComponent->SetSkeletalMesh(skeletalMeshReference, true);
+#endif
 
 #ifdef UE5
 	SDK::UGameplayStatics::FinishSpawningActor(skeletalMeshActorReference, spawnTransform, SDK::ESpawnActorScaleMethod::SelectDefaultAtRuntime);

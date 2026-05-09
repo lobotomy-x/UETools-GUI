@@ -978,7 +978,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v5.0)");
+			ImGui::Text("UETools GUI (v5.1)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1254,6 +1254,8 @@ void Features::Config::Load()
 #endif
 
 #ifdef FREE_CAMERA
+	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_forceFreezePlayer", &Features::FreeCamera::forceFreezePlayer);
+
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_forceDisablePlayerInput", &Features::FreeCamera::forceDisablePlayerInput);
 
 	ReadFeatureFromConfig(&featuresConfig, "Features_FreeCamera_cameraMovementStep", &Features::FreeCamera::cameraMovementStep);
@@ -1346,6 +1348,8 @@ void Features::Config::Save()
 #endif
 
 #ifdef FREE_CAMERA
+	featuresConfig.Set("Features_FreeCamera_forceFreezePlayer", Features::FreeCamera::forceFreezePlayer);
+
 	featuresConfig.Set("Features_FreeCamera_forceDisablePlayerInput", Features::FreeCamera::forceDisablePlayerInput);
 
 	featuresConfig.Set("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
@@ -2632,9 +2636,12 @@ bool Features::FreeCamera::Enable()
 		/* Apply custom time dilation only after a successful camera switch. */
 		if (Features::FreeCamera::lastViewTarget != nullptr)
 		{
-			Features::FreeCamera::lastViewTargetCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
-			Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
-
+			if (Features::FreeCamera::forceFreezePlayer)
+			{
+				Features::FreeCamera::storedCustomTimeDilation = Features::FreeCamera::lastViewTarget->CustomTimeDilation;
+				Features::FreeCamera::lastViewTarget->CustomTimeDilation = 0.0f;
+			}
+			
 			if (Features::FreeCamera::forceDisablePlayerInput)
 			{
 				Features::FreeCamera::wasMoveInputIgnored = playerController->IsMoveInputIgnored();
@@ -2660,7 +2667,10 @@ bool Features::FreeCamera::Disable()
 
 	if (Features::FreeCamera::lastViewTarget != nullptr)
 	{
-		Features::FreeCamera::lastViewTarget->CustomTimeDilation = Features::FreeCamera::lastViewTargetCustomTimeDilation;
+		if (Features::FreeCamera::forceFreezePlayer)
+		{
+			Features::FreeCamera::lastViewTarget->CustomTimeDilation = Features::FreeCamera::storedCustomTimeDilation;
+		}
 
 		if (Features::FreeCamera::forceDisablePlayerInput)
 		{
@@ -7501,6 +7511,11 @@ void Templates::Menus::FreeCamera::Draw()
 			ImGui::KeyBindingInput("Key Binding:  ##Toggle", &Inputs::Keybindings::freeCamera_Toggle);
 
 			ImGui::NewLine();
+
+			if (ImGui::Checkbox("Force Freeze Player", &Features::FreeCamera::forceFreezePlayer))
+			{
+				Features::Config::Save();
+			}
 
 			if (ImGui::Checkbox("Force Disable Player Input", &Features::FreeCamera::forceDisablePlayerInput))
 			{
