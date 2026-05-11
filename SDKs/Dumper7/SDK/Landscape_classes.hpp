@@ -18,8 +18,7 @@
 #include "DeveloperSettings_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class Landscape.ControlPointMeshActor
 // 0x0008 (0x0228 - 0x0220)
@@ -1040,5 +1039,4 @@ public:
 };
 DUMPER7_ASSERTS_UMaterialExpressionLandscapeVisibilityMask;
 
-}
-
+SDK_NAMESPACE_END

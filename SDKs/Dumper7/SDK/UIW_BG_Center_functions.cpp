@@ -14,8 +14,7 @@
 #include "UIW_BG_Center_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_BG_Center.UIW_BG_Center_C.ExecuteUbergraph_UIW_BG_Center
 // (Final, UbergraphFunction, HasDefaults)
@@ -70,5 +69,5 @@ void UUIW_BG_Center_C::SetContentsSize(const struct FVector2D& Size)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

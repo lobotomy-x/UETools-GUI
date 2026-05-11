@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_ActPayload_FatalAttack.BP_ActPayload_FatalAttack_C
 // 0x0060 (0x0090 - 0x0030)
@@ -41,5 +40,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_ActPayload_FatalAttack_C;
 
-}
-
+SDK_NAMESPACE_END

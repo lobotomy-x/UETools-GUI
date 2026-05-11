@@ -17,8 +17,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class PhysXVehicles.WheeledVehicleMovementComponent
 // 0x0158 (0x0290 - 0x0138)
@@ -326,5 +325,4 @@ public:
 };
 DUMPER7_ASSERTS_UWheeledVehicleMovementComponent4W;
 
-}
-
+SDK_NAMESPACE_END

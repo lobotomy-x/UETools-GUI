@@ -18,8 +18,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Recollection.UIW_Recollection_C.ExecuteUbergraph_UIW_Recollection
 // 0x08F0 (0x08F0 - 0x0000)
@@ -1165,5 +1165,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Recollection_C_OnMouseWheel;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

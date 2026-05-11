@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass ObjectPoolSystemDataBp.ObjectPoolSystemDataBp_C
 // 0x0020 (0x0240 - 0x0220)
@@ -50,5 +49,4 @@ public:
 };
 DUMPER7_ASSERTS_AObjectPoolSystemDataBp_C;
 
-}
-
+SDK_NAMESPACE_END

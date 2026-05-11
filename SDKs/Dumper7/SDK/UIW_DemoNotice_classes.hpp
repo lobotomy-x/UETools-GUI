@@ -14,8 +14,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_DemoNotice.UIW_DemoNotice_C
 // 0x0010 (0x0358 - 0x0348)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_DemoNotice_C;
 
-}
-
+SDK_NAMESPACE_END

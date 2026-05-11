@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_List_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_List.UIW_SlaveArm_List_C.ExecuteUbergraph_UIW_SlaveArm_List
 // (Final, UbergraphFunction, HasDefaults)
@@ -104,5 +103,5 @@ void UUIW_SlaveArm_List_C::BP_OnEntryReleased()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_GameStart_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_GameStart.BP_Action_GameStart_C.ExecuteUbergraph_BP_Action_GameStart
 // (Final, UbergraphFunction, HasDefaults)
@@ -110,5 +109,5 @@ void UBP_Action_GameStart_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

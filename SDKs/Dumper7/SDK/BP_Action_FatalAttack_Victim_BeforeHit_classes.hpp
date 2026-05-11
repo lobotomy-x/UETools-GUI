@@ -14,8 +14,7 @@
 #include "BP_Action_FatalAttack_VictimBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_FatalAttack_Victim_BeforeHit.BP_Action_FatalAttack_Victim_BeforeHit_C
 // 0x0010 (0x03C0 - 0x03B0)
@@ -47,5 +46,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_FatalAttack_Victim_BeforeHit_C;
 
-}
-
+SDK_NAMESPACE_END

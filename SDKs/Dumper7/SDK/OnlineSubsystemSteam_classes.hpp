@@ -14,8 +14,7 @@
 #include "OnlineSubsystemUtils_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class OnlineSubsystemSteam.SteamNetDriver
 // 0x0008 (0x07D8 - 0x07D0)
@@ -84,5 +83,4 @@ public:
 };
 DUMPER7_ASSERTS_USteamNetConnection;
 
-}
-
+SDK_NAMESPACE_END

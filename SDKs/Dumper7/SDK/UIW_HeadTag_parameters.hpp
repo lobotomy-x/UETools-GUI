@@ -10,18 +10,18 @@
 
 #include "Basic.hpp"
 
-#include "ProjectPContentInfo_structs.hpp"
 #include "UIST_AbnormalVisible_structs.hpp"
+#include "ProjectPContentInfo_structs.hpp"
 #include "Engine_structs.hpp"
-#include "UIST_Time_structs.hpp"
 #include "CoreUObject_structs.hpp"
-#include "UIST_Color_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "SlateCore_structs.hpp"
+#include "UIST_Time_structs.hpp"
+#include "UIST_Color_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_HeadTag.UIW_HeadTag_C.ExecuteUbergraph_UIW_HeadTag
 // 0x01A0 (0x01A0 - 0x0000)
@@ -400,5 +400,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_HeadTag_C_AddAbnormal;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

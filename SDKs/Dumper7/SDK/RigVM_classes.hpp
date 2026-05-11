@@ -14,8 +14,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class RigVM.RigVM
 // 0x02D0 (0x02F8 - 0x0028)
@@ -78,5 +77,4 @@ public:
 };
 DUMPER7_ASSERTS_URigVM;
 
-}
-
+SDK_NAMESPACE_END

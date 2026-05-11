@@ -14,8 +14,7 @@
 #include "UIW_ListItem_WeaponReinforced_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_WeaponReinforced.UIW_ListItem_WeaponReinforced_C.ExecuteUbergraph_UIW_ListItem_WeaponReinforced
 // (Final, UbergraphFunction, HasDefaults)
@@ -56,5 +55,5 @@ void UUIW_ListItem_WeaponReinforced_C::Set_Item(class UObject* ListObject)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass PNFunctionLibrary.PNFunctionLibrary_C
 // 0x0000 (0x0028 - 0x0028)
@@ -43,5 +42,4 @@ public:
 };
 DUMPER7_ASSERTS_UPNFunctionLibrary_C;
 
-}
-
+SDK_NAMESPACE_END

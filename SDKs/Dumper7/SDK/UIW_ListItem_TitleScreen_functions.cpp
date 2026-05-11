@@ -14,8 +14,7 @@
 #include "UIW_ListItem_TitleScreen_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_TitleScreen.UIW_ListItem_TitleScreen_C.ExecuteUbergraph_UIW_ListItem_TitleScreen
 // (Final, UbergraphFunction, HasDefaults)
@@ -356,5 +355,5 @@ void UUIW_ListItem_TitleScreen_C::SetMoveFocusEffect()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

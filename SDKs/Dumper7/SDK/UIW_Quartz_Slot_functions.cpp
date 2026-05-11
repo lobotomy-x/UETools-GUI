@@ -14,8 +14,7 @@
 #include "UIW_Quartz_Slot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Quartz_Slot.UIW_Quartz_Slot_C.SetData
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -40,5 +39,5 @@ void UUIW_Quartz_Slot_C::SetData(ELQuartzSlotStatusType QuartzSlotStatus, ELQuar
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Wire_GrappleGun_PC_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Wire_GrappleGun_PC.BP_Wire_GrappleGun_PC_C.ExecuteUbergraph_BP_Wire_GrappleGun_PC
 // (Final, UbergraphFunction, HasDefaults)
@@ -156,5 +155,5 @@ void ABP_Wire_GrappleGun_PC_C::SetWireDirection()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

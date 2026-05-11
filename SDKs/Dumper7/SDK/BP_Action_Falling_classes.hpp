@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Falling.BP_Action_Falling_C
 // 0x0030 (0x0210 - 0x01E0)
@@ -58,5 +57,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Falling_C;
 
-}
-
+SDK_NAMESPACE_END

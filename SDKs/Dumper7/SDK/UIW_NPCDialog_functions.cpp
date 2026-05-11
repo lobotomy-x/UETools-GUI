@@ -14,8 +14,7 @@
 #include "UIW_NPCDialog_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_NPCDialog.UIW_NPCDialog_C.ExecuteUbergraph_UIW_NPCDialog
 // (Final, UbergraphFunction, HasDefaults)
@@ -839,5 +838,5 @@ void UUIW_NPCDialog_C::IsNewMenu(TArray<int32>& MenuNotifies, int32 AnswerIndex,
 		*IsNewMenu_0 = Parms.IsNewMenu_0;
 }
 
-}
 
+SDK_NAMESPACE_END

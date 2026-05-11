@@ -15,8 +15,7 @@
 #include "PhysicsCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_FluidController.BP_FluidController_C
 // 0x0088 (0x02A8 - 0x0220)
@@ -81,5 +80,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_FluidController_C;
 
-}
-
+SDK_NAMESPACE_END

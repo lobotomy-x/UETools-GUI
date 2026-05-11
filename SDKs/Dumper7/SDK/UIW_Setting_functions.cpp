@@ -14,8 +14,7 @@
 #include "UIW_Setting_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Setting.UIW_Setting_C.ExecuteUbergraph_UIW_Setting
 // (Final, UbergraphFunction, HasDefaults)
@@ -1832,5 +1831,5 @@ void UUIW_Setting_C::SetTextGamePad2(const struct FKey& Key, class UTextBlock* T
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

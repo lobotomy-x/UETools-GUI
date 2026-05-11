@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_QuickSlot.UIW_HUD_QuickSlot_C
 // 0x0128 (0x03C8 - 0x02A0)
@@ -101,5 +100,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_QuickSlot_C;
 
-}
-
+SDK_NAMESPACE_END

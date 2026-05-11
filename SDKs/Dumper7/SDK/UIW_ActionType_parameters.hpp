@@ -16,8 +16,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ActionType.UIW_ActionType_C.ExecuteUbergraph_UIW_ActionType
 // 0x0140 (0x0140 - 0x0000)
@@ -232,5 +232,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ActionType_C_OnMouseButtonDoubleClick;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

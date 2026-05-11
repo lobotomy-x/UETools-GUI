@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Parry.BP_Action_Parry_C
 // 0x0018 (0x01F8 - 0x01E0)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Parry_C;
 
-}
-
+SDK_NAMESPACE_END

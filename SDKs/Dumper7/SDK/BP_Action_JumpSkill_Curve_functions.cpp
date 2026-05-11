@@ -14,8 +14,7 @@
 #include "BP_Action_JumpSkill_Curve_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_JumpSkill_Curve.BP_Action_JumpSkill_Curve_C.ExecuteUbergraph_BP_Action_JumpSkill_Curve
 // (Final, UbergraphFunction, HasDefaults)
@@ -254,5 +253,5 @@ int32 UBP_Action_JumpSkill_Curve_C::OnSelectNextAnim(class UAnimMontage* Montage
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

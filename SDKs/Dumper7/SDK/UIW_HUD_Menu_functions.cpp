@@ -14,8 +14,7 @@
 #include "UIW_HUD_Menu_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Menu.UIW_HUD_Menu_C.ExecuteUbergraph_UIW_HUD_Menu
 // (Final, UbergraphFunction, HasDefaults)
@@ -482,5 +481,5 @@ void UUIW_HUD_Menu_C::FindBeltSlot(bool IsFirstLine, int32 SlotIndex, class UUIW
 		*SlotBelt = Parms.SlotBelt;
 }
 
-}
 
+SDK_NAMESPACE_END

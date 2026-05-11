@@ -14,8 +14,7 @@
 #include "BP_PropItemDrop_gain_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_PropItemDrop_gain.BP_PropItemDrop_Gain_C.ExecuteUbergraph_BP_PropItemDrop_Gain
 // (Final, UbergraphFunction)
@@ -78,5 +77,5 @@ void ABP_PropItemDrop_Gain_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

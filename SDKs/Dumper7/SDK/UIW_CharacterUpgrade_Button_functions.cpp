@@ -14,8 +14,7 @@
 #include "UIW_CharacterUpgrade_Button_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CharacterUpgrade_Button.UIW_CharacterUpgrade_Button_C.ExecuteUbergraph_UIW_CharacterUpgrade_Button
 // (Final, UbergraphFunction, HasDefaults)
@@ -205,5 +204,5 @@ void UUIW_CharacterUpgrade_Button_C::SetLabel(class FName CodeName)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

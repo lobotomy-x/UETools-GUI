@@ -14,8 +14,7 @@
 #include "UIW_DemoNotice_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_DemoNotice.UIW_DemoNotice_C.ExecuteUbergraph_UIW_DemoNotice
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_DemoNotice_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

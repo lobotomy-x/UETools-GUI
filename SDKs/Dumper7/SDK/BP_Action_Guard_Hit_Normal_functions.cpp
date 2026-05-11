@@ -14,8 +14,7 @@
 #include "BP_Action_Guard_Hit_Normal_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Guard_Hit_Normal.BP_Action_Guard_Hit_Normal_C.ExecuteUbergraph_BP_Action_Guard_Hit_Normal
 // (Final, UbergraphFunction, HasDefaults)
@@ -134,5 +133,5 @@ void UBP_Action_Guard_Hit_Normal_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

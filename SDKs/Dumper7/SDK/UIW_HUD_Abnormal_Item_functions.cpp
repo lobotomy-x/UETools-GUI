@@ -14,8 +14,7 @@
 #include "UIW_HUD_Abnormal_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Abnormal_Item.UIW_HUD_Abnormal_Item_C.SetData
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -38,5 +37,5 @@ void UUIW_HUD_Abnormal_Item_C::SetData(bool IsPassive_0, class FName CodeName_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

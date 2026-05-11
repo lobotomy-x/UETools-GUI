@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Stepper.UIW_Stepper_C.ExecuteUbergraph_UIW_Stepper
 // 0x0028 (0x0028 - 0x0000)
@@ -124,5 +124,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Stepper_C_ReturnSelectedIndex;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

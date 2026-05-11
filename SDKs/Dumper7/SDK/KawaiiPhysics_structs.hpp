@@ -15,8 +15,7 @@
 #include "AnimGraphRuntime_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum KawaiiPhysics.ECollisionLimitType
 // NumValues: 0x0005
@@ -249,5 +248,4 @@ public:
 };
 DUMPER7_ASSERTS_FSphericalLimitData;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_HUD_PileBunker_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_PileBunker.UIW_HUD_PileBunker_C.ExecuteUbergraph_UIW_HUD_PileBunker
 // (Final, UbergraphFunction, HasDefaults)
@@ -86,5 +85,5 @@ void UUIW_HUD_PileBunker_C::OnSlaveArmAmmoChange(int32 Current, int32 Max)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

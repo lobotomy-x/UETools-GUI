@@ -14,8 +14,7 @@
 #include "UIW_Module_Text_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_Text.UIW_Module_Text_C.ExecuteUbergraph_UIW_Module_Text
 // (Final, UbergraphFunction, HasDefaults)
@@ -106,5 +105,5 @@ struct FEventReply UUIW_Module_Text_C::OnMouseButtonDown(const struct FGeometry&
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

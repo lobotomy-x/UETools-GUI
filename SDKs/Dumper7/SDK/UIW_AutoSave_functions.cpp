@@ -14,8 +14,7 @@
 #include "UIW_AutoSave_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_AutoSave.UIW_AutoSave_C.ExecuteUbergraph_UIW_AutoSave
 // (Final, UbergraphFunction)
@@ -84,5 +83,5 @@ void UUIW_AutoSave_C::OnReady()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_HeadTag_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HeadTag.UIW_HeadTag_C.ExecuteUbergraph_UIW_HeadTag
 // (Final, UbergraphFunction, HasDefaults)
@@ -524,5 +523,5 @@ void UUIW_HeadTag_C::AddAbnormal(class FName Name_0, int64 ID, bool Visible, ELA
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_Visual_Idle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_Visual_Idle.BP_Action_SlaveArm_Visual_Idle_C.ExecuteUbergraph_BP_Action_SlaveArm_Visual_Idle
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UBP_Action_SlaveArm_Visual_Idle_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

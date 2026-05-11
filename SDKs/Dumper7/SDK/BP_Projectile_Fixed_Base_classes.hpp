@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Projectile_Fixed_Base.BP_Projectile_Fixed_Base_C
 // 0x0010 (0x0350 - 0x0340)
@@ -53,5 +52,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Projectile_Fixed_Base_C;
 
-}
-
+SDK_NAMESPACE_END

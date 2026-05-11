@@ -13,8 +13,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ResultProto.UIW_ResultProto_C.ExecuteUbergraph_UIW_ResultProto
 // 0x0038 (0x0038 - 0x0000)
@@ -54,5 +54,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ResultProto_C_CallbackGoTitle;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

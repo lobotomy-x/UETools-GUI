@@ -14,8 +14,7 @@
 #include "BP_Action_HoldThrow_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_HoldThrow.BP_Action_HoldThrow_C.ExecuteUbergraph_BP_Action_HoldThrow
 // (Final, UbergraphFunction, HasDefaults)
@@ -144,5 +143,5 @@ bool UBP_Action_HoldThrow_C::OnPreProcessAction()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

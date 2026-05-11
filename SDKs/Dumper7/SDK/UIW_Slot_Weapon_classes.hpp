@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Weapon_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Slot_Weapon.UIW_Slot_Weapon_C
 // 0x0030 (0x0358 - 0x0328)
@@ -32,9 +31,9 @@ public:
 	void Destruct();
 	void Set_Item(class UObject* ListObject);
 	void OnFocusLost(const struct FFocusEvent& InFocusEvent);
-	struct FEventReply OnMouseButtonDown(const struct FGeometry& MyGeometry, const struct FPointerEvent& MouseEvent);
 	struct FEventReply OnMouseButtonDoubleClick(const struct FGeometry& InMyGeometry, const struct FPointerEvent& InMouseEvent);
 	struct FEventReply OnFocusReceived(const struct FGeometry& MyGeometry, const struct FFocusEvent& InFocusEvent);
+	struct FEventReply OnMouseButtonDown(const struct FGeometry& MyGeometry, const struct FPointerEvent& MouseEvent);
 	void SetMoveFocusEffect();
 	void SetEquipPossible();
 
@@ -54,5 +53,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Slot_Weapon_C;
 
-}
-
+SDK_NAMESPACE_END

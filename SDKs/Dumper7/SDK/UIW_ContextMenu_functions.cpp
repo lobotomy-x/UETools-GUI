@@ -14,8 +14,7 @@
 #include "UIW_ContextMenu_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ContextMenu.UIW_ContextMenu_C.ExecuteUbergraph_UIW_ContextMenu
 // (Final, UbergraphFunction)
@@ -259,5 +258,5 @@ void UUIW_ContextMenu_C::Close()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

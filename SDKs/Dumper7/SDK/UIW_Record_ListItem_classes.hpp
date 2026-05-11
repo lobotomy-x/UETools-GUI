@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Record_ListItem.UIW_Record_ListItem_C
 // 0x0068 (0x0308 - 0x02A0)
@@ -70,5 +69,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Record_ListItem_C;
 
-}
-
+SDK_NAMESPACE_END

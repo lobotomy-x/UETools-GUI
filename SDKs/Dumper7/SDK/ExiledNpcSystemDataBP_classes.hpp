@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass ExiledNpcSystemDataBP.ExiledNpcSystemDataBP_C
 // 0x0008 (0x0310 - 0x0308)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_AExiledNpcSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SlaveArm_List.UIW_SlaveArm_List_C
 // 0x0040 (0x02A0 - 0x0260)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SlaveArm_List_C;
 
-}
-
+SDK_NAMESPACE_END

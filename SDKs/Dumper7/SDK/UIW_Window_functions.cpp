@@ -14,8 +14,7 @@
 #include "UIW_Window_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Window.UIW_Window_C.ExecuteUbergraph_UIW_Window
 // (Final, UbergraphFunction, HasDefaults)
@@ -300,5 +299,5 @@ struct FEventReply UUIW_Window_C::OnMouseButtonUp(const struct FGeometry& MyGeom
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

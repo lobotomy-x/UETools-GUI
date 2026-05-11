@@ -14,8 +14,7 @@
 #include "BP_Action_LockOnDash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_LockOnDash.BP_Action_LockOnDash_C.ExecuteUbergraph_BP_Action_LockOnDash
 // (Final, UbergraphFunction)
@@ -92,5 +91,5 @@ void UBP_Action_LockOnDash_C::OnStop(class ULActBase* ReasonAction, class FName 
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

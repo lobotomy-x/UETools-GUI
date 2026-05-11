@@ -11,12 +11,11 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_CollectionInfo.UIW_CollectionInfo_C
 // 0x0070 (0x03B8 - 0x0348)
@@ -67,5 +66,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_CollectionInfo_C;
 
-}
-
+SDK_NAMESPACE_END

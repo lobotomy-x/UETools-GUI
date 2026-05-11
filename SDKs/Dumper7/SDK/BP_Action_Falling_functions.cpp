@@ -14,8 +14,7 @@
 #include "BP_Action_Falling_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Falling.BP_Action_Falling_C.ExecuteUbergraph_BP_Action_Falling
 // (Final, UbergraphFunction, HasDefaults)
@@ -155,5 +154,5 @@ bool UBP_Action_Falling_C::OnLanded(class ACharacter* LandingChar, const struct 
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

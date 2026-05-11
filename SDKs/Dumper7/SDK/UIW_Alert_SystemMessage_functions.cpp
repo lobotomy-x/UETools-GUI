@@ -14,8 +14,7 @@
 #include "UIW_Alert_SystemMessage_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_SystemMessage.UIW_Alert_SystemMessage_C.ExecuteUbergraph_UIW_Alert_SystemMessage
 // (Final, UbergraphFunction, HasDefaults)
@@ -98,5 +97,5 @@ void UUIW_Alert_SystemMessage_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

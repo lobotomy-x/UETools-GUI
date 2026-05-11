@@ -14,8 +14,7 @@
 #include "UIW_ExchangeShop_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ExchangeShop.UIW_ExchangeShop_C.ExecuteUbergraph_UIW_ExchangeShop
 // (Final, UbergraphFunction, HasDefaults)
@@ -484,5 +483,5 @@ int32 UUIW_ExchangeShop_C::GetBuyCountWithLimit(class ULProduct* Product)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

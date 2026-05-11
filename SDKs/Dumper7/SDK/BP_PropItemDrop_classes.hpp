@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_PropItemDrop.BP_PropItemDrop_C
 // 0x0038 (0x02D8 - 0x02A0)
@@ -55,5 +54,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_PropItemDrop_C;
 
-}
-
+SDK_NAMESPACE_END

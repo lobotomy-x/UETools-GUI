@@ -14,8 +14,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct NPCJumpSkill_Struct_Curve.NPCJumpSkill_Struct_Curve
 // 0x0048 (0x0048 - 0x0000)
@@ -37,5 +36,4 @@ public:
 };
 DUMPER7_ASSERTS_FNPCJumpSkill_Struct_Curve;
 
-}
-
+SDK_NAMESPACE_END

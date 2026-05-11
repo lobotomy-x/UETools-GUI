@@ -15,8 +15,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function OptionSystemDataBP.OptionSystemDataBP_C.GetDefaultUseAutoNewTargetLockOn
 // 0x0001 (0x0001 - 0x0000)
@@ -311,5 +311,5 @@ public:
 };
 DUMPER7_ASSERTS_OptionSystemDataBP_C_GetDefaultForceFeedbackIdx;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "WorldSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function WorldSystemDataBP.WorldSystemDataBP_C.ExecuteUbergraph_WorldSystemDataBP
 // (Final, UbergraphFunction)
@@ -86,5 +85,5 @@ void AWorldSystemDataBP_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

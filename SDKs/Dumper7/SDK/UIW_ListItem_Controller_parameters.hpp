@@ -15,8 +15,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_Controller.UIW_ListItem_Controller_C.ExecuteUbergraph_UIW_ListItem_Controller
 // 0x02C0 (0x02C0 - 0x0000)
@@ -180,5 +180,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_Controller_C_OnOverlap;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

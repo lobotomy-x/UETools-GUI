@@ -14,8 +14,7 @@
 #include "UIW_ListItem_SlaveArm_ReinForceInfo_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_SlaveArm_ReinForceInfo.UIW_ListItem_SlaveArm_ReinforceInfo_C.ExecuteUbergraph_UIW_ListItem_SlaveArm_ReinforceInfo
 // (Final, UbergraphFunction, HasDefaults)
@@ -193,5 +192,5 @@ void UUIW_ListItem_SlaveArm_ReinforceInfo_C::SetData(class ULSlaveArmTree* SlotD
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

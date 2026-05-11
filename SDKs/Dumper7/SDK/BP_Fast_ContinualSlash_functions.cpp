@@ -14,8 +14,7 @@
 #include "BP_Fast_ContinualSlash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Fast_ContinualSlash.BP_Fast_ContinualSlash_C.ExecuteUbergraph_BP_Fast_ContinualSlash
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Fast_ContinualSlash_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

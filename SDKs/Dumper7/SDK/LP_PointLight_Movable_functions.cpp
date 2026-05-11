@@ -13,8 +13,7 @@
 #include "LP_PointLight_Movable_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LP_PointLight_Movable.LP_PointLight_Movable_C.UserConstructionScript
 // (Event, Public, BlueprintCallable, BlueprintEvent)
@@ -29,5 +28,5 @@ void ALP_PointLight_Movable_C::UserConstructionScript()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "LNPCComboTableBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LNPCComboTableBP.LNPCComboTableBP_C.ExecuteUbergraph_LNPCComboTableBP
 // (Final, UbergraphFunction)
@@ -62,5 +61,5 @@ void ULNPCComboTableBP_C::Traverse(class AActor* TargetActor, class FName Comman
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

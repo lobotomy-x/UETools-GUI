@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ItemSmall_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_ItemSmall.UIW_ListItem_ItemSmall_C.ExecuteUbergraph_UIW_ListItem_ItemSmall
 // (Final, UbergraphFunction, HasDefaults)
@@ -399,5 +398,5 @@ struct FEventReply UUIW_ListItem_ItemSmall_C::OnMouseButtonUp(const struct FGeom
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

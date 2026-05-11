@@ -14,8 +14,7 @@
 #include "UIW_Popup_BG_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Popup_BG.UIW_Popup_BG_C.RequestCloseWindow
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -50,5 +49,5 @@ void UUIW_Popup_BG_C::SetContentsSize(const struct FVector2D& Size)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

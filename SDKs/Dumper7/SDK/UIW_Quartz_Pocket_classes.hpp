@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Quartz_Pocket.UIW_Quartz_Pocket_C
 // 0x0130 (0x0390 - 0x0260)
@@ -93,5 +92,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Quartz_Pocket_C;
 
-}
-
+SDK_NAMESPACE_END

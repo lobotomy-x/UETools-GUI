@@ -17,13 +17,12 @@
 #include "BP_Action_HitBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_DMG_STAND.BP_Action_DMG_STAND_C
 // 0x0230 (0x05C8 - 0x0398)
 #pragma pack(push, 0x1)
-class alignas(0x08) UBP_Action_DMG_STAND_C : public UBP_Action_HitBase_C
+class SDK_ALIGN(0x08) UBP_Action_DMG_STAND_C : public UBP_Action_HitBase_C
 {
 public:
 	struct FPointerToUberGraphFrame               UberGraphFrame_BP_Action_DMG_STAND_C;              // 0x0398(0x0008)(ZeroConstructor, Transient, DuplicateTransient)
@@ -108,5 +107,4 @@ public:
 #pragma pack(pop)
 DUMPER7_ASSERTS_UBP_Action_DMG_STAND_C;
 
-}
-
+SDK_NAMESPACE_END

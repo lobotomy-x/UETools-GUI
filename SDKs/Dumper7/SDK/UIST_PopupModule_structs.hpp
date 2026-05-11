@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_PopupModule.UIST_PopupModule
 // 0x0038 (0x0038 - 0x0000)
@@ -24,5 +23,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_PopupModule;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Projectile_Design_Trap_Elec_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Projectile_Design_Trap_Elec.BP_Projectile_Design_Trap_Elec_C.ExecuteUbergraph_BP_Projectile_Design_Trap_Elec
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void ABP_Projectile_Design_Trap_Elec_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

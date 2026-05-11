@@ -14,8 +14,7 @@
 #include "UIW_ProfileItem_Weight_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ProfileItem_Weight.UIW_ProfileItem_Weight_C.ExecuteUbergraph_UIW_ProfileItem_Weight
 // (Final, UbergraphFunction, HasDefaults)
@@ -136,5 +135,5 @@ void UUIW_ProfileItem_Weight_C::OnChangeEquipItem(ELEquipSlotType EquipSlot, cla
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_IdleTurn_End_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_IdleTurn_End.BP_Action_IdleTurn_End_C.ExecuteUbergraph_BP_Action_IdleTurn_End
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Action_IdleTurn_End_C::OnStop(class ULActBase* ReasonAction, class FNam
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

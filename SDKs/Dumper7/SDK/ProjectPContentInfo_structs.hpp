@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum ProjectPContentInfo.ELPhysicalSurfaceType
 // NumValues: 0x001A
@@ -9307,5 +9306,4 @@ public:
 };
 DUMPER7_ASSERTS_FWorldZoneInfoPtr;
 
-}
-
+SDK_NAMESPACE_END

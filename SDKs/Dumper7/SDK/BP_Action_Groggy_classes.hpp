@@ -16,8 +16,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Groggy.BP_Action_Groggy_C
 // 0x0028 (0x05F0 - 0x05C8)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Groggy_C;
 
-}
-
+SDK_NAMESPACE_END

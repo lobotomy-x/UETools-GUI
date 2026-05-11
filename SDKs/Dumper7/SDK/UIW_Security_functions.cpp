@@ -14,8 +14,7 @@
 #include "UIW_Security_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Security.UIW_Security_C.ExecuteUbergraph_UIW_Security
 // (Final, UbergraphFunction, HasDefaults)
@@ -238,5 +237,5 @@ void UUIW_Security_C::OnPWCommitted(const class FText& Text, ETextCommit CommitM
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

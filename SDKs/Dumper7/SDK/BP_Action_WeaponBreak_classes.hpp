@@ -15,8 +15,7 @@
 #include "BP_Action_HitBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_WeaponBreak.BP_Action_WeaponBreak_C
 // 0x01A8 (0x0540 - 0x0398)
@@ -50,5 +49,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_WeaponBreak_C;
 
-}
-
+SDK_NAMESPACE_END

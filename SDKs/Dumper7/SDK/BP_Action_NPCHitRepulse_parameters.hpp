@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_NPCHitRepulse.BP_Action_NPCHitRepulse_C.ExecuteUbergraph_BP_Action_NPCHitRepulse
 // 0x0048 (0x0048 - 0x0000)
@@ -40,5 +40,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_NPCHitRepulse_C_ExecuteUbergraph_BP_Action_NPCHitRepulse;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

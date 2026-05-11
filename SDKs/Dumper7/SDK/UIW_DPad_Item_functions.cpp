@@ -14,8 +14,7 @@
 #include "UIW_DPad_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_DPad_Item.UIW_DPad_Item_C.ExecuteUbergraph_UIW_DPad_Item
 // (Final, UbergraphFunction)
@@ -268,5 +267,5 @@ void UUIW_DPad_Item_C::CanUse(bool* NewParam)
 		*NewParam = Parms.NewParam;
 }
 
-}
 
+SDK_NAMESPACE_END

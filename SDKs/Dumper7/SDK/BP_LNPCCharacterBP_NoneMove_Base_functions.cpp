@@ -14,8 +14,7 @@
 #include "BP_LNPCCharacterBP_NoneMove_Base_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_LNPCCharacterBP_NoneMove_Base.BP_LNPCCharacterBP_NoneMove_Base_C.ExecuteUbergraph_BP_LNPCCharacterBP_NoneMove_Base
 // (Final, UbergraphFunction)
@@ -64,5 +63,5 @@ void ABP_LNPCCharacterBP_NoneMove_Base_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

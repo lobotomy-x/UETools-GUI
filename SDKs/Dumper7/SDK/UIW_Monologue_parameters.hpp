@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Monologue.UIW_Monologue_C.ExecuteUbergraph_UIW_Monologue
 // 0x0040 (0x0040 - 0x0000)
@@ -61,5 +61,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Monologue_C_CompleteTween;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

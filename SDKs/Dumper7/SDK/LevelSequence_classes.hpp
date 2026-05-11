@@ -20,8 +20,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class LevelSequence.AnimSequenceLevelSequenceLink
 // 0x0028 (0x0050 - 0x0028)
@@ -443,5 +442,4 @@ public:
 };
 DUMPER7_ASSERTS_ALevelSequenceMediaController;
 
-}
-
+SDK_NAMESPACE_END

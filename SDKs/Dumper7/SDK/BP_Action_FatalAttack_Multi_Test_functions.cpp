@@ -14,8 +14,7 @@
 #include "BP_Action_FatalAttack_Multi_Test_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_FatalAttack_Multi_Test.BP_Action_FatalAttack_Multi_Test_C.ExecuteUbergraph_BP_Action_FatalAttack_Multi_Test
 // (Final, UbergraphFunction, HasDefaults)
@@ -86,5 +85,5 @@ void UBP_Action_FatalAttack_Multi_Test_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

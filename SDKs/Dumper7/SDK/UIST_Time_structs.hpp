@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Time.UIST_Time
 // 0x0018 (0x0018 - 0x0000)
@@ -25,5 +24,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Time;
 
-}
-
+SDK_NAMESPACE_END

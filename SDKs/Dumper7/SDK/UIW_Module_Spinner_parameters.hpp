@@ -14,8 +14,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Module_Spinner.UIW_Module_Spinner_C.FocusManage
 // 0x02D0 (0x02D0 - 0x0000)
@@ -40,5 +40,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Module_Spinner_C_OnWheel;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

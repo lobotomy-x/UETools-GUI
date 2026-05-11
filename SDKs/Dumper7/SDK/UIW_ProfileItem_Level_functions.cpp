@@ -14,8 +14,7 @@
 #include "UIW_ProfileItem_Level_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ProfileItem_Level.UIW_ProfileItem_Level_C.ExecuteUbergraph_UIW_ProfileItem_Level
 // (Final, UbergraphFunction, HasDefaults)
@@ -106,5 +105,5 @@ void UUIW_ProfileItem_Level_C::RefreshData()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

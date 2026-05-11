@@ -14,8 +14,7 @@
 #include "UIW_Monologue_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Monologue.UIW_Monologue_C.ExecuteUbergraph_UIW_Monologue
 // (Final, UbergraphFunction)
@@ -118,5 +117,5 @@ void UUIW_Monologue_C::CompleteTween(class FName CategoryName)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Alert_Interaction.UIW_Alert_Interaction_C.ExecuteUbergraph_UIW_Alert_Interaction
 // 0x0050 (0x0050 - 0x0000)
@@ -86,5 +86,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Alert_Interaction_C_OnEnableInteraction;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

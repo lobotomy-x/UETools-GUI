@@ -15,8 +15,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Tutorial.UIW_Tutorial_C.ExecuteUbergraph_UIW_Tutorial
 // 0x0024 (0x0024 - 0x0000)
@@ -168,5 +168,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Tutorial_C_SetCloseBtnVisibility;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

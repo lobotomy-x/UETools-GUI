@@ -13,8 +13,7 @@
 #include "BP_Action_FatalAttack_Multi_Test_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_FatalAttack_Normal.BP_FatalAttack_Normal_C
 // 0x0000 (0x0248 - 0x0248)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_FatalAttack_Normal_C;
 
-}
-
+SDK_NAMESPACE_END

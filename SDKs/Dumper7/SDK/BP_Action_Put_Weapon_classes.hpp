@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Put_Weapon.BP_Action_Put_Weapon_C
 // 0x0010 (0x01F0 - 0x01E0)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Put_Weapon_C;
 
-}
-
+SDK_NAMESPACE_END

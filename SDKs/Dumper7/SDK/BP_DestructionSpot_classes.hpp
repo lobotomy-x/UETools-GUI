@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_DestructionSpot.BP_DestructionSpot_C
 // 0x0020 (0x03A0 - 0x0380)
@@ -54,5 +53,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_DestructionSpot_C;
 
-}
-
+SDK_NAMESPACE_END

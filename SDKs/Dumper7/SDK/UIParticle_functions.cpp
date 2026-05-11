@@ -14,8 +14,7 @@
 #include "UIParticle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIParticle.UIParticle.Play
 // (Final, Native, Public, BlueprintCallable)
@@ -280,5 +279,5 @@ void UUIParticleUtility::SetMultiThread(bool Value)
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_Menu.UIW_HUD_Menu_C
 // 0x01A8 (0x0408 - 0x0260)
@@ -118,5 +117,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_Menu_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_DMG_STAND_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Down_Up.BP_Action_Down_Up_C
 // 0x0020 (0x05E8 - 0x05C8)
@@ -47,5 +46,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Down_Up_C;
 
-}
-
+SDK_NAMESPACE_END

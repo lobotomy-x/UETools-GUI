@@ -14,8 +14,7 @@
 #include "UIW_Popup_BG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_BG_Center.UIW_BG_Center_C
 // 0x0010 (0x02B0 - 0x02A0)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_BG_Center_C;
 
-}
-
+SDK_NAMESPACE_END

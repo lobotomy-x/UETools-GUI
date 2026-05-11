@@ -15,8 +15,7 @@
 #include "InputCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class HeadMountedDisplay.HeadMountedDisplayFunctionLibrary
 // 0x0000 (0x0028 - 0x0028)
@@ -315,5 +314,4 @@ public:
 };
 DUMPER7_ASSERTS_UXRLoadingScreenFunctionLibrary;
 
-}
-
+SDK_NAMESPACE_END

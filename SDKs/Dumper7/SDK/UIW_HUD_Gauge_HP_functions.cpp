@@ -14,8 +14,7 @@
 #include "UIW_HUD_Gauge_HP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Gauge_HP.UIW_HUD_Gauge_HP_C.ExecuteUbergraph_UIW_HUD_Gauge_HP
 // (Final, UbergraphFunction)
@@ -216,5 +215,5 @@ void UUIW_HUD_Gauge_HP_C::RefreshGauge(class ULStatComponent* StatComponent, boo
 		*GaugeSizeX = Parms.GaugeSizeX;
 }
 
-}
 
+SDK_NAMESPACE_END

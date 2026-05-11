@@ -14,8 +14,7 @@
 #include "UIW_Alert_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert.UIW_Alert_C.ExecuteUbergraph_UIW_Alert
 // (Final, UbergraphFunction)
@@ -216,5 +215,5 @@ void UUIW_Alert_C::HideAchievement()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

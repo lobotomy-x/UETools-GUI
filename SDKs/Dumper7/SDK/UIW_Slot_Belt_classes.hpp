@@ -11,12 +11,11 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "ProjectPContentInfo_structs.hpp"
 #include "UIW_ListItem_ItemSmall_classes.hpp"
+#include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Slot_Belt.UIW_Slot_Belt_C
 // 0x0040 (0x0378 - 0x0338)
@@ -59,5 +58,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Slot_Belt_C;
 
-}
-
+SDK_NAMESPACE_END

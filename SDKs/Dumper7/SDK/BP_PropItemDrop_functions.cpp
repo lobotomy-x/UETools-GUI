@@ -14,8 +14,7 @@
 #include "BP_PropItemDrop_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_PropItemDrop.BP_PropItemDrop_C.ExecuteUbergraph_BP_PropItemDrop
 // (Final, UbergraphFunction)
@@ -98,5 +97,5 @@ void ABP_PropItemDrop_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

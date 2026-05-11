@@ -17,8 +17,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Quartz.UIW_Quartz_C
 // 0x0440 (0x0788 - 0x0348)
@@ -217,5 +216,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Quartz_C;
 
-}
-
+SDK_NAMESPACE_END

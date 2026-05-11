@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_PileBunker_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_PileBunker.BP_Action_SlaveArm_PileBunker_C.ExecuteUbergraph_BP_Action_SlaveArm_PileBunker
 // (Final, UbergraphFunction)
@@ -70,5 +69,5 @@ void UBP_Action_SlaveArm_PileBunker_C::JumpToNextSection(class FName NextSection
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

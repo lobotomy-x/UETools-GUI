@@ -14,8 +14,7 @@
 #include "BP_Action_IdleTurn_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_IdleTurn.BP_Action_IdleTurn_C.ExecuteUbergraph_BP_Action_IdleTurn
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Action_IdleTurn_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

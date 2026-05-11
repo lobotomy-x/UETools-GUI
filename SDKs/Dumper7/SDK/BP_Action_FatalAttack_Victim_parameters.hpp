@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_FatalAttack_Victim.BP_Action_FatalAttack_Victim_C.ExecuteUbergraph_BP_Action_FatalAttack_Victim
 // 0x0060 (0x0060 - 0x0000)
@@ -59,5 +59,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_FatalAttack_Victim_C_OnStop;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

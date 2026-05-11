@@ -19,8 +19,7 @@
 #include "AnimGraphRuntime_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum ControlRig.EControlRigComponentMapDirection
 // NumValues: 0x0003
@@ -7215,5 +7214,4 @@ public:
 };
 DUMPER7_ASSERTS_FStructReference;
 
-}
-
+SDK_NAMESPACE_END

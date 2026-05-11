@@ -12,13 +12,12 @@
 
 #include "Engine_structs.hpp"
 #include "ProjectP_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_CharacterUpgrade.UIW_CharacterUpgrade_C
 // 0x01C8 (0x0510 - 0x0348)
@@ -140,5 +139,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_CharacterUpgrade_C;
 
-}
-
+SDK_NAMESPACE_END

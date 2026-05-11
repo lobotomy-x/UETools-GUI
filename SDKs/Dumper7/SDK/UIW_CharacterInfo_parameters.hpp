@@ -16,8 +16,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_CharacterInfo.UIW_CharacterInfo_C.ExecuteUbergraph_UIW_CharacterInfo
 // 0x00B0 (0x00B0 - 0x0000)
@@ -155,5 +155,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_CharacterInfo_C_RequestCloseWindow;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

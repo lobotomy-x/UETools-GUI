@@ -14,8 +14,7 @@
 #include "UIW_Intro_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Intro.UIW_Intro_C.ExecuteUbergraph_UIW_Intro
 // (Final, UbergraphFunction)
@@ -64,5 +63,5 @@ void UUIW_Intro_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

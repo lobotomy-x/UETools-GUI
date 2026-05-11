@@ -13,8 +13,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_QA_ListItem.UIW_QA_ListItem_C.ExecuteUbergraph_UIW_QA_ListItem
 // 0x00E0 (0x00E0 - 0x0000)
@@ -42,5 +42,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_QA_ListItem_C_ExecuteUbergraph_UIW_QA_ListItem;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

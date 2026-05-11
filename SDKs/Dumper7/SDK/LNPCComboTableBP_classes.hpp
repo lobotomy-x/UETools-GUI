@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LNPCComboTableBP.LNPCComboTableBP_C
 // 0x0008 (0x00F0 - 0x00E8)
@@ -44,5 +43,4 @@ public:
 };
 DUMPER7_ASSERTS_ULNPCComboTableBP_C;
 
-}
-
+SDK_NAMESPACE_END

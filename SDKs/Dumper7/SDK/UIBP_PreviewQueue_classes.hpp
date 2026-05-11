@@ -10,12 +10,11 @@
 
 #include "Basic.hpp"
 
-#include "CoreUObject_classes.hpp"
 #include "UIEN_PreviewType_structs.hpp"
+#include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_PreviewQueue.UIBP_PreviewQueue_C
 // 0x0040 (0x0068 - 0x0028)
@@ -43,5 +42,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_PreviewQueue_C;
 
-}
-
+SDK_NAMESPACE_END

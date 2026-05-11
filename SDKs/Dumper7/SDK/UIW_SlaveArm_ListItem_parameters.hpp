@@ -15,8 +15,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_SlaveArm_ListItem.UIW_SlaveArm_ListItem_C.ExecuteUbergraph_UIW_SlaveArm_ListItem
 // 0x0130 (0x0130 - 0x0000)
@@ -152,5 +152,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_SlaveArm_ListItem_C_SetSlotTypeAll;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

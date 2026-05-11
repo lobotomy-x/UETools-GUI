@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum UIEN_Direction.UIEN_Direction
 // NumValues: 0x0005
@@ -25,5 +24,4 @@ enum class EUIEN_Direction : uint8
 	UIEN_MAX                                 = 4,
 };
 
-}
-
+SDK_NAMESPACE_END

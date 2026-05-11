@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_CharacterDetailAbility.UIW_CharacterDetailAbility_C
 // 0x0120 (0x0380 - 0x0260)
@@ -91,5 +90,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_CharacterDetailAbility_C;
 
-}
-
+SDK_NAMESPACE_END

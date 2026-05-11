@@ -14,8 +14,7 @@
 #include "UIW_Module_Spinner_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_Spinner.UIW_Module_Spinner_C.FocusManage
 // (Public, HasOutParams, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -61,5 +60,5 @@ void UUIW_Module_Spinner_C::OnWheel(float Delta)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

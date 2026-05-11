@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SelectQuantity.UIW_SelectQuantity_C
 // 0x0090 (0x0330 - 0x02A0)
@@ -72,5 +71,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SelectQuantity_C;
 
-}
-
+SDK_NAMESPACE_END

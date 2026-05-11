@@ -14,8 +14,7 @@
 #include "UIW_HUD_Menu_Btn_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Menu_Btn.UIW_HUD_Menu_Btn_C.ExecuteUbergraph_UIW_HUD_Menu_Btn
 // (Final, UbergraphFunction, HasDefaults)
@@ -143,5 +142,5 @@ struct FEventReply UUIW_HUD_Menu_Btn_C::OnMouseButtonDown(const struct FGeometry
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

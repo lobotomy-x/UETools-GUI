@@ -14,8 +14,7 @@
 #include "BP_Action_FatalAttack_VictimBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_FatalAttack_Victim_End.BP_Action_FatalAttack_Victim_End_C
 // 0x0018 (0x03C8 - 0x03B0)
@@ -47,5 +46,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_FatalAttack_Victim_End_C;
 
-}
-
+SDK_NAMESPACE_END

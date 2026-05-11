@@ -14,8 +14,7 @@
 #include "UIW_Alert_Location_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_Location.UIW_Alert_Location_C.ExecuteUbergraph_UIW_Alert_Location
 // (Final, UbergraphFunction)
@@ -112,5 +111,5 @@ void UUIW_Alert_Location_C::Show()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -13,8 +13,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Color.UIST_Color
 // 0x0004 (0x0004 - 0x0000)
@@ -25,5 +24,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Color;
 
-}
-
+SDK_NAMESPACE_END

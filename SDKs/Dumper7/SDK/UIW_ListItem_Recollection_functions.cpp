@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Recollection_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Recollection.UIW_ListItem_Recollection_C.ExecuteUbergraph_UIW_ListItem_Recollection
 // (Final, UbergraphFunction, HasDefaults)
@@ -250,5 +249,5 @@ void UUIW_ListItem_Recollection_C::SetMoveFocusEffect()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

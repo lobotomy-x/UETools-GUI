@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_PileBunker.UIW_HUD_PileBunker_C
 // 0x0048 (0x02A8 - 0x0260)
@@ -53,5 +52,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_PileBunker_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function ObjectManagementSystemDataBP.ObjectManagementSystemDataBP_C.ExecuteUbergraph_ObjectManagementSystemDataBP
 // 0x0008 (0x0008 - 0x0000)
@@ -33,5 +33,5 @@ public:
 };
 DUMPER7_ASSERTS_ObjectManagementSystemDataBP_C_ReceiveTick;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

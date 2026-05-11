@@ -14,8 +14,7 @@
 #include "BP_Action_Climb_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Climb.BP_Action_Climb_C.ExecuteUbergraph_BP_Action_Climb
 // (Final, UbergraphFunction, HasDefaults)
@@ -308,5 +307,5 @@ void UBP_Action_Climb_C::ExecuteClimb(bool Up, bool Fast)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

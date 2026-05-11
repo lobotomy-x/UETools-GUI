@@ -14,8 +14,7 @@
 #include "ControlRig_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ControlRig.ControlRig.SetInteractionRig
 // (Final, Native, Public, BlueprintCallable)
@@ -1657,5 +1656,5 @@ bool AControlRigGizmoActor::IsSelectedInEditor() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -11,13 +11,12 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_MonadBuff.UIW_MonadBuff_C
 // 0x00E8 (0x0430 - 0x0348)
@@ -91,5 +90,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_MonadBuff_C;
 
-}
-
+SDK_NAMESPACE_END

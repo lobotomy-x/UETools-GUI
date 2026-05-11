@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum FSR2TemporalUpscaling.EFSR2LandscapeHISMMode
 // NumValues: 0x0004
@@ -55,5 +54,4 @@ enum class EFSR2QualityMode : uint32
 	EFSR2QualityMode_MAX                     = 5,
 };
 
-}
-
+SDK_NAMESPACE_END

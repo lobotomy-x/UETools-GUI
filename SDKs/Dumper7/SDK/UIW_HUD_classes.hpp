@@ -17,8 +17,7 @@
 #include "UMG_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD.UIW_HUD_C
 // 0x0208 (0x04A8 - 0x02A0)
@@ -153,5 +152,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_C;
 
-}
-
+SDK_NAMESPACE_END

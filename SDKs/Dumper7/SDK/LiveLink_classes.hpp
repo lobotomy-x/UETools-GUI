@@ -20,8 +20,7 @@
 #include "TimeManagement_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class LiveLink.LiveLinkAnimationVirtualSubject
 // 0x0008 (0x0168 - 0x0160)
@@ -601,5 +600,4 @@ public:
 };
 DUMPER7_ASSERTS_ULiveLinkVirtualSubjectSourceSettings;
 
-}
-
+SDK_NAMESPACE_END

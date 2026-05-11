@@ -15,8 +15,7 @@
 #include "UIW_ListItem_ItemSmall_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_WeaponParts.UIW_ListItem_WeaponParts_C
 // 0x0018 (0x0350 - 0x0338)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_WeaponParts_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -13,8 +13,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct BP_Action_JumpSkill_Data_Jump13.BP_Action_JumpSkill_Data_Jump13
 // 0x0030 (0x0030 - 0x0000)
@@ -30,5 +29,4 @@ public:
 };
 DUMPER7_ASSERTS_FBP_Action_JumpSkill_Data_Jump13;
 
-}
-
+SDK_NAMESPACE_END

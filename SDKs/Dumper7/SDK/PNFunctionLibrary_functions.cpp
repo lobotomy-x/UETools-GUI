@@ -14,8 +14,7 @@
 #include "PNFunctionLibrary_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function PNFunctionLibrary.PNFunctionLibrary_C.Is Play State
 // (Static, Public, HasOutParams, BlueprintCallable, BlueprintEvent, BlueprintPure)
@@ -98,5 +97,5 @@ void UPNFunctionLibrary_C::CheckRepulse(const class FName& SkillHitCodeName, cla
 		*Result = Parms.Result;
 }
 
-}
 
+SDK_NAMESPACE_END

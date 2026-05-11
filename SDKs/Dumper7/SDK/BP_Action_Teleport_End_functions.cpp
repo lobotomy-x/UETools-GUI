@@ -14,8 +14,7 @@
 #include "BP_Action_Teleport_End_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Teleport_End.BP_Action_Teleport_End_C.ExecuteUbergraph_BP_Action_Teleport_End
 // (Final, UbergraphFunction)
@@ -130,5 +129,5 @@ void UBP_Action_Teleport_End_C::OnTick(float DeltaTime)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

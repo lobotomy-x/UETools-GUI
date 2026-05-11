@@ -14,8 +14,7 @@
 #include "UIW_Tutorial_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Tutorial.UIW_Tutorial_C.ExecuteUbergraph_UIW_Tutorial
 // (Final, UbergraphFunction)
@@ -274,5 +273,5 @@ void UUIW_Tutorial_C::SequenceEvent__ENTRYPOINTUIW_Tutorial_0()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

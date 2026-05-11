@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_ObjectRepulse.BP_Action_ObjectRepulse_C
 // 0x0018 (0x03B0 - 0x0398)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_ObjectRepulse_C;
 
-}
-
+SDK_NAMESPACE_END

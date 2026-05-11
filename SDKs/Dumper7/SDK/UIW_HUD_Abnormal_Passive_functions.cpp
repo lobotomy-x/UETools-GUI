@@ -14,8 +14,7 @@
 #include "UIW_HUD_Abnormal_Passive_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Abnormal_Passive.UIW_HUD_Abnormal_Passive_C.ExecuteUbergraph_UIW_HUD_Abnormal_Passive
 // (Final, UbergraphFunction)
@@ -108,5 +107,5 @@ void UUIW_HUD_Abnormal_Passive_C::OnVisibleSpecial(bool IsPutOn, class FName Abn
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

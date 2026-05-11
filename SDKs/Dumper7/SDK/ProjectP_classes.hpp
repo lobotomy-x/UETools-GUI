@@ -30,8 +30,7 @@
 #include "InputCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class ProjectP.LGameSubSystem
 // 0x0048 (0x0078 - 0x0030)
@@ -13961,7 +13960,7 @@ DUMPER7_ASSERTS_ULHitCollisionSphereComponent;
 // Class ProjectP.LProjectile
 // 0x0100 (0x0320 - 0x0220)
 #pragma pack(push, 0x1)
-class alignas(0x10) ALProjectile : public AActor
+class SDK_ALIGN(0x10) ALProjectile : public AActor
 {
 public:
 	uint8                                         Pad_220[0x8];                                      // 0x0220(0x0008)(Fixing Size After Last Property [ Dumper-7 ])
@@ -19026,5 +19025,4 @@ public:
 };
 DUMPER7_ASSERTS_AProjectPGameModeBase;
 
-}
-
+SDK_NAMESPACE_END

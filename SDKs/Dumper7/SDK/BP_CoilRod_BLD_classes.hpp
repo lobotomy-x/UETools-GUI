@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_CoilRod_BLD.BP_CoilRod_BLD_C
 // 0x0000 (0x01F8 - 0x01F8)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_CoilRod_BLD_C;
 
-}
-
+SDK_NAMESPACE_END

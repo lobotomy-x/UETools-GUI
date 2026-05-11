@@ -24,8 +24,7 @@
 #include "MovieScene_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class ControlRig.ControlRig
 // 0x0628 (0x0650 - 0x0028)
@@ -616,5 +615,4 @@ public:
 };
 DUMPER7_ASSERTS_UMovieSceneControlRigParameterTrack;
 
-}
-
+SDK_NAMESPACE_END

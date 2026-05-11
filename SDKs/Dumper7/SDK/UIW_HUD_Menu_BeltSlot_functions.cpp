@@ -14,8 +14,7 @@
 #include "UIW_HUD_Menu_BeltSlot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Menu_BeltSlot.UIW_HUD_Menu_BeltSlot_C.ExecuteUbergraph_UIW_HUD_Menu_BeltSlot
 // (Final, UbergraphFunction, HasDefaults)
@@ -108,5 +107,5 @@ struct FEventReply UUIW_HUD_Menu_BeltSlot_C::OnMouseButtonDoubleClick(const stru
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

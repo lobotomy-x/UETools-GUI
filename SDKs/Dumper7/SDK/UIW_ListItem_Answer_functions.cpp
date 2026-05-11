@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Answer_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Answer.UIW_ListItem_Answer_C.ExecuteUbergraph_UIW_ListItem_Answer
 // (Final, UbergraphFunction, HasDefaults)
@@ -110,5 +109,5 @@ void UUIW_ListItem_Answer_C::BP_OnEntryReleased()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

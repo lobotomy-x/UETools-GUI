@@ -14,8 +14,7 @@
 #include "UIW_Stat_Diff_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Stat_Diff.UIW_Stat_Diff_C.SetValue
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -60,5 +59,5 @@ void UUIW_Stat_Diff_C::SetText(const class FText& Text)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

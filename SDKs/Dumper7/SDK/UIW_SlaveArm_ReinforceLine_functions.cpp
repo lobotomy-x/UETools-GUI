@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_ReinforceLine_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_ReinforceLine.UIW_SlaveArm_ReinforceLine_C.ExecuteUbergraph_UIW_SlaveArm_ReinforceLine
 // (Final, UbergraphFunction)
@@ -70,5 +69,5 @@ void UUIW_SlaveArm_ReinforceLine_C::SetActive(bool IsActive)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

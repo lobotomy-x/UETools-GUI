@@ -14,8 +14,7 @@
 #include "steelheart_animBP_V02_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function steelheart_animBP_V02.steelheart_animBP_V02_C.ExecuteUbergraph_steelheart_animBP_V02
 // (Final, UbergraphFunction)
@@ -99,5 +98,5 @@ void Usteelheart_animBP_V02_C::AnimGraph(struct FPoseLink* AnimGraph_0)
 		*AnimGraph_0 = std::move(Parms.AnimGraph_0);
 }
 
-}
 
+SDK_NAMESPACE_END

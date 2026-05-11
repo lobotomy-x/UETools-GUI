@@ -16,8 +16,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Quartz_Listbar.UIW_Quartz_Listbar_C
 // 0x0058 (0x02B8 - 0x0260)
@@ -62,5 +61,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Quartz_Listbar_C;
 
-}
-
+SDK_NAMESPACE_END

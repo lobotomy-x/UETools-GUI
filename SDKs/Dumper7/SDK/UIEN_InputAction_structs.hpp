@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum UIEN_InputAction.UIEN_InputAction
 // NumValues: 0x0022
@@ -54,5 +53,4 @@ enum class EUIEN_InputAction : uint8
 	UIEN_MAX                                 = 33,
 };
 
-}
-
+SDK_NAMESPACE_END

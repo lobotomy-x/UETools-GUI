@@ -17,8 +17,7 @@
 #include "UIEN_WeaponPart_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_FunctionLibrary.UIBP_FunctionLibrary_C
 // 0x0000 (0x0028 - 0x0028)
@@ -94,5 +93,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_FunctionLibrary_C;
 
-}
-
+SDK_NAMESPACE_END

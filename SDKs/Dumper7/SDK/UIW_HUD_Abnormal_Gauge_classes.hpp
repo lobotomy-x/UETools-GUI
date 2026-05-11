@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_Abnormal_Gauge.UIW_HUD_Abnormal_Gauge_C
 // 0x0080 (0x0320 - 0x02A0)
@@ -67,5 +66,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_Abnormal_Gauge_C;
 
-}
-
+SDK_NAMESPACE_END

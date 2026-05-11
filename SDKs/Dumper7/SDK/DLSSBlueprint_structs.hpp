@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum DLSSBlueprint.UDLSSMode
 // NumValues: 0x0008
@@ -42,5 +41,4 @@ enum class EUDLSSSupport : uint8
 	UDLSSSupport_MAX                         = 7,
 };
 
-}
-
+SDK_NAMESPACE_END

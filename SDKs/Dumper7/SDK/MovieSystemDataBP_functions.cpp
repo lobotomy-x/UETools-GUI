@@ -14,8 +14,7 @@
 #include "MovieSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function MovieSystemDataBP.MovieSystemDataBP_C.ExecuteUbergraph_MovieSystemDataBP
 // (Final, UbergraphFunction)
@@ -141,5 +140,5 @@ bool AMovieSystemDataBP_C::IsPlayingBinkMovie()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

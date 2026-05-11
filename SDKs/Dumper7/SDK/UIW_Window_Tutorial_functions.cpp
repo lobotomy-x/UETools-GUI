@@ -14,8 +14,7 @@
 #include "UIW_Window_Tutorial_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Window_Tutorial.UIW_Window_Tutorial_C.ExecuteUbergraph_UIW_Window_Tutorial
 // (Final, UbergraphFunction, HasDefaults)
@@ -210,5 +209,5 @@ void UUIW_Window_Tutorial_C::ClearEventBinding()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

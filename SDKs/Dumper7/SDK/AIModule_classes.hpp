@@ -20,8 +20,7 @@
 #include "GameplayTags_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class AIModule.AISenseConfig
 // 0x0020 (0x0048 - 0x0028)
@@ -4695,5 +4694,4 @@ public:
 };
 DUMPER7_ASSERTS_UVisualLoggerExtension;
 
-}
-
+SDK_NAMESPACE_END

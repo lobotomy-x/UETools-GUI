@@ -14,8 +14,7 @@
 #include "BP_Action_Jump_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Jump.BP_Action_Jump_C.ExecuteUbergraph_BP_Action_Jump
 // (Final, UbergraphFunction, HasDefaults)
@@ -212,5 +211,5 @@ bool UBP_Action_Jump_C::OnMoveBlockedBy(class ACharacter* BlockedChar, const str
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

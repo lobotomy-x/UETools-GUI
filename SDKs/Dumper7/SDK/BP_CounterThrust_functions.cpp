@@ -14,8 +14,7 @@
 #include "BP_CounterThrust_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_CounterThrust.BP_CounterThrust_C.ExecuteUbergraph_BP_CounterThrust
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_CounterThrust_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

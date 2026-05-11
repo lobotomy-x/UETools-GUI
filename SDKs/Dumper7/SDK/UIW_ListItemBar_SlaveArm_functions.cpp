@@ -14,8 +14,7 @@
 #include "UIW_ListItemBar_SlaveArm_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItemBar_SlaveArm.UIW_ListItemBar_SlaveArm_C.ExecuteUbergraph_UIW_ListItemBar_SlaveArm
 // (Final, UbergraphFunction, HasDefaults)
@@ -259,5 +258,5 @@ void UUIW_ListItemBar_SlaveArm_C::SetSelected(bool IsSelected_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

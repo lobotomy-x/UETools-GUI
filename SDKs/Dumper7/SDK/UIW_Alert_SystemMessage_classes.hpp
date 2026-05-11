@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_SystemMessage.UIW_Alert_SystemMessage_C
 // 0x0028 (0x02C8 - 0x02A0)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_SystemMessage_C;
 
-}
-
+SDK_NAMESPACE_END

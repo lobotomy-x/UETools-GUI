@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_FlameThrower.BP_Action_SlaveArm_FlameThrower_C
 // 0x0038 (0x0250 - 0x0218)
@@ -64,5 +63,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_FlameThrower_C;
 
-}
-
+SDK_NAMESPACE_END

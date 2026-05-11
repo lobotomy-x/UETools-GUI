@@ -14,8 +14,7 @@
 #include "BP_Action_CommonMontage_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_CommonMontage.BP_Action_CommonMontage_C.ExecuteUbergraph_BP_Action_CommonMontage
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UBP_Action_CommonMontage_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

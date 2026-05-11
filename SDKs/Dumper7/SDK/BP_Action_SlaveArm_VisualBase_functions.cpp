@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_VisualBase_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_VisualBase.BP_Action_SlaveArm_VisualBase_C.ExecuteUbergraph_BP_Action_SlaveArm_VisualBase
 // (Final, UbergraphFunction)
@@ -130,5 +129,5 @@ class UAnimSequenceBase* UBP_Action_SlaveArm_VisualBase_C::GetSlaveArmAdditiveAn
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_Teleport_Start_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Teleport_Start.BP_Action_Teleport_Start_C.ExecuteUbergraph_BP_Action_Teleport_Start
 // (Final, UbergraphFunction)
@@ -120,5 +119,5 @@ void UBP_Action_Teleport_Start_C::Teleport_End()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_DPad_Durability_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_DPad_Durability.UIW_DPad_Durability_C.ExecuteUbergraph_UIW_DPad_Durability
 // (Final, UbergraphFunction, HasDefaults)
@@ -210,5 +209,5 @@ void UUIW_DPad_Durability_C::SetEmpty()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

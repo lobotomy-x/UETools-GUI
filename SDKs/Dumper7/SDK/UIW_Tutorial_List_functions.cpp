@@ -14,8 +14,7 @@
 #include "UIW_Tutorial_List_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Tutorial_List.UIW_Tutorial_List_C.ExecuteUbergraph_UIW_Tutorial_List
 // (Final, UbergraphFunction, HasDefaults)
@@ -239,5 +238,5 @@ void UUIW_Tutorial_List_C::SetMoveFocusEffect()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

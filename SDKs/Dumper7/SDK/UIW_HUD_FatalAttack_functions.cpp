@@ -14,8 +14,7 @@
 #include "UIW_HUD_FatalAttack_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_FatalAttack.UIW_HUD_FatalAttack_C.ExecuteUbergraph_UIW_HUD_FatalAttack
 // (Final, UbergraphFunction)
@@ -104,5 +103,5 @@ void UUIW_HUD_FatalAttack_C::RemoveIndicator(int32 Index_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

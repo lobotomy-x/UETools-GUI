@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Module_ItemList.UIW_Module_ItemList_C.ExecuteUbergraph_UIW_Module_ItemList
 // 0x0018 (0x0018 - 0x0000)
@@ -44,5 +44,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Module_ItemList_C_SetListItem;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

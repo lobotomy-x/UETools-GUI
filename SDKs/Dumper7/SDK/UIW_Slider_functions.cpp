@@ -14,8 +14,7 @@
 #include "UIW_Slider_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Slider.UIW_Slider_C.ExecuteUbergraph_UIW_Slider
 // (Final, UbergraphFunction, HasDefaults)
@@ -184,5 +183,5 @@ void UUIW_Slider_C::ReturnValue(float Value_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

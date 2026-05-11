@@ -14,8 +14,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIBP_ActorController.UIBP_ActorController_C.UpdateTick
 // 0x0088 (0x0088 - 0x0000)
@@ -161,5 +161,5 @@ public:
 };
 DUMPER7_ASSERTS_UIBP_ActorController_C_GetHalfMaxHeight;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

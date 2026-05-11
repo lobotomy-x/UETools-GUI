@@ -14,8 +14,7 @@
 #include "UIBP_ActorController_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIBP_ActorController.UIBP_ActorController_C.UpdateTick
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -202,5 +201,5 @@ void UUIBP_ActorController_C::GetHalfMaxHeight(float* OutHalfHeight)
 		*OutHalfHeight = Parms.OutHalfHeight;
 }
 
-}
 
+SDK_NAMESPACE_END

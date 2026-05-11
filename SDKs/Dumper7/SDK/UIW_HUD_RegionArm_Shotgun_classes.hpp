@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_RegionArm_Shotgun.UIW_HUD_RegionArm_Shotgun_C
 // 0x0070 (0x0310 - 0x02A0)
@@ -66,5 +65,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_RegionArm_Shotgun_C;
 
-}
-
+SDK_NAMESPACE_END

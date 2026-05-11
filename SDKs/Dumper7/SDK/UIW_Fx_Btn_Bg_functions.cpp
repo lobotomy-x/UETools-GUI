@@ -14,8 +14,7 @@
 #include "UIW_Fx_Btn_Bg_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Fx_Btn_Bg.UIW_Fx_Btn_Bg_C.ExecuteUbergraph_UIW_Fx_Btn_Bg
 // (Final, UbergraphFunction)
@@ -126,5 +125,5 @@ void UUIW_Fx_Btn_Bg_C::OnSelected()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

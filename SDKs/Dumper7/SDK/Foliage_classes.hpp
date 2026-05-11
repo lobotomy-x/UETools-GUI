@@ -17,8 +17,7 @@
 #include "Foliage_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class Foliage.InteractiveFoliageComponent
 // 0x0010 (0x0500 - 0x04F0)
@@ -470,5 +469,4 @@ public:
 };
 DUMPER7_ASSERTS_AProceduralFoliageVolume;
 
-}
-
+SDK_NAMESPACE_END

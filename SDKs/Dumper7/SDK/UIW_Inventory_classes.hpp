@@ -11,14 +11,13 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "ProjectP_structs.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Inventory.UIW_Inventory_C
 // 0x0200 (0x0548 - 0x0348)
@@ -190,5 +189,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Inventory_C;
 
-}
-
+SDK_NAMESPACE_END

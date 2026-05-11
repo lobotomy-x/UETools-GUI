@@ -14,8 +14,7 @@
 #include "BP_Action_Sprint_Exhausted_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Sprint_Exhausted.BP_Action_Sprint_Exhausted_C.ExecuteUbergraph_BP_Action_Sprint_Exhausted
 // (Final, UbergraphFunction, HasDefaults)
@@ -114,5 +113,5 @@ void UBP_Action_Sprint_Exhausted_C::OnStop(class ULActBase* ReasonAction, class 
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

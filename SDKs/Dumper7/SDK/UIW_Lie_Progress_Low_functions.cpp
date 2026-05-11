@@ -14,8 +14,7 @@
 #include "UIW_Lie_Progress_Low_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Lie_Progress_Low.UIW_Lie_Progress_Low_C.SetProgress
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -36,5 +35,5 @@ void UUIW_Lie_Progress_Low_C::SetProgress(float Current)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_HUD_Tutorial_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Tutorial.UIW_HUD_Tutorial_C.ExecuteUbergraph_UIW_HUD_Tutorial
 // (Final, UbergraphFunction, HasDefaults)
@@ -186,5 +185,5 @@ void UUIW_HUD_Tutorial_C::HideTime()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

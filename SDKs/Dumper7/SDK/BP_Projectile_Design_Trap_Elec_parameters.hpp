@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Projectile_Design_Trap_Elec.BP_Projectile_Design_Trap_Elec_C.ExecuteUbergraph_BP_Projectile_Design_Trap_Elec
 // 0x0004 (0x0004 - 0x0000)
@@ -23,5 +23,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Projectile_Design_Trap_Elec_C_ExecuteUbergraph_BP_Projectile_Design_Trap_Elec;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

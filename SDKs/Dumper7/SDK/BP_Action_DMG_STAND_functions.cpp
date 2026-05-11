@@ -14,8 +14,7 @@
 #include "BP_Action_DMG_STAND_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_DMG_STAND.BP_Action_DMG_STAND_C.ExecuteUbergraph_BP_Action_DMG_STAND
 // (Final, UbergraphFunction, HasDefaults)
@@ -243,5 +242,5 @@ void UBP_Action_DMG_STAND_C::Applyinput_GuardDash()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_GrabRelease_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_GrabRelease.BP_Action_GrabRelease_C.ExecuteUbergraph_BP_Action_GrabRelease
 // (Final, UbergraphFunction)
@@ -96,5 +95,5 @@ void UBP_Action_GrabRelease_C::OnStop(class ULActBase* ReasonAction, class FName
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

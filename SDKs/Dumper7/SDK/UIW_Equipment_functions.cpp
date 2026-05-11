@@ -14,8 +14,7 @@
 #include "UIW_Equipment_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Equipment.UIW_Equipment_C.ExecuteUbergraph_UIW_Equipment
 // (Final, UbergraphFunction, HasDefaults)
@@ -3825,5 +3824,5 @@ void UUIW_Equipment_C::OnCompleteTweenEvent(class FName Name_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

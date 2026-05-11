@@ -14,8 +14,7 @@
 #include "SoulDrop_Butterfly_BP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function SoulDrop_Butterfly_BP.SoulDrop_Butterfly_BP_C.ExecuteUbergraph_SoulDrop_Butterfly_BP
 // (Final, UbergraphFunction, HasDefaults)
@@ -92,5 +91,5 @@ void ASoulDrop_Butterfly_BP_C::타임라인_0__FinishedFunc()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

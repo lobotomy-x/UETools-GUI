@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ContextMenu_Btn.UIW_ContextMenu_Btn_C
 // 0x0040 (0x02E0 - 0x02A0)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ContextMenu_Btn_C;
 
-}
-
+SDK_NAMESPACE_END

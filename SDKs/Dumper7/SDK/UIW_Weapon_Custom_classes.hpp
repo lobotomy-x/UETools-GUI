@@ -11,16 +11,15 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
+#include "UIEN_WeaponPart_structs.hpp"
 #include "ProjectP_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
-#include "UIEN_WeaponPart_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
-#include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Weapon_Custom.UIW_Weapon_Custom_C
 // 0x0158 (0x04A0 - 0x0348)
@@ -124,5 +123,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Weapon_Custom_C;
 
-}
-
+SDK_NAMESPACE_END

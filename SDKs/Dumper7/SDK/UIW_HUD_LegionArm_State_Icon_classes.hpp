@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_LegionArm_State_Icon.UIW_HUD_LegionArm_State_Icon_C
 // 0x0048 (0x02A8 - 0x0260)
@@ -56,5 +55,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_LegionArm_State_Icon_C;
 
-}
-
+SDK_NAMESPACE_END

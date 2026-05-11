@@ -16,8 +16,7 @@
 #include "EasyParticle_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class EasyParticle.EasyParticle
 // 0x0030 (0x0138 - 0x0108)
@@ -1631,5 +1630,4 @@ public:
 };
 DUMPER7_ASSERTS_UEasyParticleRootState;
 
-}
-
+SDK_NAMESPACE_END

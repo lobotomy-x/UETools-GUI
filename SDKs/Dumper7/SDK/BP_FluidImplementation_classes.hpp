@@ -16,8 +16,7 @@
 #include "PhysicsCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_FluidImplementation.BP_FluidImplementation_C
 // 0x0098 (0x0148 - 0x00B0)
@@ -76,5 +75,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_FluidImplementation_C;
 
-}
-
+SDK_NAMESPACE_END

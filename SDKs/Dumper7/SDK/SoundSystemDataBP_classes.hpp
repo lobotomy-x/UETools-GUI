@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass SoundSystemDataBP.SoundSystemDataBP_C
 // 0x0078 (0x02A0 - 0x0228)
@@ -76,5 +75,4 @@ public:
 };
 DUMPER7_ASSERTS_ASoundSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

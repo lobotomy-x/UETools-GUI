@@ -14,8 +14,7 @@
 #include "BP_Action_WireAction_NPC_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_WireAction_NPC.BP_Action_WireAction_NPC_C.ExecuteUbergraph_BP_Action_WireAction_NPC
 // (Final, UbergraphFunction, HasDefaults)
@@ -124,5 +123,5 @@ void UBP_Action_WireAction_NPC_C::OnPulling()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

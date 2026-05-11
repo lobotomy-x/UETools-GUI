@@ -14,8 +14,7 @@
 #include "UIW_Grid_Sample_Menu_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Grid_Sample_Menu.UIW_Grid_Sample_Menu_C.ExecuteUbergraph_UIW_Grid_Sample_Menu
 // (Final, UbergraphFunction)
@@ -56,5 +55,5 @@ void UUIW_Grid_Sample_Menu_C::PreConstruct(bool IsDesignTime)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_Teleport_Start.BP_Action_Teleport_Start_C.ExecuteUbergraph_BP_Action_Teleport_Start
 // 0x0080 (0x0080 - 0x0000)
@@ -70,5 +70,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_Teleport_Start_C_OnTick;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

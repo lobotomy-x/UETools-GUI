@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum UIEN_PreviewType.UIEN_PreviewType
 // NumValues: 0x0004
@@ -24,5 +23,4 @@ enum class EUIEN_PreviewType : uint8
 	UIEN_MAX                                 = 3,
 };
 
-}
-
+SDK_NAMESPACE_END

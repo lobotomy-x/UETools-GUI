@@ -14,8 +14,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum MovieSceneCapture.EHDRCaptureGamut
 // NumValues: 0x0007
@@ -123,5 +122,4 @@ public:
 };
 DUMPER7_ASSERTS_FCapturedPixelsID;
 
-}
-
+SDK_NAMESPACE_END

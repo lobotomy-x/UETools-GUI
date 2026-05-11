@@ -14,8 +14,7 @@
 #include "LNPCCharacterBP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_LNPCCharacterBP_NoneMove_Base.BP_LNPCCharacterBP_NoneMove_Base_C
 // 0x0010 (0x13E0 - 0x13D0)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_LNPCCharacterBP_NoneMove_Base_C;
 
-}
-
+SDK_NAMESPACE_END

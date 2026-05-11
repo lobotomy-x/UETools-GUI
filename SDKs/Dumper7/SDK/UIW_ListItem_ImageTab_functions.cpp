@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ImageTab_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_ImageTab.UIW_ListItem_ImageTab_C.ExecuteUbergraph_UIW_ListItem_ImageTab
 // (Final, UbergraphFunction, HasDefaults)
@@ -188,5 +187,5 @@ void UUIW_ListItem_ImageTab_C::CustomEvent(const struct FGeometry& MyGeometry, c
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

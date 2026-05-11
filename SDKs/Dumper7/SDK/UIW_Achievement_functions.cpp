@@ -14,8 +14,7 @@
 #include "UIW_Achievement_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Achievement.UIW_Achievement_C.ExecuteUbergraph_UIW_Achievement
 // (Final, UbergraphFunction, HasDefaults)
@@ -289,5 +288,5 @@ void UUIW_Achievement_C::RefreshCountData()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

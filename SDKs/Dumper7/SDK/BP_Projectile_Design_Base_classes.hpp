@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Projectile_Design_Base.BP_Projectile_Design_Base_C
 // 0x00A0 (0x0338 - 0x0298)
@@ -79,5 +78,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Projectile_Design_Base_C;
 
-}
-
+SDK_NAMESPACE_END

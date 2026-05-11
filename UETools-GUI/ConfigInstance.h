@@ -3,11 +3,7 @@
 
 #include <array>
 #include <unordered_map>
-#include <optional>
 #include <variant>
-#include <iomanip>
-#include <charconv>
-#include <cctype>
 
 
 
@@ -17,52 +13,49 @@
 class ConfigInstance : public FileInstance
 {
 public:
-	explicit ConfigInstance(const std::filesystem::path& filePath);
+    using Value = std::variant<bool, int, float, std::array<float, 2>, std::array<float, 3>, std::array<float, 4>, std::string>;
 
-    bool Load();
-    bool Save();
+    ConfigInstance(const std::string& filePath);
+    ConfigInstance(const std::wstring& filePath);
+
+    const bool Load();
+    const bool Save();
 
     template <typename T>
-    std::optional<T> Get(const std::string& key);
+    const std::optional<T> GetKey(const std::string& key);
 
     template <typename T>
-    void Set(const std::string& key, const T& value);
-    void Set(const std::string& key, const char* value);
-    void Set(const std::string& key, const std::array<float, 2>& value);
-    void Set(const std::string& key, const std::array<float, 3>& value);
-    void Set(const std::string& key, const std::array<float, 4>& value);
+    void SetKey(const std::string& key, const T& value);
+    void SetKey(const std::string& key, const char* value);
+    void SetKey(const std::string& key, const std::array<float, 2>& value);
+    void SetKey(const std::string& key, const std::array<float, 3>& value);
+    void SetKey(const std::string& key, const std::array<float, 4>& value);
 
-    bool HasKey(const std::string& key);
-    void Remove(const std::string& key);
-    void Clear();
+    const bool HasKey(const std::string& key);
+    void RemoveKey(const std::string& key);
 
+    void ClearKeys();
 
 private:
-    using Value = std::variant<bool, int, float, 
-                               std::array<float, 2>,
-                               std::array<float, 3>, 
-                               std::array<float, 4>, 
-                               std::string>;
     std::unordered_map<std::string, Value> _values;
     std::vector<std::string> _keysOrder;
 
-    static std::string Trim(const std::string& text);
-    static bool IsLineCommentOrEmpty(const std::string& line);
+    static const std::string Trim(const std::string& text);
+    static const bool IsLineCommentOrEmpty(const std::string& line);
+    static const bool ReadFloat(const std::string& text, const size_t& inPos, size_t* outPos, float* outValue);
 
-    static bool ReadFloat(const std::string& text, const size_t& inPos, size_t* outPos, float* outValue);
+    static const std::optional<std::pair<std::string, std::string>> SplitKeyValue(const std::string& line);
+    static const std::optional<Value> ParseValueWithOptionalType(const std::string& rawValue);
 
-    static std::optional<std::pair<std::string, std::string>> SplitKeyValue(const std::string& line);
-    static std::optional<Value> ParseValueWithOptionalType(const std::string& rawValue);
+    static const std::string String_ToLower(const std::string& text);
+    static const std::string Float_ToString(const float& value);
+    static const std::string Value_ToLine(const std::string& key, const Value& value);
 
-    static std::string String_ToLower(const std::string& text);
-    static std::string Float_ToString(const float& value);
-    static std::string Value_ToLine(const std::string& key, const Value& value);
-
-    static std::optional<bool> TryParseBool(const std::string& text);
-    static std::optional<int> TryParseInt(const std::string& text);
-    static std::optional<float> TryParseFloat(const std::string& text);
-    static std::optional<std::array<float, 2>> TryParseFloat2(const std::string& text);
-    static std::optional<std::array<float, 3>> TryParseFloat3(const std::string& text);
-    static std::optional<std::array<float, 4>> TryParseFloat4(const std::string& text);
+    static const std::optional<bool> TryParseBool(const std::string& text);
+    static const std::optional<int> TryParseInt(const std::string& text);
+    static const std::optional<float> TryParseFloat(const std::string& text);
+    static const std::optional<std::array<float, 2>> TryParseFloat2(const std::string& text);
+    static const std::optional<std::array<float, 3>> TryParseFloat3(const std::string& text);
+    static const std::optional<std::array<float, 4>> TryParseFloat4(const std::string& text);
 };
 

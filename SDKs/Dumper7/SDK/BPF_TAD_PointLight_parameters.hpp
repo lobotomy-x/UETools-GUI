@@ -14,8 +14,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BPF_TAD_PointLight.BPF_TAD_PointLight_C.BPF TAD Point Light
 // 0x0048 (0x0048 - 0x0000)
@@ -41,5 +41,5 @@ public:
 };
 DUMPER7_ASSERTS_BPF_TAD_PointLight_C_BPF_TAD_Point_Light;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

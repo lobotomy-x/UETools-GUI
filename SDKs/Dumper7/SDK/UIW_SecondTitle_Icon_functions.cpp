@@ -14,8 +14,7 @@
 #include "UIW_SecondTitle_Icon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SecondTitle_Icon.UIW_SecondTitle_Icon_C.ExecuteUbergraph_UIW_SecondTitle_Icon
 // (Final, UbergraphFunction)
@@ -92,5 +91,5 @@ void UUIW_SecondTitle_Icon_C::SetSelected(bool IsSelected_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

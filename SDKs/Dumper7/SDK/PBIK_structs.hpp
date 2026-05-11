@@ -14,8 +14,7 @@
 #include "ControlRig_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum PBIK.EPBIKLimitType
 // NumValues: 0x0004
@@ -116,5 +115,4 @@ public:
 };
 DUMPER7_ASSERTS_FRigUnit_PBIK;
 
-}
-
+SDK_NAMESPACE_END

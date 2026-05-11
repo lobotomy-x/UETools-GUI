@@ -16,8 +16,7 @@
 #include "AudioMixer_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class TimeSynth.TimeSynthVolumeGroup
 // 0x0008 (0x0030 - 0x0028)
@@ -138,5 +137,4 @@ public:
 };
 DUMPER7_ASSERTS_UTimeSynthComponent;
 
-}
-
+SDK_NAMESPACE_END

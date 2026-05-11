@@ -14,8 +14,7 @@
 #include "BP_Projectile_Wire_Base_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Projectile_Wire_Base.BP_Projectile_Wire_Base_C.ExecuteUbergraph_BP_Projectile_Wire_Base
 // (Final, UbergraphFunction, HasDefaults)
@@ -185,5 +184,5 @@ void ABP_Projectile_Wire_Base_C::GetWireCable(class UCableComponent** NewParam)
 		*NewParam = Parms.NewParam;
 }
 
-}
 
+SDK_NAMESPACE_END

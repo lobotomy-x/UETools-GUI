@@ -14,8 +14,7 @@
 #include "UIW_HUD_RegionArm_Shotgun_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_RegionArm_Shotgun.UIW_HUD_RegionArm_Shotgun_C.ExecuteUbergraph_UIW_HUD_RegionArm_Shotgun
 // (Final, UbergraphFunction, HasDefaults)
@@ -158,5 +157,5 @@ void UUIW_HUD_RegionArm_Shotgun_C::Show()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

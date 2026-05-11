@@ -14,8 +14,7 @@
 #include "BP_Ergo_Trail_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Ergo_Trail.BP_Ergo_Trail_C.ExecuteUbergraph_BP_Ergo_Trail
 // (Final, UbergraphFunction, HasDefaults)
@@ -164,5 +163,5 @@ void ABP_Ergo_Trail_C::TickFollowTarget(float DeltaTime)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

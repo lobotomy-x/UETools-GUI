@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_BG_Window.UIW_BG_Window_C
 // 0x0000 (0x0260 - 0x0260)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_BG_Window_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SlaveArm_ReinforceLine.UIW_SlaveArm_ReinforceLine_C
 // 0x0010 (0x0270 - 0x0260)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SlaveArm_ReinforceLine_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_EndingCredit_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_EndingCredit.UIW_EndingCredit_C.ExecuteUbergraph_UIW_EndingCredit
 // (Final, UbergraphFunction, HasDefaults)
@@ -106,5 +105,5 @@ void UUIW_EndingCredit_C::OnReady()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_Stat_Simple.UIW_ListItem_Stat_Simple_C
 // 0x0058 (0x02F8 - 0x02A0)
@@ -64,5 +63,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_Stat_Simple_C;
 
-}
-
+SDK_NAMESPACE_END

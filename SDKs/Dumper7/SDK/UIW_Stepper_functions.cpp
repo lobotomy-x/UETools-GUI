@@ -14,8 +14,7 @@
 #include "UIW_Stepper_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Stepper.UIW_Stepper_C.ExecuteUbergraph_UIW_Stepper
 // (Final, UbergraphFunction)
@@ -251,5 +250,5 @@ void UUIW_Stepper_C::ReturnSelectedIndex(int32 Index_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

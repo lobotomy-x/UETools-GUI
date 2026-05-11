@@ -7,8 +7,6 @@
 #include "Math.h"
 #include "Utilities.h"
 
-#include "Windows.h"
-
 
 
 

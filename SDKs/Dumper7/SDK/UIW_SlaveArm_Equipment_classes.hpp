@@ -12,14 +12,13 @@
 
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SlaveArm_Equipment.UIW_SlaveArm_Equipment_C
 // 0x0178 (0x04C0 - 0x0348)
@@ -144,5 +143,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SlaveArm_Equipment_C;
 
-}
-
+SDK_NAMESPACE_END

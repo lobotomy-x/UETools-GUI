@@ -14,8 +14,7 @@
 #include "UIW_Alert_GetHumanity_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_GetHumanity.UIW_Alert_GetHumanity_C.ExecuteUbergraph_UIW_Alert_GetHumanity
 // (Final, UbergraphFunction)
@@ -126,5 +125,5 @@ void UUIW_Alert_GetHumanity_C::SequenceEvent__ENTRYPOINTUIW_Alert_GetHumanity_0(
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

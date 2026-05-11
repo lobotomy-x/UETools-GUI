@@ -14,8 +14,7 @@
 #include "BP_Action_ChangeSlaveArm_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_ChangeSlaveArm.BP_Action_ChangeSlaveArm_C.ExecuteUbergraph_BP_Action_ChangeSlaveArm
 // (Final, UbergraphFunction, HasDefaults)
@@ -100,5 +99,5 @@ void UBP_Action_ChangeSlaveArm_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_ListItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_ListItem.UIW_SlaveArm_ListItem_C.ExecuteUbergraph_UIW_SlaveArm_ListItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -212,5 +211,5 @@ void UUIW_SlaveArm_ListItem_C::SetSlotTypeAll(class FName InputPin)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_FatalAttack_VictimBase_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_FatalAttack_VictimBase.BP_Action_FatalAttack_VictimBase_C.ExecuteUbergraph_BP_Action_FatalAttack_VictimBase
 // (Final, UbergraphFunction)
@@ -96,5 +95,5 @@ void UBP_Action_FatalAttack_VictimBase_C::OnCurrMontageEnded(class UAnimMontage*
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

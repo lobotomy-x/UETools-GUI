@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Fast_ContinualSlash.BP_Fast_ContinualSlash_C
 // 0x0008 (0x0200 - 0x01F8)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Fast_ContinualSlash_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -24,8 +24,7 @@
 #include "Chaos_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class Engine.MaterialExpression
 // 0x0018 (0x0040 - 0x0028)
@@ -1415,7 +1414,7 @@ DUMPER7_ASSERTS_UParticleModuleAcceleration;
 // Class Engine.MeshComponent
 // 0x0030 (0x0480 - 0x0450)
 #pragma pack(push, 0x1)
-class alignas(0x10) UMeshComponent : public UPrimitiveComponent
+class SDK_ALIGN(0x10) UMeshComponent : public UPrimitiveComponent
 {
 public:
 	TArray<class UMaterialInterface*>             OverrideMaterials;                                 // 0x0450(0x0010)(Edit, ZeroConstructor, AdvancedDisplay, NativeAccessSpecifierPublic)
@@ -2161,7 +2160,7 @@ DUMPER7_ASSERTS_APawn;
 // Class Engine.Character
 // 0x0240 (0x04C0 - 0x0280)
 #pragma pack(push, 0x1)
-class alignas(0x10) ACharacter : public APawn
+class SDK_ALIGN(0x10) ACharacter : public APawn
 {
 public:
 	class USkeletalMeshComponent*                 Mesh;                                              // 0x0280(0x0008)(Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, DisableEditOnInstance, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPrivate)
@@ -2311,7 +2310,7 @@ DUMPER7_ASSERTS_UArrowComponent;
 // Class Engine.ShapeComponent
 // 0x0020 (0x0470 - 0x0450)
 #pragma pack(push, 0x1)
-class alignas(0x10) UShapeComponent : public UPrimitiveComponent
+class SDK_ALIGN(0x10) UShapeComponent : public UPrimitiveComponent
 {
 public:
 	class UBodySetup*                             ShapeBodySetup;                                    // 0x0450(0x0008)(ZeroConstructor, Transient, DuplicateTransient, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -4049,7 +4048,7 @@ DUMPER7_ASSERTS_UAnimBoneCompressionSettings;
 // Class Engine.SkeletalMeshComponent
 // 0x0830 (0x0ED0 - 0x06A0)
 #pragma pack(push, 0x1)
-class alignas(0x10) USkeletalMeshComponent : public USkinnedMeshComponent
+class SDK_ALIGN(0x10) USkeletalMeshComponent : public USkinnedMeshComponent
 {
 public:
 	class UClass*                                 AnimBlueprintGeneratedClass;                       // 0x06A0(0x0008)(BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -4811,7 +4810,7 @@ DUMPER7_ASSERTS_UMaterialExpressionConstantBiasScale;
 // Class Engine.DecalComponent
 // 0x0040 (0x0240 - 0x0200)
 #pragma pack(push, 0x1)
-class alignas(0x10) UDecalComponent : public USceneComponent
+class SDK_ALIGN(0x10) UDecalComponent : public USceneComponent
 {
 public:
 	class UMaterialInterface*                     DecalMaterial;                                     // 0x01F8(0x0008)(Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected)
@@ -6875,7 +6874,7 @@ DUMPER7_ASSERTS_UInterpTrackVisibility;
 // Class Engine.BoxComponent
 // 0x0010 (0x0480 - 0x0470)
 #pragma pack(push, 0x1)
-class alignas(0x10) UBoxComponent : public UShapeComponent
+class SDK_ALIGN(0x10) UBoxComponent : public UShapeComponent
 {
 public:
 	struct FVector                                BoxExtent;                                         // 0x0468(0x000C)(Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected)
@@ -7520,7 +7519,7 @@ DUMPER7_ASSERTS_UGameEngine;
 // Class Engine.LevelStreaming
 // 0x0128 (0x0150 - 0x0028)
 #pragma pack(push, 0x1)
-class alignas(0x10) ULevelStreaming : public UObject
+class SDK_ALIGN(0x10) ULevelStreaming : public UObject
 {
 public:
 	TSoftObjectPtr<class UWorld>                  WorldAsset;                                        // 0x0028(0x0028)(Edit, BlueprintVisible, BlueprintReadOnly, EditConst, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPrivate)
@@ -8754,7 +8753,7 @@ DUMPER7_ASSERTS_UMaterialExpressionParticleSubUVProperties;
 // Class Engine.SplineComponent
 // 0x0100 (0x0550 - 0x0450)
 #pragma pack(push, 0x1)
-class alignas(0x10) USplineComponent : public UPrimitiveComponent
+class SDK_ALIGN(0x10) USplineComponent : public UPrimitiveComponent
 {
 public:
 	struct FSplineCurves                          SplineCurves;                                      // 0x0450(0x0070)(Edit, NativeAccessSpecifierPublic)
@@ -9296,7 +9295,7 @@ DUMPER7_ASSERTS_UMaterialExpressionRotator;
 // Class Engine.WindDirectionalSourceComponent
 // 0x0020 (0x0220 - 0x0200)
 #pragma pack(push, 0x1)
-class alignas(0x10) UWindDirectionalSourceComponent : public USceneComponent
+class SDK_ALIGN(0x10) UWindDirectionalSourceComponent : public USceneComponent
 {
 public:
 	float                                         Strength;                                          // 0x01F8(0x0004)(Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, Interp, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -9739,7 +9738,7 @@ DUMPER7_ASSERTS_UInstancedStaticMeshComponent;
 // Class Engine.HierarchicalInstancedStaticMeshComponent
 // 0x00F0 (0x0690 - 0x05A0)
 #pragma pack(push, 0x1)
-class alignas(0x10) UHierarchicalInstancedStaticMeshComponent : public UInstancedStaticMeshComponent
+class SDK_ALIGN(0x10) UHierarchicalInstancedStaticMeshComponent : public UInstancedStaticMeshComponent
 {
 public:
 	uint8                                         Pad_5A0[0x8];                                      // 0x05A0(0x0008)(Fixing Size After Last Property [ Dumper-7 ])
@@ -13224,7 +13223,7 @@ DUMPER7_ASSERTS_IBlendableInterface;
 // Class Engine.LightComponentBase
 // 0x0030 (0x0230 - 0x0200)
 #pragma pack(push, 0x1)
-class alignas(0x10) ULightComponentBase : public USceneComponent
+class SDK_ALIGN(0x10) ULightComponentBase : public USceneComponent
 {
 public:
 	struct FGuid                                  LightGuid;                                         // 0x01F8(0x0010)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -13279,7 +13278,7 @@ DUMPER7_ASSERTS_ULightComponentBase;
 // Class Engine.LightComponent
 // 0x0100 (0x0330 - 0x0230)
 #pragma pack(push, 0x1)
-class alignas(0x10) ULightComponent : public ULightComponentBase
+class SDK_ALIGN(0x10) ULightComponent : public ULightComponentBase
 {
 public:
 	float                                         Temperature;                                       // 0x0228(0x0004)(Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, Interp, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -13406,7 +13405,7 @@ DUMPER7_ASSERTS_ULocalLightComponent;
 // Class Engine.PointLightComponent
 // 0x0020 (0x0360 - 0x0340)
 #pragma pack(push, 0x1)
-class alignas(0x10) UPointLightComponent : public ULocalLightComponent
+class SDK_ALIGN(0x10) UPointLightComponent : public ULocalLightComponent
 {
 public:
 	uint8                                         bUseInverseSquaredFalloff : 1;                     // 0x0340(0x0001)(BitIndex: 0x00, PropSize: 0x0001 (Edit, BlueprintVisible, BlueprintReadOnly, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic))
@@ -32114,5 +32113,4 @@ public:
 };
 DUMPER7_ASSERTS_UVolumetricCloudComponent;
 
-}
-
+SDK_NAMESPACE_END

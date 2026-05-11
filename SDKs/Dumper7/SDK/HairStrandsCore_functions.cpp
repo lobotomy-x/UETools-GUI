@@ -14,8 +14,7 @@
 #include "HairStrandsCore_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function HairStrandsCore.GroomBlueprintLibrary.CreateNewGeometryCacheGroomBindingAsset
 // (Final, Native, Static, Public, BlueprintCallable)
@@ -214,5 +213,5 @@ void UGroomComponent::SetGroomAsset(class UGroomAsset* Asset)
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

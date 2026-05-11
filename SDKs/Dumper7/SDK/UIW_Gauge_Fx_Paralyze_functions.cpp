@@ -14,8 +14,7 @@
 #include "UIW_Gauge_Fx_Paralyze_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Gauge_Fx_Paralyze.UIW_Gauge_Fx_Paralyze_C.ExecuteUbergraph_UIW_Gauge_Fx_Paralyze
 // (Final, UbergraphFunction)
@@ -98,5 +97,5 @@ void UUIW_Gauge_Fx_Paralyze_C::SequenceEvent__ENTRYPOINTUIW_Gauge_Fx_Paralyze_0(
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

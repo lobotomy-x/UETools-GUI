@@ -15,8 +15,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_SelectActionType.UIW_SelectActionType_C.ExecuteUbergraph_UIW_SelectActionType
 // 0x00F8 (0x00F8 - 0x0000)
@@ -140,5 +140,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_SelectActionType_C_Callback;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -20,8 +20,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class MovieRenderPipelineCore.MoviePipelineSetting
 // 0x0020 (0x0048 - 0x0028)
@@ -1005,5 +1004,4 @@ public:
 };
 DUMPER7_ASSERTS_UMovieRenderDebugWidget;
 
-}
-
+SDK_NAMESPACE_END

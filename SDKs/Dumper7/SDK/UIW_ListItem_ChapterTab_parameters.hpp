@@ -14,8 +14,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_ChapterTab.UIW_ListItem_ChapterTab_C.ExecuteUbergraph_UIW_ListItem_ChapterTab
 // 0x0248 (0x0248 - 0x0000)
@@ -98,5 +98,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_ChapterTab_C_BP_OnItemExpansionChanged;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

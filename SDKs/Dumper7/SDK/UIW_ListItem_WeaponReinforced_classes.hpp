@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Weapon_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_WeaponReinforced.UIW_ListItem_WeaponReinforced_C
 // 0x0008 (0x0330 - 0x0328)
@@ -44,5 +43,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_WeaponReinforced_C;
 
-}
-
+SDK_NAMESPACE_END

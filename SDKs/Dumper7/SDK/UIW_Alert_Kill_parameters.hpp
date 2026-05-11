@@ -13,8 +13,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Alert_Kill.UIW_Alert_Kill_C.ExecuteUbergraph_UIW_Alert_Kill
 // 0x0068 (0x0068 - 0x0000)
@@ -63,5 +63,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Alert_Kill_C_SetAlertKill;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

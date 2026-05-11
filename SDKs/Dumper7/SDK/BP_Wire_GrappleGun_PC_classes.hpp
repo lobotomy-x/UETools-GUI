@@ -16,8 +16,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Wire_GrappleGun_PC.BP_Wire_GrappleGun_PC_C
 // 0x0018 (0x0328 - 0x0310)
@@ -55,5 +54,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Wire_GrappleGun_PC_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "ItemDropSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ItemDropSystemDataBP.ItemDropSystemDataBP_C.ExecuteUbergraph_ItemDropSystemDataBP
 // (Final, UbergraphFunction, HasDefaults)
@@ -106,5 +105,5 @@ void AItemDropSystemDataBP_C::FIndErgoSocketLocation2(class ALCharacter* TargetC
 		*SpawnLocation = std::move(Parms.SpawnLocation);
 }
 
-}
 
+SDK_NAMESPACE_END

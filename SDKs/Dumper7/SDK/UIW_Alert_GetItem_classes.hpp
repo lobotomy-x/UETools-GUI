@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_GetItem.UIW_Alert_GetItem_C
 // 0x0080 (0x0320 - 0x02A0)
@@ -63,5 +62,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_GetItem_C;
 
-}
-
+SDK_NAMESPACE_END

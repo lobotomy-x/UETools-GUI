@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_PileBunker.BP_Action_SlaveArm_PileBunker_C.ExecuteUbergraph_BP_Action_SlaveArm_PileBunker
 // 0x0038 (0x0038 - 0x0000)
@@ -42,5 +42,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_SlaveArm_PileBunker_C_JumpToNextSection;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

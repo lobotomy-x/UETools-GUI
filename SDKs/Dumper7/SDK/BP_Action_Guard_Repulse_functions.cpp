@@ -14,8 +14,7 @@
 #include "BP_Action_Guard_Repulse_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Guard_Repulse.BP_Action_Guard_Repulse_C.ExecuteUbergraph_BP_Action_Guard_Repulse
 // (Final, UbergraphFunction, HasDefaults)
@@ -72,5 +71,5 @@ void UBP_Action_Guard_Repulse_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

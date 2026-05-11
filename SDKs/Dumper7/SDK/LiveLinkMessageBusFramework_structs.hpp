@@ -14,8 +14,7 @@
 #include "LiveLinkInterface_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // ScriptStruct LiveLinkMessageBusFramework.LiveLinkSubjectFrameMessage
 // 0x0090 (0x0090 - 0x0000)
@@ -91,5 +90,4 @@ public:
 };
 DUMPER7_ASSERTS_FLiveLinkPingMessage;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ItemInfo_Compare_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ItemInfo_Compare.UIW_ItemInfo_Compare_C.GetWeaponDiff
 // (Private, HasOutParams, BlueprintCallable, BlueprintEvent, BlueprintPure)
@@ -150,5 +149,5 @@ void UUIW_ItemInfo_Compare_C::RefreshGearInfo()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_RockDrill_LoopingCharge.BP_Action_RockDrill_LoopingCharge_C
 // 0x0010 (0x0208 - 0x01F8)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_RockDrill_LoopingCharge_C;
 
-}
-
+SDK_NAMESPACE_END

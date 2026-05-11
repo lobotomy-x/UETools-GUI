@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_ButtonWithTooltip.UIBP_ButtonWithTooltip_C
 // 0x0018 (0x0440 - 0x0428)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_ButtonWithTooltip_C;
 
-}
-
+SDK_NAMESPACE_END

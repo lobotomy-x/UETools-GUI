@@ -10,17 +10,17 @@
 
 #include "Basic.hpp"
 
-#include "UIEN_WeaponPart_structs.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
 #include "ProjectP_structs.hpp"
+#include "UIEN_WeaponPart_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Weapon_Custom.UIW_Weapon_Custom_C.ExecuteUbergraph_UIW_Weapon_Custom
 // 0x02E0 (0x02E0 - 0x0000)
@@ -701,5 +701,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Weapon_Custom_C_NavToLRLoopItem;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

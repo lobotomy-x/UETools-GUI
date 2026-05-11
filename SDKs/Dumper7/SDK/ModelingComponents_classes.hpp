@@ -17,8 +17,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class ModelingComponents.BaseDynamicMeshComponent
 // 0x0040 (0x04C0 - 0x0480)
@@ -1032,5 +1031,4 @@ public:
 };
 DUMPER7_ASSERTS_UWeightMapSetProperties;
 
-}
-
+SDK_NAMESPACE_END

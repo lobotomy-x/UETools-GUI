@@ -13,8 +13,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Module_Item.UIW_Module_Item_C.SetItem
 // 0x0140 (0x0140 - 0x0000)
@@ -46,5 +46,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Module_Item_C_SetItem;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

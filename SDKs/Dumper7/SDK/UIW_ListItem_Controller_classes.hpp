@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_Controller.UIW_ListItem_Controller_C
 // 0x0068 (0x0308 - 0x02A0)
@@ -69,5 +68,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_Controller_C;
 
-}
-
+SDK_NAMESPACE_END

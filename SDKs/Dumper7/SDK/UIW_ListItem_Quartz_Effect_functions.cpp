@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Quartz_Effect_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Quartz_Effect.UIW_ListItem_Quartz_Effect_C.ExecuteUbergraph_UIW_ListItem_Quartz_Effect
 // (Final, UbergraphFunction, HasDefaults)
@@ -253,5 +252,5 @@ void UUIW_ListItem_Quartz_Effect_C::SetTextColor()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

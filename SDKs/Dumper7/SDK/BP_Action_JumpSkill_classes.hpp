@@ -16,8 +16,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_JumpSkill.BP_Action_JumpSkill_C
 // 0x0088 (0x0280 - 0x01F8)
@@ -80,5 +79,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_JumpSkill_C;
 
-}
-
+SDK_NAMESPACE_END

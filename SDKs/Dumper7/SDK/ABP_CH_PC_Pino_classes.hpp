@@ -18,8 +18,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // AnimBlueprintGeneratedClass ABP_CH_PC_Pino.ABP_CH_PC_Pino_C
 // 0x9460 (0x9AC0 - 0x0660)
@@ -260,5 +259,4 @@ public:
 };
 DUMPER7_ASSERTS_UABP_CH_PC_Pino_C;
 
-}
-
+SDK_NAMESPACE_END

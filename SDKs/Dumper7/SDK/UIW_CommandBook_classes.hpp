@@ -15,8 +15,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_CommandBook.UIW_CommandBook_C
 // 0x0168 (0x04B0 - 0x0348)
@@ -138,5 +137,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_CommandBook_C;
 
-}
-
+SDK_NAMESPACE_END

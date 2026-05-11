@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_DPad_Durability.UIW_DPad_Durability_C.ExecuteUbergraph_UIW_DPad_Durability
 // 0x0038 (0x0038 - 0x0000)
@@ -103,5 +103,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_DPad_Durability_C_Show_Grind_Effect;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

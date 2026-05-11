@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Fx_Slot_Bg.UIW_Fx_Slot_Bg_C
 // 0x0000 (0x0260 - 0x0260)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Fx_Slot_Bg_C;
 
-}
-
+SDK_NAMESPACE_END

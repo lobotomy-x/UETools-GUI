@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass ObjectManagementSystemDataBP.ObjectManagementSystemDataBP_C
 // 0x0070 (0x0290 - 0x0220)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_AObjectManagementSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

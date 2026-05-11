@@ -10,14 +10,14 @@
 
 #include "Basic.hpp"
 
-#include "NPCJumpSkill_Struct_Curve_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
+#include "NPCJumpSkill_Struct_Curve_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_JumpSkill_Curve.BP_Action_JumpSkill_Curve_C.ExecuteUbergraph_BP_Action_JumpSkill_Curve
 // 0x0880 (0x0880 - 0x0000)
@@ -377,5 +377,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_JumpSkill_Curve_C_OnSelectNextAnim;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

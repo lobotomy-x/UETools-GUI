@@ -14,8 +14,7 @@
 #include "UIW_Quartz_Listbar_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Quartz_Listbar.UIW_Quartz_Listbar_C.ExecuteUbergraph_UIW_Quartz_Listbar
 // (Final, UbergraphFunction, HasDefaults)
@@ -193,5 +192,5 @@ void UUIW_Quartz_Listbar_C::SetData(const struct FLQuartzSlot& SlotData)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_NoContents_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_NoContents.UIW_NoContents_C.ExecuteUbergraph_UIW_NoContents
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_NoContents_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

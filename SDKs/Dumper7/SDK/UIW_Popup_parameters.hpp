@@ -10,19 +10,19 @@
 
 #include "Basic.hpp"
 
-#include "Slate_structs.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
-#include "UIST_Time_structs.hpp"
 #include "CoreUObject_structs.hpp"
 #include "Engine_structs.hpp"
 #include "UIST_Popup_structs.hpp"
+#include "UIST_Time_structs.hpp"
 #include "UIST_Key_structs.hpp"
 #include "UIST_PopupModule_structs.hpp"
+#include "Slate_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Popup.UIW_Popup_C.SetPopup
 // 0x01D0 (0x01D0 - 0x0000)
@@ -286,5 +286,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Popup_C_OnCompleteTweenEvent;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

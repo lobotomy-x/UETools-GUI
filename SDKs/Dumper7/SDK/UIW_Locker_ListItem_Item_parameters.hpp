@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Locker_ListItem_Item.UIW_Locker_ListItem_Item_C.SetEquipPossible
 // 0x0001 (0x0001 - 0x0000)
@@ -23,5 +23,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Locker_ListItem_Item_C_SetEquipPossible;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

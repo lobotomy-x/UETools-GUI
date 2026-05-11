@@ -10,13 +10,12 @@
 
 #include "Basic.hpp"
 
+#include "Engine_structs.hpp"
 #include "UIEN_InputAction_structs.hpp"
 #include "UIEN_Controller_structs.hpp"
-#include "Engine_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Key.UIST_Key
 // 0x0028 (0x0028 - 0x0000)
@@ -31,5 +30,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Key;
 
-}
-
+SDK_NAMESPACE_END

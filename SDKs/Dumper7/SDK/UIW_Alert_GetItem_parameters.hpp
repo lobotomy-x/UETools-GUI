@@ -10,15 +10,15 @@
 
 #include "Basic.hpp"
 
-#include "UIST_GetItem_structs.hpp"
 #include "UIST_FirstCategoryInfo_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIST_GetItem_structs.hpp"
 #include "UIST_Time_structs.hpp"
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Alert_GetItem.UIW_Alert_GetItem_C.ExecuteUbergraph_UIW_Alert_GetItem
 // 0x0070 (0x0070 - 0x0000)
@@ -81,5 +81,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Alert_GetItem_C_SetItem;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

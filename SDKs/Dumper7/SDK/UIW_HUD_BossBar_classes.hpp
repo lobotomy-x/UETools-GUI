@@ -10,15 +10,14 @@
 
 #include "Basic.hpp"
 
-#include "UIST_AbnormalVisible_structs.hpp"
 #include "Engine_structs.hpp"
+#include "ProjectPContentInfo_structs.hpp"
+#include "UIST_AbnormalVisible_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectP_classes.hpp"
-#include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_BossBar.UIW_HUD_BossBar_C
 // 0x0138 (0x03D8 - 0x02A0)
@@ -86,5 +85,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_BossBar_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Page_Indicator_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Page_Indicator.UIW_Page_Indicator_C.SetData
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -38,5 +37,5 @@ void UUIW_Page_Indicator_C::SetData(int32 Current, int32 Max)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

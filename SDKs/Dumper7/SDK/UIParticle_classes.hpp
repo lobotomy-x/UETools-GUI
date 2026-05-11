@@ -16,8 +16,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class UIParticle.UIParticle
 // 0x0030 (0x0138 - 0x0108)
@@ -215,5 +214,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIParticleUtility;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Stat_Normal_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Stat_Normal.UIW_ListItem_Stat_Normal_C.ExecuteUbergraph_UIW_ListItem_Stat_Normal
 // (Final, UbergraphFunction)
@@ -244,5 +243,5 @@ void UUIW_ListItem_Stat_Normal_C::SetCommon(const class FText& Label, TSoftObjec
 	ChaUpPreview = std::move(Parms.ChaUpPreview);
 }
 
-}
 
+SDK_NAMESPACE_END

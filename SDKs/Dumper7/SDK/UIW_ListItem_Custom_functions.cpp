@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Custom_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Custom.UIW_ListItem_Custom_C.ExecuteUbergraph_UIW_ListItem_Custom
 // (Final, UbergraphFunction, HasDefaults)
@@ -264,5 +263,5 @@ struct FEventReply UUIW_ListItem_Custom_C::OnMouseButtonDown(const struct FGeome
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

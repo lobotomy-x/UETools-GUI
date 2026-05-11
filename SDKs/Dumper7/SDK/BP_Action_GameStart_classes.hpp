@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_GameStart.BP_Action_GameStart_C
 // 0x0028 (0x01E0 - 0x01B8)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_GameStart_C;
 
-}
-
+SDK_NAMESPACE_END

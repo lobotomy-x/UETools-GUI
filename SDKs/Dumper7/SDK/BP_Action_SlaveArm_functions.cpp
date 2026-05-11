@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm.BP_Action_SlaveArm_C.ExecuteUbergraph_BP_Action_SlaveArm
 // (Final, UbergraphFunction)
@@ -292,5 +291,5 @@ void UBP_Action_SlaveArm_C::ClearReinforcedVariableValues()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

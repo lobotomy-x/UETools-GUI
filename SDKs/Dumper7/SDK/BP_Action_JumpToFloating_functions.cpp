@@ -14,8 +14,7 @@
 #include "BP_Action_JumpToFloating_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_JumpToFloating.BP_Action_JumpToFloating_C.ExecuteUbergraph_BP_Action_JumpToFloating
 // (Final, UbergraphFunction, HasDefaults)
@@ -118,5 +117,5 @@ void UBP_Action_JumpToFloating_C::PrepareJump()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

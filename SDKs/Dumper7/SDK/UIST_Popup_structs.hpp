@@ -14,8 +14,7 @@
 #include "UIST_Key_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Popup.UIST_Popup
 // 0x0048 (0x0048 - 0x0000)
@@ -28,5 +27,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Popup;
 
-}
-
+SDK_NAMESPACE_END

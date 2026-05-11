@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_ReinforceSlot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_ReinforceSlot.UIW_SlaveArm_ReinforceSlot_C.ExecuteUbergraph_UIW_SlaveArm_ReinforceSlot
 // (Final, UbergraphFunction)
@@ -70,5 +69,5 @@ void UUIW_SlaveArm_ReinforceSlot_C::SetData(class ULSlaveArmTree* SlotData_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

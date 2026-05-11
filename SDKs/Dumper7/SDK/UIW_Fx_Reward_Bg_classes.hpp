@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Fx_Reward_Bg.UIW_Fx_Reward_Bg_C
 // 0x0008 (0x0268 - 0x0260)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Fx_Reward_Bg_C;
 
-}
-
+SDK_NAMESPACE_END

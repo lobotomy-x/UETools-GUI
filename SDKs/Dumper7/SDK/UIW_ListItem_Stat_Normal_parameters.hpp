@@ -16,8 +16,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_Stat_Normal.UIW_ListItem_Stat_Normal_C.ExecuteUbergraph_UIW_ListItem_Stat_Normal
 // 0x0080 (0x0080 - 0x0000)
@@ -244,5 +244,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_Stat_Normal_C_SetCommon;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Alert_GetItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_GetItem.UIW_Alert_GetItem_C.ExecuteUbergraph_UIW_Alert_GetItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -104,5 +103,5 @@ void UUIW_Alert_GetItem_C::SetItem(const struct FUIST_GetItem& GetItem)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

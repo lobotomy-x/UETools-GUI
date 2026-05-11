@@ -14,8 +14,7 @@
 #include "UIW_Recollection_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Recollection.UIW_Recollection_C.ExecuteUbergraph_UIW_Recollection
 // (Final, UbergraphFunction, HasDefaults)
@@ -1326,5 +1325,5 @@ void UUIW_Recollection_C::WheelStop()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

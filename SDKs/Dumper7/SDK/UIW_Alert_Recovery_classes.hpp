@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_Recovery.UIW_Alert_Recovery_C
 // 0x0018 (0x0278 - 0x0260)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_Recovery_C;
 
-}
-
+SDK_NAMESPACE_END

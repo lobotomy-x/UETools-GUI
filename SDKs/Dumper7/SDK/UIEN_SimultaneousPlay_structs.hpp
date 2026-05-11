@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum UIEN_SimultaneousPlay.UIEN_SimultaneousPlay
 // NumValues: 0x0003
@@ -23,5 +22,4 @@ enum class EUIEN_SimultaneousPlay : uint8
 	UIEN_MAX                                 = 2,
 };
 
-}
-
+SDK_NAMESPACE_END

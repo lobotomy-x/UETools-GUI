@@ -14,8 +14,7 @@
 #include "UIW_MOV_BI_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_MOV_BI.UIW_MOV_BI_C.ExecuteUbergraph_UIW_MOV_BI
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UUIW_MOV_BI_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

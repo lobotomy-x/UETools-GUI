@@ -14,8 +14,7 @@
 #include "UIW_EULA_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_EULA.UIW_EULA_C.ExecuteUbergraph_UIW_EULA
 // (Final, UbergraphFunction, HasDefaults)
@@ -130,5 +129,5 @@ void UUIW_EULA_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

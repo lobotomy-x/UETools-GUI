@@ -14,8 +14,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_OnOffButton.UIW_OnOffButton_C.ExecuteUbergraph_UIW_OnOffButton
 // 0x0258 (0x0258 - 0x0000)
@@ -125,5 +125,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_OnOffButton_C_ReturnToggle;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

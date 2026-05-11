@@ -17,8 +17,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_CommandBook.UIW_CommandBook_C.ExecuteUbergraph_UIW_CommandBook
 // 0x0388 (0x0388 - 0x0000)
@@ -761,5 +761,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_CommandBook_C_MoveRightTab;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

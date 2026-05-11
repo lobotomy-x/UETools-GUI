@@ -14,8 +14,7 @@
 #include "UIW_Popup_Module_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Module_HelpMate.UIW_Module_HelpMate_C
 // 0x0018 (0x02C0 - 0x02A8)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Module_HelpMate_C;
 
-}
-
+SDK_NAMESPACE_END

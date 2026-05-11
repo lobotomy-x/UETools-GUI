@@ -20,8 +20,7 @@
 #include "CinematicCamera_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class TemplateSequence.TemplateSequencePlayer
 // 0x0008 (0x04F0 - 0x04E8)
@@ -341,5 +340,4 @@ public:
 };
 DUMPER7_ASSERTS_UTemplateSequenceTrack;
 
-}
-
+SDK_NAMESPACE_END

@@ -13,8 +13,7 @@
 #include "BP_Projectile_Design_Base_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Projectile_Design_Trap_Elec_Child.BP_Projectile_Design_Trap_Elec_Child_C
 // 0x0000 (0x0338 - 0x0338)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Projectile_Design_Trap_Elec_Child_C;
 
-}
-
+SDK_NAMESPACE_END

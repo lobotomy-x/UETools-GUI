@@ -14,8 +14,7 @@
 #include "UIW_ListItem_WeaponParts_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_WeaponParts.UIW_ListItem_WeaponParts_C.ExecuteUbergraph_UIW_ListItem_WeaponParts
 // (Final, UbergraphFunction)
@@ -109,5 +108,5 @@ void UUIW_ListItem_WeaponParts_C::SetEquipPossible()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

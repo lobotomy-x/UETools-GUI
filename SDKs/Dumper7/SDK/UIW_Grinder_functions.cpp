@@ -14,8 +14,7 @@
 #include "UIW_Grinder_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Grinder.UIW_Grinder_C.ExecuteUbergraph_UIW_Grinder
 // (Final, UbergraphFunction, HasDefaults)
@@ -338,5 +337,5 @@ class UWidget* UUIW_Grinder_C::NavToLRLoop(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

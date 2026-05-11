@@ -14,8 +14,7 @@
 #include "ObjectManagementSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ObjectManagementSystemDataBP.ObjectManagementSystemDataBP_C.ExecuteUbergraph_ObjectManagementSystemDataBP
 // (Final, UbergraphFunction)
@@ -70,5 +69,5 @@ void AObjectManagementSystemDataBP_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

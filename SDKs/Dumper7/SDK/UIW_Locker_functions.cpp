@@ -14,8 +14,7 @@
 #include "UIW_Locker_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Locker.UIW_Locker_C.ExecuteUbergraph_UIW_Locker
 // (Final, UbergraphFunction, HasDefaults)
@@ -555,5 +554,5 @@ void UUIW_Locker_C::ListPendingCheck()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

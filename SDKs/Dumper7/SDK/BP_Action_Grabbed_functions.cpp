@@ -14,8 +14,7 @@
 #include "BP_Action_Grabbed_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Grabbed.BP_Action_Grabbed_C.ExecuteUbergraph_BP_Action_Grabbed
 // (Final, UbergraphFunction, HasDefaults)
@@ -110,5 +109,5 @@ void UBP_Action_Grabbed_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

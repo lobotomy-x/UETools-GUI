@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Climb.BP_Action_Climb_C
 // 0x0098 (0x0278 - 0x01E0)
@@ -90,5 +89,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Climb_C;
 
-}
-
+SDK_NAMESPACE_END

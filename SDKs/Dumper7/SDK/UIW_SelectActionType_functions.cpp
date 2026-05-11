@@ -14,8 +14,7 @@
 #include "UIW_SelectActionType_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SelectActionType.UIW_SelectActionType_C.ExecuteUbergraph_UIW_SelectActionType
 // (Final, UbergraphFunction, HasDefaults)
@@ -239,5 +238,5 @@ void UUIW_SelectActionType_C::Callback(class UUIW_Popup_C* Popup, class UUIW_Btn
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

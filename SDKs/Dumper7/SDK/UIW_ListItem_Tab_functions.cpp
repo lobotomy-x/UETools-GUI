@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Tab_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Tab.UIW_ListItem_Tab_C.ExecuteUbergraph_UIW_ListItem_Tab
 // (Final, UbergraphFunction, HasDefaults)
@@ -244,5 +243,5 @@ void UUIW_ListItem_Tab_C::SetHighlightLabel()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

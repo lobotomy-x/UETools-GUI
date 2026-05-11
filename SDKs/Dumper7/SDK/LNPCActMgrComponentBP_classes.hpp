@@ -14,8 +14,7 @@
 #include "LPCActMgrComponentBP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LNPCActMgrComponentBP.LNPCActMgrComponentBP_C
 // 0x0018 (0x0BB0 - 0x0B98)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_ULNPCActMgrComponentBP_C;
 
-}
-
+SDK_NAMESPACE_END

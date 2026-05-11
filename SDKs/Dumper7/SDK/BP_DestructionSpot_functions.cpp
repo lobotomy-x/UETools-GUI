@@ -14,8 +14,7 @@
 #include "BP_DestructionSpot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_DestructionSpot.BP_DestructionSpot_C.ExecuteUbergraph_BP_DestructionSpot
 // (Final, UbergraphFunction, HasDefaults)
@@ -126,5 +125,5 @@ void ABP_DestructionSpot_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

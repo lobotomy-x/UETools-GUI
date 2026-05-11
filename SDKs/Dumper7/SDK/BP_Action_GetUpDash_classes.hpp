@@ -17,8 +17,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_GetUpDash.BP_Action_GetUpDash_C
 // 0x0080 (0x0260 - 0x01E0)
@@ -69,5 +68,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_GetUpDash_C;
 
-}
-
+SDK_NAMESPACE_END

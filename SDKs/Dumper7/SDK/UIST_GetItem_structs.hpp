@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_GetItem.UIST_GetItem
 // 0x0010 (0x0010 - 0x0000)
@@ -25,5 +24,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_GetItem;
 
-}
-
+SDK_NAMESPACE_END

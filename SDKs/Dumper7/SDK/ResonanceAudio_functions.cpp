@@ -14,8 +14,7 @@
 #include "ResonanceAudio_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ResonanceAudio.ResonanceAudioSpatializationSourceSettings.SetSoundSourceDirectivity
 // (Final, Native, Public, BlueprintCallable)
@@ -343,5 +342,5 @@ void UResonanceAudioReverbPluginPreset::SetRoomRotation(const struct FQuat& InRo
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

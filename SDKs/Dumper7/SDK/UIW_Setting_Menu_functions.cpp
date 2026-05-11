@@ -14,8 +14,7 @@
 #include "UIW_Setting_Menu_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Setting_Menu.UIW_Setting_Menu_C.ExecuteUbergraph_UIW_Setting_Menu
 // (Final, UbergraphFunction, HasDefaults)
@@ -191,5 +190,5 @@ void UUIW_Setting_Menu_C::SetEnabledView(bool IsEnabledView_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

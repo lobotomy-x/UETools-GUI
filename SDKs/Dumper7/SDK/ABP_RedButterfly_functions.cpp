@@ -14,8 +14,7 @@
 #include "ABP_RedButterfly_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ABP_RedButterfly.ABP_RedButterfly_C.ExecuteUbergraph_ABP_RedButterfly
 // (Final, UbergraphFunction)
@@ -117,5 +116,5 @@ void UABP_RedButterfly_C::AnimLayer_Additive(const struct FPoseLink& MainStateBa
 		*AnimLayer_Additive_0 = std::move(Parms.AnimLayer_Additive_0);
 }
 
-}
 
+SDK_NAMESPACE_END

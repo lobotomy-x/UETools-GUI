@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Ergo_Trail.BP_Ergo_Trail_C
 // 0x0080 (0x02A0 - 0x0220)
@@ -67,5 +66,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Ergo_Trail_C;
 
-}
-
+SDK_NAMESPACE_END

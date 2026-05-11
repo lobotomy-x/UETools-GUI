@@ -19,8 +19,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class Synthesis.SourceEffectEnvelopeFollowerPreset
 // 0x0040 (0x00A8 - 0x0068)
@@ -1156,5 +1155,4 @@ public:
 };
 DUMPER7_ASSERTS_USynthKnob;
 
-}
-
+SDK_NAMESPACE_END

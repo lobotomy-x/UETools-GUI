@@ -14,8 +14,7 @@
 #include "AudioMixer_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function AudioMixer.AudioMixerBlueprintLibrary.AddMasterSubmixEffect
 // (Final, Native, Static, Public, BlueprintCallable)
@@ -2703,5 +2702,5 @@ bool UQuartzSubsystem::IsQuartzEnabled()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

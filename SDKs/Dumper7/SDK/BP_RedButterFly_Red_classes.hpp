@@ -15,8 +15,7 @@
 #include "LNPCCharacterBP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_RedButterFly_Red.BP_RedButterFly_Red_C
 // 0x00E0 (0x14B0 - 0x13D0)
@@ -80,5 +79,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_RedButterFly_Red_C;
 
-}
-
+SDK_NAMESPACE_END

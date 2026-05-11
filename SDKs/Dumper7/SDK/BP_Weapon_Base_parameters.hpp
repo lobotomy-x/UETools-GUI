@@ -14,8 +14,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Weapon_Base.BP_Weapon_Base_C.ExecuteUbergraph_BP_Weapon_Base
 // 0x03A0 (0x03A0 - 0x0000)
@@ -827,5 +827,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Weapon_Base_C_TakeOffAbnormal;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

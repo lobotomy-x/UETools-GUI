@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_GetHumanity.UIW_Alert_GetHumanity_C
 // 0x0058 (0x02F8 - 0x02A0)
@@ -61,5 +60,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_GetHumanity_C;
 
-}
-
+SDK_NAMESPACE_END

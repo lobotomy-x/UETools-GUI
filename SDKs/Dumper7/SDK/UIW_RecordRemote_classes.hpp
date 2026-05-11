@@ -16,8 +16,7 @@
 #include "UMG_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_RecordRemote.UIW_RecordRemote_C
 // 0x0100 (0x03A0 - 0x02A0)
@@ -118,5 +117,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_RecordRemote_C;
 
-}
-
+SDK_NAMESPACE_END

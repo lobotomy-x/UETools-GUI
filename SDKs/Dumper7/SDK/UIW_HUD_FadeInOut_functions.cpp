@@ -14,8 +14,7 @@
 #include "UIW_HUD_FadeInOut_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_FadeInOut.UIW_HUD_FadeInOut_C.ExecuteUbergraph_UIW_HUD_FadeInOut
 // (Final, UbergraphFunction)
@@ -260,5 +259,5 @@ void UUIW_HUD_FadeInOut_C::SequenceEvent__ENTRYPOINTUIW_HUD_FadeInOut_0()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

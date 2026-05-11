@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_GrappleGun_JumpSmash.BP_Action_SlaveArm_GrappleGun_JumpSmash_C
 // 0x0010 (0x0228 - 0x0218)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_GrappleGun_JumpSmash_C;
 
-}
-
+SDK_NAMESPACE_END

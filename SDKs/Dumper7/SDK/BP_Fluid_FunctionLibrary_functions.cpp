@@ -14,8 +14,7 @@
 #include "BP_Fluid_FunctionLibrary_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Fluid_FunctionLibrary.BP_Fluid_FunctionLibrary_C.DrawFluidSim
 // (Static, Public, HasOutParams, BlueprintCallable, BlueprintEvent)
@@ -112,5 +111,5 @@ void UBP_Fluid_FunctionLibrary_C::DrawFluidSim_Capture(class ABP_FluidController
 	Draw_Material = Parms.Draw_Material;
 }
 
-}
 
+SDK_NAMESPACE_END

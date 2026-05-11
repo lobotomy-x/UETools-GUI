@@ -14,8 +14,7 @@
 #include "UIW_ListItem_BladeReinforced_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_BladeReinforced.UIW_ListItem_BladeReinforced_C.ExecuteUbergraph_UIW_ListItem_BladeReinforced
 // (Final, UbergraphFunction, HasDefaults)
@@ -56,5 +55,5 @@ void UUIW_ListItem_BladeReinforced_C::Set_Item(class UObject* ListItem)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

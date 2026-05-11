@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass SoulDrop_Butterfly_BP.SoulDrop_Butterfly_BP_C
 // 0x0058 (0x02F8 - 0x02A0)
@@ -60,5 +59,4 @@ public:
 };
 DUMPER7_ASSERTS_ASoulDrop_Butterfly_BP_C;
 
-}
-
+SDK_NAMESPACE_END

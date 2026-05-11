@@ -14,8 +14,7 @@
 #include "AIModule_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function AIModule.AIController.ClaimTaskResource
 // (Final, Native, Public, BlueprintCallable)
@@ -5766,5 +5765,5 @@ float UPawnSensingComponent::GetPeripheralVisionCosine() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

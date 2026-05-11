@@ -14,8 +14,7 @@
 #include "UIW_Loading_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Loading.UIW_Loading_C.ExecuteUbergraph_UIW_Loading
 // (Final, UbergraphFunction, HasDefaults)
@@ -134,5 +133,5 @@ void UUIW_Loading_C::PrintTipText()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

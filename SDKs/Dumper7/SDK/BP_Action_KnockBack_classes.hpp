@@ -13,8 +13,7 @@
 #include "BP_Action_DMG_STAND_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_KnockBack.BP_Action_KnockBack_C
 // 0x0000 (0x05C8 - 0x05C8)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_KnockBack_C;
 
-}
-
+SDK_NAMESPACE_END

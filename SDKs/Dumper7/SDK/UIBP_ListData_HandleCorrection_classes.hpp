@@ -14,8 +14,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_ListData_HandleCorrection.UIBP_ListData_HandleCorrection_C
 // 0x0010 (0x0038 - 0x0028)
@@ -42,5 +41,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_ListData_HandleCorrection_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Slot_Belt_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Slot_Belt.UIW_Slot_Belt_C.ExecuteUbergraph_UIW_Slot_Belt
 // (Final, UbergraphFunction, HasDefaults)
@@ -179,5 +178,5 @@ void UUIW_Slot_Belt_C::SetCount()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

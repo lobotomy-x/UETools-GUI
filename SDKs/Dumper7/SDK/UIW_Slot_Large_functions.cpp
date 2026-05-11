@@ -14,8 +14,7 @@
 #include "UIW_Slot_Large_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Slot_Large.UIW_Slot_Large_C.ExecuteUbergraph_UIW_Slot_Large
 // (Final, UbergraphFunction, HasDefaults)
@@ -193,5 +192,5 @@ void UUIW_Slot_Large_C::SetEquiped()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

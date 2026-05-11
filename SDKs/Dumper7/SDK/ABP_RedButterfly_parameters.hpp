@@ -13,8 +13,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function ABP_RedButterfly.ABP_RedButterfly_C.ExecuteUbergraph_ABP_RedButterfly
 // 0x000C (0x000C - 0x0000)
@@ -56,5 +56,5 @@ public:
 };
 DUMPER7_ASSERTS_ABP_RedButterfly_C_AnimLayer_Additive;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

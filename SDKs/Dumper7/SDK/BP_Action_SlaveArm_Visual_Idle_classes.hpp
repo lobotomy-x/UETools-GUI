@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_VisualBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_Visual_Idle.BP_Action_SlaveArm_Visual_Idle_C
 // 0x0008 (0x01F0 - 0x01E8)
@@ -44,5 +43,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_Visual_Idle_C;
 
-}
-
+SDK_NAMESPACE_END

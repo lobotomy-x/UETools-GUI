@@ -14,8 +14,7 @@
 #include "BP_Action_RockDrill_LoopingCharge_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_RockDrill_LoopingCharge.BP_Action_RockDrill_LoopingCharge_C.ExecuteUbergraph_BP_Action_RockDrill_LoopingCharge
 // (Final, UbergraphFunction)
@@ -161,5 +160,5 @@ int32 UBP_Action_RockDrill_LoopingCharge_C::OnSelectNextAnim(class UAnimMontage*
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

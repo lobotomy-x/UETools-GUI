@@ -14,8 +14,7 @@
 #include "UIW_Record_ListItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Record_ListItem.UIW_Record_ListItem_C.ExecuteUbergraph_UIW_Record_ListItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -275,5 +274,5 @@ void UUIW_Record_ListItem_C::SetTextColor()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

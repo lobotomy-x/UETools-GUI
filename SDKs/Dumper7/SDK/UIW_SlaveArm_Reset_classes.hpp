@@ -15,8 +15,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SlaveArm_Reset.UIW_SlaveArm_Reset_C
 // 0x0088 (0x03D0 - 0x0348)
@@ -70,5 +69,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SlaveArm_Reset_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_EULA.UIW_EULA_C
 // 0x0058 (0x03A0 - 0x0348)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_EULA_C;
 
-}
-
+SDK_NAMESPACE_END

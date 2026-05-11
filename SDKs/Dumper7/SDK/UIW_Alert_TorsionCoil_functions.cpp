@@ -14,8 +14,7 @@
 #include "UIW_Alert_TorsionCoil_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_TorsionCoil.UIW_Alert_TorsionCoil_C.ExecuteUbergraph_UIW_Alert_TorsionCoil
 // (Final, UbergraphFunction)
@@ -112,5 +111,5 @@ void UUIW_Alert_TorsionCoil_C::Finished_A92A722F4C10AB934556B68E0DBDF1E2()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

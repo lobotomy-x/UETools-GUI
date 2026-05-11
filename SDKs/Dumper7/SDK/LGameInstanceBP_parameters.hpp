@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function LGameInstanceBP.LGameInstanceBP_C.ExecuteUbergraph_LGameInstanceBP
 // 0x0408 (0x0408 - 0x0000)
@@ -238,5 +238,5 @@ public:
 };
 DUMPER7_ASSERTS_LGameInstanceBP_C_ExecBP;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

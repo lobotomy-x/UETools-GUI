@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_FatalAttack_Multi_Test.BP_Action_FatalAttack_Multi_Test_C
 // 0x0050 (0x0248 - 0x01F8)
@@ -58,5 +57,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_FatalAttack_Multi_Test_C;
 
-}
-
+SDK_NAMESPACE_END

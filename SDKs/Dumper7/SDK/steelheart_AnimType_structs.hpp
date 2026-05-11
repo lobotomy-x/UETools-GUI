@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum steelheart_AnimType.steelheart_AnimType
 // NumValues: 0x0004
@@ -24,5 +23,4 @@ enum class Esteelheart_AnimType : uint8
 	steelheart_MAX                           = 3,
 };
 
-}
-
+SDK_NAMESPACE_END

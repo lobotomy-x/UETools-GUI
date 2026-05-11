@@ -14,8 +14,7 @@
 #include "UIW_HUD_Gauge_PileBunker_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Gauge_PileBunker.UIW_HUD_Gauge_PileBunker_C.ExecuteUbergraph_UIW_HUD_Gauge_PileBunker
 // (Final, UbergraphFunction)
@@ -112,5 +111,5 @@ void UUIW_HUD_Gauge_PileBunker_C::Off()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

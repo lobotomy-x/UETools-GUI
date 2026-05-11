@@ -13,8 +13,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum SlateCore.EUINavigation
 // NumValues: 0x0009
@@ -1062,5 +1061,4 @@ public:
 };
 DUMPER7_ASSERTS_FCheckBoxStyle;
 
-}
-
+SDK_NAMESPACE_END

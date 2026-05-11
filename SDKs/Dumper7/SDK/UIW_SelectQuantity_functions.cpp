@@ -14,8 +14,7 @@
 #include "UIW_SelectQuantity_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SelectQuantity.UIW_SelectQuantity_C.ExecuteUbergraph_UIW_SelectQuantity
 // (Final, UbergraphFunction, HasDefaults)
@@ -261,5 +260,5 @@ void UUIW_SelectQuantity_C::RefreshErgo(int32 Count)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

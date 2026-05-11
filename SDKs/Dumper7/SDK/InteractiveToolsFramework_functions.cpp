@@ -14,8 +14,7 @@
 #include "InteractiveToolsFramework_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function InteractiveToolsFramework.GizmoVec2ParameterSource.BeginModify
 // (Native, Public)
@@ -460,5 +459,5 @@ void IGizmoStateTarget::EndUpdate()
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

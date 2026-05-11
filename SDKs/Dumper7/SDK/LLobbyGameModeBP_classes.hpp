@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LLobbyGameModeBP.LLobbyGameModeBP_C
 // 0x0010 (0x02D8 - 0x02C8)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_ALLobbyGameModeBP_C;
 
-}
-
+SDK_NAMESPACE_END

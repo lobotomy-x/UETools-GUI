@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_DPad_Item.UIW_DPad_Item_C
 // 0x00C8 (0x0368 - 0x02A0)
@@ -81,5 +80,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_DPad_Item_C;
 
-}
-
+SDK_NAMESPACE_END

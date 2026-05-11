@@ -14,8 +14,7 @@
 #include "GallerySystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function GallerySystemDataBP.GallerySystemDataBP_C.ExecuteUbergraph_GallerySystemDataBP
 // (Final, UbergraphFunction, HasDefaults)
@@ -142,5 +141,5 @@ void AGallerySystemDataBP_C::CalcCamZByPivot(class USceneComponent* InCam, class
 		*OutInterval = Parms.OutInterval;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_PropItemDrop.BP_PropItemDrop_C.ExecuteUbergraph_BP_PropItemDrop
 // 0x0010 (0x0010 - 0x0000)
@@ -40,5 +40,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_PropItemDrop_C_OnChangeState;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

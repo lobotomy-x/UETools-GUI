@@ -14,8 +14,7 @@
 #include "UIW_HUD_ControlGuide_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_ControlGuide.UIW_HUD_ControlGuide_C.ExecuteUbergraph_UIW_HUD_ControlGuide
 // (Final, UbergraphFunction)
@@ -132,5 +131,5 @@ void UUIW_HUD_ControlGuide_C::SetControlGuide(bool IsGamePad)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

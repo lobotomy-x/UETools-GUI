@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Achievement_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Achievement.UIW_ListItem_Achievement_C.ExecuteUbergraph_UIW_ListItem_Achievement
 // (Final, UbergraphFunction, HasDefaults)
@@ -270,5 +269,5 @@ void UUIW_ListItem_Achievement_C::SetData(class UUIBP_ListData_Achievement_C* It
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

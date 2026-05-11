@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_SaveData.UIW_ListItem_SaveData_C
 // 0x00C0 (0x0360 - 0x02A0)
@@ -77,5 +76,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_SaveData_C;
 
-}
-
+SDK_NAMESPACE_END

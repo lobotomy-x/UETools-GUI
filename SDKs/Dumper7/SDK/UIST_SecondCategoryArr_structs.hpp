@@ -13,8 +13,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_SecondCategoryArr.UIST_SecondCategoryArr
 // 0x0028 (0x0028 - 0x0000)
@@ -28,5 +27,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_SecondCategoryArr;
 
-}
-
+SDK_NAMESPACE_END

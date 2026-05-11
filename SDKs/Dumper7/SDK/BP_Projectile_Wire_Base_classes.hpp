@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Projectile_Wire_Base.BP_Projectile_Wire_Base_C
 // 0x0020 (0x0340 - 0x0320)
@@ -53,5 +52,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Projectile_Wire_Base_C;
 
-}
-
+SDK_NAMESPACE_END

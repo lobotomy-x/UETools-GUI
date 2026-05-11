@@ -14,8 +14,7 @@
 #include "UIW_Spinner_Number_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Spinner_Number.UIW_Spinner_Number_C.SetNumber
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -56,5 +55,5 @@ void UUIW_Spinner_Number_C::SetColor(bool IsEdited)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

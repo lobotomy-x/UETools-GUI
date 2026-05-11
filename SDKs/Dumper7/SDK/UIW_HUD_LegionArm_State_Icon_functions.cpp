@@ -14,8 +14,7 @@
 #include "UIW_HUD_LegionArm_State_Icon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_LegionArm_State_Icon.UIW_HUD_LegionArm_State_Icon_C.ExecuteUbergraph_UIW_HUD_LegionArm_State_Icon
 // (Final, UbergraphFunction, HasDefaults)
@@ -104,5 +103,5 @@ void UUIW_HUD_LegionArm_State_Icon_C::OnChooseSlaveArm(const struct FLEquipItemS
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

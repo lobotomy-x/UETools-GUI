@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Correction_ListItem.UIW_Correction_ListItem_C
 // 0x0090 (0x0330 - 0x02A0)
@@ -78,5 +77,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Correction_ListItem_C;
 
-}
-
+SDK_NAMESPACE_END

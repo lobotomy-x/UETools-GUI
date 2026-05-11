@@ -10,13 +10,13 @@
 
 #include "Basic.hpp"
 
-#include "BGM_Struct_structs.hpp"
 #include "Engine_structs.hpp"
+#include "BGM_Struct_structs.hpp"
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function LNPCCharacterBP.LNPCCharacterBP_C.ExecuteUbergraph_LNPCCharacterBP
 // 0x00B8 (0x00B8 - 0x0000)
@@ -206,5 +206,5 @@ public:
 };
 DUMPER7_ASSERTS_LNPCCharacterBP_C_UpdateHeadTagPosition;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

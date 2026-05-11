@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Hold_Slash.BP_Hold_Slash_C
 // 0x0010 (0x01F0 - 0x01E0)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Hold_Slash_C;
 
-}
-
+SDK_NAMESPACE_END

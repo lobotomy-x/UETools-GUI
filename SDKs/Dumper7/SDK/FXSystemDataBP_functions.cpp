@@ -14,8 +14,7 @@
 #include "FXSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function FXSystemDataBP.FXSystemDataBP_C.ExecuteUbergraph_FXSystemDataBP
 // (Final, UbergraphFunction, HasDefaults)
@@ -434,5 +433,5 @@ class UNiagaraSystem* AFXSystemDataBP_C::GetWeaponTrailElementFX(class FName Ele
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Correction_ListItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Correction_ListItem.UIW_Correction_ListItem_C.ExecuteUbergraph_UIW_Correction_ListItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -329,5 +328,5 @@ void UUIW_Correction_ListItem_C::SetMoveFocusEffect()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

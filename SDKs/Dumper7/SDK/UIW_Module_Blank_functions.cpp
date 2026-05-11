@@ -14,8 +14,7 @@
 #include "UIW_Module_Blank_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_Blank.UIW_Module_Blank_C.SetModule
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -38,5 +37,5 @@ void UUIW_Module_Blank_C::SetModule(class UUIW_Popup_C* PopupWindow_0, const cla
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

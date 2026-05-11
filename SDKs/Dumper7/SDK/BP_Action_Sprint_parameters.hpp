@@ -15,8 +15,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_Sprint.BP_Action_Sprint_C.ExecuteUbergraph_BP_Action_Sprint
 // 0x0138 (0x0138 - 0x0000)
@@ -124,5 +124,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_Sprint_C_OnCommandOccured;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -15,8 +15,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_Fulminis.BP_Action_SlaveArm_Fulminis_C.ExecuteUbergraph_BP_Action_SlaveArm_Fulminis
 // 0x01E8 (0x01E8 - 0x0000)
@@ -204,5 +204,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_SlaveArm_Fulminis_C_SetReinforcedVariableValue;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

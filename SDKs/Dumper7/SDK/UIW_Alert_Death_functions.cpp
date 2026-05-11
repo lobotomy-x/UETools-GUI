@@ -14,8 +14,7 @@
 #include "UIW_Alert_Death_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_Death.UIW_Alert_Death_C.ExecuteUbergraph_UIW_Alert_Death
 // (Final, UbergraphFunction, HasDefaults)
@@ -190,5 +189,5 @@ void UUIW_Alert_Death_C::SequenceEvent__ENTRYPOINTUIW_Alert_Death_1()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

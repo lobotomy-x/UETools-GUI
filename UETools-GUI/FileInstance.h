@@ -1,9 +1,7 @@
 #pragma once
-#include <string>
-#include <vector>
+#include "Utilities.h"
+
 #include <filesystem>
-#include <fstream>
-#include <sstream>
 
 
 
@@ -13,21 +11,27 @@
 class FileInstance
 {
 public:
-	explicit FileInstance(const std::filesystem::path& filePath);
-	virtual ~FileInstance() = default;
+    FileInstance(const std::string& filePath);
+    FileInstance(const std::wstring& filePath);
 
-	std::string GetAbsoluteFilePath();
-	bool DoesFileDirectoryExist();
-	bool DoesFileExist();
+    const bool Exists();
 
-	bool LoadText(std::string* outText);
-	bool SaveText(const std::string& text);
+    const bool ReadText(std::string* outText);
+    const bool SaveText(const std::string& text);
 
-	bool LoadLines(std::vector<std::string>* outLines);
-	bool SaveLines(const std::vector<std::string>& lines);
+    const bool ReadLines(std::vector<std::string>* outLines);
+    const bool SaveLines(const std::vector<std::string>& lines);
 
+    const bool AppendLine(const std::string& line);
+    const bool AppendLines(const std::vector<std::string>& lines);
+
+    const bool Clear();
+    const bool Destroy();
 
 private:
-	std::filesystem::path _filePath;
+    const std::wstring GetAbsolutePath();
+    const bool EnsureDirectoryExists();
+
+    std::wstring _filePath;
 };
 

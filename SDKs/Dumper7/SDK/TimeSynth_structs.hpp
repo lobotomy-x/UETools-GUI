@@ -13,8 +13,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum TimeSynth.ETimeSynthEventQuantization
 // NumValues: 0x0010
@@ -200,5 +199,4 @@ public:
 };
 DUMPER7_ASSERTS_FTimeSynthSpectralData;
 
-}
-
+SDK_NAMESPACE_END

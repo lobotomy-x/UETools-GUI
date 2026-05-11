@@ -14,8 +14,7 @@
 #include "UIW_Quartz_Pocket_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Quartz_Pocket.UIW_Quartz_Pocket_C.ExecuteUbergraph_UIW_Quartz_Pocket
 // (Final, UbergraphFunction, HasDefaults)
@@ -166,5 +165,5 @@ void UUIW_Quartz_Pocket_C::RefreshSlot(int32 NowInstallIndex)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

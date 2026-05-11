@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass FXSystemDataBP.FXSystemDataBP_C
 // 0x0218 (0x0448 - 0x0230)
@@ -102,5 +101,4 @@ public:
 };
 DUMPER7_ASSERTS_AFXSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

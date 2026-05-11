@@ -12,16 +12,15 @@
 
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "UIEN_EquipSlotSize_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Equipment.UIW_Equipment_C
 // 0x0408 (0x0750 - 0x0348)
@@ -366,5 +365,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Equipment_C;
 
-}
-
+SDK_NAMESPACE_END

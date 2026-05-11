@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_HitBase.BP_Action_HitBase_C
 // 0x0020 (0x0398 - 0x0378)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_HitBase_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_CH_PC_Pino.BP_CH_PC_Pino_C
 // 0x0790 (0x1580 - 0x0DF0)
@@ -157,5 +156,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_CH_PC_Pino_C;
 
-}
-
+SDK_NAMESPACE_END

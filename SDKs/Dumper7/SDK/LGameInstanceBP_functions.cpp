@@ -14,8 +14,7 @@
 #include "LGameInstanceBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LGameInstanceBP.LGameInstanceBP_C.ExecuteUbergraph_LGameInstanceBP
 // (Final, UbergraphFunction, HasDefaults)
@@ -131,5 +130,5 @@ bool ULGameInstanceBP_C::ExecBP(class UWorld* InWorld, const class FString& Cmd)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

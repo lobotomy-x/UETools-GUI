@@ -14,8 +14,7 @@
 #include "BP_Action_GetUpDash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_GetUpDash.BP_Action_GetUpDash_C.ExecuteUbergraph_BP_Action_GetUpDash
 // (Final, UbergraphFunction)
@@ -106,5 +105,5 @@ void UBP_Action_GetUpDash_C::OnStop(class ULActBase* ReasonAction, class FName R
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

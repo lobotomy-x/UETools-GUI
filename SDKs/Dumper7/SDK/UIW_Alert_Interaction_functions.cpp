@@ -14,8 +14,7 @@
 #include "UIW_Alert_Interaction_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_Interaction.UIW_Alert_Interaction_C.ExecuteUbergraph_UIW_Alert_Interaction
 // (Final, UbergraphFunction)
@@ -154,5 +153,5 @@ void UUIW_Alert_Interaction_C::OnEnableInteraction(bool IsValid)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -11,17 +11,17 @@
 #include "Basic.hpp"
 
 #include "ProjectPContentInfo_structs.hpp"
-#include "UIST_FirstStatInfo_structs.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
-#include "UIST_Color_structs.hpp"
+#include "UIST_FirstStatInfo_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
+#include "UIST_Color_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_CharacterUpgrade.UIW_CharacterUpgrade_C.ExecuteUbergraph_UIW_CharacterUpgrade
 // 0x00A8 (0x00A8 - 0x0000)
@@ -874,5 +874,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_CharacterUpgrade_C_ClearEventBinding;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

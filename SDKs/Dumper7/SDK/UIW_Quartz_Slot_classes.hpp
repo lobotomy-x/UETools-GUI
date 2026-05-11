@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Quartz_Slot.UIW_Quartz_Slot_C
 // 0x0010 (0x02B0 - 0x02A0)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Quartz_Slot_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_BG_Title.UIW_BG_Title_C
 // 0x0020 (0x02C0 - 0x02A0)
@@ -47,5 +46,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_BG_Title_C;
 
-}
-
+SDK_NAMESPACE_END

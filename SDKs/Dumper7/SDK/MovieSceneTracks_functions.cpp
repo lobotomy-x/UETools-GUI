@@ -14,8 +14,7 @@
 #include "MovieSceneTracks_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function MovieSceneTracks.MovieSceneParameterSection.AddBoolParameterKey
 // (Final, Native, Public, HasDefaults, BlueprintCallable)
@@ -754,5 +753,5 @@ ELevelVisibility UMovieSceneLevelVisibilitySection::GetVisibility() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

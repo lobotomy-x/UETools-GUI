@@ -15,8 +15,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_FlameThrower.BP_Action_SlaveArm_FlameThrower_C.ExecuteUbergraph_BP_Action_SlaveArm_FlameThrower
 // 0x0100 (0x0100 - 0x0000)
@@ -117,5 +117,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_SlaveArm_FlameThrower_C_SetReinforcedVariableValue;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

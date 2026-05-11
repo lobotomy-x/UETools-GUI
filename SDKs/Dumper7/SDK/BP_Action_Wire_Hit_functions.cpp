@@ -14,8 +14,7 @@
 #include "BP_Action_Wire_Hit_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Wire_Hit.BP_Action_Wire_Hit_C.ExecuteUbergraph_BP_Action_Wire_Hit
 // (Final, UbergraphFunction, HasDefaults)
@@ -72,5 +71,5 @@ void UBP_Action_Wire_Hit_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

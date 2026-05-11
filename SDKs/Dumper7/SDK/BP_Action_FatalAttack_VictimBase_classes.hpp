@@ -14,8 +14,7 @@
 #include "BP_Action_HitBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_FatalAttack_VictimBase.BP_Action_FatalAttack_VictimBase_C
 // 0x0018 (0x03B0 - 0x0398)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_FatalAttack_VictimBase_C;
 
-}
-
+SDK_NAMESPACE_END

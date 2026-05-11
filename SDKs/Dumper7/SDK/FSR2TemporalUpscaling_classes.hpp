@@ -15,8 +15,7 @@
 #include "DeveloperSettings_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class FSR2TemporalUpscaling.FSR2Settings
 // 0x0050 (0x0088 - 0x0038)
@@ -71,5 +70,4 @@ public:
 };
 DUMPER7_ASSERTS_UFSR2Settings;
 
-}
-
+SDK_NAMESPACE_END

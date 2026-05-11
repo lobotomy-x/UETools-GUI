@@ -15,8 +15,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Security.UIW_Security_C
 // 0x0040 (0x0388 - 0x0348)
@@ -61,5 +60,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Security_C;
 
-}
-
+SDK_NAMESPACE_END

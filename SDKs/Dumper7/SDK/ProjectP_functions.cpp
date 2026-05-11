@@ -14,8 +14,7 @@
 #include "ProjectP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ProjectP.LFXSystem.DetachEffectHardly
 // (Final, Native, Public, HasOutParams, BlueprintCallable)
@@ -80783,5 +80782,5 @@ class FName ULWorldSystem::GetAppliedWeatherCodeName() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_Paralyzation_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Paralyzation.BP_Action_Paralyzation_C.ExecuteUbergraph_BP_Action_Paralyzation
 // (Final, UbergraphFunction, HasDefaults)
@@ -100,5 +99,5 @@ void UBP_Action_Paralyzation_C::OnGroggyEnded()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Popup_Module_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Module_ItemList.UIW_Module_ItemList_C
 // 0x0070 (0x0318 - 0x02A8)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Module_ItemList_C;
 
-}
-
+SDK_NAMESPACE_END

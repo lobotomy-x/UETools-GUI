@@ -14,8 +14,7 @@
 #include "BP_Action_NPCHitRepulse_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_NPCHitRepulse.BP_Action_NPCHitRepulse_C.ExecuteUbergraph_BP_Action_NPCHitRepulse
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UBP_Action_NPCHitRepulse_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

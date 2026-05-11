@@ -13,8 +13,7 @@
 #include "BP_Action_Guard_Hit_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Guard_Hit_Repulse.BP_Action_Guard_Hit_Repulse_C
 // 0x0000 (0x03E0 - 0x03E0)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Guard_Hit_Repulse_C;
 
-}
-
+SDK_NAMESPACE_END

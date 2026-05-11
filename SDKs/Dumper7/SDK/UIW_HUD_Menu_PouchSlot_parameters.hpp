@@ -14,8 +14,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_HUD_Menu_PouchSlot.UIW_HUD_Menu_PouchSlot_C.ExecuteUbergraph_UIW_HUD_Menu_PouchSlot
 // 0x00B0 (0x00B0 - 0x0000)
@@ -63,5 +63,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_HUD_Menu_PouchSlot_C_OnMouseButtonDoubleClick;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

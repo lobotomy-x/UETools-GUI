@@ -14,8 +14,7 @@
 #include "BP_FluidController_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_FluidController.BP_FluidController_C.ExecuteUbergraph_BP_FluidController
 // (Final, UbergraphFunction, HasDefaults)
@@ -287,5 +286,5 @@ void ABP_FluidController_C::ShouldUpdate(bool* Value) const
 		*Value = Parms.Value;
 }
 
-}
 
+SDK_NAMESPACE_END

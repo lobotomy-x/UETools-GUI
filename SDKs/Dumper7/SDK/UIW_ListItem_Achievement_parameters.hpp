@@ -16,8 +16,8 @@
 #include "InputCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_Achievement.UIW_ListItem_Achievement_C.ExecuteUbergraph_UIW_ListItem_Achievement
 // 0x01A0 (0x01A0 - 0x0000)
@@ -205,5 +205,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_Achievement_C_SetData;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

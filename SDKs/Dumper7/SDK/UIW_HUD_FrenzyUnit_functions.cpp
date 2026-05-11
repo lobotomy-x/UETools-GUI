@@ -14,8 +14,7 @@
 #include "UIW_HUD_FrenzyUnit_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_FrenzyUnit.UIW_HUD_FrenzyUnit_C.SetActive
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -56,5 +55,5 @@ void UUIW_HUD_FrenzyUnit_C::SetUse(bool IsUse)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

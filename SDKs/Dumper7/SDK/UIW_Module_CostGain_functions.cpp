@@ -14,8 +14,7 @@
 #include "UIW_Module_CostGain_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_CostGain.UIW_Module_CostGain_C.ExecuteUbergraph_UIW_Module_CostGain
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_Module_CostGain_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

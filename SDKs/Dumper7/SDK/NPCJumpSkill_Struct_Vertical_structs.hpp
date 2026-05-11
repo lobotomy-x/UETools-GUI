@@ -14,8 +14,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct NPCJumpSkill_Struct_Vertical.NPCJumpSkill_Struct_Vertical
 // 0x0040 (0x0040 - 0x0000)
@@ -34,5 +33,4 @@ public:
 };
 DUMPER7_ASSERTS_FNPCJumpSkill_Struct_Vertical;
 
-}
-
+SDK_NAMESPACE_END

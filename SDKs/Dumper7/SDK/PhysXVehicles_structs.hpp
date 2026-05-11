@@ -15,8 +15,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum PhysXVehicles.EWheelSweepType
 // NumValues: 0x0004
@@ -166,5 +165,4 @@ public:
 };
 DUMPER7_ASSERTS_FVehicleDifferential4WData;
 
-}
-
+SDK_NAMESPACE_END

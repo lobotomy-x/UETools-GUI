@@ -13,15 +13,15 @@
 #include "InputCore_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 #include "ProjectP_structs.hpp"
-#include "UIST_Float_structs.hpp"
 #include "Engine_structs.hpp"
+#include "UIST_Float_structs.hpp"
 #include "CoreUObject_structs.hpp"
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_HUD.UIW_HUD_C.ExecuteUbergraph_UIW_HUD
 // 0x02F0 (0x02F0 - 0x0000)
@@ -744,5 +744,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_HUD_C_SetSlaveArmControlGuide;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

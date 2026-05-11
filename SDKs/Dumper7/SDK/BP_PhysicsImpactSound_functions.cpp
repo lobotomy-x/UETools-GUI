@@ -14,8 +14,7 @@
 #include "BP_PhysicsImpactSound_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_PhysicsImpactSound.BP_PhysicsImpactSound_C.ExecuteUbergraph_BP_PhysicsImpactSound
 // (Final, UbergraphFunction, HasDefaults)
@@ -226,5 +225,5 @@ void UBP_PhysicsImpactSound_C::AddActor(class AActor* InActor)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

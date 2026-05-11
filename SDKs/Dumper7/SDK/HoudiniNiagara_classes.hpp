@@ -15,8 +15,7 @@
 #include "Niagara_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class HoudiniNiagara.HoudiniPointCache
 // 0x00C0 (0x00E8 - 0x0028)
@@ -133,5 +132,4 @@ public:
 };
 DUMPER7_ASSERTS_UNiagaraDataInterfaceHoudini;
 
-}
-
+SDK_NAMESPACE_END

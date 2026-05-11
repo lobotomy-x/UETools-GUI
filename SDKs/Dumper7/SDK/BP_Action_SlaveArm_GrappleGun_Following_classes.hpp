@@ -11,13 +11,12 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "CoreUObject_structs.hpp"
 #include "BP_Action_SlaveArm_classes.hpp"
+#include "CoreUObject_structs.hpp"
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_GrappleGun_Following.BP_Action_SlaveArm_GrappleGun_Following_C
 // 0x0080 (0x0298 - 0x0218)
@@ -77,5 +76,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_GrappleGun_Following_C;
 
-}
-
+SDK_NAMESPACE_END

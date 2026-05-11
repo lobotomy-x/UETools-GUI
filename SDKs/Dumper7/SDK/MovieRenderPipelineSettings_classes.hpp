@@ -15,8 +15,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class MovieRenderPipelineSettings.MoviePipelineBurnInSetting
 // 0x0058 (0x00A0 - 0x0048)
@@ -119,5 +118,4 @@ public:
 };
 DUMPER7_ASSERTS_UMoviePipelineWidgetRenderer;
 
-}
-
+SDK_NAMESPACE_END

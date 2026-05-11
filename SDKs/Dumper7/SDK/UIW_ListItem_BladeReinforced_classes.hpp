@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ItemSmall_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_BladeReinforced.UIW_ListItem_BladeReinforced_C
 // 0x0010 (0x0348 - 0x0338)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_BladeReinforced_C;
 
-}
-
+SDK_NAMESPACE_END

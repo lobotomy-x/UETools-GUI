@@ -14,8 +14,7 @@
 #include "BP_Fast_TwoHandSlash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Fast_TwoHandSlash.BP_Fast_TwoHandSlash_C.ExecuteUbergraph_BP_Fast_TwoHandSlash
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Fast_TwoHandSlash_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

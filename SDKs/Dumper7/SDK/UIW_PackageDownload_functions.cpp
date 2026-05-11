@@ -14,8 +14,7 @@
 #include "UIW_PackageDownload_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_PackageDownload.UIW_PackageDownload_C.ExecuteUbergraph_UIW_PackageDownload
 // (Final, UbergraphFunction, HasDefaults)
@@ -138,5 +137,5 @@ void UUIW_PackageDownload_C::RefreshDownload()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

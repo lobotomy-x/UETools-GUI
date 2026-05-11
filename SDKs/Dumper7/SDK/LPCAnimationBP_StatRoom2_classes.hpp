@@ -18,8 +18,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // AnimBlueprintGeneratedClass LPCAnimationBP_StatRoom2.LPCAnimationBP_StatRoom2_C
 // 0x5400 (0x56C0 - 0x02C0)
@@ -131,5 +130,4 @@ public:
 };
 DUMPER7_ASSERTS_ULPCAnimationBP_StatRoom2_C;
 
-}
-
+SDK_NAMESPACE_END

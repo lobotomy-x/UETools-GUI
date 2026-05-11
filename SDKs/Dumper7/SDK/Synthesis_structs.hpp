@@ -15,8 +15,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum Synthesis.ESynth1PatchDestination
 // NumValues: 0x0010
@@ -986,5 +985,4 @@ public:
 };
 DUMPER7_ASSERTS_FSynthSlateStyle;
 
-}
-
+SDK_NAMESPACE_END

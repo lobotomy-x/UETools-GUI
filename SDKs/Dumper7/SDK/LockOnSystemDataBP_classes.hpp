@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LockOnSystemDataBP.LockOnSystemDataBP_C
 // 0x0008 (0x0330 - 0x0328)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_ALockOnSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HotelArena.UIW_HotelArena_C
 // 0x00B8 (0x0358 - 0x02A0)
@@ -75,5 +74,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HotelArena_C;
 
-}
-
+SDK_NAMESPACE_END

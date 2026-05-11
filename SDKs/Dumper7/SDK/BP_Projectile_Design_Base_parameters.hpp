@@ -15,8 +15,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Projectile_Design_Base.BP_Projectile_Design_Base_C.ExecuteUbergraph_BP_Projectile_Design_Base
 // 0x02E8 (0x02E8 - 0x0000)
@@ -235,5 +235,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Projectile_Design_Base_C_DeactiveMoveFX;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

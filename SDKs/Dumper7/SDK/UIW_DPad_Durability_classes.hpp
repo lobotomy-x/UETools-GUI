@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_DPad_Durability.UIW_DPad_Durability_C
 // 0x00A8 (0x0348 - 0x02A0)
@@ -75,5 +74,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_DPad_Durability_C;
 
-}
-
+SDK_NAMESPACE_END

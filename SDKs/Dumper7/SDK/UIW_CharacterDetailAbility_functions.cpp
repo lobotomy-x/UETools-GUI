@@ -14,8 +14,7 @@
 #include "UIW_CharacterDetailAbility_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CharacterDetailAbility.UIW_CharacterDetailAbility_C.ExecuteUbergraph_UIW_CharacterDetailAbility
 // (Final, UbergraphFunction, HasDefaults)
@@ -223,5 +222,5 @@ struct FEventReply UUIW_CharacterDetailAbility_C::OnMouseButtonUp(const struct F
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

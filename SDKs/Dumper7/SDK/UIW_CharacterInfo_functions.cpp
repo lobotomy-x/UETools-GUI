@@ -14,8 +14,7 @@
 #include "UIW_CharacterInfo_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CharacterInfo.UIW_CharacterInfo_C.ExecuteUbergraph_UIW_CharacterInfo
 // (Final, UbergraphFunction, HasDefaults)
@@ -185,5 +184,5 @@ void UUIW_CharacterInfo_C::RequestCloseWindow()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

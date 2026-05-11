@@ -14,8 +14,7 @@
 #include "UIW_BladeReinforced_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_BladeReinforced.UIW_BladeReinforced_C.ExecuteUbergraph_UIW_BladeReinforced
 // (Final, UbergraphFunction, HasDefaults)
@@ -434,5 +433,5 @@ void UUIW_BladeReinforced_C::OnReady()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

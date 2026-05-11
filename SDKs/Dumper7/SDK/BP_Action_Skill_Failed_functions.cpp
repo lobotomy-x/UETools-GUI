@@ -14,8 +14,7 @@
 #include "BP_Action_Skill_Failed_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Skill_Failed.BP_Action_Skill_Failed_C.ExecuteUbergraph_BP_Action_Skill_Failed
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Action_Skill_Failed_C::OnStop(class ULActBase* ReasonAction, class FNam
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

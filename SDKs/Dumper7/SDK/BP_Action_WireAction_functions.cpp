@@ -14,8 +14,7 @@
 #include "BP_Action_WireAction_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_WireAction.BP_Action_WireAction_C.ExecuteUbergraph_BP_Action_WireAction
 // (Final, UbergraphFunction, HasDefaults)
@@ -264,5 +263,5 @@ void UBP_Action_WireAction_C::ClearReinforcedVariableValues()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

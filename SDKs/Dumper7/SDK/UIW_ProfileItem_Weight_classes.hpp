@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ProfileItem_Weight.UIW_ProfileItem_Weight_C
 // 0x0058 (0x02B8 - 0x0260)
@@ -60,5 +59,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ProfileItem_Weight_C;
 
-}
-
+SDK_NAMESPACE_END

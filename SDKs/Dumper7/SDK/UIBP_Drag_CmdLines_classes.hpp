@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_Drag_CmdLines.UIBP_Drag_CmdLines_C
 // 0x0018 (0x00A0 - 0x0088)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_Drag_CmdLines_C;
 
-}
-
+SDK_NAMESPACE_END

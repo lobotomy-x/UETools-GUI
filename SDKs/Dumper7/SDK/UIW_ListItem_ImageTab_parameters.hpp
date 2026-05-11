@@ -11,13 +11,13 @@
 #include "Basic.hpp"
 
 #include "SlateCore_structs.hpp"
+#include "UIST_FirstCategoryInfo_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 #include "CoreUObject_structs.hpp"
-#include "UIST_FirstCategoryInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_ImageTab.UIW_ListItem_ImageTab_C.ExecuteUbergraph_UIW_ListItem_ImageTab
 // 0x0378 (0x0378 - 0x0000)
@@ -134,5 +134,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_ImageTab_C_CustomEvent;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

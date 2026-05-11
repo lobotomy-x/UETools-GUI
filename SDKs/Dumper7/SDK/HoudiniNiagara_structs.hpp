@@ -13,8 +13,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum HoudiniNiagara.EHoudiniPointCacheFileType
 // NumValues: 0x0005
@@ -74,5 +73,4 @@ public:
 };
 DUMPER7_ASSERTS_FHoudiniEvent;
 
-}
-
+SDK_NAMESPACE_END

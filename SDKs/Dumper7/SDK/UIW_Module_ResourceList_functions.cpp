@@ -14,8 +14,7 @@
 #include "UIW_Module_ResourceList_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_ResourceList.UIW_Module_ResourceList_C.ExecuteUbergraph_UIW_Module_ResourceList
 // (Final, UbergraphFunction)
@@ -74,5 +73,5 @@ void UUIW_Module_ResourceList_C::SetData(const class FString& Title, TArray<clas
 	ListItems = std::move(Parms.ListItems);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -12,12 +12,11 @@
 
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
-#include "ProjectPContentInfo_structs.hpp"
 #include "UIW_Window_classes.hpp"
+#include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_NPCDialog.UIW_NPCDialog_C
 // 0x01D8 (0x0520 - 0x0348)
@@ -151,5 +150,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_NPCDialog_C;
 
-}
-
+SDK_NAMESPACE_END

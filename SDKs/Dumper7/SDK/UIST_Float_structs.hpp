@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Float.UIST_Float
 // 0x0004 (0x0004 - 0x0000)
@@ -23,5 +22,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Float;
 
-}
-
+SDK_NAMESPACE_END

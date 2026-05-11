@@ -14,8 +14,7 @@
 #include "BPF_TAD_IES_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BPF_TAD_IES.BPF_TAD_IES_C.BPF TAD IES
 // (Static, Public, BlueprintCallable, BlueprintEvent)
@@ -44,5 +43,5 @@ void UBPF_TAD_IES_C::BPF_TAD_IES(class ULightComponent* LightTarget, class UText
 	GetDefaultObj()->ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

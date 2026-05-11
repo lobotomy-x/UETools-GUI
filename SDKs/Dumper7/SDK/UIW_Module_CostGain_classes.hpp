@@ -14,8 +14,7 @@
 #include "UIW_Popup_Module_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Module_CostGain.UIW_Module_CostGain_C
 // 0x0028 (0x02D0 - 0x02A8)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Module_CostGain_C;
 
-}
-
+SDK_NAMESPACE_END

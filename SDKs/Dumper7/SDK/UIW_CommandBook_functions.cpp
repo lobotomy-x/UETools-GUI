@@ -14,8 +14,7 @@
 #include "UIW_CommandBook_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CommandBook.UIW_CommandBook_C.ExecuteUbergraph_UIW_CommandBook
 // (Final, UbergraphFunction, HasDefaults)
@@ -1015,5 +1014,5 @@ void UUIW_CommandBook_C::MoveRightTab(class UUIW_Btn_Key_C* BtnKey)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

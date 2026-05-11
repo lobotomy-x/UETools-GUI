@@ -14,8 +14,7 @@
 #include "UIW_Indicator_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Indicator.UIW_Indicator_C.Show
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -58,5 +57,5 @@ void UUIW_Indicator_C::CheckHide()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

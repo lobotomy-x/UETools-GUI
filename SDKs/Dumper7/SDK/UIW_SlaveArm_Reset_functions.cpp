@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_Reset_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_Reset.UIW_SlaveArm_Reset_C.ExecuteUbergraph_UIW_SlaveArm_Reset
 // (Final, UbergraphFunction, HasDefaults)
@@ -267,5 +266,5 @@ class UWidget* UUIW_SlaveArm_Reset_C::NavToBottom(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

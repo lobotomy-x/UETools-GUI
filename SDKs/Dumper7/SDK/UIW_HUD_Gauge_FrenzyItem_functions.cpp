@@ -14,8 +14,7 @@
 #include "UIW_HUD_Gauge_FrenzyItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Gauge_FrenzyItem.UIW_HUD_Gauge_FrenzyItem_C.ExecuteUbergraph_UIW_HUD_Gauge_FrenzyItem
 // (Final, UbergraphFunction)
@@ -126,5 +125,5 @@ void UUIW_HUD_Gauge_FrenzyItem_C::CompleteTween(class FName CategoryName)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

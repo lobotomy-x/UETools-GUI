@@ -14,8 +14,7 @@
 #include "UIW_CharacterUpgrade_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CharacterUpgrade.UIW_CharacterUpgrade_C.ExecuteUbergraph_UIW_CharacterUpgrade
 // (Final, UbergraphFunction, HasDefaults)
@@ -776,5 +775,5 @@ void UUIW_CharacterUpgrade_C::ClearEventBinding()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

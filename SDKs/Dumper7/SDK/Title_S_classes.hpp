@@ -13,8 +13,7 @@
 #include "LevelSequence_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass Title_S.SequenceDirector_C
 // 0x0000 (0x0038 - 0x0038)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_USequenceDirector_C;
 
-}
-
+SDK_NAMESPACE_END

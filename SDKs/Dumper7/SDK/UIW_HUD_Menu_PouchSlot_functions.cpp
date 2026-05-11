@@ -14,8 +14,7 @@
 #include "UIW_HUD_Menu_PouchSlot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Menu_PouchSlot.UIW_HUD_Menu_PouchSlot_C.ExecuteUbergraph_UIW_HUD_Menu_PouchSlot
 // (Final, UbergraphFunction, HasDefaults)
@@ -108,5 +107,5 @@ struct FEventReply UUIW_HUD_Menu_PouchSlot_C::OnMouseButtonDoubleClick(const str
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

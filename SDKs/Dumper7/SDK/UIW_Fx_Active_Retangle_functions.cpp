@@ -14,8 +14,7 @@
 #include "UIW_Fx_Active_Retangle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Fx_Active_Retangle.UIW_Fx_Active_Retangle_C.ExecuteUbergraph_UIW_Fx_Active_Retangle
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UUIW_Fx_Active_Retangle_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class AugmentedReality.ARActor
 // 0x0000 (0x0220 - 0x0220)
@@ -235,7 +234,7 @@ DUMPER7_ASSERTS_UARGetCandidateObjectAsyncTaskBlueprintProxy;
 // Class AugmentedReality.ARComponent
 // 0x0080 (0x0280 - 0x0200)
 #pragma pack(push, 0x1)
-class alignas(0x10) UARComponent : public USceneComponent
+class SDK_ALIGN(0x10) UARComponent : public USceneComponent
 {
 public:
 	struct FGuid                                  NativeID;                                          // 0x01F8(0x0010)(Net, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -1065,7 +1064,7 @@ DUMPER7_ASSERTS_AARSkyLight;
 // Class AugmentedReality.ARTexture
 // 0x0020 (0x01A0 - 0x0180)
 #pragma pack(push, 0x1)
-class alignas(0x10) UARTexture : public UTexture
+class SDK_ALIGN(0x10) UARTexture : public UTexture
 {
 public:
 	EARTextureType                                TextureType;                                       // 0x0178(0x0001)(BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -1187,7 +1186,7 @@ DUMPER7_ASSERTS_UARTraceResultDummy;
 // Class AugmentedReality.ARTrackedGeometry
 // 0x00D8 (0x0100 - 0x0028)
 #pragma pack(push, 0x1)
-class alignas(0x10) UARTrackedGeometry : public UObject
+class SDK_ALIGN(0x10) UARTrackedGeometry : public UObject
 {
 public:
 	struct FGuid                                  UniqueId;                                          // 0x0028(0x0010)(BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -1295,7 +1294,7 @@ DUMPER7_ASSERTS_UARTrackedPoint;
 // Class AugmentedReality.ARTrackedImage
 // 0x0010 (0x0110 - 0x0100)
 #pragma pack(push, 0x1)
-class alignas(0x10) UARTrackedImage : public UARTrackedGeometry
+class SDK_ALIGN(0x10) UARTrackedImage : public UARTrackedGeometry
 {
 public:
 	class UARCandidateImage*                      DetectedImage;                                     // 0x00F8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected)
@@ -1651,5 +1650,4 @@ public:
 };
 DUMPER7_ASSERTS_UARCandidateObject;
 
-}
-
+SDK_NAMESPACE_END

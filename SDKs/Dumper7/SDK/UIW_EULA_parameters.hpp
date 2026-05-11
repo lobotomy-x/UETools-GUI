@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_EULA.UIW_EULA_C.ExecuteUbergraph_UIW_EULA
 // 0x0068 (0x0068 - 0x0000)
@@ -67,5 +67,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_EULA_C_BndEvt__UIW_EULA_Btn_Agree_K2Node_ComponentBoundEvent_0_OnActive__DelegateSignature;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

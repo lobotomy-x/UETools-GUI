@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Stat_Simple_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Stat_Simple.UIW_ListItem_Stat_Simple_C.ExecuteUbergraph_UIW_ListItem_Stat_Simple
 // (Final, UbergraphFunction)
@@ -226,5 +225,5 @@ void UUIW_ListItem_Stat_Simple_C::SetCorrection(const class FText& Label, ELWeap
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Resource_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Resource.UIW_ListItem_Resource_C.ExecuteUbergraph_UIW_ListItem_Resource
 // (Final, UbergraphFunction)
@@ -134,5 +133,5 @@ void UUIW_ListItem_Resource_C::SetData(TSoftObjectPtr<class UObject> Icon, int32
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

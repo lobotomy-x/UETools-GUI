@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class CoreUObject.Object
 // 0x0028 (0x0028 - 0x0000)
@@ -98,7 +97,7 @@ DUMPER7_ASSERTS_UField;
 class UStruct : public UField
 {
 public:
-	uint8                                         Pad_30[0x10];                                      // 0x0030(0x0010)(Fixing Size After Last Property [ Dumper-7 ])
+	struct FStructBaseChain                       BaseChain;                                         // 0x0030(0x0010)(NOT AUTO-GENERATED PROPERTY)
 	class UStruct*                                SuperStruct;                                       // 0x0040(0x0008)(NOT AUTO-GENERATED PROPERTY)
 	class UField*                                 Children;                                          // 0x0048(0x0008)(NOT AUTO-GENERATED PROPERTY)
 	class FField*                                 ChildProperties;                                   // 0x0050(0x0008)(NOT AUTO-GENERATED PROPERTY)
@@ -108,7 +107,7 @@ public:
 
 public:
 	bool IsSubclassOf(const UStruct* Base) const;
-	bool IsSubclassOf(const FName& baseClassName) const;
+	bool IsSubclassOf(const FName& BaseClassName) const;
 
 public:
 	static class UClass* StaticClass()
@@ -1298,5 +1297,4 @@ public:
 };
 DUMPER7_ASSERTS_UTextProperty;
 
-}
-
+SDK_NAMESPACE_END

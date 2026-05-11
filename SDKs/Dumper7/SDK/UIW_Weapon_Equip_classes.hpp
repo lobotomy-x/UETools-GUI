@@ -11,12 +11,11 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "UIW_Window_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
+#include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Weapon_Equip.UIW_Weapon_Equip_C
 // 0x00B0 (0x03F8 - 0x0348)
@@ -76,5 +75,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Weapon_Equip_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // ScriptStruct OpenColorIO.OpenColorIOColorSpace
 // 0x0028 (0x0028 - 0x0000)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_FOpenColorIODisplayConfiguration;
 
-}
-
+SDK_NAMESPACE_END

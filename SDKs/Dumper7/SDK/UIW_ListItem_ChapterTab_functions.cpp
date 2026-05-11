@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ChapterTab_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_ChapterTab.UIW_ListItem_ChapterTab_C.ExecuteUbergraph_UIW_ListItem_ChapterTab
 // (Final, UbergraphFunction, HasDefaults)
@@ -166,5 +165,5 @@ void UUIW_ListItem_ChapterTab_C::BP_OnEntryReleased()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

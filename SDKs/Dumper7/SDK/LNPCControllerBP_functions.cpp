@@ -14,8 +14,7 @@
 #include "LNPCControllerBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LNPCControllerBP.LNPCControllerBP_C.ExecuteUbergraph_LNPCControllerBP
 // (Final, UbergraphFunction)
@@ -77,5 +76,5 @@ void ALNPCControllerBP_C::OnMovementNavigationQueryFilter(TSubclassOf<class UNav
 		*FilterClass = Parms.FilterClass;
 }
 
-}
 
+SDK_NAMESPACE_END

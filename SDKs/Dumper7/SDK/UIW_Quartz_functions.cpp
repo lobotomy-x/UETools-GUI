@@ -14,8 +14,7 @@
 #include "UIW_Quartz_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Quartz.UIW_Quartz_C.ExecuteUbergraph_UIW_Quartz
 // (Final, UbergraphFunction, HasDefaults)
@@ -810,5 +809,5 @@ void UUIW_Quartz_C::GetSnapPositionNearOne(class UUIW_Quartz_Pocket_C** NewParam
 		*NewParam = Parms.NewParam;
 }
 
-}
 
+SDK_NAMESPACE_END

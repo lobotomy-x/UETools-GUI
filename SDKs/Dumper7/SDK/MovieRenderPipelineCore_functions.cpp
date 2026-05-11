@@ -14,8 +14,7 @@
 #include "MovieRenderPipelineCore_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function MovieRenderPipelineCore.MoviePipelineSetting.BuildNewProcessCommandLine
 // (Final, Native, Public, HasOutParams, BlueprintCallable, BlueprintPure, Const)
@@ -2536,5 +2535,5 @@ void UMovieRenderDebugWidget::OnInitializedForPipeline(class UMoviePipeline* For
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

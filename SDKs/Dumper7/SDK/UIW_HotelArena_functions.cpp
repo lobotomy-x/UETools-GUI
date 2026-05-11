@@ -14,8 +14,7 @@
 #include "UIW_HotelArena_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HotelArena.UIW_HotelArena_C.ExecuteUbergraph_UIW_HotelArena
 // (Final, UbergraphFunction, HasDefaults)
@@ -193,5 +192,5 @@ void UUIW_HotelArena_C::SetCurrentEquip(bool* IsValid)
 		*IsValid = Parms.IsValid;
 }
 
-}
 
+SDK_NAMESPACE_END

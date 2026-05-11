@@ -14,8 +14,7 @@
 #include "BP_Action_DMG_STAND_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Guard_Repulse.BP_Action_Guard_Repulse_C
 // 0x0008 (0x05D0 - 0x05C8)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Guard_Repulse_C;
 
-}
-
+SDK_NAMESPACE_END

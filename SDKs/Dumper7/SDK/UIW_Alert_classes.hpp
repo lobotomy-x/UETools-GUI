@@ -10,13 +10,12 @@
 
 #include "Basic.hpp"
 
-#include "UIST_GetItem_structs.hpp"
 #include "Engine_structs.hpp"
+#include "UIST_GetItem_structs.hpp"
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert.UIW_Alert_C
 // 0x0050 (0x02F0 - 0x02A0)
@@ -63,5 +62,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_C;
 
-}
-
+SDK_NAMESPACE_END

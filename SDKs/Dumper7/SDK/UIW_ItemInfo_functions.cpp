@@ -14,8 +14,7 @@
 #include "UIW_ItemInfo_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ItemInfo.UIW_ItemInfo_C.ExecuteUbergraph_UIW_ItemInfo
 // (Final, UbergraphFunction, HasDefaults)
@@ -357,5 +356,5 @@ void UUIW_ItemInfo_C::SetScrollBtn()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

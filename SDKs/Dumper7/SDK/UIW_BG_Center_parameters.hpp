@@ -14,8 +14,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_BG_Center.UIW_BG_Center_C.ExecuteUbergraph_UIW_BG_Center
 // 0x001C (0x001C - 0x0000)
@@ -39,5 +39,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_BG_Center_C_SetContentsSize;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

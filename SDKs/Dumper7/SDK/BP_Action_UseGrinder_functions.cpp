@@ -14,8 +14,7 @@
 #include "BP_Action_UseGrinder_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_UseGrinder.BP_Action_UseGrinder_C.ExecuteUbergraph_BP_Action_UseGrinder
 // (Final, UbergraphFunction, HasDefaults)
@@ -164,5 +163,5 @@ bool UBP_Action_UseGrinder_C::OnPreProcessAction()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

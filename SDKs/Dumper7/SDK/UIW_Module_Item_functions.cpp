@@ -14,8 +14,7 @@
 #include "UIW_Module_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_Item.UIW_Module_Item_C.SetItem
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -36,5 +35,5 @@ void UUIW_Module_Item_C::SetItem(class ULItem* Item)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

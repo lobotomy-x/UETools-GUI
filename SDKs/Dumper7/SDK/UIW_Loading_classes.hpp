@@ -15,8 +15,7 @@
 #include "UMG_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Loading.UIW_Loading_C
 // 0x0088 (0x0330 - 0x02A8)
@@ -67,5 +66,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Loading_C;
 
-}
-
+SDK_NAMESPACE_END

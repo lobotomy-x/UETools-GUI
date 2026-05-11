@@ -14,8 +14,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ComboBox_List.UIW_ComboBox_List_C
 // 0x0030 (0x0378 - 0x0348)
@@ -60,5 +59,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ComboBox_List_C;
 
-}
-
+SDK_NAMESPACE_END

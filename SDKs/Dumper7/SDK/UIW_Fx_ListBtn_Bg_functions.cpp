@@ -14,8 +14,7 @@
 #include "UIW_Fx_ListBtn_Bg_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Fx_ListBtn_Bg.UIW_Fx_ListBtn_Bg_C.ExecuteUbergraph_UIW_Fx_ListBtn_Bg
 // (Final, UbergraphFunction, HasDefaults)
@@ -120,5 +119,5 @@ void UUIW_Fx_ListBtn_Bg_C::OnHovered()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

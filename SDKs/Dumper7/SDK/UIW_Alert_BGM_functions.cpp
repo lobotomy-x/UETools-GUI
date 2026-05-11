@@ -14,8 +14,7 @@
 #include "UIW_Alert_BGM_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_BGM.UIW_Alert_BGM_C.ExecuteUbergraph_UIW_Alert_BGM
 // (Final, UbergraphFunction)
@@ -126,5 +125,5 @@ void UUIW_Alert_BGM_C::VisibleEffectHide()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

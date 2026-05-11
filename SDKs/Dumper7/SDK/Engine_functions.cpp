@@ -14,8 +14,7 @@
 #include "Engine_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function Engine.Actor.AddComponent
 // (Final, Native, Public, HasOutParams, HasDefaults, BlueprintCallable)
@@ -97660,5 +97659,5 @@ void UVolumetricCloudComponent::SetViewSampleCountScale(float NewValue)
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

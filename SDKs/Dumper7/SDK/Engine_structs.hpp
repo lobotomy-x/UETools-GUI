@@ -17,8 +17,7 @@
 #include "Slate_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum Engine.ETextGender
 // NumValues: 0x0004
@@ -12841,7 +12840,7 @@ DUMPER7_ASSERTS_FRootMotionFinishVelocitySettings;
 // ScriptStruct Engine.RootMotionSource
 // 0x00A0 (0x00A0 - 0x0000)
 #pragma pack(push, 0x1)
-struct alignas(0x10) FRootMotionSource
+struct SDK_ALIGN(0x10) FRootMotionSource
 {
 public:
 	uint8                                         Pad_0[0x10];                                       // 0x0000(0x0010)(Fixing Size After Last Property [ Dumper-7 ])
@@ -14715,5 +14714,4 @@ public:
 };
 DUMPER7_ASSERTS_FLightmassWorldInfoSettings;
 
-}
-
+SDK_NAMESPACE_END

@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum EN_StatRoomMotionType.EN_StatRoomMotionType
 // NumValues: 0x000C
@@ -32,5 +31,4 @@ enum class EN_StatRoomMotionType : uint8
 	EN_MAX                                   = 11,
 };
 
-}
-
+SDK_NAMESPACE_END

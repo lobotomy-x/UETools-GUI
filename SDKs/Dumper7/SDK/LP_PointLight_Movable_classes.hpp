@@ -15,8 +15,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LP_PointLight_Movable.LP_PointLight_Movable_C
 // 0x0058 (0x0278 - 0x0220)
@@ -62,5 +61,4 @@ public:
 };
 DUMPER7_ASSERTS_ALP_PointLight_Movable_C;
 
-}
-
+SDK_NAMESPACE_END

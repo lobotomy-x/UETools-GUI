@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_TitleScreen.UIW_TitleScreen_C
 // 0x00C8 (0x0410 - 0x0348)
@@ -110,5 +109,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_TitleScreen_C;
 
-}
-
+SDK_NAMESPACE_END

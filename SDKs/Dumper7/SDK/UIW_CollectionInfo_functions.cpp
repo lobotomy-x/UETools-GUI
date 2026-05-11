@@ -14,8 +14,7 @@
 #include "UIW_CollectionInfo_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CollectionInfo.UIW_CollectionInfo_C.ExecuteUbergraph_UIW_CollectionInfo
 // (Final, UbergraphFunction, HasDefaults)
@@ -197,5 +196,5 @@ struct FEventReply UUIW_CollectionInfo_C::OnMouseWheel(const struct FGeometry& M
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

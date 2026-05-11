@@ -15,8 +15,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Slider.UIW_Slider_C.ExecuteUbergraph_UIW_Slider
 // 0x0090 (0x0090 - 0x0000)
@@ -131,5 +131,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Slider_C_ReturnValue;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

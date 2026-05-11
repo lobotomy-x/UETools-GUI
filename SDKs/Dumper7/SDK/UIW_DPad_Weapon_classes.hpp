@@ -16,8 +16,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_DPad_Weapon.UIW_DPad_Weapon_C
 // 0x0128 (0x03C8 - 0x02A0)
@@ -99,5 +98,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_DPad_Weapon_C;
 
-}
-
+SDK_NAMESPACE_END

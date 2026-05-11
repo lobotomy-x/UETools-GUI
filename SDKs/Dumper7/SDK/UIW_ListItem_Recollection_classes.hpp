@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_Recollection.UIW_ListItem_Recollection_C
 // 0x0048 (0x02E8 - 0x02A0)
@@ -62,5 +61,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_Recollection_C;
 
-}
-
+SDK_NAMESPACE_END

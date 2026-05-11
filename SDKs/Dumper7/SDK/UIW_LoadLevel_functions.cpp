@@ -14,8 +14,7 @@
 #include "UIW_LoadLevel_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_LoadLevel.UIW_LoadLevel_C.ExecuteUbergraph_UIW_LoadLevel
 // (Final, UbergraphFunction, HasDefaults)
@@ -345,5 +344,5 @@ class UWidget* UUIW_LoadLevel_C::NavToStart(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

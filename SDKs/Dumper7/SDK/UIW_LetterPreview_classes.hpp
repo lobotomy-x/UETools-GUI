@@ -11,13 +11,12 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "ProjectP_classes.hpp"
 #include "UIEN_PreviewType_structs.hpp"
+#include "ProjectP_classes.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_LetterPreview.UIW_LetterPreview_C
 // 0x0068 (0x0308 - 0x02A0)
@@ -80,5 +79,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_LetterPreview_C;
 
-}
-
+SDK_NAMESPACE_END

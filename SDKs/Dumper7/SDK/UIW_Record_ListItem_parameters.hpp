@@ -16,8 +16,8 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Record_ListItem.UIW_Record_ListItem_C.ExecuteUbergraph_UIW_Record_ListItem
 // 0x0200 (0x0200 - 0x0000)
@@ -169,5 +169,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Record_ListItem_C_SetTextColor;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

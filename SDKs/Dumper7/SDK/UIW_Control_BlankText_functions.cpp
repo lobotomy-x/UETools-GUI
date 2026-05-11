@@ -14,8 +14,7 @@
 #include "UIW_Control_BlankText_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Control_BlankText.UIW_Control_BlankText_C.ExecuteUbergraph_UIW_Control_BlankText
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_Control_BlankText_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

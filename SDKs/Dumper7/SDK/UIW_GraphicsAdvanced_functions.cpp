@@ -14,8 +14,7 @@
 #include "UIW_GraphicsAdvanced_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_GraphicsAdvanced.UIW_GraphicsAdvanced_C.ExecuteUbergraph_UIW_GraphicsAdvanced
 // (Final, UbergraphFunction, HasDefaults)
@@ -451,5 +450,5 @@ void UUIW_GraphicsAdvanced_C::RefreshOptions()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

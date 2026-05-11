@@ -14,8 +14,7 @@
 #include "UIW_Locker_Slot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Locker_Slot.UIW_Locker_Slot_C.ExecuteUbergraph_UIW_Locker_Slot
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_Locker_Slot_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_MOV_Subtitle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_MOV_Subtitle.UIW_MOV_Subtitle_C.ExecuteUbergraph_UIW_MOV_Subtitle
 // (Final, UbergraphFunction)
@@ -120,5 +119,5 @@ void UUIW_MOV_Subtitle_C::CompleteTween(class FName CategoryName)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

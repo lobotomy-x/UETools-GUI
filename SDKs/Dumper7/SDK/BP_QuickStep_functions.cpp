@@ -14,8 +14,7 @@
 #include "BP_QuickStep_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_QuickStep.BP_QuickStep_C.ExecuteUbergraph_BP_QuickStep
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_QuickStep_C::OnStop(class ULActBase* ReasonAction, class FName Reason)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

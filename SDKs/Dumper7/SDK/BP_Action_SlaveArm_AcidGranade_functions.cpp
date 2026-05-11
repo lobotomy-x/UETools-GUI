@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_AcidGranade_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_AcidGranade.BP_Action_SlaveArm_AcidGranade_C.ExecuteUbergraph_BP_Action_SlaveArm_AcidGranade
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Action_SlaveArm_AcidGranade_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

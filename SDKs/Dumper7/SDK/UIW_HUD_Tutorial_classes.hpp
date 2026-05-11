@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_Tutorial.UIW_HUD_Tutorial_C
 // 0x0038 (0x0298 - 0x0260)
@@ -58,5 +57,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_Tutorial_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum ModelingOperators.ECSGOperation
 // NumValues: 0x0007
@@ -102,5 +101,4 @@ enum class EMorphologyOperation : uint8
 	EMorphologyOperation_MAX                 = 4,
 };
 
-}
-
+SDK_NAMESPACE_END

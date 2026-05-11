@@ -14,8 +14,7 @@
 #include "BP_Action_Guard_Break_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Guard_Break.BP_Action_Guard_Break_C.ExecuteUbergraph_BP_Action_Guard_Break
 // (Final, UbergraphFunction)
@@ -74,5 +73,5 @@ void BP_Action_Guard_Break::UBP_Action_Guard_Break_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

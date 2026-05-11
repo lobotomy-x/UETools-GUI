@@ -14,8 +14,7 @@
 #include "SoundSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function SoundSystemDataBP.SoundSystemDataBP_C.ExecuteUbergraph_SoundSystemDataBP
 // (Final, UbergraphFunction, HasDefaults)
@@ -329,5 +328,5 @@ void ASoundSystemDataBP_C::OnCompleteDialogSound()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

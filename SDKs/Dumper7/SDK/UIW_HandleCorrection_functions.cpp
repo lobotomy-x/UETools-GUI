@@ -14,8 +14,7 @@
 #include "UIW_HandleCorrection_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HandleCorrection.UIW_HandleCorrection_C.ExecuteUbergraph_UIW_HandleCorrection
 // (Final, UbergraphFunction, HasDefaults)
@@ -598,5 +597,5 @@ class UWidget* UUIW_HandleCorrection_C::NavToEndWeapon(EUINavigation Navigation_
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "Start_Manu_Lightningn_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function Start_Manu_Lightningn.Start_Manu_Lightningn_C.타임라인_0__FinishedFunc
 // (BlueprintEvent)
@@ -78,5 +77,5 @@ void AStart_Manu_Lightningn_C::ExecuteUbergraph_Start_Manu_Lightningn(int32 Entr
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

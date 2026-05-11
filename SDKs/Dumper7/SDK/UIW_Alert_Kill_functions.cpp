@@ -14,8 +14,7 @@
 #include "UIW_Alert_Kill_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_Kill.UIW_Alert_Kill_C.ExecuteUbergraph_UIW_Alert_Kill
 // (Final, UbergraphFunction)
@@ -120,5 +119,5 @@ void UUIW_Alert_Kill_C::SetAlertKill(class FName CodeName)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum OnlineSubsystemUtils.EInAppPurchaseStatus
 // NumValues: 0x0007
@@ -283,5 +282,4 @@ public:
 };
 DUMPER7_ASSERTS_FSpectatorReservation;
 
-}
-
+SDK_NAMESPACE_END

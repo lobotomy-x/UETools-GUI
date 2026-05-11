@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Grid_Sample_Menu.UIW_Grid_Sample_Menu_C.ExecuteUbergraph_UIW_Grid_Sample_Menu
 // 0x0008 (0x0008 - 0x0000)
@@ -33,5 +33,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Grid_Sample_Menu_C_PreConstruct;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

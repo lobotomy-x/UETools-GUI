@@ -13,8 +13,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass HLODSetting_NoSimplify.HLODSetting_NoSimplify_C
 // 0x0000 (0x0060 - 0x0060)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UHLODSetting_NoSimplify_C;
 
-}
-
+SDK_NAMESPACE_END

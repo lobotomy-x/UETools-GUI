@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_ShotGun_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_ShotGun.BP_Action_SlaveArm_ShotGun_C.ExecuteUbergraph_BP_Action_SlaveArm_ShotGun
 // (Final, UbergraphFunction, HasDefaults)
@@ -304,5 +303,5 @@ void UBP_Action_SlaveArm_ShotGun_C::ClearReinforcedVariableValues()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

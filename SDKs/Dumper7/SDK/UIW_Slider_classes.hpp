@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Slider.UIW_Slider_C
 // 0x0060 (0x02C0 - 0x0260)
@@ -64,5 +63,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Slider_C;
 
-}
-
+SDK_NAMESPACE_END

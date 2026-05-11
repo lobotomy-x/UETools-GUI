@@ -13,8 +13,8 @@
 #include "GeometryCache_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function GeometryCache.GeometryCacheTrack_FlipbookAnimation.AddMeshSample
 // 0x00B8 (0x00B8 - 0x0000)
@@ -222,5 +222,5 @@ public:
 };
 DUMPER7_ASSERTS_GeometryCacheTrack_TransformGroupAnimation_SetMesh;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

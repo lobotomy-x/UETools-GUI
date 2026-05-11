@@ -14,8 +14,7 @@
 #include "UIW_Btn_Key_RIght_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Btn_Key_RIght.UIW_Btn_Key_RIght_C.ExecuteUbergraph_UIW_Btn_Key_RIght
 // (Final, UbergraphFunction)
@@ -626,5 +625,5 @@ void UUIW_Btn_Key_RIght_C::SetHoldControlGuide(bool IsHoldType)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

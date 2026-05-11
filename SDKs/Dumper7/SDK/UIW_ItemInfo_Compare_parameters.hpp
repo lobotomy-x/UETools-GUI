@@ -15,8 +15,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ItemInfo_Compare.UIW_ItemInfo_Compare_C.GetWeaponDiff
 // 0x0040 (0x0040 - 0x0000)
@@ -1070,5 +1070,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ItemInfo_Compare_C_RefreshGearInfo;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

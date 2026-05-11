@@ -14,8 +14,7 @@
 #include "ImagePlate_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ImagePlate.ImagePlateComponent.OnRenderTextureChanged
 // (Final, Native, Public)
@@ -85,5 +84,5 @@ struct FImagePlateParameters UImagePlateComponent::GetPlate() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

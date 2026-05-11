@@ -14,8 +14,7 @@
 #include "UIW_HUD_Narration_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Narration.UIW_HUD_Narration_C.ExecuteUbergraph_UIW_HUD_Narration
 // (Final, UbergraphFunction)
@@ -150,5 +149,5 @@ void UUIW_HUD_Narration_C::OnTimerGuide(float VisibleTime, const class FText& Ms
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

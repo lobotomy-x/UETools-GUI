@@ -14,8 +14,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Indicator_FatalAttack.UIW_Indicator_FatalAttack_C.ExecuteUbergraph_UIW_Indicator_FatalAttack
 // 0x0040 (0x0040 - 0x0000)
@@ -58,5 +58,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Indicator_FatalAttack_C_Refresh;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

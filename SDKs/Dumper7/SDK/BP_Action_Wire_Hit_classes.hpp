@@ -15,8 +15,7 @@
 #include "BP_Action_HitBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Wire_Hit.BP_Action_Wire_Hit_C
 // 0x0020 (0x03B8 - 0x0398)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Wire_Hit_C;
 
-}
-
+SDK_NAMESPACE_END

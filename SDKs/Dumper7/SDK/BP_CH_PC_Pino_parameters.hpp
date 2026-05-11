@@ -15,8 +15,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_CH_PC_Pino.BP_CH_PC_Pino_C.ExecuteUbergraph_BP_CH_PC_Pino
 // 0x00D8 (0x00D8 - 0x0000)
@@ -480,5 +480,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_CH_PC_Pino_C_GetLampMesh;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

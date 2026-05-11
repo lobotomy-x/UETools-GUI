@@ -14,8 +14,7 @@
 #include "UIW_QA_ListItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_QA_ListItem.UIW_QA_ListItem_C.ExecuteUbergraph_UIW_QA_ListItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -64,5 +63,5 @@ void UUIW_QA_ListItem_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

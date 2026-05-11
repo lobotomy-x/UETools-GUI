@@ -14,8 +14,7 @@
 #include "UIW_Spinner_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Spinner.UIW_Spinner_C.ExecuteUbergraph_UIW_Spinner
 // (Final, UbergraphFunction, HasDefaults)
@@ -380,5 +379,5 @@ void UUIW_Spinner_C::SetEnabledDown(bool Enabled)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Spinner.UIW_Spinner_C
 // 0x0118 (0x03B8 - 0x02A0)
@@ -97,5 +96,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Spinner_C;
 
-}
-
+SDK_NAMESPACE_END

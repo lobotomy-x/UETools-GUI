@@ -14,8 +14,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ComboBox.UIW_ComboBox_C.ExecuteUbergraph_UIW_ComboBox
 // 0x0004 (0x0004 - 0x0000)
@@ -106,5 +106,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ComboBox_C_Open;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

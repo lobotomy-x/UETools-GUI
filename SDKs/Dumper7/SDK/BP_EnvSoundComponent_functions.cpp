@@ -14,8 +14,7 @@
 #include "BP_EnvSoundComponent_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_EnvSoundComponent.BP_EnvSoundComponent_C.ExecuteUbergraph_BP_EnvSoundComponent
 // (Final, UbergraphFunction, HasDefaults)
@@ -90,5 +89,5 @@ void UBP_EnvSoundComponent_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

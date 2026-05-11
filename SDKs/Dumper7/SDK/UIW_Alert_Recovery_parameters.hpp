@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Alert_Recovery.UIW_Alert_Recovery_C.ExecuteUbergraph_UIW_Alert_Recovery
 // 0x0058 (0x0058 - 0x0000)
@@ -43,5 +43,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Alert_Recovery_C_Show;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

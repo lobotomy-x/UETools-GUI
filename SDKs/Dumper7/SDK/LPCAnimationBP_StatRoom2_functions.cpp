@@ -14,8 +14,7 @@
 #include "LPCAnimationBP_StatRoom2_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LPCAnimationBP_StatRoom2.LPCAnimationBP_StatRoom2_C.ExecuteUbergraph_LPCAnimationBP_StatRoom2
 // (Final, UbergraphFunction)
@@ -91,5 +90,5 @@ void ULPCAnimationBP_StatRoom2_C::AnimGraph(struct FPoseLink* AnimGraph_0)
 		*AnimGraph_0 = std::move(Parms.AnimGraph_0);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -16,8 +16,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Wire_Pulling.BP_Action_Wire_Pulling_C
 // 0x0080 (0x0418 - 0x0398)
@@ -70,5 +69,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Wire_Pulling_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_GrappleGun_JumpSmash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_GrappleGun_JumpSmash.BP_Action_SlaveArm_GrappleGun_JumpSmash_C.ExecuteUbergraph_BP_Action_SlaveArm_GrappleGun_JumpSmash
 // (Final, UbergraphFunction, HasDefaults)
@@ -111,5 +110,5 @@ bool UBP_Action_SlaveArm_GrappleGun_JumpSmash_C::OnLanded(class ACharacter* Land
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

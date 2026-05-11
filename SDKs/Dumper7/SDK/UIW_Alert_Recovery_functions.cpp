@@ -14,8 +14,7 @@
 #include "UIW_Alert_Recovery_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Alert_Recovery.UIW_Alert_Recovery_C.ExecuteUbergraph_UIW_Alert_Recovery
 // (Final, UbergraphFunction)
@@ -126,5 +125,5 @@ void UUIW_Alert_Recovery_C::SetAlertRecovery()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Indicator.UIW_Indicator_C
 // 0x0020 (0x0280 - 0x0260)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Indicator_C;
 
-}
-
+SDK_NAMESPACE_END

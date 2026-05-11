@@ -14,8 +14,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_ListData_Teleport.UIBP_ListData_Teleport_C
 // 0x0020 (0x0048 - 0x0028)
@@ -40,5 +39,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_ListData_Teleport_C;
 
-}
-
+SDK_NAMESPACE_END

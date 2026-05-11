@@ -14,8 +14,7 @@
 #include "BPF_TAD_PointLight_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BPF_TAD_PointLight.BPF_TAD_PointLight_C.BPF TAD Point Light
 // (Static, Public, BlueprintCallable, BlueprintEvent)
@@ -60,5 +59,5 @@ void UBPF_TAD_PointLight_C::BPF_TAD_Point_Light(class UPointLightComponent* Poin
 	GetDefaultObj()->ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

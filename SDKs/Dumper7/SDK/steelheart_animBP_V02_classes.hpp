@@ -10,14 +10,13 @@
 
 #include "Basic.hpp"
 
+#include "steelheart_AnimType_structs.hpp"
 #include "Engine_structs.hpp"
 #include "Engine_classes.hpp"
 #include "AnimGraphRuntime_structs.hpp"
-#include "steelheart_AnimType_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // AnimBlueprintGeneratedClass steelheart_animBP_V02.steelheart_animBP_V02_C
 // 0x03F0 (0x06B0 - 0x02C0)
@@ -61,5 +60,4 @@ public:
 };
 DUMPER7_ASSERTS_Usteelheart_animBP_V02_C;
 
-}
-
+SDK_NAMESPACE_END

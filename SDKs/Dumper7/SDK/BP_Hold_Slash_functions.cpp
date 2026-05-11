@@ -14,8 +14,7 @@
 #include "BP_Hold_Slash_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Hold_Slash.BP_Hold_Slash_C.ExecuteUbergraph_BP_Hold_Slash
 // (Final, UbergraphFunction)
@@ -158,5 +157,5 @@ void UBP_Hold_Slash_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

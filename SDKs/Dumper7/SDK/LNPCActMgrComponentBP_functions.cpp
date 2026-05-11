@@ -14,8 +14,7 @@
 #include "LNPCActMgrComponentBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LNPCActMgrComponentBP.LNPCActMgrComponentBP_C.ExecuteUbergraph_LNPCActMgrComponentBP
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void ULNPCActMgrComponentBP_C::ReceiveBeginPlay()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

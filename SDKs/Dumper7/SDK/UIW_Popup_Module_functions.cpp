@@ -14,8 +14,7 @@
 #include "UIW_Popup_Module_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Popup_Module.UIW_Popup_Module_C.SetModule
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -123,5 +122,5 @@ void UUIW_Popup_Module_C::OnWheel(float Delta)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

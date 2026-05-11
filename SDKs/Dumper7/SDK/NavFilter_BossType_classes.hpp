@@ -13,8 +13,7 @@
 #include "NavigationSystem_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass NavFilter_BossType.NavFilter_BossType_C
 // 0x0000 (0x0048 - 0x0048)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UNavFilter_BossType_C;
 
-}
-
+SDK_NAMESPACE_END

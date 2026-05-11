@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HasItem_Counter.UIW_HasItem_Counter_C
 // 0x0030 (0x0290 - 0x0260)
@@ -50,5 +49,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HasItem_Counter_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_Test_GuardArm1_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Test_GuardArm1.BP_Action_Test_GuardArm1_C.ExecuteUbergraph_BP_Action_Test_GuardArm1
 // (Final, UbergraphFunction, HasDefaults)
@@ -92,5 +91,5 @@ void UBP_Action_Test_GuardArm1_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

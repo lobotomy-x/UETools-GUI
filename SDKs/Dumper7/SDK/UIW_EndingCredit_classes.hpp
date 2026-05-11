@@ -14,8 +14,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_EndingCredit.UIW_EndingCredit_C
 // 0x0018 (0x0360 - 0x0348)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_EndingCredit_C;
 
-}
-
+SDK_NAMESPACE_END

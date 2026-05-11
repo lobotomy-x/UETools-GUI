@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Teleport_End.BP_Action_Teleport_End_C
 // 0x0090 (0x0270 - 0x01E0)
@@ -59,5 +58,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Teleport_End_C;
 
-}
-
+SDK_NAMESPACE_END

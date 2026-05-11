@@ -14,8 +14,7 @@
 #include "UIW_Btn_Arrow_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Btn_Arrow.UIW_Btn_Arrow_C.ExecuteUbergraph_UIW_Btn_Arrow
 // (Final, UbergraphFunction)
@@ -104,5 +103,5 @@ void UUIW_Btn_Arrow_C::SetArrowDirection(EUIEN_Direction Direction)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

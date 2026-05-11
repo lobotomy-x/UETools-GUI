@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct BGM_Struct.BGM_Struct
 // 0x0040 (0x0040 - 0x0000)
@@ -27,5 +26,4 @@ public:
 };
 DUMPER7_ASSERTS_FBGM_Struct;
 
-}
-
+SDK_NAMESPACE_END

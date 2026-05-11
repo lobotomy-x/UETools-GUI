@@ -14,8 +14,7 @@
 #include "UIW_Module_ItemList_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_ItemList.UIW_Module_ItemList_C.ExecuteUbergraph_UIW_Module_ItemList
 // (Final, UbergraphFunction, HasDefaults)
@@ -72,5 +71,5 @@ void UUIW_Module_ItemList_C::SetListItem(TArray<class ULItem*>& DataArr)
 	DataArr = std::move(Parms.DataArr);
 }
 
-}
 
+SDK_NAMESPACE_END

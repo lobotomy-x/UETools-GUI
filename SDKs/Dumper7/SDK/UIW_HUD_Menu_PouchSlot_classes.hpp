@@ -10,12 +10,11 @@
 
 #include "Basic.hpp"
 
-#include "Engine_structs.hpp"
 #include "UIW_Slot_Pouch_classes.hpp"
+#include "Engine_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_Menu_PouchSlot.UIW_HUD_Menu_PouchSlot_C
 // 0x0028 (0x0398 - 0x0370)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_Menu_PouchSlot_C;
 
-}
-
+SDK_NAMESPACE_END

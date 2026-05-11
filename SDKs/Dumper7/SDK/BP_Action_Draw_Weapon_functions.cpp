@@ -14,8 +14,7 @@
 #include "BP_Action_Draw_Weapon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Draw_Weapon.BP_Action_Draw_Weapon_C.ExecuteUbergraph_BP_Action_Draw_Weapon
 // (Final, UbergraphFunction, HasDefaults)
@@ -72,5 +71,5 @@ void UBP_Action_Draw_Weapon_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

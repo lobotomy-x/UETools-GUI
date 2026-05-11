@@ -15,8 +15,7 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ContextMenu.UIW_ContextMenu_C
 // 0x0040 (0x02E0 - 0x02A0)
@@ -63,5 +62,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ContextMenu_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_SpawnIdle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SpawnIdle.BP_Action_SpawnIdle_C.ExecuteUbergraph_BP_Action_SpawnIdle
 // (Final, UbergraphFunction, HasDefaults)
@@ -146,5 +145,5 @@ class UAnimSequenceBase* UBP_Action_SpawnIdle_C::GetSpawnIdleAnim()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

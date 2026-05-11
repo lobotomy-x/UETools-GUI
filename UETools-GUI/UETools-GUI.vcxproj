@@ -150,28 +150,24 @@
     <ClCompile Include="..\SDKs\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\SDKs\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="ConfigInstance.cpp" />
-    <ClCompile Include="DirectWindow11.cpp" />
-    <ClCompile Include="DirectWindow12.cpp" />
+    <ClCompile Include="DirectWindow.cpp" />
     <ClCompile Include="FileInstance.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Unreal.cpp" />
-    <ClCompile Include="VulkanWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigInstance.h" />
     <ClInclude Include="definitions.h" />
-    <ClInclude Include="DirectWindow11.h" />
-    <ClInclude Include="DirectWindow12.h" />
+    <ClInclude Include="DirectWindow.h" />
     <ClInclude Include="FileInstance.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Unreal.h" />
-    <ClInclude Include="VulkanWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UETools-GUI.rc" />

@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Interaction.BP_Action_Interaction_C
 // 0x0050 (0x0230 - 0x01E0)
@@ -65,5 +64,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Interaction_C;
 
-}
-
+SDK_NAMESPACE_END

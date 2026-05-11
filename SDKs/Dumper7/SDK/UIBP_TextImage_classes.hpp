@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_TextImage.UIBP_TextImage_C
 // 0x0000 (0x0030 - 0x0030)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_TextImage_C;
 
-}
-
+SDK_NAMESPACE_END

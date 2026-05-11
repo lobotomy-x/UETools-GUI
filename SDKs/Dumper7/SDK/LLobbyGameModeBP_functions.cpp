@@ -14,8 +14,7 @@
 #include "LLobbyGameModeBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LLobbyGameModeBP.LLobbyGameModeBP_C.ChangeGameState
 // (Event, Protected, BlueprintEvent)
@@ -50,5 +49,5 @@ void ALLobbyGameModeBP_C::ExecuteUbergraph_LLobbyGameModeBP(int32 EntryPoint)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

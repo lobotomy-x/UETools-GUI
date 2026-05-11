@@ -13,8 +13,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function PABP_Pino_02_Body.PABP_Pino_02_Body_C.ExecuteUbergraph_PABP_Pino_02_Body
 // 0x0004 (0x0004 - 0x0000)
@@ -35,5 +35,5 @@ public:
 };
 DUMPER7_ASSERTS_PABP_Pino_02_Body_C_AnimGraph;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

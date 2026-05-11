@@ -14,8 +14,7 @@
 #include "UIW_List_ShopItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_List_ShopItem.UIW_List_ShopItem_C.ExecuteUbergraph_UIW_List_ShopItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -285,5 +284,5 @@ struct FEventReply UUIW_List_ShopItem_C::OnMouseButtonUp(const struct FGeometry&
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

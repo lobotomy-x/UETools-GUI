@@ -14,8 +14,7 @@
 #include "UIW_Slot_Small_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Slot_Small.UIW_Slot_Small_C.ExecuteUbergraph_UIW_Slot_Small
 // (Final, UbergraphFunction, HasDefaults)
@@ -179,5 +178,5 @@ void UUIW_Slot_Small_C::SetMoveFocusEffect()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

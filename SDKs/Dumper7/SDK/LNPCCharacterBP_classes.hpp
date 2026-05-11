@@ -16,13 +16,12 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LNPCCharacterBP.LNPCCharacterBP_C
 // 0x0090 (0x13D0 - 0x1340)
 #pragma pack(push, 0x1)
-class alignas(0x10) ALNPCCharacterBP_C : public ALNPCCharacter
+class SDK_ALIGN(0x10) ALNPCCharacterBP_C : public ALNPCCharacter
 {
 public:
 	struct FPointerToUberGraphFrame               UberGraphFrame;                                    // 0x1340(0x0008)(ZeroConstructor, Transient, DuplicateTransient)
@@ -71,5 +70,4 @@ public:
 #pragma pack(pop)
 DUMPER7_ASSERTS_ALNPCCharacterBP_C;
 
-}
-
+SDK_NAMESPACE_END

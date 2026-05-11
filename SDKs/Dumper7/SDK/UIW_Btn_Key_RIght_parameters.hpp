@@ -10,17 +10,17 @@
 
 #include "Basic.hpp"
 
-#include "UIEN_InputAction_structs.hpp"
 #include "SlateCore_structs.hpp"
-#include "UIEN_Controller_structs.hpp"
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
+#include "UIEN_Controller_structs.hpp"
 #include "InputCore_structs.hpp"
+#include "UIEN_InputAction_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Btn_Key_RIght.UIW_Btn_Key_RIght_C.ExecuteUbergraph_UIW_Btn_Key_RIght
 // 0x0050 (0x0050 - 0x0000)
@@ -462,5 +462,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Btn_Key_RIght_C_SetHoldControlGuide;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

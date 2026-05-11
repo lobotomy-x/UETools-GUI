@@ -14,8 +14,7 @@
 #include "MovieScene_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // ScriptStruct ImagePlate.ImagePlateParameters
 // 0x0038 (0x0038 - 0x0000)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_FMovieSceneImagePlateSectionTemplate;
 
-}
-
+SDK_NAMESPACE_END

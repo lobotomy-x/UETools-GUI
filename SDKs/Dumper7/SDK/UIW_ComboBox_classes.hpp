@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ComboBox.UIW_ComboBox_C
 // 0x0070 (0x0310 - 0x02A0)
@@ -68,5 +67,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ComboBox_C;
 
-}
-
+SDK_NAMESPACE_END

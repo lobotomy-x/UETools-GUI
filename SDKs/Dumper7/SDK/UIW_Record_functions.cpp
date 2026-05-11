@@ -14,8 +14,7 @@
 #include "UIW_Record_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Record.UIW_Record_C.ExecuteUbergraph_UIW_Record
 // (Final, UbergraphFunction, HasDefaults)
@@ -451,5 +450,5 @@ void UUIW_Record_C::OnCompleteTweenEvent(class FName Name_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

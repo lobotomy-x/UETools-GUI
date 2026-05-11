@@ -14,8 +14,7 @@
 #include "UIW_Module_TextList_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_TextList.UIW_Module_TextList_C.ExecuteUbergraph_UIW_Module_TextList
 // (Final, UbergraphFunction, HasDefaults)
@@ -157,5 +156,5 @@ struct FEventReply UUIW_Module_TextList_C::FocusManage(const struct FGeometry& M
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

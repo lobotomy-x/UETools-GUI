@@ -14,8 +14,7 @@
 #include "PABP_Pino_03_Body_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function PABP_Pino_03_Body.PABP_Pino_03_Body_C.ExecuteUbergraph_PABP_Pino_03_Body
 // (Final, UbergraphFunction)
@@ -60,5 +59,5 @@ void UPABP_Pino_03_Body_C::AnimGraph(const struct FPoseLink& InPose, struct FPos
 		*AnimGraph_0 = std::move(Parms.AnimGraph_0);
 }
 
-}
 
+SDK_NAMESPACE_END

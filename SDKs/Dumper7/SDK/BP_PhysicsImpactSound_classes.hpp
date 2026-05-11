@@ -14,8 +14,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_PhysicsImpactSound.BP_PhysicsImpactSound_C
 // 0x0068 (0x0118 - 0x00B0)
@@ -69,5 +68,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_PhysicsImpactSound_C;
 
-}
-
+SDK_NAMESPACE_END

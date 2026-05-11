@@ -15,8 +15,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_SelectQuantity.UIW_SelectQuantity_C.ExecuteUbergraph_UIW_SelectQuantity
 // 0x0088 (0x0088 - 0x0000)
@@ -165,5 +165,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_SelectQuantity_C_RefreshErgo;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

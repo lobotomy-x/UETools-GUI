@@ -12,14 +12,14 @@
 
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
-#include "UIST_Time_structs.hpp"
-#include "UIEN_PreviewType_structs.hpp"
 #include "ProjectP_structs.hpp"
+#include "UIEN_PreviewType_structs.hpp"
+#include "UIST_Time_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_LetterPreview.UIW_LetterPreview_C.ExecuteUbergraph_UIW_LetterPreview
 // 0x0130 (0x0130 - 0x0000)
@@ -266,5 +266,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_LetterPreview_C_SetHUDVisible;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

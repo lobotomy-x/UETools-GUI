@@ -14,8 +14,7 @@
 #include "BP_Action_UseItem_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_UseItem.BP_Action_UseItem_C.ExecuteUbergraph_BP_Action_UseItem
 // (Final, UbergraphFunction, HasDefaults)
@@ -116,5 +115,5 @@ bool UBP_Action_UseItem_C::OnPreProcessAction()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

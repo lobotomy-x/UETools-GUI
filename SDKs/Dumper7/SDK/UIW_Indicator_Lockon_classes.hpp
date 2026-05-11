@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Indicator_Lockon.UIW_Indicator_Lockon_C
 // 0x0008 (0x02A8 - 0x02A0)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Indicator_Lockon_C;
 
-}
-
+SDK_NAMESPACE_END

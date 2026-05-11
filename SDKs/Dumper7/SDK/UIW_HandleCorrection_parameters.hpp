@@ -13,14 +13,14 @@
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
-#include "UIST_Color_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "Engine_structs.hpp"
 #include "CoreUObject_structs.hpp"
+#include "UIST_Color_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_HandleCorrection.UIW_HandleCorrection_C.ExecuteUbergraph_UIW_HandleCorrection
 // 0x0058 (0x0058 - 0x0000)
@@ -669,5 +669,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_HandleCorrection_C_NavToEndWeapon;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

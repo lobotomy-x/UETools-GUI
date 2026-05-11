@@ -14,8 +14,7 @@
 #include "InputCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum HeadMountedDisplay.EXRVisualType
 // NumValues: 0x0003
@@ -230,5 +229,4 @@ public:
 };
 DUMPER7_ASSERTS_FXRGestureConfig;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_Sprint_TurnAround_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Sprint_TurnAround.BP_Action_Sprint_TurnAround_C.ExecuteUbergraph_BP_Action_Sprint_TurnAround
 // (Final, UbergraphFunction, HasDefaults)
@@ -72,5 +71,5 @@ void UBP_Action_Sprint_TurnAround_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

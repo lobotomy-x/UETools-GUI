@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Lie_Progress_High.UIW_Lie_Progress_High_C
 // 0x0058 (0x02B8 - 0x0260)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Lie_Progress_High_C;
 
-}
-
+SDK_NAMESPACE_END

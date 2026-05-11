@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_ControlGuide.UIW_HUD_ControlGuide_C
 // 0x0038 (0x0298 - 0x0260)
@@ -56,5 +55,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_ControlGuide_C;
 
-}
-
+SDK_NAMESPACE_END

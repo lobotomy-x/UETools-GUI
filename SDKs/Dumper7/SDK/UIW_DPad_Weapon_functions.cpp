@@ -14,8 +14,7 @@
 #include "UIW_DPad_Weapon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_DPad_Weapon.UIW_DPad_Weapon_C.ExecuteUbergraph_UIW_DPad_Weapon
 // (Final, UbergraphFunction, HasDefaults)
@@ -274,5 +273,5 @@ void UUIW_DPad_Weapon_C::OnFableBuffEnable(bool On, bool IsHandle)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

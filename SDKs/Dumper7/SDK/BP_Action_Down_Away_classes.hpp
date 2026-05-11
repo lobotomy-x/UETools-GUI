@@ -13,8 +13,7 @@
 #include "BP_Action_Down_Up_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Down_Away.BP_Action_Down_Away_C
 // 0x0000 (0x05E8 - 0x05E8)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Down_Away_C;
 
-}
-
+SDK_NAMESPACE_END

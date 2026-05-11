@@ -14,8 +14,7 @@
 #include "UIW_HUD_Gauge_Frenzy_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Gauge_Frenzy.UIW_HUD_Gauge_Frenzy_C.ExecuteUbergraph_UIW_HUD_Gauge_Frenzy
 // (Final, UbergraphFunction, HasDefaults)
@@ -92,5 +91,5 @@ void UUIW_HUD_Gauge_Frenzy_C::UpdateFrenzyPoint(int32 Current, int32 Max, int32 
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Weapon_Base_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Weapon_Base.BP_Weapon_Base_C.ExecuteUbergraph_BP_Weapon_Base
 // (Final, UbergraphFunction, HasDefaults)
@@ -678,5 +677,5 @@ void ABP_Weapon_Base_C::TakeOffAbnormal(class FName InAbnormalCodeName, bool Imm
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

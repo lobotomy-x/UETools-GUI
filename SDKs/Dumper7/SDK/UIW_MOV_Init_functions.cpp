@@ -14,8 +14,7 @@
 #include "UIW_MOV_Init_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_MOV_Init.UIW_MOV_Init_C.Construct
 // (BlueprintCosmetic, Event, Public, BlueprintEvent)
@@ -146,5 +145,5 @@ void UUIW_MOV_Init_C::ExecuteUbergraph_UIW_MOV_Init(int32 EntryPoint)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -13,8 +13,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Fx_ListBtn_Bg.UIW_Fx_ListBtn_Bg_C.ExecuteUbergraph_UIW_Fx_ListBtn_Bg
 // 0x0010 (0x0010 - 0x0000)
@@ -26,5 +26,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Fx_ListBtn_Bg_C_ExecuteUbergraph_UIW_Fx_ListBtn_Bg;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

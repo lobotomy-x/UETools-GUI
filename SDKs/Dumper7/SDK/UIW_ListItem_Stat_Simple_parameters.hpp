@@ -11,14 +11,14 @@
 #include "Basic.hpp"
 
 #include "ProjectPContentInfo_structs.hpp"
-#include "UIST_Color_structs.hpp"
 #include "ProjectP_structs.hpp"
+#include "UIST_Color_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_Stat_Simple.UIW_ListItem_Stat_Simple_C.ExecuteUbergraph_UIW_ListItem_Stat_Simple
 // 0x0060 (0x0060 - 0x0000)
@@ -165,5 +165,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_Stat_Simple_C_SetCorrection;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ProfileItem_Ergo.UIW_ProfileItem_Ergo_C
 // 0x00B8 (0x0358 - 0x02A0)
@@ -76,5 +75,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ProfileItem_Ergo_C;
 
-}
-
+SDK_NAMESPACE_END

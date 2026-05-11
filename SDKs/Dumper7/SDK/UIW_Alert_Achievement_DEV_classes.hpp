@@ -13,8 +13,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_Achievement_DEV.UIW_Alert_Achievement_DEV_C
 // 0x0008 (0x0268 - 0x0260)
@@ -39,5 +38,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_Achievement_DEV_C;
 
-}
-
+SDK_NAMESPACE_END

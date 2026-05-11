@@ -14,8 +14,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Setting_Menu.UIW_Setting_Menu_C
 // 0x0070 (0x02D0 - 0x0260)
@@ -65,5 +64,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Setting_Menu_C;
 
-}
-
+SDK_NAMESPACE_END

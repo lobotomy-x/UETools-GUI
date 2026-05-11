@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Location_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Location.UIW_ListItem_Location_C.ExecuteUbergraph_UIW_ListItem_Location
 // (Final, UbergraphFunction, HasDefaults)
@@ -278,5 +277,5 @@ struct FEventReply UUIW_ListItem_Location_C::OnFocusReceived(const struct FGeome
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

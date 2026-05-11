@@ -14,8 +14,7 @@
 #include "UIW_ComboBox_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ComboBox_Item.UIW_ComboBox_Item_C.ExecuteUbergraph_UIW_ComboBox_Item
 // (Final, UbergraphFunction, HasDefaults)
@@ -253,5 +252,5 @@ void UUIW_ComboBox_Item_C::SetTextColor()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

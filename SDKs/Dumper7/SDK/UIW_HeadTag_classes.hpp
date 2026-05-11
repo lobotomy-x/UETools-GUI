@@ -10,15 +10,14 @@
 
 #include "Basic.hpp"
 
-#include "UIST_AbnormalVisible_structs.hpp"
 #include "Engine_structs.hpp"
+#include "ProjectPContentInfo_structs.hpp"
+#include "UIST_AbnormalVisible_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectP_classes.hpp"
-#include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HeadTag.UIW_HeadTag_C
 // 0x0140 (0x03F0 - 0x02B0)
@@ -103,5 +102,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HeadTag_C;
 
-}
-
+SDK_NAMESPACE_END

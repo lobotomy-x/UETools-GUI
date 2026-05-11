@@ -13,8 +13,7 @@
 #include "BP_Action_GetUpDash_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_GetUpDash_Light.BP_Action_GetUpDash_Light_C
 // 0x0000 (0x0260 - 0x0260)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_GetUpDash_Light_C;
 
-}
-
+SDK_NAMESPACE_END

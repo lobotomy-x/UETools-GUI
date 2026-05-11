@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ItemInfo_Compare.UIW_ItemInfo_Compare_C
 // 0x0008 (0x0600 - 0x05F8)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ItemInfo_Compare_C;
 
-}
-
+SDK_NAMESPACE_END

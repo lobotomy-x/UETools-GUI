@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum SubstanceCore.ESubstanceInputType
 // NumValues: 0x000C
@@ -158,5 +157,4 @@ public:
 };
 DUMPER7_ASSERTS_FSubstanceConnection;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ComboBox_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ComboBox.UIW_ComboBox_C.ExecuteUbergraph_UIW_ComboBox
 // (Final, UbergraphFunction)
@@ -236,5 +235,5 @@ void UUIW_ComboBox_C::Close()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

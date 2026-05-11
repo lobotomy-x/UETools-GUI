@@ -14,8 +14,7 @@
 #include "UIW_Inventory_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Inventory.UIW_Inventory_C.ExecuteUbergraph_UIW_Inventory
 // (Final, UbergraphFunction, HasDefaults)
@@ -1797,5 +1796,5 @@ void UUIW_Inventory_C::ClearEventBinding()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ResourceListBar_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_ResourceListBar.UIW_ListItem_ResourceListBar_C.ExecuteUbergraph_UIW_ListItem_ResourceListBar
 // (Final, UbergraphFunction)
@@ -136,5 +135,5 @@ void UUIW_ListItem_ResourceListBar_C::SetData(const class FText& ItemName, TSoft
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

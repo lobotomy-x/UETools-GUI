@@ -14,8 +14,7 @@
 #include "UIW_ContextMenu_Btn_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ContextMenu_Btn.UIW_ContextMenu_Btn_C.ExecuteUbergraph_UIW_ContextMenu_Btn
 // (Final, UbergraphFunction)
@@ -89,5 +88,5 @@ struct FEventReply UUIW_ContextMenu_Btn_C::OnFocusReceived(const struct FGeometr
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

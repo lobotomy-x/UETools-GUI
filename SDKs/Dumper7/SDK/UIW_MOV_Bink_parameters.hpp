@@ -13,8 +13,8 @@
 #include "UIST_Time_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_MOV_Bink.UIW_MOV_Bink_C.ExecuteUbergraph_UIW_MOV_Bink
 // 0x0048 (0x0048 - 0x0000)
@@ -42,5 +42,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_MOV_Bink_C_BndEvt__UIW_Btn_Key_K2Node_ComponentBoundEvent_0_OnActive__DelegateSignature;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

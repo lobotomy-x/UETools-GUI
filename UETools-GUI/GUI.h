@@ -1,5 +1,5 @@
 #pragma once
-#include "DirectWindow11.h"
+#include "DirectWindow.h"
 #include "imgui.h"
 
 #include "definitions.h"
@@ -7,8 +7,6 @@
 #include "Unreal.h"
 #include "Math.h"
 
-#include <Windows.h>
-#include <algorithm>
 #include <thread>
 
 
@@ -18,6 +16,14 @@
 
 namespace ImGui
 {
+	/*
+		Swap default font with new "ProggyVector-minimal.ttf".
+		imgui_draw.cpp -> ImFontAtlas::AddFontDefault(...)
+		{
+			return AddFontDefaultVector(font_cfg);
+		}
+	*/
+
 	struct Viewport
 	{
 		ImGuiViewport* iViewport;

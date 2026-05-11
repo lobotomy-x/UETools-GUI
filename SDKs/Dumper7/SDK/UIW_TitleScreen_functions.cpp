@@ -14,8 +14,7 @@
 #include "UIW_TitleScreen_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_TitleScreen.UIW_TitleScreen_C.ExecuteUbergraph_UIW_TitleScreen
 // (Final, UbergraphFunction, HasDefaults)
@@ -755,5 +754,5 @@ void UUIW_TitleScreen_C::ShowDisabledComplete()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

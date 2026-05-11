@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ItemSmall_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Slot_Small.UIW_Slot_Small_C
 // 0x0030 (0x0368 - 0x0338)
@@ -53,5 +52,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Slot_Small_C;
 
-}
-
+SDK_NAMESPACE_END

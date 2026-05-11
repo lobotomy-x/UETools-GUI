@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Grid_Sample_Menu.UIW_Grid_Sample_Menu_C
 // 0x0040 (0x02E0 - 0x02A0)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Grid_Sample_Menu_C;
 
-}
-
+SDK_NAMESPACE_END

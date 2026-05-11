@@ -14,8 +14,7 @@
 #include "UIW_Popup_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Popup.UIW_Popup_C.SetPopup
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -286,5 +285,5 @@ void UUIW_Popup_C::OnCompleteTweenEvent(class FName Name_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

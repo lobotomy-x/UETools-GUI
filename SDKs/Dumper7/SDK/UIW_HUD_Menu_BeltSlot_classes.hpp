@@ -14,8 +14,7 @@
 #include "UIW_Slot_Belt_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_HUD_Menu_BeltSlot.UIW_HUD_Menu_BeltSlot_C
 // 0x0028 (0x03A0 - 0x0378)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_HUD_Menu_BeltSlot_C;
 
-}
-
+SDK_NAMESPACE_END

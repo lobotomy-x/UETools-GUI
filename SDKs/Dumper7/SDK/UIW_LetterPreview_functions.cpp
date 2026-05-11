@@ -14,8 +14,7 @@
 #include "UIW_LetterPreview_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_LetterPreview.UIW_LetterPreview_C.ExecuteUbergraph_UIW_LetterPreview
 // (Final, UbergraphFunction, HasDefaults)
@@ -398,5 +397,5 @@ void UUIW_LetterPreview_C::SetHUDVisible(bool IsShow)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

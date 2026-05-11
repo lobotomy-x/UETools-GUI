@@ -16,8 +16,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_TitleScreen.UIW_TitleScreen_C.ExecuteUbergraph_UIW_TitleScreen
 // 0x02B8 (0x02B8 - 0x0000)
@@ -669,5 +669,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_TitleScreen_C_HideComplete;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

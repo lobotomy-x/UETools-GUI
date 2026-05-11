@@ -15,8 +15,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_MonadBuff.UIW_MonadBuff_C.ExecuteUbergraph_UIW_MonadBuff
 // 0x0070 (0x0070 - 0x0000)
@@ -326,5 +326,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_MonadBuff_C_NavToLRLoop;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

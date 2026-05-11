@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_LRichKeyTextBlock.UIBP_LRichKeyTextBlock_C
 // 0x0020 (0x0698 - 0x0678)
@@ -44,5 +43,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_LRichKeyTextBlock_C;
 
-}
-
+SDK_NAMESPACE_END

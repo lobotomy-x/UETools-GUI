@@ -14,8 +14,7 @@
 #include "UIBP_LRichKeyTextBlock_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIBP_LRichKeyTextBlock.UIBP_LRichKeyTextBlock_C.SetKeyText
 // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -56,5 +55,5 @@ void UUIBP_LRichKeyTextBlock_C::UpdateText(bool bGamePad)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

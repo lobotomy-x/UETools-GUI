@@ -16,8 +16,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_SlaveArm_Reset.UIW_SlaveArm_Reset_C.ExecuteUbergraph_UIW_SlaveArm_Reset
 // 0x02A0 (0x02A0 - 0x0000)
@@ -267,5 +267,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_SlaveArm_Reset_C_NavToBottom;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

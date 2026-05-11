@@ -14,8 +14,7 @@
 #include "MeshModelingTools_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function MeshModelingTools.HoleFillToolActions.Clear
 // (Final, Native, Public)
@@ -1263,5 +1262,5 @@ void UMeshSelectionMeshEditActions::SeparateTriangles()
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

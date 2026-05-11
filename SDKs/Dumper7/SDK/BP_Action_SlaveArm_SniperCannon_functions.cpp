@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_SniperCannon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SlaveArm_SniperCannon.BP_Action_SlaveArm_SniperCannon_C.ExecuteUbergraph_BP_Action_SlaveArm_SniperCannon
 // (Final, UbergraphFunction, HasDefaults)
@@ -176,5 +175,5 @@ void UBP_Action_SlaveArm_SniperCannon_C::ClearReinforcedVariableValues()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

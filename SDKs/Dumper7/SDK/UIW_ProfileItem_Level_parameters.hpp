@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ProfileItem_Level.UIW_ProfileItem_Level_C.ExecuteUbergraph_UIW_ProfileItem_Level
 // 0x0050 (0x0050 - 0x0000)
@@ -43,5 +43,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ProfileItem_Level_C_RefreshData;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

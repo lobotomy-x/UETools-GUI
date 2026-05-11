@@ -14,13 +14,12 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class CinematicCamera.CineCameraComponent
 // 0x0100 (0x0920 - 0x0820)
 #pragma pack(push, 0x1)
-class alignas(0x10) UCineCameraComponent : public UCameraComponent
+class SDK_ALIGN(0x10) UCineCameraComponent : public UCameraComponent
 {
 public:
 	struct FCameraFilmbackSettings                FilmbackSettings;                                  // 0x0820(0x000C)(Deprecated, NoDestructor, NativeAccessSpecifierPublic)
@@ -160,5 +159,4 @@ public:
 };
 DUMPER7_ASSERTS_ACameraRig_Rail;
 
-}
-
+SDK_NAMESPACE_END

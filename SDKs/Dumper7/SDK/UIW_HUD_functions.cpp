@@ -14,8 +14,7 @@
 #include "UIW_HUD_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD.UIW_HUD_C.ExecuteUbergraph_UIW_HUD
 // (Final, UbergraphFunction, HasDefaults)
@@ -872,5 +871,5 @@ void UUIW_HUD_C::SetSlaveArmControlGuide()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

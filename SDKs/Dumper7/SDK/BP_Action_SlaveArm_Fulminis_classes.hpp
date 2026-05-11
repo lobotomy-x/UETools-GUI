@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_Fulminis.BP_Action_SlaveArm_Fulminis_C
 // 0x0070 (0x0288 - 0x0218)
@@ -59,5 +58,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_Fulminis_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_EnvSoundComponent.BP_EnvSoundComponent_C
 // 0x0020 (0x00D0 - 0x00B0)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_EnvSoundComponent_C;
 
-}
-
+SDK_NAMESPACE_END

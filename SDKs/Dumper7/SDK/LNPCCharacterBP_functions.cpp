@@ -14,8 +14,7 @@
 #include "LNPCCharacterBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LNPCCharacterBP.LNPCCharacterBP_C.ExecuteUbergraph_LNPCCharacterBP
 // (Final, UbergraphFunction)
@@ -267,5 +266,5 @@ void ALNPCCharacterBP_C::UpdateHeadTagPosition()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

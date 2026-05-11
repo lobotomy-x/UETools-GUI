@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_MOV.UIW_MOV_C
 // 0x0050 (0x02F0 - 0x02A0)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_MOV_C;
 
-}
-
+SDK_NAMESPACE_END

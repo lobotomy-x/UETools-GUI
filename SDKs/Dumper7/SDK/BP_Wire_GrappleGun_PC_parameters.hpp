@@ -16,8 +16,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Wire_GrappleGun_PC.BP_Wire_GrappleGun_PC_C.ExecuteUbergraph_BP_Wire_GrappleGun_PC
 // 0x0260 (0x0260 - 0x0000)
@@ -247,5 +247,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Wire_GrappleGun_PC_C_SetWireDirection;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

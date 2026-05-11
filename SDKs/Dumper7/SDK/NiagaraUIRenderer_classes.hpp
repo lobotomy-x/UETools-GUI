@@ -15,8 +15,7 @@
 #include "Niagara_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class NiagaraUIRenderer.NiagaraSystemWidget
 // 0x0088 (0x0190 - 0x0108)
@@ -102,5 +101,4 @@ public:
 };
 DUMPER7_ASSERTS_UNiagaraUIComponent;
 
-}
-
+SDK_NAMESPACE_END

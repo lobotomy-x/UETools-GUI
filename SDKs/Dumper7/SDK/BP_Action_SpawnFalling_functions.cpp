@@ -14,8 +14,7 @@
 #include "BP_Action_SpawnFalling_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_SpawnFalling.BP_Action_SpawnFalling_C.ExecuteUbergraph_BP_Action_SpawnFalling
 // (Final, UbergraphFunction)
@@ -75,5 +74,5 @@ bool UBP_Action_SpawnFalling_C::OnLanded(class ACharacter* LandingChar, const st
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

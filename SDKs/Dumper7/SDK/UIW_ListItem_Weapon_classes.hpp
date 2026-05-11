@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_Weapon.UIW_ListItem_Weapon_C
 // 0x0088 (0x0328 - 0x02A0)
@@ -77,5 +76,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_Weapon_C;
 
-}
-
+SDK_NAMESPACE_END

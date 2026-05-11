@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LNPCControllerBP.LNPCControllerBP_C
 // 0x0008 (0x0D70 - 0x0D68)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_ALNPCControllerBP_C;
 
-}
-
+SDK_NAMESPACE_END

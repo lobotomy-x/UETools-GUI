@@ -14,8 +14,7 @@
 #include "UIW_CharacterUpgrade_Stat_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_CharacterUpgrade_Stat.UIW_CharacterUpgrade_Stat_C.ExecuteUbergraph_UIW_CharacterUpgrade_Stat
 // (Final, UbergraphFunction, HasDefaults)
@@ -194,5 +193,5 @@ struct FEventReply UUIW_CharacterUpgrade_Stat_C::OnMouseWheel(const struct FGeom
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

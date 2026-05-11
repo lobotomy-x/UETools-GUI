@@ -14,8 +14,7 @@
 #include "UIW_HelpMate_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HelpMate.UIW_HelpMate_C.ExecuteUbergraph_UIW_HelpMate
 // (Final, UbergraphFunction, HasDefaults)
@@ -164,5 +163,5 @@ void UUIW_HelpMate_C::OnHelpmateAbnormal(class FName AbnormalName, int64 Abnorma
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

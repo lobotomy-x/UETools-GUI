@@ -12,14 +12,14 @@
 
 #include "ProjectPContentInfo_structs.hpp"
 #include "Engine_structs.hpp"
-#include "UIST_Time_structs.hpp"
 #include "CoreUObject_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "UMG_structs.hpp"
+#include "UIST_Time_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_RecordRemote.UIW_RecordRemote_C.ExecuteUbergraph_UIW_RecordRemote
 // 0x01D8 (0x01D8 - 0x0000)
@@ -392,5 +392,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_RecordRemote_C_OnGetHumanity;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

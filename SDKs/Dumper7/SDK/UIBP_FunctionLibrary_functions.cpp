@@ -14,8 +14,7 @@
 #include "UIBP_FunctionLibrary_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIBP_FunctionLibrary.UIBP_FunctionLibrary_C.GetMainWidget
 // (Static, Public, HasOutParams, BlueprintCallable, BlueprintEvent, BlueprintPure)
@@ -1429,5 +1428,5 @@ class FText UUIBP_FunctionLibrary_C::GetSynergyNameWithNumber(int32 SynergyNumbe
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

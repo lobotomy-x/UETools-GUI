@@ -14,8 +14,7 @@
 #include "LiveLinkInterface_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum LiveLink.ELiveLinkAxis
 // NumValues: 0x0007
@@ -95,5 +94,4 @@ public:
 };
 DUMPER7_ASSERTS_FLiveLinkRoleProjectSetting;
 
-}
-
+SDK_NAMESPACE_END

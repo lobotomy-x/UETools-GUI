@@ -14,8 +14,7 @@
 #include "UIW_Weapon_Equip_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Weapon_Equip.UIW_Weapon_Equip_C.ExecuteUbergraph_UIW_Weapon_Equip
 // (Final, UbergraphFunction, HasDefaults)
@@ -249,5 +248,5 @@ struct FEventReply UUIW_Weapon_Equip_C::FocusManage(const struct FGeometry& MyGe
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

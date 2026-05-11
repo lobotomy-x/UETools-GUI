@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LPCCharacterBP_StatRoom.LPCCharacterBP_StatRoom_C
 // 0x0060 (0x0CE0 - 0x0C80)
@@ -57,5 +56,4 @@ public:
 };
 DUMPER7_ASSERTS_ALPCCharacterBP_StatRoom_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedEnum UIEN_Controller.UIEN_Controller
 // NumValues: 0x0004
@@ -24,5 +23,4 @@ enum class EUIEN_Controller : uint8
 	UIEN_MAX                                 = 3,
 };
 
-}
-
+SDK_NAMESPACE_END

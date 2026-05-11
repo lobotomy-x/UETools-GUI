@@ -14,8 +14,7 @@
 #include "BP_FluidImplementation_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_FluidImplementation.BP_FluidImplementation_C.ExecuteUbergraph_BP_FluidImplementation
 // (Final, UbergraphFunction, HasDefaults)
@@ -138,5 +137,5 @@ void UBP_FluidImplementation_C::PerBoneDraw(class FName Bone_Name, class UMeshCo
 	Mesh_Component = Parms.Mesh_Component;
 }
 
-}
 
+SDK_NAMESPACE_END

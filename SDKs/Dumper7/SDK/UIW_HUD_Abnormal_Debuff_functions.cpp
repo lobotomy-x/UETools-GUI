@@ -14,8 +14,7 @@
 #include "UIW_HUD_Abnormal_Debuff_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Abnormal_Debuff.UIW_HUD_Abnormal_Debuff_C.ExecuteUbergraph_UIW_HUD_Abnormal_Debuff
 // (Final, UbergraphFunction)
@@ -110,5 +109,5 @@ void UUIW_HUD_Abnormal_Debuff_C::SetAbnormal(class FName AbnormalName, int64 Abn
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

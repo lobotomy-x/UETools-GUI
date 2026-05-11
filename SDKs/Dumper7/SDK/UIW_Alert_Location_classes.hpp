@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Alert_Location.UIW_Alert_Location_C
 // 0x0040 (0x02E0 - 0x02A0)
@@ -55,5 +54,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Alert_Location_C;
 
-}
-
+SDK_NAMESPACE_END

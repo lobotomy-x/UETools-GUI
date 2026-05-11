@@ -10,16 +10,15 @@
 
 #include "Basic.hpp"
 
-#include "UIEN_Controller_structs.hpp"
 #include "Engine_structs.hpp"
-#include "SlateCore_structs.hpp"
+#include "UIEN_Controller_structs.hpp"
 #include "UIEN_InputAction_structs.hpp"
 #include "ProjectP_classes.hpp"
+#include "SlateCore_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Btn_Key_RIght.UIW_Btn_Key_RIght_C
 // 0x0120 (0x03C0 - 0x02A0)
@@ -117,5 +116,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Btn_Key_RIght_C;
 
-}
-
+SDK_NAMESPACE_END

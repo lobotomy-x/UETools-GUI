@@ -13,16 +13,16 @@
 #include "UMG_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
-#include "UIST_SecondCategoryArr_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "CoreUObject_structs.hpp"
 #include "Engine_structs.hpp"
+#include "UIST_SecondCategoryArr_structs.hpp"
 #include "InputCore_structs.hpp"
 #include "UIEN_EquipSlotSize_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Equipment.UIW_Equipment_C.ExecuteUbergraph_UIW_Equipment
 // 0x0460 (0x0460 - 0x0000)
@@ -3196,5 +3196,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Equipment_C_OnCompleteTweenEvent;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_ListData_OneStat.UIBP_ListData_OneStat_C
 // 0x0080 (0x00A8 - 0x0028)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_ListData_OneStat_C;
 
-}
-
+SDK_NAMESPACE_END

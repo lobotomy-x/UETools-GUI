@@ -14,8 +14,7 @@
 #include "UIW_Indicator_FatalAttack_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Indicator_FatalAttack.UIW_Indicator_FatalAttack_C.ExecuteUbergraph_UIW_Indicator_FatalAttack
 // (Final, UbergraphFunction, HasDefaults)
@@ -86,5 +85,5 @@ void UUIW_Indicator_FatalAttack_C::Refresh()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

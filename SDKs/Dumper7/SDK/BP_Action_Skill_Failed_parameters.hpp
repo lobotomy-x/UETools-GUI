@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_Skill_Failed.BP_Action_Skill_Failed_C.ExecuteUbergraph_BP_Action_Skill_Failed
 // 0x0018 (0x0018 - 0x0000)
@@ -36,5 +36,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_Skill_Failed_C_OnStop;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

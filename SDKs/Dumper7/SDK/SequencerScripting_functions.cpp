@@ -14,8 +14,7 @@
 #include "SequencerScripting_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function SequencerScripting.MovieSceneBindingExtensions.AddTrack
 // (Final, Native, Static, Public, HasOutParams, BlueprintCallable)
@@ -6836,5 +6835,5 @@ void USequencerScriptingRangeExtensions::SetStartSeconds(struct FSequencerScript
 	Range = std::move(Parms.Range);
 }
 
-}
 
+SDK_NAMESPACE_END

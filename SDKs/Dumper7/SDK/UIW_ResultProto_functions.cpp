@@ -14,8 +14,7 @@
 #include "UIW_ResultProto_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ResultProto.UIW_ResultProto_C.ExecuteUbergraph_UIW_ResultProto
 // (Final, UbergraphFunction, HasDefaults)
@@ -106,5 +105,5 @@ void UUIW_ResultProto_C::CallbackGoTitle(class UUIW_Popup_C* Popup, class UUIW_B
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

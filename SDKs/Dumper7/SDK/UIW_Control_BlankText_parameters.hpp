@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Control_BlankText.UIW_Control_BlankText_C.ExecuteUbergraph_UIW_Control_BlankText
 // 0x0040 (0x0040 - 0x0000)
@@ -27,5 +27,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Control_BlankText_C_ExecuteUbergraph_UIW_Control_BlankText;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

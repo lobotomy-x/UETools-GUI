@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_JumpToFloating.BP_Action_JumpToFloating_C
 // 0x0038 (0x0218 - 0x01E0)
@@ -58,5 +57,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_JumpToFloating_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Lie_Low_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Lie_Low.UIW_ListItem_Lie_Low_C.ExecuteUbergraph_UIW_ListItem_Lie_Low
 // (Final, UbergraphFunction, HasDefaults)
@@ -202,5 +201,5 @@ struct FEventReply UUIW_ListItem_Lie_Low_C::OnFocusReceived(const struct FGeomet
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

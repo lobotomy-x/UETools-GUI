@@ -14,8 +14,7 @@
 #include "UIW_ActionType_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ActionType.UIW_ActionType_C.ExecuteUbergraph_UIW_ActionType
 // (Final, UbergraphFunction, HasDefaults)
@@ -196,5 +195,5 @@ struct FEventReply UUIW_ActionType_C::OnMouseButtonDoubleClick(const struct FGeo
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

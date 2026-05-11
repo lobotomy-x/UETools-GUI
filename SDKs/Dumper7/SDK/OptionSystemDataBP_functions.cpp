@@ -14,8 +14,7 @@
 #include "OptionSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function OptionSystemDataBP.OptionSystemDataBP_C.GetDefaultUseAutoNewTargetLockOn
 // (Event, Public, HasOutParams, BlueprintCallable, BlueprintEvent)
@@ -642,5 +641,5 @@ int32 AOptionSystemDataBP_C::GetDefaultForceFeedbackIdx()
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

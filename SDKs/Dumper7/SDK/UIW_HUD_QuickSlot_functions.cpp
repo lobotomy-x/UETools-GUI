@@ -14,8 +14,7 @@
 #include "UIW_HUD_QuickSlot_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_QuickSlot.UIW_HUD_QuickSlot_C.ExecuteUbergraph_UIW_HUD_QuickSlot
 // (Final, UbergraphFunction, HasDefaults)
@@ -419,5 +418,5 @@ void UUIW_HUD_QuickSlot_C::SetControlGuide(bool IsGamePad)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

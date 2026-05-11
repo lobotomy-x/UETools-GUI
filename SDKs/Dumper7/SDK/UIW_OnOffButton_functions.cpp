@@ -14,8 +14,7 @@
 #include "UIW_OnOffButton_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_OnOffButton.UIW_OnOffButton_C.ExecuteUbergraph_UIW_OnOffButton
 // (Final, UbergraphFunction, HasDefaults)
@@ -209,5 +208,5 @@ void UUIW_OnOffButton_C::ReturnToggle(bool IsSelected_0)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

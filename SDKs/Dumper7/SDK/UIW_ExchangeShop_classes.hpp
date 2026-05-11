@@ -11,13 +11,12 @@
 #include "Basic.hpp"
 
 #include "Engine_structs.hpp"
-#include "ProjectPContentInfo_structs.hpp"
 #include "UIW_Window_classes.hpp"
 #include "SlateCore_structs.hpp"
+#include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ExchangeShop.UIW_ExchangeShop_C
 // 0x0118 (0x0460 - 0x0348)
@@ -102,5 +101,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ExchangeShop_C;
 
-}
-
+SDK_NAMESPACE_END

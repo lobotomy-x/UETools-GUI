@@ -14,8 +14,7 @@
 #include "UIW_Slot_Pouch_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Slot_Pouch.UIW_Slot_Pouch_C.ExecuteUbergraph_UIW_Slot_Pouch
 // (Final, UbergraphFunction, HasDefaults)
@@ -193,5 +192,5 @@ void UUIW_Slot_Pouch_C::SetCount()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

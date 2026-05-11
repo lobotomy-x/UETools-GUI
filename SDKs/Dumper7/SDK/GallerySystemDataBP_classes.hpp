@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass GallerySystemDataBP.GallerySystemDataBP_C
 // 0x0038 (0x0258 - 0x0220)
@@ -54,5 +53,4 @@ public:
 };
 DUMPER7_ASSERTS_AGallerySystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

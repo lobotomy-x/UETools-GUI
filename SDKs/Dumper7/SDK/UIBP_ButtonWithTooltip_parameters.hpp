@@ -13,8 +13,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIBP_ButtonWithTooltip.UIBP_ButtonWithTooltip_C.SetCustomTooltip
 // 0x0040 (0x0040 - 0x0000)
@@ -56,5 +56,5 @@ public:
 };
 DUMPER7_ASSERTS_UIBP_ButtonWithTooltip_C_GetCustomTooltipText;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

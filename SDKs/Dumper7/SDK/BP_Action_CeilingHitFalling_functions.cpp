@@ -14,8 +14,7 @@
 #include "BP_Action_CeilingHitFalling_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_CeilingHitFalling.BP_Action_CeilingHitFalling_C.ExecuteUbergraph_BP_Action_CeilingHitFalling
 // (Final, UbergraphFunction)
@@ -123,5 +122,5 @@ bool UBP_Action_CeilingHitFalling_C::OnLanded(class ACharacter* LandingChar, con
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

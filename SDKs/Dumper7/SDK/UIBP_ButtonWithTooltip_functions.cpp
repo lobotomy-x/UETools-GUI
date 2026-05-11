@@ -14,8 +14,7 @@
 #include "UIBP_ButtonWithTooltip_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIBP_ButtonWithTooltip.UIBP_ButtonWithTooltip_C.SetCustomTooltip
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -85,5 +84,5 @@ void UUIBP_ButtonWithTooltip_C::GetCustomTooltipText(class FText* ToolTipText_0)
 		*ToolTipText_0 = std::move(Parms.ToolTipText_0);
 }
 
-}
 
+SDK_NAMESPACE_END

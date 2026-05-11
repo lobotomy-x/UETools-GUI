@@ -17,8 +17,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_SaveData.UIW_ListItem_SaveData_C.ExecuteUbergraph_UIW_ListItem_SaveData
 // 0x05C0 (0x05C0 - 0x0000)
@@ -205,5 +205,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_SaveData_C_OnFocusReceived;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

@@ -15,8 +15,7 @@
 #include "ActorLayerUtilities_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class MovieRenderPipelineRenderPasses.MoviePipelineImagePassBase
 // 0x0080 (0x00C8 - 0x0048)
@@ -307,5 +306,4 @@ public:
 };
 DUMPER7_ASSERTS_UMoviePipelineWaveOutput;
 
-}
-
+SDK_NAMESPACE_END

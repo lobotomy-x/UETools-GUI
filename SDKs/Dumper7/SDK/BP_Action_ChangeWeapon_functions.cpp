@@ -14,8 +14,7 @@
 #include "BP_Action_ChangeWeapon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_ChangeWeapon.BP_Action_ChangeWeapon_C.ExecuteUbergraph_BP_Action_ChangeWeapon
 // (Final, UbergraphFunction)
@@ -96,5 +95,5 @@ void UBP_Action_ChangeWeapon_C::OnCurrMontageEnded(class UAnimMontage* Montage, 
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -17,8 +17,8 @@
 #include "BP_Action_JumpSkill_Data_Jump12_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Action_JumpSkill.BP_Action_JumpSkill_C.ExecuteUbergraph_BP_Action_JumpSkill
 // 0x0970 (0x0970 - 0x0000)
@@ -449,5 +449,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_JumpSkill_C_OnSelectNextAnim;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

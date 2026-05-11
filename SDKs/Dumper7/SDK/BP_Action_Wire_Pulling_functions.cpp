@@ -14,8 +14,7 @@
 #include "BP_Action_Wire_Pulling_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Wire_Pulling.BP_Action_Wire_Pulling_C.ExecuteUbergraph_BP_Action_Wire_Pulling
 // (Final, UbergraphFunction, HasDefaults)
@@ -170,5 +169,5 @@ void UBP_Action_Wire_Pulling_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

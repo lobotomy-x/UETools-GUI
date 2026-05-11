@@ -14,8 +14,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function LPCAnimationBP_StatRoom2.LPCAnimationBP_StatRoom2_C.ExecuteUbergraph_LPCAnimationBP_StatRoom2
 // 0x0080 (0x0080 - 0x0000)
@@ -72,5 +72,5 @@ public:
 };
 DUMPER7_ASSERTS_LPCAnimationBP_StatRoom2_C_AnimGraph;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

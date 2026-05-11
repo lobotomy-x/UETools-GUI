@@ -10,14 +10,13 @@
 
 #include "Basic.hpp"
 
+#include "UIEN_Direction_structs.hpp"
 #include "Engine_structs.hpp"
 #include "UMG_classes.hpp"
-#include "UIEN_Direction_structs.hpp"
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Btn_Arrow.UIW_Btn_Arrow_C
 // 0x0030 (0x0290 - 0x0260)
@@ -54,5 +53,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Btn_Arrow_C;
 
-}
-
+SDK_NAMESPACE_END

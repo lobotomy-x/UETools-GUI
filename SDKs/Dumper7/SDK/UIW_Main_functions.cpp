@@ -14,8 +14,7 @@
 #include "UIW_Main_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Main.UIW_Main_C.ExecuteUbergraph_UIW_Main
 // (Final, UbergraphFunction, HasDefaults)
@@ -902,5 +901,5 @@ void UUIW_Main_C::RecordSoundMixControl(bool IsPush)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

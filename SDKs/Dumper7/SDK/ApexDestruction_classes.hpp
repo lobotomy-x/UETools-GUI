@@ -17,8 +17,7 @@
 #include "ApexDestruction_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class ApexDestruction.DestructibleActor
 // 0x0018 (0x0238 - 0x0220)
@@ -139,5 +138,4 @@ public:
 };
 DUMPER7_ASSERTS_UDestructibleMesh;
 
-}
-
+SDK_NAMESPACE_END

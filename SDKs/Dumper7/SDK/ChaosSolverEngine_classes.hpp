@@ -18,8 +18,7 @@
 #include "Chaos_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class ChaosSolverEngine.ChaosDebugDrawComponent
 // 0x0008 (0x00B8 - 0x00B0)
@@ -242,5 +241,4 @@ public:
 };
 DUMPER7_ASSERTS_UChaosSolverSettings;
 
-}
-
+SDK_NAMESPACE_END

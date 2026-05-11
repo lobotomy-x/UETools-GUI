@@ -15,8 +15,7 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass OptionSystemDataBP.OptionSystemDataBP_C
 // 0x0180 (0x05F8 - 0x0478)
@@ -127,5 +126,4 @@ public:
 };
 DUMPER7_ASSERTS_AOptionSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

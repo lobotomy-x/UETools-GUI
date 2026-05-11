@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Paralyzation.BP_Action_Paralyzation_C
 // 0x0018 (0x05E0 - 0x05C8)
@@ -51,5 +50,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Paralyzation_C;
 
-}
-
+SDK_NAMESPACE_END

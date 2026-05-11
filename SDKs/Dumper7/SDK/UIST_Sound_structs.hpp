@@ -13,8 +13,7 @@
 #include "UIEN_SimultaneousPlay_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_Sound.UIST_Sound
 // 0x0040 (0x0040 - 0x0000)
@@ -32,5 +31,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_Sound;
 
-}
-
+SDK_NAMESPACE_END

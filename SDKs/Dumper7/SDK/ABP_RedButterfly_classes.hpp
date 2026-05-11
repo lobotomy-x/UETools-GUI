@@ -17,8 +17,7 @@
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // AnimBlueprintGeneratedClass ABP_RedButterfly.ABP_RedButterfly_C
 // 0x1230 (0x1890 - 0x0660)
@@ -86,5 +85,4 @@ public:
 };
 DUMPER7_ASSERTS_UABP_RedButterfly_C;
 
-}
-
+SDK_NAMESPACE_END

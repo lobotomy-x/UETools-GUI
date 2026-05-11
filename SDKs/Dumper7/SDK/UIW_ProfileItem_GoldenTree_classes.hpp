@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ProfileItem_GoldenTree.UIW_ProfileItem_GoldenTree_C
 // 0x0030 (0x02D0 - 0x02A0)
@@ -55,5 +54,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ProfileItem_GoldenTree_C;
 
-}
-
+SDK_NAMESPACE_END

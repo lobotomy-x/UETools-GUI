@@ -11,16 +11,16 @@
 #include "Basic.hpp"
 
 #include "UMG_structs.hpp"
-#include "UIST_Sound_structs.hpp"
 #include "SlateCore_structs.hpp"
 #include "ProjectP_structs.hpp"
 #include "ProjectPContentInfo_structs.hpp"
 #include "Engine_structs.hpp"
+#include "UIST_Sound_structs.hpp"
 #include "CoreUObject_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Record.UIW_Record_C.ExecuteUbergraph_UIW_Record
 // 0x00E8 (0x00E8 - 0x0000)
@@ -419,5 +419,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Record_C_OnCompleteTweenEvent;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

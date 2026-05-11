@@ -14,8 +14,7 @@
 #include "UIW_RecordRemote_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_RecordRemote.UIW_RecordRemote_C.ExecuteUbergraph_UIW_RecordRemote
 // (Final, UbergraphFunction, HasDefaults)
@@ -588,5 +587,5 @@ void UUIW_RecordRemote_C::SequenceEvent__ENTRYPOINTUIW_RecordRemote_0()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

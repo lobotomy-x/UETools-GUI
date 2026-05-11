@@ -14,8 +14,7 @@
 #include "BP_Projectile_Design_Base_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Projectile_Design_Base.BP_Projectile_Design_Base_C.ExecuteUbergraph_BP_Projectile_Design_Base
 // (Final, UbergraphFunction, HasDefaults)
@@ -221,5 +220,5 @@ void ABP_Projectile_Design_Base_C::DeactiveMoveFX()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

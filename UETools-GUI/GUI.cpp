@@ -394,7 +394,7 @@ void ImGui::TextCopyable(const char* fmt, ...)
 	{
 		if (ImGui::Selectable("Copy"))
 		{
-			GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(buffer));
+			GUI::PlayActionSound(Utilities::Clipboard::SetText(buffer));
 		}
 		ImGui::EndPopup();
 	}
@@ -434,7 +434,7 @@ void ImGui::ReadOnlyInputText(const char* label, const char* text, const bool& s
 		ImGui::SameLine();
 		if (ImGui::Button("Copy"))
 		{
-			GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(buffer.data()));
+			GUI::PlayActionSound(Utilities::Clipboard::SetText(buffer.data()));
 		}
 	}
 
@@ -939,7 +939,7 @@ bool GUI::StartWindowThread()
 	if (windowThread)
 		return false;
 
-	windowThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)DirectWindow11::Create, 0, 0, 0);
+	windowThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)DirectWindow::Create, 0, 0, 0);
 	return windowThread;
 }
 
@@ -949,7 +949,7 @@ bool GUI::StartWindowThread()
 void GUI::Init(const HMODULE& applicationModule)
 {
 	/* Before creating a DirectWindow, we need to make it aware of our DLL HMODULE. */
-	DirectWindow11::SetApplicationModule(applicationModule);
+	DirectWindow::SetApplicationModule(applicationModule);
 	StartWindowThread();
 
 	Features::Config::Load();
@@ -978,7 +978,7 @@ void GUI::Draw()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			ImGui::Text("UETools GUI (v5.1)");
+			ImGui::Text("UETools GUI (v5.2)");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -1129,7 +1129,7 @@ inline void Features::Config::ReadFeatureFromConfig(ConfigInstance* featuresConf
 	if (featuresConfig->HasKey(entryName) == false)
 		return;
 
-	*featureValue = featuresConfig->Get<T>(entryName).value_or(*featureValue);
+	*featureValue = featuresConfig->GetKey<T>(entryName).value_or(*featureValue);
 }
 
 void Features::Config::Load()
@@ -1275,93 +1275,93 @@ void Features::Config::Save()
 {
 	ConfigInstance featuresConfig(PATH_CONFIG_FEATURES);
 
-	featuresConfig.Set("Features_Menu_enableSound", Features::Menu::enableSound);
-	featuresConfig.Set("Features_Menu_autoConstructConsole", Features::Menu::autoConstructConsole);
-	featuresConfig.Set("Features_Menu_enableConsoleOutput", Features::Menu::enableConsoleOutput);
+	featuresConfig.SetKey("Features_Menu_enableSound", Features::Menu::enableSound);
+	featuresConfig.SetKey("Features_Menu_autoConstructConsole", Features::Menu::autoConstructConsole);
+	featuresConfig.SetKey("Features_Menu_enableConsoleOutput", Features::Menu::enableConsoleOutput);
 
-	featuresConfig.Set("Features_Debug_autoUpdate", Features::Debug::autoUpdate);
-	featuresConfig.Set("Features_Debug_autoUpdateDelay", Features::Debug::autoUpdateDelay);
+	featuresConfig.SetKey("Features_Debug_autoUpdate", Features::Debug::autoUpdate);
+	featuresConfig.SetKey("Features_Debug_autoUpdateDelay", Features::Debug::autoUpdateDelay);
 
-	featuresConfig.Set("Features_DirectionalMovement_enabled", Features::DirectionalMovement::enabled);
-	featuresConfig.Set("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
-	featuresConfig.Set("Features_DirectionalMovement_step", Features::DirectionalMovement::step);
-	featuresConfig.Set("Features_DirectionalMovement_delay", Features::DirectionalMovement::delay);
+	featuresConfig.SetKey("Features_DirectionalMovement_enabled", Features::DirectionalMovement::enabled);
+	featuresConfig.SetKey("Features_DirectionalMovement_omniMovement", Features::DirectionalMovement::omniMovement);
+	featuresConfig.SetKey("Features_DirectionalMovement_step", Features::DirectionalMovement::step);
+	featuresConfig.SetKey("Features_DirectionalMovement_delay", Features::DirectionalMovement::delay);
 
 #ifdef ACTOR_TRACE
-	featuresConfig.Set("Features_ActorTrace_showOnScreen", Features::ActorTrace::showOnScreen);
+	featuresConfig.SetKey("Features_ActorTrace_showOnScreen", Features::ActorTrace::showOnScreen);
 
 	std::array<float, 4> traceColor = { Features::ActorTrace::traceColor[0], Features::ActorTrace::traceColor[1],
 										 Features::ActorTrace::traceColor[2], Features::ActorTrace::traceColor[3] };
-	featuresConfig.Set("Features_ActorTrace_traceColor", traceColor);
+	featuresConfig.SetKey("Features_ActorTrace_traceColor", traceColor);
 
-	featuresConfig.Set("Features_ActorTrace_traceThickness", Features::ActorTrace::traceThickness);
-	featuresConfig.Set("Features_ActorTrace_traceDistance", Features::ActorTrace::traceDistance);
+	featuresConfig.SetKey("Features_ActorTrace_traceThickness", Features::ActorTrace::traceThickness);
+	featuresConfig.SetKey("Features_ActorTrace_traceDistance", Features::ActorTrace::traceDistance);
 #endif
 
 #ifdef COLLISION_VISUALIZER
 	std::array<float, 4> color_StaticMesh = { Features::CollisionVisualizer::color_StaticMesh[0], Features::CollisionVisualizer::color_StaticMesh[1],
 											  Features::CollisionVisualizer::color_StaticMesh[2], Features::CollisionVisualizer::color_StaticMesh[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_StaticMesh", color_StaticMesh);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_StaticMesh", color_StaticMesh);
 
 
 	std::array<float, 4> color_Primitive = { Features::CollisionVisualizer::color_Primitive[0], Features::CollisionVisualizer::color_Primitive[1],
 											 Features::CollisionVisualizer::color_Primitive[2], Features::CollisionVisualizer::color_Primitive[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_Primitive", color_Primitive);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_Primitive", color_Primitive);
 
 
 	std::array<float, 4> color_PhysicsVolume = { Features::CollisionVisualizer::color_PhysicsVolume[0], Features::CollisionVisualizer::color_PhysicsVolume[1],
 												 Features::CollisionVisualizer::color_PhysicsVolume[2], Features::CollisionVisualizer::color_PhysicsVolume[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_PhysicsVolume", color_PhysicsVolume);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_PhysicsVolume", color_PhysicsVolume);
 
 
 	std::array<float, 4> color_BlockingVolume = { Features::CollisionVisualizer::color_BlockingVolume[0], Features::CollisionVisualizer::color_BlockingVolume[1],
 												  Features::CollisionVisualizer::color_BlockingVolume[2], Features::CollisionVisualizer::color_BlockingVolume[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_BlockingVolume", color_BlockingVolume);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_BlockingVolume", color_BlockingVolume);
 
 
 	std::array<float, 4> color_TriggerVolume = { Features::CollisionVisualizer::color_TriggerVolume[0], Features::CollisionVisualizer::color_TriggerVolume[1],
 												 Features::CollisionVisualizer::color_TriggerVolume[2], Features::CollisionVisualizer::color_TriggerVolume[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_TriggerVolume", color_TriggerVolume);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_TriggerVolume", color_TriggerVolume);
 
 
 	std::array<float, 4> color_PostProcessVolume = { Features::CollisionVisualizer::color_PostProcessVolume[0], Features::CollisionVisualizer::color_PostProcessVolume[1],
 													 Features::CollisionVisualizer::color_PostProcessVolume[2], Features::CollisionVisualizer::color_PostProcessVolume[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_PostProcessVolume", color_PostProcessVolume);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_PostProcessVolume", color_PostProcessVolume);
 
 
 	std::array<float, 4> color_Other = { Features::CollisionVisualizer::color_Other[0], Features::CollisionVisualizer::color_Other[1],
 										 Features::CollisionVisualizer::color_Other[2], Features::CollisionVisualizer::color_Other[3] };
-	featuresConfig.Set("Features_CollisionVisualizer_color_Other", color_Other);
+	featuresConfig.SetKey("Features_CollisionVisualizer_color_Other", color_Other);
 
 
-	featuresConfig.Set("Features_CollisionVisualizer_thickness", Features::CollisionVisualizer::thickness);
+	featuresConfig.SetKey("Features_CollisionVisualizer_thickness", Features::CollisionVisualizer::thickness);
 #endif
 
 #ifdef ACTORS_TRACKING
 	std::array<float, 4> actorColor = { Features::ActorsTracker::actorColor[0], Features::ActorsTracker::actorColor[1],
 										Features::ActorsTracker::actorColor[2], Features::ActorsTracker::actorColor[3] };
-	featuresConfig.Set("Features_ActorsTracker_actorColor", actorColor);
+	featuresConfig.SetKey("Features_ActorsTracker_actorColor", actorColor);
 
-	featuresConfig.Set("Features_ActorsTracker_checkValidness", Features::ActorsTracker::checkValidness);
+	featuresConfig.SetKey("Features_ActorsTracker_checkValidness", Features::ActorsTracker::checkValidness);
 
-	featuresConfig.Set("Features_ActorsTracker_showDistance", Features::ActorsTracker::showDistance);
+	featuresConfig.SetKey("Features_ActorsTracker_showDistance", Features::ActorsTracker::showDistance);
 #endif
 
 #ifdef FREE_CAMERA
-	featuresConfig.Set("Features_FreeCamera_forceFreezePlayer", Features::FreeCamera::forceFreezePlayer);
+	featuresConfig.SetKey("Features_FreeCamera_forceFreezePlayer", Features::FreeCamera::forceFreezePlayer);
 
-	featuresConfig.Set("Features_FreeCamera_forceDisablePlayerInput", Features::FreeCamera::forceDisablePlayerInput);
+	featuresConfig.SetKey("Features_FreeCamera_forceDisablePlayerInput", Features::FreeCamera::forceDisablePlayerInput);
 
-	featuresConfig.Set("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
-	featuresConfig.Set("Features_FreeCamera_cameraRotationStep", Features::FreeCamera::cameraRotationStep);
+	featuresConfig.SetKey("Features_FreeCamera_cameraMovementStep", Features::FreeCamera::cameraMovementStep);
+	featuresConfig.SetKey("Features_FreeCamera_cameraRotationStep", Features::FreeCamera::cameraRotationStep);
 
-	featuresConfig.Set("Features_FreeCamera_useMouseControl", Features::FreeCamera::useMouseControl);
-	featuresConfig.Set("Features_FreeCamera_mouseControlOnHold", Features::FreeCamera::mouseControlOnHold);
-	featuresConfig.Set("Features_FreeCamera_mouseControlXInverted", Features::FreeCamera::mouseControlXInverted);
-	featuresConfig.Set("Features_FreeCamera_mouseControlYInverted", Features::FreeCamera::mouseControlYInverted);
-	featuresConfig.Set("Features_FreeCamera_mouseControlSensitivity", Features::FreeCamera::mouseControlSensitivity);
-	featuresConfig.Set("Features_FreeCamera_mouseControlLimitMaximumDelta", Features::FreeCamera::mouseControlLimitMaximumDelta);
-	featuresConfig.Set("Features_FreeCamera_mouseControlMaximumDelta", Features::FreeCamera::mouseControlMaximumDelta);
+	featuresConfig.SetKey("Features_FreeCamera_useMouseControl", Features::FreeCamera::useMouseControl);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlOnHold", Features::FreeCamera::mouseControlOnHold);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlXInverted", Features::FreeCamera::mouseControlXInverted);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlYInverted", Features::FreeCamera::mouseControlYInverted);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlSensitivity", Features::FreeCamera::mouseControlSensitivity);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlLimitMaximumDelta", Features::FreeCamera::mouseControlLimitMaximumDelta);
+	featuresConfig.SetKey("Features_FreeCamera_mouseControlMaximumDelta", Features::FreeCamera::mouseControlMaximumDelta);
 #endif
 
 	featuresConfig.Save();
@@ -2173,12 +2173,12 @@ bool Features::Positions::ReadPositionFromConfig(ConfigInstance* positionsConfig
 	if (positionsConfig->HasKey(entryName_Title) == false || positionsConfig->HasKey(entryName_Location) == false)
 		return false;
 
-	positionEntry->title = positionsConfig->Get<std::string>(entryName_Title).value_or(std::string());
+	positionEntry->title = positionsConfig->GetKey<std::string>(entryName_Title).value_or(std::string());
 
-	std::array<float, 3> location = positionsConfig->Get<std::array<float, 3>>(entryName_Location).value_or({ 0.0f, 0.0f, 0.0f });
+	std::array<float, 3> location = positionsConfig->GetKey<std::array<float, 3>>(entryName_Location).value_or({ 0.0f, 0.0f, 0.0f });
 	positionEntry->location = { location[0], location[1], location[2] };
 
-	std::array<float, 3> rotation = positionsConfig->Get<std::array<float, 3>>(entryName_Rotation).value_or({ 0.0f, 0.0f, 0.0f });
+	std::array<float, 3> rotation = positionsConfig->GetKey<std::array<float, 3>>(entryName_Rotation).value_or({ 0.0f, 0.0f, 0.0f });
 	positionEntry->rotation = { rotation[0], rotation[1], rotation[2] };
 
 	return true;
@@ -2218,13 +2218,13 @@ void Features::Positions::Save()
 		std::string entryName_Location = entryName_Base + Positions::entryLocationSuffix;
 		std::string entryName_Rotation = entryName_Base + Positions::entryRotationSuffix;
 
-		positionsConfig.Set(entryName_Title, entries[i].title);
+		positionsConfig.SetKey(entryName_Title, entries[i].title);
 
 		std::array<float, 3> location = { entries[i].location.X, entries[i].location.Y, entries[i].location.Z };
-		positionsConfig.Set(entryName_Location, location);
+		positionsConfig.SetKey(entryName_Location, location);
 
 		std::array<float, 3> rotation = { entries[i].rotation.Pitch, entries[i].rotation.Yaw, entries[i].rotation.Roll };
-		positionsConfig.Set(entryName_Rotation, rotation);
+		positionsConfig.SetKey(entryName_Rotation, rotation);
 	}
 
 	positionsConfig.Save();
@@ -2793,7 +2793,7 @@ void Inputs::Config::ReadKeyBindingFromConfig(ConfigInstance* keybindingsConfig,
 	if (keybindingsConfig->HasKey(entryName) == false)
 		return;
 
-	keyBinding->key = static_cast<ImGuiKey>(keybindingsConfig->Get<int>(entryName).value_or((int)keyBinding->key));
+	keyBinding->key = static_cast<ImGuiKey>(keybindingsConfig->GetKey<int>(entryName).value_or((int)keyBinding->key));
 }
 
 void Inputs::Config::Load()
@@ -2852,45 +2852,46 @@ void Inputs::Config::Save()
 {
 	ConfigInstance keybindingsConfig(PATH_CONFIG_KEYBINDINGS);
 	
-	keybindingsConfig.Set("general_MenuOpenClose", static_cast<int>(Inputs::Keybindings::general_MenuOpenClose.key));
+	keybindingsConfig.SetKey("general_MenuOpenClose", static_cast<int>(Inputs::Keybindings::general_MenuOpenClose.key));
 
 #ifdef ACTOR_TRACE
-	keybindingsConfig.Set("debug_ActorTrace", static_cast<int>(Keybindings::debug_ActorTrace.key));
+	keybindingsConfig.SetKey("debug_ActorTrace", static_cast<int>(Keybindings::debug_ActorTrace.key));
 #endif
-	keybindingsConfig.Set("debug_ActorsListUpdate", static_cast<int>(Inputs::Keybindings::debug_ActorsListUpdate.key));
+	keybindingsConfig.SetKey("debug_ActorsListUpdate", static_cast<int>(Inputs::Keybindings::debug_ActorsListUpdate.key));
 #ifdef ACTORS_TRACKING
-	keybindingsConfig.Set("debug_ActorsListTracking", static_cast<int>(Keybindings::debug_ActorsListTracking.key));
+	keybindingsConfig.SetKey("debug_ActorsListTracking", static_cast<int>(Keybindings::debug_ActorsListTracking.key));
 #endif
 #ifdef COLLISION_VISUALIZER
-	keybindingsConfig.Set("debug_ActorsListCollisionDraw", static_cast<int>(Keybindings::debug_ActorsListCollisionDraw.key));
+	keybindingsConfig.SetKey("debug_ActorsListCollisionDraw", static_cast<int>(Keybindings::debug_ActorsListCollisionDraw.key));
 #endif
 
-	keybindingsConfig.Set("characterMovement_Ghost", static_cast<int>(Inputs::Keybindings::characterMovement_Ghost.key));
-	keybindingsConfig.Set("characterMovement_Fly", static_cast<int>(Inputs::Keybindings::characterMovement_Fly.key));
-	keybindingsConfig.Set("characterMovement_Walk", static_cast<int>(Inputs::Keybindings::characterMovement_Walk.key));
-	keybindingsConfig.Set("characterMovement_Launch", static_cast<int>(Inputs::Keybindings::characterMovement_Launch.key));
-	keybindingsConfig.Set("characterMovement_Dash", static_cast<int>(Inputs::Keybindings::characterMovement_Dash.key));
+	keybindingsConfig.SetKey("characterMovement_Ghost", static_cast<int>(Inputs::Keybindings::characterMovement_Ghost.key));
+	keybindingsConfig.SetKey("characterMovement_Fly", static_cast<int>(Inputs::Keybindings::characterMovement_Fly.key));
+	keybindingsConfig.SetKey("characterMovement_Walk", static_cast<int>(Inputs::Keybindings::characterMovement_Walk.key));
+	keybindingsConfig.SetKey("characterMovement_Jump", static_cast<int>(Inputs::Keybindings::characterMovement_Jump.key));
+	keybindingsConfig.SetKey("characterMovement_Launch", static_cast<int>(Inputs::Keybindings::characterMovement_Launch.key));
+	keybindingsConfig.SetKey("characterMovement_Dash", static_cast<int>(Inputs::Keybindings::characterMovement_Dash.key));
 
-	keybindingsConfig.Set("characterOmniMovement_Up", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Up.key));
-	keybindingsConfig.Set("characterOmniMovement_Down", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Down.key));
+	keybindingsConfig.SetKey("characterOmniMovement_Up", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Up.key));
+	keybindingsConfig.SetKey("characterOmniMovement_Down", static_cast<int>(Inputs::Keybindings::characterOmniMovement_Down.key));
 
-	keybindingsConfig.Set("characterCamera_StartFade", static_cast<int>(Inputs::Keybindings::characterCamera_StartFade.key));
-	keybindingsConfig.Set("characterCamera_StopFade", static_cast<int>(Inputs::Keybindings::characterCamera_StopFade.key));
+	keybindingsConfig.SetKey("characterCamera_StartFade", static_cast<int>(Inputs::Keybindings::characterCamera_StartFade.key));
+	keybindingsConfig.SetKey("characterCamera_StopFade", static_cast<int>(Inputs::Keybindings::characterCamera_StopFade.key));
 
 #ifdef FREE_CAMERA
-	keybindingsConfig.Set("freeCamera_TeleportCameraToPlayer", static_cast<int>(Keybindings::freeCamera_TeleportCameraToPlayer.key));
-	keybindingsConfig.Set("freeCamera_Toggle", static_cast<int>(Keybindings::freeCamera_Toggle.key));
-	keybindingsConfig.Set("freeCamera_TeleportPlayerToCamera", static_cast<int>(Keybindings::freeCamera_TeleportPlayerToCamera.key));
-	keybindingsConfig.Set("freeCamera_MoveForward", static_cast<int>(Keybindings::freeCamera_MoveForward.key));
-	keybindingsConfig.Set("freeCamera_MoveBackward", static_cast<int>(Keybindings::freeCamera_MoveBackward.key));
-	keybindingsConfig.Set("freeCamera_MoveLeft", static_cast<int>(Keybindings::freeCamera_MoveLeft.key));
-	keybindingsConfig.Set("freeCamera_MoveRight", static_cast<int>(Keybindings::freeCamera_MoveRight.key));
-	keybindingsConfig.Set("freeCamera_MoveUp", static_cast<int>(Keybindings::freeCamera_MoveUp.key));
-	keybindingsConfig.Set("freeCamera_MoveDown", static_cast<int>(Keybindings::freeCamera_MoveDown.key));
-	keybindingsConfig.Set("freeCamera_RotateUp", static_cast<int>(Keybindings::freeCamera_RotateUp.key));
-	keybindingsConfig.Set("freeCamera_RotateDown", static_cast<int>(Keybindings::freeCamera_RotateDown.key));
-	keybindingsConfig.Set("freeCamera_RotateLeft", static_cast<int>(Keybindings::freeCamera_RotateLeft.key));
-	keybindingsConfig.Set("freeCamera_RotateRight", static_cast<int>(Keybindings::freeCamera_RotateRight.key));
+	keybindingsConfig.SetKey("freeCamera_TeleportCameraToPlayer", static_cast<int>(Keybindings::freeCamera_TeleportCameraToPlayer.key));
+	keybindingsConfig.SetKey("freeCamera_Toggle", static_cast<int>(Keybindings::freeCamera_Toggle.key));
+	keybindingsConfig.SetKey("freeCamera_TeleportPlayerToCamera", static_cast<int>(Keybindings::freeCamera_TeleportPlayerToCamera.key));
+	keybindingsConfig.SetKey("freeCamera_MoveForward", static_cast<int>(Keybindings::freeCamera_MoveForward.key));
+	keybindingsConfig.SetKey("freeCamera_MoveBackward", static_cast<int>(Keybindings::freeCamera_MoveBackward.key));
+	keybindingsConfig.SetKey("freeCamera_MoveLeft", static_cast<int>(Keybindings::freeCamera_MoveLeft.key));
+	keybindingsConfig.SetKey("freeCamera_MoveRight", static_cast<int>(Keybindings::freeCamera_MoveRight.key));
+	keybindingsConfig.SetKey("freeCamera_MoveUp", static_cast<int>(Keybindings::freeCamera_MoveUp.key));
+	keybindingsConfig.SetKey("freeCamera_MoveDown", static_cast<int>(Keybindings::freeCamera_MoveDown.key));
+	keybindingsConfig.SetKey("freeCamera_RotateUp", static_cast<int>(Keybindings::freeCamera_RotateUp.key));
+	keybindingsConfig.SetKey("freeCamera_RotateDown", static_cast<int>(Keybindings::freeCamera_RotateDown.key));
+	keybindingsConfig.SetKey("freeCamera_RotateLeft", static_cast<int>(Keybindings::freeCamera_RotateLeft.key));
+	keybindingsConfig.SetKey("freeCamera_RotateRight", static_cast<int>(Keybindings::freeCamera_RotateRight.key));
 #endif
 
 	keybindingsConfig.Save();
@@ -3813,7 +3814,7 @@ void Templates::Descriptions::HDR::Draw()
 	ImGui::SameLine();
 	if (ImGui::Button("Copy##HDRAllowConfigDescription"))
 	{
-		GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(HDRAllowConfigDescription));
+		GUI::PlayActionSound(Utilities::Clipboard::SetText(HDRAllowConfigDescription));
 	}
 
 	ImGui::NewLine();
@@ -3868,7 +3869,7 @@ void Templates::Descriptions::HDR::Draw()
 	ImGui::SameLine();
 	if (ImGui::Button("Copy##HDRSettingsConfigDescription"))
 	{
-		GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(HDRSettingsConfigDescription));
+		GUI::PlayActionSound(Utilities::Clipboard::SetText(HDRSettingsConfigDescription));
 	}
 
 	ImGui::SetFontRegular();
@@ -3889,7 +3890,7 @@ void Templates::Descriptions::HDR::Draw()
 	ImGui::SameLine();
 	if (ImGui::Button("Copy##HDRSettingsConsoleDescription"))
 	{
-		GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(HDRSettingsConsoleDescription));
+		GUI::PlayActionSound(Utilities::Clipboard::SetText(HDRSettingsConsoleDescription));
 	}
 
 	ImGui::NewLine();
@@ -3907,7 +3908,7 @@ void Templates::Descriptions::HDR::Draw()
 	ImGui::SameLine();
 	if (ImGui::Button("Copy##HDRDisturbanceConfigDescription"))
 	{
-		GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(HDRDisturbanceConfigDescription));
+		GUI::PlayActionSound(Utilities::Clipboard::SetText(HDRDisturbanceConfigDescription));
 	}
 
 	ImGui::SetFontRegular();
@@ -3920,7 +3921,7 @@ void Templates::Descriptions::HDR::Draw()
 	ImGui::SameLine();
 	if (ImGui::Button("Copy##HDRDisturbanceConsoleDescription"))
 	{
-		GUI::PlayActionSound(Utilities::Clipboard::SetClipboardText(HDRDisturbanceConsoleDescription));
+		GUI::PlayActionSound(Utilities::Clipboard::SetText(HDRDisturbanceConsoleDescription));
 	}
 
 	ImGui::NewLine();

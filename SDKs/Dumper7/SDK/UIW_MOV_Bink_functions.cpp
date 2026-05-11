@@ -14,8 +14,7 @@
 #include "UIW_MOV_Bink_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_MOV_Bink.UIW_MOV_Bink_C.ExecuteUbergraph_UIW_MOV_Bink
 // (Final, UbergraphFunction)
@@ -112,5 +111,5 @@ void UUIW_MOV_Bink_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

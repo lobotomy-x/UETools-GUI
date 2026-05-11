@@ -14,8 +14,7 @@
 #include "Engine_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass Title_P.Title_P_C
 // 0x0018 (0x0240 - 0x0228)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_ATitle_P_C;
 
-}
-
+SDK_NAMESPACE_END

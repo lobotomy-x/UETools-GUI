@@ -14,8 +14,7 @@
 #include "UIW_Locker_ListItem_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Locker_ListItem_Item.UIW_Locker_ListItem_Item_C.SetEquipPossible
 // (Protected, BlueprintCallable, BlueprintEvent)
@@ -30,5 +29,5 @@ void UUIW_Locker_ListItem_Item_C::SetEquipPossible()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

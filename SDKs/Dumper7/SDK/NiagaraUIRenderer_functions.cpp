@@ -14,8 +14,7 @@
 #include "NiagaraUIRenderer_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function NiagaraUIRenderer.NiagaraSystemWidget.ActivateSystem
 // (Final, Native, Public, BlueprintCallable)
@@ -135,5 +134,5 @@ void UNiagaraSystemWidget::UpdateTickWhenPaused(bool NewTickWhenPaused)
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

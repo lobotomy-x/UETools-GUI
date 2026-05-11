@@ -14,8 +14,7 @@
 #include "BP_Action_WireProjectile_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_WireProjectile.BP_Action_WireProjectile_C.ExecuteUbergraph_BP_Action_WireProjectile
 // (Final, UbergraphFunction)
@@ -120,5 +119,5 @@ void UBP_Action_WireProjectile_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "MediaAssets_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function MediaAssets.MediaSource.SetMediaOptionBool
 // (Final, Native, Public, HasOutParams, BlueprintCallable)
@@ -3025,5 +3024,5 @@ int32 UMediaTexture::GetWidth() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

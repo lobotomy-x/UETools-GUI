@@ -14,8 +14,7 @@
 #include "UIW_HUD_BossBar_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_BossBar.UIW_HUD_BossBar_C.ExecuteUbergraph_UIW_HUD_BossBar
 // (Final, UbergraphFunction, HasDefaults)
@@ -358,5 +357,5 @@ void UUIW_HUD_BossBar_C::OnAbnormalState(class FName AbnormalName, int64 Abnorma
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

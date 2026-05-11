@@ -18,8 +18,7 @@
 #include "ChaosSolverEngine_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class GeometryCollectionEngine.ChaosDestructionListener
 // 0x0220 (0x0420 - 0x0200)
@@ -498,5 +497,4 @@ public:
 };
 DUMPER7_ASSERTS_UStaticMeshSimulationComponent;
 
-}
-
+SDK_NAMESPACE_END

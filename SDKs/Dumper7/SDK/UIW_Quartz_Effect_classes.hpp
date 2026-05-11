@@ -16,8 +16,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Quartz_Effect.UIW_Quartz_Effect_C
 // 0x01B0 (0x0410 - 0x0260)
@@ -140,5 +139,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Quartz_Effect_C;
 
-}
-
+SDK_NAMESPACE_END

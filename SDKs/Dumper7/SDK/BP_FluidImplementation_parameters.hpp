@@ -16,8 +16,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_FluidImplementation.BP_FluidImplementation_C.ExecuteUbergraph_BP_FluidImplementation
 // 0x0160 (0x0160 - 0x0000)
@@ -253,5 +253,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_FluidImplementation_C_PerBoneDraw;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

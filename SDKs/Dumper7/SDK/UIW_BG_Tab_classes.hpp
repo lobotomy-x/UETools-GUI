@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_BG_Tab.UIW_BG_Tab_C
 // 0x0010 (0x02B0 - 0x02A0)
@@ -40,5 +39,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_BG_Tab_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass WorldSystemDataBP.WorldSystemDataBP_C
 // 0x0010 (0x0230 - 0x0220)
@@ -47,5 +46,4 @@ public:
 };
 DUMPER7_ASSERTS_AWorldSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

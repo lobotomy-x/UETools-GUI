@@ -14,8 +14,7 @@
 #include "UIW_Weapon_Custom_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Weapon_Custom.UIW_Weapon_Custom_C.ExecuteUbergraph_UIW_Weapon_Custom
 // (Final, UbergraphFunction, HasDefaults)
@@ -652,5 +651,5 @@ class UWidget* UUIW_Weapon_Custom_C::NavToLRLoopItem(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

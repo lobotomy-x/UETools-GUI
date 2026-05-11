@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_CeilingHitFalling.BP_Action_CeilingHitFalling_C
 // 0x0020 (0x03B8 - 0x0398)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_CeilingHitFalling_C;
 
-}
-
+SDK_NAMESPACE_END

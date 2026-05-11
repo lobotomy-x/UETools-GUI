@@ -14,8 +14,7 @@
 #include "UIW_MonadBuff_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_MonadBuff.UIW_MonadBuff_C.ExecuteUbergraph_UIW_MonadBuff
 // (Final, UbergraphFunction, HasDefaults)
@@ -338,5 +337,5 @@ class UWidget* UUIW_MonadBuff_C::NavToLRLoop(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

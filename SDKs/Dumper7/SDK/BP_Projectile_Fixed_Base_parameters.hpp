@@ -14,8 +14,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function BP_Projectile_Fixed_Base.BP_Projectile_Fixed_Base_C.ExecuteUbergraph_BP_Projectile_Fixed_Base
 // 0x0020 (0x0020 - 0x0000)
@@ -63,5 +63,5 @@ public:
 };
 DUMPER7_ASSERTS_BP_Projectile_Fixed_Base_C_FinishProjectile;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

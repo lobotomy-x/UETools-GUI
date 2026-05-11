@@ -14,8 +14,7 @@
 #include "UIW_SlaveArm_Reinforce_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SlaveArm_Reinforce.UIW_SlaveArm_Reinforce_C.ExecuteUbergraph_UIW_SlaveArm_Reinforce
 // (Final, UbergraphFunction, HasDefaults)
@@ -295,5 +294,5 @@ void UUIW_SlaveArm_Reinforce_C::RefreshResource(const struct FSlaveArmTreeInfoPt
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

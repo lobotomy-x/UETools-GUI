@@ -14,8 +14,7 @@
 #include "ABP_CH_PC_Pino_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ABP_CH_PC_Pino.ABP_CH_PC_Pino_C.ExecuteUbergraph_ABP_CH_PC_Pino
 // (Final, UbergraphFunction)
@@ -527,5 +526,5 @@ void UABP_CH_PC_Pino_C::AnimLayer_Additive(const struct FPoseLink& MainStateBase
 		*AnimLayer_Additive_0 = std::move(Parms.AnimLayer_Additive_0);
 }
 
-}
 
+SDK_NAMESPACE_END

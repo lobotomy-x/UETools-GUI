@@ -14,8 +14,7 @@
 #include "BP_CH_PC_Pino_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_CH_PC_Pino.BP_CH_PC_Pino_C.ExecuteUbergraph_BP_CH_PC_Pino
 // (Final, UbergraphFunction)
@@ -699,5 +698,5 @@ class UMeshComponent* ABP_CH_PC_Pino_C::GetLampMesh() const
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

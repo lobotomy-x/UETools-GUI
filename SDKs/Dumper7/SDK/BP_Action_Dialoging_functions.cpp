@@ -14,8 +14,7 @@
 #include "BP_Action_Dialoging_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Dialoging.BP_Action_Dialoging_C.ExecuteUbergraph_BP_Action_Dialoging
 // (Final, UbergraphFunction, HasDefaults)
@@ -226,5 +225,5 @@ void UBP_Action_Dialoging_C::Start_Rotation(class AActor* LookAtTarget, int32 No
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

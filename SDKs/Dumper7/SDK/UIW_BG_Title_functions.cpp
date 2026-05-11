@@ -14,8 +14,7 @@
 #include "UIW_BG_Title_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_BG_Title.UIW_BG_Title_C.ExecuteUbergraph_UIW_BG_Title
 // (Final, UbergraphFunction, HasDefaults)
@@ -50,5 +49,5 @@ void UUIW_BG_Title_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

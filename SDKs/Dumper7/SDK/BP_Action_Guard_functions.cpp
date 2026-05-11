@@ -14,8 +14,7 @@
 #include "BP_Action_Guard_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Guard.BP_Action_Guard_C.ExecuteUbergraph_BP_Action_Guard
 // (Final, UbergraphFunction, HasDefaults)
@@ -97,5 +96,5 @@ bool UBP_Action_Guard_C::OnLanded(class ACharacter* LandingChar, const struct FH
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

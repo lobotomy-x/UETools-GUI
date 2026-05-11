@@ -14,8 +14,7 @@
 #include "BP_Action_FatalAttack_Victim_End_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_FatalAttack_Victim_End.BP_Action_FatalAttack_Victim_End_C.ExecuteUbergraph_BP_Action_FatalAttack_Victim_End
 // (Final, UbergraphFunction)
@@ -72,5 +71,5 @@ void UBP_Action_FatalAttack_Victim_End_C::OnStart()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

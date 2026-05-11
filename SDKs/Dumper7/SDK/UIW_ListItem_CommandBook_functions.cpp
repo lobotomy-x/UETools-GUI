@@ -14,8 +14,7 @@
 #include "UIW_ListItem_CommandBook_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_CommandBook.UIW_ListItem_CommandBook_C.ExecuteUbergraph_UIW_ListItem_CommandBook
 // (Final, UbergraphFunction, HasDefaults)
@@ -300,5 +299,5 @@ bool UUIW_ListItem_CommandBook_C::OnDrop(const struct FGeometry& MyGeometry, con
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_Die_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Die.BP_Action_Die_C.ExecuteUbergraph_BP_Action_Die
 // (Final, UbergraphFunction, HasDefaults)
@@ -197,5 +196,5 @@ bool UBP_Action_Die_C::OnLanded(class ACharacter* LandingChar, const struct FHit
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

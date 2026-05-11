@@ -14,8 +14,7 @@
 #include "LPCCharacterBP_StatRoom_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LPCCharacterBP_StatRoom.LPCCharacterBP_StatRoom_C.ExecuteUbergraph_LPCCharacterBP_StatRoom
 // (Final, UbergraphFunction)
@@ -84,5 +83,5 @@ void ALPCCharacterBP_StatRoom_C::UserConstructionScript()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

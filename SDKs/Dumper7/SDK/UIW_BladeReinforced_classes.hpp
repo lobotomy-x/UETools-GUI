@@ -15,8 +15,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_BladeReinforced.UIW_BladeReinforced_C
 // 0x0110 (0x0458 - 0x0348)
@@ -102,5 +101,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_BladeReinforced_C;
 
-}
-
+SDK_NAMESPACE_END

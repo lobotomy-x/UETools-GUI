@@ -13,8 +13,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_EndingCredit_Module.UIW_EndingCredit_Module_C
 // 0x0050 (0x02F0 - 0x02A0)
@@ -43,5 +42,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_EndingCredit_Module_C;
 
-}
-
+SDK_NAMESPACE_END

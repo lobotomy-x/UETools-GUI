@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ItemLarge_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Slot_Large.UIW_Slot_Large_C
 // 0x0030 (0x0338 - 0x0308)
@@ -54,5 +53,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Slot_Large_C;
 
-}
-
+SDK_NAMESPACE_END

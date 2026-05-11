@@ -14,8 +14,7 @@
 #include "UIW_Teleport_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Teleport.UIW_Teleport_C.ExecuteUbergraph_UIW_Teleport
 // (Final, UbergraphFunction, HasDefaults)
@@ -335,5 +334,5 @@ class UWidget* UUIW_Teleport_C::NavToBottom(EUINavigation Navigation_0)
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

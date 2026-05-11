@@ -15,8 +15,8 @@
 #include "InputCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_HUD_Menu_BeltSlot.UIW_HUD_Menu_BeltSlot_C.ExecuteUbergraph_UIW_HUD_Menu_BeltSlot
 // 0x00B0 (0x00B0 - 0x0000)
@@ -67,5 +67,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_HUD_Menu_BeltSlot_C_OnMouseButtonDoubleClick;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

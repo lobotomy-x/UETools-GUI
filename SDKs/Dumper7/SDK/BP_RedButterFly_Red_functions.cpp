@@ -14,8 +14,7 @@
 #include "BP_RedButterFly_Red_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_RedButterFly_Red.BP_RedButterFly_Red_C.ExecuteUbergraph_BP_RedButterFly_Red
 // (Final, UbergraphFunction, HasDefaults)
@@ -348,5 +347,5 @@ void ABP_RedButterFly_Red_C::Get_Ghost_Skill_Code_Name(bool IsToGhost, class FNa
 		*Out = Parms.Out;
 }
 
-}
 
+SDK_NAMESPACE_END

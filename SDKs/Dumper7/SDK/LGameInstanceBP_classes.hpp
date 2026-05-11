@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass LGameInstanceBP.LGameInstanceBP_C
 // 0x0028 (0x02C8 - 0x02A0)
@@ -60,5 +59,4 @@ public:
 };
 DUMPER7_ASSERTS_ULGameInstanceBP_C;
 
-}
-
+SDK_NAMESPACE_END

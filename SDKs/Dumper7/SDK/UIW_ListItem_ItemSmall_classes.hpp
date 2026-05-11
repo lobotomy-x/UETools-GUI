@@ -15,8 +15,7 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_ItemSmall.UIW_ListItem_ItemSmall_C
 // 0x0098 (0x0338 - 0x02A0)
@@ -82,5 +81,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_ItemSmall_C;
 
-}
-
+SDK_NAMESPACE_END

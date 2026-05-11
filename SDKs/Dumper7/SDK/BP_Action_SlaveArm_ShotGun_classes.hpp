@@ -15,8 +15,7 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_ShotGun.BP_Action_SlaveArm_ShotGun_C
 // 0x0030 (0x0248 - 0x0218)
@@ -70,5 +69,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_ShotGun_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_ProfileItem_GoldenTree_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ProfileItem_GoldenTree.UIW_ProfileItem_GoldenTree_C.ExecuteUbergraph_UIW_ProfileItem_GoldenTree
 // (Final, UbergraphFunction)
@@ -140,5 +139,5 @@ void UUIW_ProfileItem_GoldenTree_C::SetIsHUD()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

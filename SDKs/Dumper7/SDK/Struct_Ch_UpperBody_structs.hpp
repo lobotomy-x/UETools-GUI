@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct Struct_Ch_UpperBody.Struct_Ch_UpperBody
 // 0x0020 (0x0020 - 0x0000)
@@ -26,5 +25,4 @@ public:
 };
 DUMPER7_ASSERTS_FStruct_Ch_UpperBody;
 
-}
-
+SDK_NAMESPACE_END

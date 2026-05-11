@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Controller_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Controller.UIW_ListItem_Controller_C.ExecuteUbergraph_UIW_ListItem_Controller
 // (Final, UbergraphFunction, HasDefaults)
@@ -285,5 +284,5 @@ void UUIW_ListItem_Controller_C::OnOverlap(bool IsOverlap)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

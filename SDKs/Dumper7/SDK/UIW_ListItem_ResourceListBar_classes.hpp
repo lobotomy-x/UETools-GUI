@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_ListItem_ResourceListBar.UIW_ListItem_ResourceListBar_C
 // 0x0030 (0x02D0 - 0x02A0)
@@ -53,5 +52,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_ListItem_ResourceListBar_C;
 
-}
-
+SDK_NAMESPACE_END

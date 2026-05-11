@@ -13,8 +13,7 @@
 #include "BP_Action_LockOnDash_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_LockOnDash_Heavy.BP_Action_LockOnDash_Heavy_C
 // 0x0000 (0x0258 - 0x0258)
@@ -36,5 +35,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_LockOnDash_Heavy_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Quartz_Effect_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Quartz_Effect.UIW_Quartz_Effect_C.ExecuteUbergraph_UIW_Quartz_Effect
 // (Final, UbergraphFunction, HasDefaults)
@@ -909,5 +908,5 @@ void UUIW_Quartz_Effect_C::GetCanInstall(class FName EffectID, bool* CanInstall)
 		*CanInstall = Parms.CanInstall;
 }
 
-}
 
+SDK_NAMESPACE_END

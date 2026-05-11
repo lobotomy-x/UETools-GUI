@@ -14,8 +14,7 @@
 #include "BP_Action_HitBase_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Guard_Break.BP_Action_Guard_Break_C
 // 0x0030 (0x03C8 - 0x0398)
@@ -52,5 +51,4 @@ public:
 };
 DUMPER7_ASSERTS_BP_Action_Guard_Break__UBP_Action_Guard_Break_C;
 
-}
-
+SDK_NAMESPACE_END

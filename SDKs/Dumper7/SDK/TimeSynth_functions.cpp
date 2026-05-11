@@ -14,8 +14,7 @@
 #include "TimeSynth_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function TimeSynth.TimeSynthComponent.AddQuantizationEventDelegate
 // (Final, Native, Public, HasOutParams, BlueprintCallable)
@@ -562,5 +561,5 @@ TArray<struct FTimeSynthSpectralData> UTimeSynthComponent::GetSpectralData() con
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

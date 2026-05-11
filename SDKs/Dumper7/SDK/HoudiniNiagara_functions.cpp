@@ -14,8 +14,7 @@
 #include "HoudiniNiagara_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function HoudiniNiagara.HoudiniPointCache.GetAttributeIndexInArrayFromString
 // (Final, Native, Static, Public, HasOutParams, BlueprintCallable)
@@ -1495,5 +1494,5 @@ bool UHoudiniPointCache::GetVelocityValue(const int32& SampleIndex, struct FVect
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

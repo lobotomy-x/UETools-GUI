@@ -14,8 +14,8 @@
 #include "Engine_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Window_Tutorial.UIW_Window_Tutorial_C.ExecuteUbergraph_UIW_Window_Tutorial
 // 0x00A0 (0x00A0 - 0x0000)
@@ -144,5 +144,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Window_Tutorial_C_ClearEventBinding;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

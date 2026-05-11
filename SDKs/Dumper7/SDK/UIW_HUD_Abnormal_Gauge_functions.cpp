@@ -14,8 +14,7 @@
 #include "UIW_HUD_Abnormal_Gauge_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Abnormal_Gauge.UIW_HUD_Abnormal_Gauge_C.ExecuteUbergraph_UIW_HUD_Abnormal_Gauge
 // (Final, UbergraphFunction)
@@ -145,5 +144,5 @@ void UUIW_HUD_Abnormal_Gauge_C::RefreshAbnormal()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

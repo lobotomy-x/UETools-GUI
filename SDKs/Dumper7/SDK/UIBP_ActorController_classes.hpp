@@ -14,8 +14,7 @@
 #include "CoreUObject_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass UIBP_ActorController.UIBP_ActorController_C
 // 0x0058 (0x0080 - 0x0028)
@@ -62,5 +61,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIBP_ActorController_C;
 
-}
-
+SDK_NAMESPACE_END

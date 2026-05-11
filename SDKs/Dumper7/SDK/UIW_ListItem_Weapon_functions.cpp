@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Weapon_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Weapon.UIW_ListItem_Weapon_C.ExecuteUbergraph_UIW_ListItem_Weapon
 // (Final, UbergraphFunction, HasDefaults)
@@ -352,5 +351,5 @@ void UUIW_ListItem_Weapon_C::SetNew()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

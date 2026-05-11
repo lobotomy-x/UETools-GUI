@@ -14,8 +14,7 @@
 #include "BP_Action_Interaction_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Interaction.BP_Action_Interaction_C.ExecuteUbergraph_BP_Action_Interaction
 // (Final, UbergraphFunction, HasDefaults)
@@ -218,5 +217,5 @@ void UBP_Action_Interaction_C::StartRotation()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

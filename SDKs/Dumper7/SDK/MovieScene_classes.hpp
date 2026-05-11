@@ -16,8 +16,7 @@
 #include "MovieScene_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class MovieScene.MovieSceneSequencePlayer
 // 0x04C0 (0x04E8 - 0x0028)
@@ -1609,5 +1608,4 @@ public:
 };
 DUMPER7_ASSERTS_UMovieSceneTrackInstance;
 
-}
-
+SDK_NAMESPACE_END

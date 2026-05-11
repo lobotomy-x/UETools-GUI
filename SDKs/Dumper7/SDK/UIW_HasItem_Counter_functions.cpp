@@ -14,8 +14,7 @@
 #include "UIW_HasItem_Counter_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HasItem_Counter.UIW_HasItem_Counter_C.ExecuteUbergraph_UIW_HasItem_Counter
 // (Final, UbergraphFunction, HasDefaults)
@@ -70,5 +69,5 @@ void UUIW_HasItem_Counter_C::SetItem(class ULItem* LItem)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

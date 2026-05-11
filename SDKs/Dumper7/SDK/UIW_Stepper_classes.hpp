@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Stepper.UIW_Stepper_C
 // 0x0080 (0x0320 - 0x02A0)
@@ -72,5 +71,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Stepper_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -18,8 +18,7 @@
 #include "PropertyPath_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum UMG.ESlateAccessibleBehavior
 // NumValues: 0x0006
@@ -445,5 +444,4 @@ public:
 };
 DUMPER7_ASSERTS_FWidgetNavigationData;
 
-}
-
+SDK_NAMESPACE_END

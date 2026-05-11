@@ -14,8 +14,7 @@
 #include "UIW_HUD_Gauge_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_Gauge.UIW_HUD_Gauge_C.ExecuteUbergraph_UIW_HUD_Gauge
 // (Final, UbergraphFunction)
@@ -178,5 +177,5 @@ void UUIW_HUD_Gauge_C::RefreshGauge(float CurrentPercent, bool NeedTween)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

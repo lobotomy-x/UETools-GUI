@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum CoreUObject.EInterpCurveMode
 // NumValues: 0x0007
@@ -1448,5 +1447,4 @@ public:
 };
 DUMPER7_ASSERTS_FAssetData;
 
-}
-
+SDK_NAMESPACE_END

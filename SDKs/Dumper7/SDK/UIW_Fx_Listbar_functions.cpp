@@ -14,8 +14,7 @@
 #include "UIW_Fx_Listbar_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Fx_Listbar.UIW_Fx_Listbar_C.ExecuteUbergraph_UIW_Fx_Listbar
 // (Final, UbergraphFunction, HasDefaults)
@@ -120,5 +119,5 @@ void UUIW_Fx_Listbar_C::OnSelected()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -13,8 +13,8 @@
 #include "SlateCore_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Locker_Slot.UIW_Locker_Slot_C.ExecuteUbergraph_UIW_Locker_Slot
 // 0x04D8 (0x04D8 - 0x0000)
@@ -27,5 +27,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Locker_Slot_C_ExecuteUbergraph_UIW_Locker_Slot;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

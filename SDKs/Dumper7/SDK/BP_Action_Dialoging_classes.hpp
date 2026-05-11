@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Dialoging.BP_Action_Dialoging_C
 // 0x0038 (0x0220 - 0x01E8)
@@ -66,5 +65,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Dialoging_C;
 
-}
-
+SDK_NAMESPACE_END

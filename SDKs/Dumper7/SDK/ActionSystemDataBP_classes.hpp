@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass ActionSystemDataBP.ActionSystemDataBP_C
 // 0x0018 (0x0570 - 0x0558)
@@ -48,5 +47,4 @@ public:
 };
 DUMPER7_ASSERTS_AActionSystemDataBP_C;
 
-}
-
+SDK_NAMESPACE_END

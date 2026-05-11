@@ -14,8 +14,7 @@
 #include "LGalleryActor_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LGalleryActor.LGalleryActor_C.ExecuteUbergraph_LGalleryActor
 // (Final, UbergraphFunction, HasDefaults)
@@ -163,5 +162,5 @@ void ALGalleryActor_C::Get_Zoom_Speed(float* OutSpeed) const
 		*OutSpeed = Parms.OutSpeed;
 }
 
-}
 
+SDK_NAMESPACE_END

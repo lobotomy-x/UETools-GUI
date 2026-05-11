@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Control_BlankText.UIW_Control_BlankText_C
 // 0x0018 (0x02B8 - 0x02A0)
@@ -46,5 +45,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Control_BlankText_C;
 
-}
-
+SDK_NAMESPACE_END

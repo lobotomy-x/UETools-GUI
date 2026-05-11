@@ -15,8 +15,7 @@
 #include "UMG_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_CharacterUpgrade_Stat.UIW_CharacterUpgrade_Stat_C
 // 0x0050 (0x02B0 - 0x0260)
@@ -59,5 +58,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_CharacterUpgrade_Stat_C;
 
-}
-
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Action_JumpSkill_Vertical_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_JumpSkill_Vertical.BP_Action_JumpSkill_Vertical_C.ExecuteUbergraph_BP_Action_JumpSkill_Vertical
 // (Final, UbergraphFunction, HasDefaults)
@@ -307,5 +306,5 @@ int32 UBP_Action_JumpSkill_Vertical_C::OnSelectNextAnim(class UAnimMontage* Mont
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

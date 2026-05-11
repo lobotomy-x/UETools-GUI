@@ -16,8 +16,8 @@
 #include "ProjectP_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_Window.UIW_Window_C.ExecuteUbergraph_UIW_Window
 // 0x0030 (0x0030 - 0x0000)
@@ -168,5 +168,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_Window_C_OnMouseButtonUp;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

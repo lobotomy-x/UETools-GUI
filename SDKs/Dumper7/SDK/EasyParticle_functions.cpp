@@ -14,8 +14,7 @@
 #include "EasyParticle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function EasyParticle.EasyParticle.Play
 // (Final, Native, Public, BlueprintCallable)
@@ -271,5 +270,5 @@ void UEasyParticleComponentRuntime::Tick(const struct FGeometry& AllottedGeometr
 	Func->FunctionFlags = Flgs;
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "UIW_Window_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_SlaveArm_Reinforce.UIW_SlaveArm_Reinforce_C
 // 0x0170 (0x04B8 - 0x0348)
@@ -99,5 +98,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_SlaveArm_Reinforce_C;
 
-}
-
+SDK_NAMESPACE_END

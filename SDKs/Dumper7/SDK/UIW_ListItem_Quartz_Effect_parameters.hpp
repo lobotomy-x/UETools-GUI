@@ -15,8 +15,8 @@
 #include "ProjectPContentInfo_structs.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function UIW_ListItem_Quartz_Effect.UIW_ListItem_Quartz_Effect_C.ExecuteUbergraph_UIW_ListItem_Quartz_Effect
 // 0x01E8 (0x01E8 - 0x0000)
@@ -154,5 +154,5 @@ public:
 };
 DUMPER7_ASSERTS_UIW_ListItem_Quartz_Effect_C_SetTextColor;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END

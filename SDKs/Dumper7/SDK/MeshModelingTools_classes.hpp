@@ -18,8 +18,7 @@
 #include "ModelingComponents_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Class MeshModelingTools.HoleFillToolActions
 // 0x0008 (0x0068 - 0x0060)
@@ -6552,5 +6551,4 @@ public:
 };
 DUMPER7_ASSERTS_UWeldMeshEdgesTool;
 
-}
-
+SDK_NAMESPACE_END

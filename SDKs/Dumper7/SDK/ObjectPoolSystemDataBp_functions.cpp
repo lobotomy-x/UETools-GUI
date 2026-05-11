@@ -14,8 +14,7 @@
 #include "ObjectPoolSystemDataBp_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ObjectPoolSystemDataBp.ObjectPoolSystemDataBp_C.ExecuteUbergraph_ObjectPoolSystemDataBp
 // (Final, UbergraphFunction, HasDefaults)
@@ -111,5 +110,5 @@ void AObjectPoolSystemDataBp_C::RemoveHeadtagWidget(class UUserWidget* HeadTagWi
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "LEquipmentComponentBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function LEquipmentComponentBP.LEquipmentComponentBP_C.SpawnWeaponWithClass
 // (Event, Public, HasOutParams, HasDefaults, BlueprintCallable, BlueprintEvent)
@@ -41,5 +40,5 @@ class ALWeapon* ULEquipmentComponentBP_C::SpawnWeaponWithClass(TSubclassOf<class
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

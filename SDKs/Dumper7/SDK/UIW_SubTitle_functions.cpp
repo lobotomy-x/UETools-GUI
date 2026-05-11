@@ -14,8 +14,7 @@
 #include "UIW_SubTitle_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_SubTitle.UIW_SubTitle_C.SetHeadlineVisibility
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -38,5 +37,5 @@ void UUIW_SubTitle_C::SetHeadlineVisibility(bool Visible, const class FText& Tex
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

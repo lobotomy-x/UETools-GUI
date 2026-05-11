@@ -14,8 +14,7 @@
 #include "BP_Action_DMG_STAND_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_ToughSpecialHit.BP_Action_ToughSpecialHit_C
 // 0x0008 (0x05D0 - 0x05C8)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_ToughSpecialHit_C;
 
-}
-
+SDK_NAMESPACE_END

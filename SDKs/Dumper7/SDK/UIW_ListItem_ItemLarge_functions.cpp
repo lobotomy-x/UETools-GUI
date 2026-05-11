@@ -14,8 +14,7 @@
 #include "UIW_ListItem_ItemLarge_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_ItemLarge.UIW_ListItem_ItemLarge_C.ExecuteUbergraph_UIW_ListItem_ItemLarge
 // (Final, UbergraphFunction, HasDefaults)
@@ -332,5 +331,5 @@ void UUIW_ListItem_ItemLarge_C::SetSlotType(class FName ID)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

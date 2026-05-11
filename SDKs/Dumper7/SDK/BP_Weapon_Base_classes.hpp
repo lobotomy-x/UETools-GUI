@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Weapon_Base.BP_Weapon_Base_C
 // 0x0050 (0x03E8 - 0x0398)
@@ -91,5 +90,4 @@ public:
 };
 DUMPER7_ASSERTS_ABP_Weapon_Base_C;
 
-}
-
+SDK_NAMESPACE_END

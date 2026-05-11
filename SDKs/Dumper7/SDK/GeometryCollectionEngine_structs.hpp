@@ -14,8 +14,7 @@
 #include "Chaos_structs.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Enum GeometryCollectionEngine.EChaosBreakingSortMethod
 // NumValues: 0x0006
@@ -265,5 +264,4 @@ public:
 };
 DUMPER7_ASSERTS_FGeometryCollectionSource;
 
-}
-
+SDK_NAMESPACE_END

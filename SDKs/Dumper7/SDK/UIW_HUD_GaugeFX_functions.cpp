@@ -14,8 +14,7 @@
 #include "UIW_HUD_GaugeFX_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_HUD_GaugeFX.UIW_HUD_GaugeFX_C.ExecuteUbergraph_UIW_HUD_GaugeFX
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UUIW_HUD_GaugeFX_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

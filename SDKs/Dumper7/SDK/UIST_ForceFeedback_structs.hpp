@@ -11,8 +11,7 @@
 #include "Basic.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // UserDefinedStruct UIST_ForceFeedback.UIST_ForceFeedback
 // 0x0010 (0x0010 - 0x0000)
@@ -26,5 +25,4 @@ public:
 };
 DUMPER7_ASSERTS_FUIST_ForceFeedback;
 
-}
-
+SDK_NAMESPACE_END

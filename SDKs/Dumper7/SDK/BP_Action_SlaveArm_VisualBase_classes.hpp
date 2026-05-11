@@ -15,8 +15,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_VisualBase.BP_Action_SlaveArm_VisualBase_C
 // 0x0008 (0x01E8 - 0x01E0)
@@ -49,5 +48,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_VisualBase_C;
 
-}
-
+SDK_NAMESPACE_END

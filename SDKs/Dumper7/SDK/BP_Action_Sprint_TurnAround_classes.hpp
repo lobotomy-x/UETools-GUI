@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_Sprint_TurnAround.BP_Action_Sprint_TurnAround_C
 // 0x0008 (0x01E8 - 0x01E0)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_Sprint_TurnAround_C;
 
-}
-
+SDK_NAMESPACE_END

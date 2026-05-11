@@ -14,8 +14,7 @@
 #include "UIW_Page_Indicator_Item_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Page_Indicator_Item.UIW_Page_Indicator_Item_C.ExecuteUbergraph_UIW_Page_Indicator_Item
 // (Final, UbergraphFunction)
@@ -50,5 +49,5 @@ void UUIW_Page_Indicator_Item_C::Construct()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

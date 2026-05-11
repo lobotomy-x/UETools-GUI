@@ -14,8 +14,7 @@
 #include "UIW_Module_TitleText_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_Module_TitleText.UIW_Module_TitleText_C.SetModule
 // (Public, BlueprintCallable, BlueprintEvent)
@@ -78,5 +77,5 @@ void UUIW_Module_TitleText_C::SetText(const class FText& Text)
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

@@ -14,8 +14,7 @@
 #include "BP_Projectile_Fixed_Base_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Projectile_Fixed_Base.BP_Projectile_Fixed_Base_C.ExecuteUbergraph_BP_Projectile_Fixed_Base
 // (Final, UbergraphFunction, HasDefaults)
@@ -160,5 +159,5 @@ void ABP_Projectile_Fixed_Base_C::FinishProjectile()
 	UObject::ProcessEvent(Func, nullptr);
 }
 
-}
 
+SDK_NAMESPACE_END

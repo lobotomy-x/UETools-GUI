@@ -14,8 +14,7 @@
 #include "BP_Action_Stretch_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function BP_Action_Stretch.BP_Action_Stretch_C.ExecuteUbergraph_BP_Action_Stretch
 // (Final, UbergraphFunction)
@@ -58,5 +57,5 @@ void UBP_Action_Stretch_C::OnStop(class ULActBase* ReasonAction, class FName Rea
 	UObject::ProcessEvent(Func, &Parms);
 }
 
-}
 
+SDK_NAMESPACE_END

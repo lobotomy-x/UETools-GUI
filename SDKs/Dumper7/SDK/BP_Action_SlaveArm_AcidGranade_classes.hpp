@@ -14,8 +14,7 @@
 #include "BP_Action_SlaveArm_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // BlueprintGeneratedClass BP_Action_SlaveArm_AcidGranade.BP_Action_SlaveArm_AcidGranade_C
 // 0x0008 (0x0220 - 0x0218)
@@ -45,5 +44,4 @@ public:
 };
 DUMPER7_ASSERTS_UBP_Action_SlaveArm_AcidGranade_C;
 
-}
-
+SDK_NAMESPACE_END

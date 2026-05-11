@@ -14,8 +14,7 @@
 #include "ProjectP_classes.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // WidgetBlueprintGeneratedClass UIW_Fx_Btn_Bg.UIW_Fx_Btn_Bg_C
 // 0x0038 (0x02D8 - 0x02A0)
@@ -55,5 +54,4 @@ public:
 };
 DUMPER7_ASSERTS_UUIW_Fx_Btn_Bg_C;
 
-}
-
+SDK_NAMESPACE_END

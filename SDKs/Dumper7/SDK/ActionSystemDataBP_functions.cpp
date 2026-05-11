@@ -14,8 +14,7 @@
 #include "ActionSystemDataBP_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function ActionSystemDataBP.ActionSystemDataBP_C.ExecuteUbergraph_ActionSystemDataBP
 // (Final, UbergraphFunction)
@@ -108,5 +107,5 @@ bool AActionSystemDataBP_C::FindPixelDepthOffsetData_ForCurrentFace(class UTextu
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

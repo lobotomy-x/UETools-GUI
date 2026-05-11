@@ -14,8 +14,7 @@
 #include "UIW_ListItem_Lie_High_parameters.hpp"
 
 
-namespace SDK
-{
+SDK_NAMESPACE_START
 
 // Function UIW_ListItem_Lie_High.UIW_ListItem_Lie_High_C.ExecuteUbergraph_UIW_ListItem_Lie_High
 // (Final, UbergraphFunction, HasDefaults)
@@ -202,5 +201,5 @@ struct FEventReply UUIW_ListItem_Lie_High_C::OnFocusReceived(const struct FGeome
 	return Parms.ReturnValue;
 }
 
-}
 
+SDK_NAMESPACE_END

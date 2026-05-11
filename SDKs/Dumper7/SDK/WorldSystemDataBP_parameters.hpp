@@ -11,8 +11,8 @@
 #include "Basic.hpp"
 
 
-namespace SDK::Params
-{
+SDK_NAMESPACE_START
+SDK_PARAM_NAMESPACE_START
 
 // Function WorldSystemDataBP.WorldSystemDataBP_C.ExecuteUbergraph_WorldSystemDataBP
 // 0x0020 (0x0020 - 0x0000)
@@ -38,5 +38,5 @@ public:
 };
 DUMPER7_ASSERTS_WorldSystemDataBP_C_ProcessMoveToTeleportSpotSameLevel;
 
-}
-
+SDK_PARAM_NAMESPACE_END
+SDK_NAMESPACE_END
