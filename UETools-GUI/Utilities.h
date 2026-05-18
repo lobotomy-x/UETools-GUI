@@ -17,26 +17,65 @@ namespace Utilities
 	{
 	public:
 		static std::string GetEnvironmentValue(const std::string& variableName);
+		static std::string GetEnvironmentValue(const std::wstring& variableName);
+		static std::string GetEnvironmentValue(const char* variableName);
+		static std::string GetEnvironmentValue(const wchar_t* variableName);
+
+		static std::wstring GetEnvironmentValueUtf16(const std::string& variableName);
+		static std::wstring GetEnvironmentValueUtf16(const std::wstring& variableName);
+		static std::wstring GetEnvironmentValueUtf16(const char* variableName);
+		static std::wstring GetEnvironmentValueUtf16(const wchar_t* variableName);
 
 		static std::string GetExecutablePath();
-		static std::string GetExecutableName(bool includeExtension);
+		static std::wstring GetExecutablePathUtf16();
+
+		static std::string GetExecutableName(bool includeFileExtension);
+		static std::wstring GetExecutableNameUtf16(bool includeFileExtension);
+
 		static std::string GetExecutableDirectory();
+		static std::wstring GetExecutableDirectoryUtf16();
 
 		static std::string GetProgramFilesDirectory();
+		static std::wstring GetProgramFilesDirectoryUtf16();
+
 		static std::string GetProgramFilesX86Directory();
+		static std::wstring GetProgramFilesX86DirectoryUtf16();
+
 		static std::string GetUserDirectory();
+		static std::wstring GetUserDirectoryUtf16();
+
 		static std::string GetDesktopDirectory();
+		static std::wstring GetDesktopDirectoryUtf16();
+
 		static std::string GetDownloadsDirectory();
+		static std::wstring GetDownloadsDirectoryUtf16();
+
 		static std::string GetDocumentsDirectory();
+		static std::wstring GetDocumentsDirectoryUtf16();
+
 		static std::string GetPicturesDirectory();
+		static std::wstring GetPicturesDirectoryUtf16();
+
 		static std::string GetVideosDirectory();
+		static std::wstring GetVideosDirectoryUtf16();
+
 		static std::string GetMusicDirectory();
+		static std::wstring GetMusicDirectoryUtf16();
+
 		static std::string GetAppDataLocalDirectory();
+		static std::wstring GetAppDataLocalDirectoryUtf16();
+
 		static std::string GetAppDataLocalLowDirectory();
+		static std::wstring GetAppDataLocalLowDirectoryUtf16();
+
 		static std::string GetAppDataRoamingDirectory();
+		static std::wstring GetAppDataRoamingDirectoryUtf16();
 
 		static std::string GetSystemPath();
+		static std::wstring GetSystemPathUtf16();
+
 		static std::string GetSystemDrive();
+		static std::wstring GetSystemDriveUtf16();
 	};
 
 
@@ -62,17 +101,23 @@ namespace Utilities
 	class Clipboard
 	{
 	public:
-		static std::string GetTextASCII();
-		static std::wstring GetText();
+		static std::string GetText();
+		static std::wstring GetTextUtf16();
 
 		static bool SetText(const std::string& string);
 		static bool SetText(const std::wstring& wString);
+		static bool SetText(const char* cString);
+		static bool SetText(const wchar_t* wcString);
 
 		static bool Contains(const std::string& string);
 		static bool Contains(const std::wstring& wString);
+		static bool Contains(const char* cString);
+		static bool Contains(const wchar_t* wcString);
 
 		static bool ContainsRegex(const std::string& regexPattern);
 		static bool ContainsRegex(const std::wstring& wRegexPattern);
+		static bool ContainsRegex(const char* cRegexPattern);
+		static bool ContainsRegex(const wchar_t* wcRegexPattern);
 	};
 
 
@@ -94,11 +139,56 @@ namespace Utilities
 			Unknown
 		};
 
-		static E_MessageResult Show(HWND hwndOwner, const std::string& title, const std::string& message, UINT type);
-		static E_MessageResult Show(const std::string& title, const std::string& message, UINT type);
+		enum class E_Buttons : UINT
+		{
+			OK = MB_OK,
+			OKCancel = MB_OKCANCEL,
+			AbortRetryIgnore = MB_ABORTRETRYIGNORE,
+			YesNoCancel = MB_YESNOCANCEL,
+			YesNo = MB_YESNO,
+			RetryCancel = MB_RETRYCANCEL,
+			CancelTryContinue = MB_CANCELTRYCONTINUE
+		};
+
+		enum class E_Icon : UINT
+		{
+			None = 0,
+			Error = MB_ICONERROR,
+			Question = MB_ICONQUESTION,
+			Warning = MB_ICONWARNING,
+			Information = MB_ICONINFORMATION
+		};
+
+
+		/* HWND, title, message, type (buttons/icon). */
+		static E_MessageResult Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+
+		/* title, message, type (buttons/icon). */
+		static E_MessageResult Show(const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+
+		/* title, message. */
 		static E_MessageResult Show(const std::string& title, const std::string& message);
-		static E_MessageResult Show(const std::string& message, UINT type);
+		static E_MessageResult Show(const std::wstring& title, const std::wstring& message);
+		static E_MessageResult Show(const char* title, const char* message);
+		static E_MessageResult Show(const wchar_t* title, const wchar_t* message);
+
+		/* message, type (buttons/icon). */
+		static E_MessageResult Show(const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		static E_MessageResult Show(const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+
+		/* message. */
 		static E_MessageResult Show(const std::string& message);
+		static E_MessageResult Show(const std::wstring& message);
+		static E_MessageResult Show(const char* message);
+		static E_MessageResult Show(const wchar_t* message);
 	};
 
 
@@ -118,42 +208,52 @@ namespace Utilities
 
 		static std::string ToLowerCase(std::string string);
 		static std::wstring ToLowerCase(std::wstring wString);
+		static std::string ToLowerCase(const char* cString);
+		static std::wstring ToLowerCase(const wchar_t* wcString);
 
 		static std::string ToUpperCase(std::string string);
 		static std::wstring ToUpperCase(std::wstring wString);
+		static std::string ToUpperCase(const char* cString);
+		static std::wstring ToUpperCase(const wchar_t* wcString);
 
 
 		static std::string Replace(std::string string, const std::string& from, const std::string& to);
 		static std::string Replace(const std::string& string, const std::string& from, const std::wstring& to);
 		static std::string Replace(const std::string& string, const std::wstring& from, const std::string& to);
 		static std::string Replace(const std::string& string, const std::wstring& from, const std::wstring& to);
+		static std::string Replace(const char* cString, const char* from, const char* to);
 
 		static std::wstring Replace(std::wstring wString, const std::wstring& from, const std::wstring& to);
 		static std::wstring Replace(const std::wstring& wString, const std::wstring& from, const std::string& to);
 		static std::wstring Replace(const std::wstring& wString, const std::string& from, const std::wstring& to);
 		static std::wstring Replace(const std::wstring& wString, const std::string& from, const std::string& to);
+		static std::wstring Replace(const wchar_t* wcString, const wchar_t* from, const wchar_t* to);
 
 
 		static std::string ReplaceFirstOf(std::string string, const std::string& from, const std::string& to);
 		static std::string ReplaceFirstOf(const std::string& string, const std::string& from, const std::wstring& to);
 		static std::string ReplaceFirstOf(const std::string& string, const std::wstring& from, const std::string& to);
 		static std::string ReplaceFirstOf(const std::string& string, const std::wstring& from, const std::wstring& to);
+		static std::string ReplaceFirstOf(const char* cString, const char* from, const char* to);
 
 		static std::wstring ReplaceFirstOf(std::wstring wString, const std::wstring& from, const std::wstring& to);
 		static std::wstring ReplaceFirstOf(const std::wstring& wString, const std::wstring& from, const std::string& to);
 		static std::wstring ReplaceFirstOf(const std::wstring& wString, const std::string& from, const std::wstring& to);
 		static std::wstring ReplaceFirstOf(const std::wstring& wString, const std::string& from, const std::string& to);
+		static std::wstring ReplaceFirstOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to);
 
 
 		static std::string ReplaceLastOf(std::string string, const std::string& from, const std::string& to);
 		static std::string ReplaceLastOf(const std::string& string, const std::string& from, const std::wstring& to);
 		static std::string ReplaceLastOf(const std::string& string, const std::wstring& from, const std::string& to);
 		static std::string ReplaceLastOf(const std::string& string, const std::wstring& from, const std::wstring& to);
+		static std::string ReplaceLastOf(const char* cString, const char* from, const char* to);
 
 		static std::wstring ReplaceLastOf(std::wstring wString, const std::wstring& from, const std::wstring& to);
 		static std::wstring ReplaceLastOf(const std::wstring& wString, const std::wstring& from, const std::string& to);
 		static std::wstring ReplaceLastOf(const std::wstring& wString, const std::string& from, const std::wstring& to);
 		static std::wstring ReplaceLastOf(const std::wstring& wString, const std::string& from, const std::string& to);
+		static std::wstring ReplaceLastOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to);
 
 
 		static std::vector<std::string> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true);
@@ -169,7 +269,6 @@ namespace Utilities
 
 		std::string Reverse(std::string string);
 		std::wstring Reverse(std::wstring wString);
-
 		std::string Reverse(const char* cString);
 		std::wstring Reverse(const wchar_t* wcString);
 
@@ -204,46 +303,46 @@ namespace Utilities
 		static bool Exists(const std::wstring& filePath);
 
 
-		static std::string ReadTextASCII(const std::string& filePath);
-		static std::string ReadTextASCII(const std::wstring& filePath);
-		static std::wstring ReadText(const std::string& filePath);
-		static std::wstring ReadText(const std::wstring& filePath);
+		static bool ReadText(const std::string& filePath, std::string* outContents);
+		static bool ReadText(const std::wstring& filePath, std::string* outContents);
+		static bool ReadTextUtf16(const std::string& filePath, std::wstring* outContents);
+		static bool ReadTextUtf16(const std::wstring& filePath, std::wstring* outContents);
 
 
-		static std::vector<std::string> ReadLinesASCII(const std::string& filePath);
-		static std::vector<std::string> ReadLinesASCII(const std::wstring& filePath);
-		static std::vector<std::wstring> ReadLines(const std::string& filePath);
-		static std::vector<std::wstring> ReadLines(const std::wstring& filePath);
+		static bool ReadLines(const std::string& filePath, std::vector<std::string>* outLines);
+		static bool ReadLines(const std::wstring& filePath, std::vector<std::string>* outLines);
+		static bool ReadLinesUtf16(const std::string& filePath, std::vector<std::wstring>* outLines);
+		static bool ReadLinesUtf16(const std::wstring& filePath, std::vector<std::wstring>* outLines);
 
 
-		static bool WriteTextASCII(const std::string& filePath, const std::string& text);
-		static bool WriteTextASCII(const std::wstring& filePath, const std::string& text);
-		static bool WriteText(const std::string& filePath, const std::wstring& text);
-		static bool WriteText(const std::wstring& filePath, const std::wstring& text);
+		static bool WriteText(const std::string& filePath, const std::string& text);
+		static bool WriteText(const std::wstring& filePath, const std::string& text);
+		static bool WriteTextUtf16(const std::string& filePath, const std::wstring& text);
+		static bool WriteTextUtf16(const std::wstring& filePath, const std::wstring& text);
 
 
-		static bool WriteLinesASCII(const std::string& filePath, const std::vector<std::string>& lines);
-		static bool WriteLinesASCII(const std::wstring& filePath, const std::vector<std::string>& lines);
-		static bool WriteLines(const std::string& filePath, const std::vector<std::wstring>& lines);
-		static bool WriteLines(const std::wstring& filePath, const std::vector<std::wstring>& lines);
+		static bool WriteLines(const std::string& filePath, const std::vector<std::string>& lines);
+		static bool WriteLines(const std::wstring& filePath, const std::vector<std::string>& lines);
+		static bool WriteLinesUtf16(const std::string& filePath, const std::vector<std::wstring>& lines);
+		static bool WriteLinesUtf16(const std::wstring& filePath, const std::vector<std::wstring>& lines);
 
 
-		static bool AppendTextASCII(const std::string& filePath, const std::string& text);
-		static bool AppendTextASCII(const std::wstring& filePath, const std::string& text);
-		static bool AppendText(const std::string& filePath, const std::wstring& text);
-		static bool AppendText(const std::wstring& filePath, const std::wstring& text);
+		static bool AppendText(const std::string& filePath, const std::string& text);
+		static bool AppendText(const std::wstring& filePath, const std::string& text);
+		static bool AppendTextUtf16(const std::string& filePath, const std::wstring& text);
+		static bool AppendTextUtf16(const std::wstring& filePath, const std::wstring& text);
 
 
-		static bool AppendLineASCII(const std::string& filePath, const std::string& line);
-		static bool AppendLineASCII(const std::wstring& filePath, const std::string& line);
-		static bool AppendLine(const std::string& filePath, const std::wstring& line);
-		static bool AppendLine(const std::wstring& filePath, const std::wstring& line);
+		static bool AppendLine(const std::string& filePath, const std::string& line);
+		static bool AppendLine(const std::wstring& filePath, const std::string& line);
+		static bool AppendLineUtf16(const std::string& filePath, const std::wstring& line);
+		static bool AppendLineUtf16(const std::wstring& filePath, const std::wstring& line);
 
 
-		static bool AppendLinesASCII(const std::string& filePath, const std::vector<std::string>& lines);
-		static bool AppendLinesASCII(const std::wstring& filePath, const std::vector<std::string>& lines);
-		static bool AppendLines(const std::string& filePath, const std::vector<std::wstring>& lines);
-		static bool AppendLines(const std::wstring& filePath, const std::vector<std::wstring>& lines);
+		static bool AppendLines(const std::string& filePath, const std::vector<std::string>& lines);
+		static bool AppendLines(const std::wstring& filePath, const std::vector<std::string>& lines);
+		static bool AppendLinesUtf16(const std::string& filePath, const std::vector<std::wstring>& lines);
+		static bool AppendLinesUtf16(const std::wstring& filePath, const std::vector<std::wstring>& lines);
 
 
 		static bool Destroy(const std::string& filePath);
@@ -264,10 +363,8 @@ namespace Utilities
 
 	namespace Memory
 	{
-		class Internal
+		class Internal // Functions within the class allows to manipulate memory of process program is running in.
 		{
-			// Description: Functions within the class allows to manipulate memory of process program is running in.
-			// Search Tags: #internal, #dll, #asi, #process, #readprocessmemory, #writeprocessmemory.
 		public:
 			/**
 			* @brief Determines whether a given pointer refers to a valid, committed, and readable (or executable) memory region.
@@ -583,10 +680,8 @@ namespace Utilities
 
 
 
-		class External
+		class External // Functions within the class allows to manipulate memory of 3'rd party processes.
 		{
-			// Description: Functions within the class allows to manipulate memory of 3'rd party processes.
-			// Search Tags: #external, #exe, #pid, #process, #readprocessmemory, #writeprocessmemory, #handle.
 		private:
 			static std::string ReadRemoteString(const HANDLE& hProcess, const uintptr_t memoryAddress, size_t maxLength = 256);
 			static std::wstring ReadRemoteWString(const HANDLE& hProcess, const uintptr_t memoryAddress, size_t maxLength = 256);

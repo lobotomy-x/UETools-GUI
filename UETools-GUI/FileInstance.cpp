@@ -41,8 +41,7 @@ const bool FileInstance::ReadText(std::string* outText)
         return false;
     }
 
-    *outText = Utilities::File::ReadTextASCII(_filePath);
-    return true;
+    return Utilities::File::ReadText(_filePath, outText);
 }
 
 const bool FileInstance::SaveText(const std::string& text)
@@ -52,7 +51,7 @@ const bool FileInstance::SaveText(const std::string& text)
         return false;
     }
 
-    return Utilities::File::WriteTextASCII(_filePath, text);
+    return Utilities::File::WriteText(_filePath, text);
 }
 
 
@@ -68,8 +67,7 @@ const bool FileInstance::ReadLines(std::vector<std::string>* outLines)
         return false;
     }
 
-    *outLines = Utilities::File::ReadLinesASCII(_filePath);
-    return true;
+    return Utilities::File::ReadLines(_filePath, outLines);
 }
 
 const bool FileInstance::SaveLines(const std::vector<std::string>& lines)
@@ -79,7 +77,7 @@ const bool FileInstance::SaveLines(const std::vector<std::string>& lines)
         return false;
     }
 
-    return Utilities::File::WriteLinesASCII(_filePath, lines);
+    return Utilities::File::WriteLines(_filePath, lines);
 }
 
 
@@ -90,7 +88,7 @@ const bool FileInstance::AppendLine(const std::string& line)
         return false;
     }
 
-    return Utilities::File::AppendLineASCII(_filePath, line);
+    return Utilities::File::AppendLine(_filePath, line);
 }
 
 const bool FileInstance::AppendLines(const std::vector<std::string>& lines)
@@ -100,7 +98,7 @@ const bool FileInstance::AppendLines(const std::vector<std::string>& lines)
         return false;
     }
 
-    return Utilities::File::AppendLinesASCII(_filePath, lines);
+    return Utilities::File::AppendLines(_filePath, lines);
 }
 
 
@@ -111,8 +109,7 @@ const bool FileInstance::Clear()
         return false;
     }
 
-    // Writing an empty string with CREATE_ALWAYS flag effectively clears the file.
-    return Utilities::File::WriteText(_filePath, std::wstring());
+    return Utilities::File::WriteText(_filePath, std::string());
 }
 
 const bool FileInstance::Destroy()

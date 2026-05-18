@@ -21,6 +21,53 @@ std::string Utilities::Environment::GetEnvironmentValue(const std::string& varia
 	return outPath;
 }
 
+std::string Utilities::Environment::GetEnvironmentValue(const std::wstring& variableName)
+{
+    return GetEnvironmentValue(String::ToString(variableName));
+}
+
+std::string Utilities::Environment::GetEnvironmentValue(const char* variableName)
+{
+    return GetEnvironmentValue(String::ToString(variableName));
+}
+
+std::string Utilities::Environment::GetEnvironmentValue(const wchar_t* variableName)
+{
+    return GetEnvironmentValue(String::ToString(variableName));
+}
+
+
+std::wstring Utilities::Environment::GetEnvironmentValueUtf16(const std::string& variableName)
+{
+    return GetEnvironmentValueUtf16(String::ToWString(variableName));
+}
+
+std::wstring Utilities::Environment::GetEnvironmentValueUtf16(const std::wstring& variableName)
+{
+    wchar_t* directoryPath = nullptr;
+    size_t len = 0;
+
+    if (_wdupenv_s(&directoryPath, &len, variableName.c_str()) != 0 || directoryPath == nullptr)
+    {
+        return std::wstring();
+    }
+
+    std::wstring outPath(directoryPath);
+    free(directoryPath);
+
+    return outPath;
+}
+
+std::wstring Utilities::Environment::GetEnvironmentValueUtf16(const char* variableName)
+{
+    return GetEnvironmentValueUtf16(String::ToWString(variableName));
+}
+
+std::wstring Utilities::Environment::GetEnvironmentValueUtf16(const wchar_t* variableName)
+{
+    return GetEnvironmentValueUtf16(String::ToWString(variableName));
+}
+
 
 std::string Utilities::Environment::GetExecutablePath()
 {
@@ -34,7 +81,20 @@ std::string Utilities::Environment::GetExecutablePath()
 	return std::string(executablePath);
 }
 
-std::string Utilities::Environment::GetExecutableName(bool includeExtension)
+std::wstring Utilities::Environment::GetExecutablePathUtf16()
+{
+    wchar_t executablePath[MAX_PATH] = { 0 };
+
+    if (GetModuleFileNameW(NULL, executablePath, MAX_PATH) == 0)
+    {
+        return std::wstring();
+    }
+
+    return std::wstring(executablePath);
+}
+
+
+std::string Utilities::Environment::GetExecutableName(bool includeFileExtension)
 {
 	std::string executablePath = GetExecutablePath();
 	if (executablePath.empty() == true)
@@ -43,8 +103,21 @@ std::string Utilities::Environment::GetExecutableName(bool includeExtension)
 	}
 
 	std::filesystem::path fsPath(executablePath);
-	return includeExtension ? fsPath.filename().string() : fsPath.stem().string();
+	return includeFileExtension ? fsPath.filename().string() : fsPath.stem().string();
 }
+
+std::wstring Utilities::Environment::GetExecutableNameUtf16(bool includeFileExtension)
+{
+    std::wstring executablePath = GetExecutablePathUtf16();
+    if (executablePath.empty() == true)
+    {
+        return std::wstring();
+    }
+
+    std::filesystem::path fsPath(executablePath);
+    return includeFileExtension ? fsPath.filename().wstring() : fsPath.stem().wstring();
+}
+
 
 std::string Utilities::Environment::GetExecutableDirectory()
 {
@@ -58,25 +131,55 @@ std::string Utilities::Environment::GetExecutableDirectory()
 	return fsPath.parent_path().string();
 }
 
+std::wstring Utilities::Environment::GetExecutableDirectoryUtf16()
+{
+    std::wstring executablePath = GetExecutablePathUtf16();
+    if (executablePath.empty() == true)
+    {
+        return std::wstring();
+    }
+
+    std::filesystem::path fsPath(executablePath);
+    return fsPath.parent_path().wstring();
+}
+
 
 std::string Utilities::Environment::GetProgramFilesDirectory()
 {
 	return GetEnvironmentValue("ProgramFiles");
 }
 
+std::wstring Utilities::Environment::GetProgramFilesDirectoryUtf16()
+{
+    return GetEnvironmentValueUtf16(L"ProgramFiles");
+}
+
+
 std::string Utilities::Environment::GetProgramFilesX86Directory()
 {
 	return GetEnvironmentValue("ProgramFiles(x86)");
 }
+
+std::wstring Utilities::Environment::GetProgramFilesX86DirectoryUtf16()
+{
+    return GetEnvironmentValueUtf16(L"ProgramFiles(x86)");
+}
+
 
 std::string Utilities::Environment::GetUserDirectory()
 {
 	return GetEnvironmentValue("USERPROFILE");
 }
 
+std::wstring Utilities::Environment::GetUserDirectoryUtf16()
+{
+    return GetEnvironmentValueUtf16(L"USERPROFILE");
+}
+
+
 std::string Utilities::Environment::GetDesktopDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+    std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Desktop";
@@ -86,9 +189,22 @@ std::string Utilities::Environment::GetDesktopDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetDesktopDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Desktop";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetDownloadsDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+    std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Downloads";
@@ -98,9 +214,22 @@ std::string Utilities::Environment::GetDownloadsDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetDownloadsDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Downloads";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetDocumentsDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+	std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Documents";
@@ -110,9 +239,21 @@ std::string Utilities::Environment::GetDocumentsDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetDocumentsDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Documents";
+        return outPath;
+    }
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetPicturesDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+	std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Pictures";
@@ -122,9 +263,22 @@ std::string Utilities::Environment::GetPicturesDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetPicturesDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Pictures";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetVideosDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+	std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Videos";
@@ -134,9 +288,22 @@ std::string Utilities::Environment::GetVideosDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetVideosDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Videos";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetMusicDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+	std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\Music";
@@ -146,14 +313,33 @@ std::string Utilities::Environment::GetMusicDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetMusicDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\Music";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetAppDataLocalDirectory()
 {
 	return GetEnvironmentValue("LOCALAPPDATA");
 }
 
+std::wstring Utilities::Environment::GetAppDataLocalDirectoryUtf16()
+{
+    return GetEnvironmentValueUtf16(L"LOCALAPPDATA");
+}
+
+
 std::string Utilities::Environment::GetAppDataLocalLowDirectory()
 {
-	std::string outPath = GetEnvironmentValue("USERPROFILE");
+	std::string outPath = GetUserDirectory();
 	if (outPath.empty() == false)
 	{
 		outPath += "\\AppData\\LocalLow";
@@ -163,9 +349,27 @@ std::string Utilities::Environment::GetAppDataLocalLowDirectory()
 	return std::string();
 }
 
+std::wstring Utilities::Environment::GetAppDataLocalLowDirectoryUtf16()
+{
+    std::wstring outPath = GetUserDirectoryUtf16();
+    if (outPath.empty() == false)
+    {
+        outPath += L"\\AppData\\LocalLow";
+        return outPath;
+    }
+
+    return std::wstring();
+}
+
+
 std::string Utilities::Environment::GetAppDataRoamingDirectory()
 {
 	return GetEnvironmentValue("APPDATA");
+}
+
+std::wstring Utilities::Environment::GetAppDataRoamingDirectoryUtf16()
+{
+    return GetEnvironmentValueUtf16(L"APPDATA");
 }
 
 
@@ -180,6 +384,18 @@ std::string Utilities::Environment::GetSystemPath()
 	return std::string(buffer);
 }
 
+std::wstring Utilities::Environment::GetSystemPathUtf16()
+{
+    wchar_t buffer[MAX_PATH];
+    if (GetSystemDirectoryW(buffer, MAX_PATH) == 0)
+    {
+        return std::wstring();
+    }
+
+    return std::wstring(buffer);
+}
+
+
 std::string Utilities::Environment::GetSystemDrive()
 {
 	std::string systemPath = GetSystemPath();
@@ -189,6 +405,17 @@ std::string Utilities::Environment::GetSystemDrive()
 	}
 
 	return std::string();
+}
+
+std::wstring Utilities::Environment::GetSystemDriveUtf16()
+{
+    std::wstring systemPath = GetSystemPathUtf16();
+    if ((systemPath.empty() == false) && (systemPath.size() >= 3))
+    {
+        return systemPath.substr(0, 3);
+    }
+
+    return std::wstring();
 }
 
 
@@ -308,12 +535,12 @@ void Utilities::Console::Encoding437()
 
 
 
-std::string Utilities::Clipboard::GetTextASCII()
+std::string Utilities::Clipboard::GetText()
 {
-    return String::ToString(GetText());
+    return String::ToString(GetTextUtf16());
 }
 
-std::wstring Utilities::Clipboard::GetText()
+std::wstring Utilities::Clipboard::GetTextUtf16()
 {
     if (OpenClipboard(nullptr))
     {
@@ -406,23 +633,43 @@ bool Utilities::Clipboard::SetText(const std::wstring& wString)
     return false; 
 }
 
+bool Utilities::Clipboard::SetText(const char* cString)
+{
+    return SetText(String::ToString(cString));
+}
+
+bool Utilities::Clipboard::SetText(const wchar_t* wcString)
+{
+    return SetText(String::ToWString(wcString));
+}
+
 
 bool Utilities::Clipboard::Contains(const std::string& string)
 {
-    std::string text = Clipboard::GetTextASCII();
+    std::string text = Clipboard::GetText();
     return (text.find(string) != std::string::npos);
 }
 
 bool Utilities::Clipboard::Contains(const std::wstring& wString)
 {
-    std::wstring text = GetText();
+    std::wstring text = GetTextUtf16();
     return (text.find(wString) != std::wstring::npos);
+}
+
+bool Utilities::Clipboard::Contains(const char* cString)
+{
+    return Contains(String::ToString(cString));
+}
+
+bool Utilities::Clipboard::Contains(const wchar_t* wcString)
+{
+    return Contains(String::ToWString(wcString));
 }
 
 
 bool Utilities::Clipboard::ContainsRegex(const std::string& regexPattern)
 {
-    std::string text = String::ToString(GetText());
+    std::string text = String::ToString(GetTextUtf16());
     try
     {
         std::regex re(regexPattern);
@@ -436,7 +683,7 @@ bool Utilities::Clipboard::ContainsRegex(const std::string& regexPattern)
 
 bool Utilities::Clipboard::ContainsRegex(const std::wstring& wRegexPattern)
 {
-    std::wstring text = GetText();
+    std::wstring text = GetTextUtf16();
     try
     {
         std::wregex re(wRegexPattern);
@@ -448,41 +695,135 @@ bool Utilities::Clipboard::ContainsRegex(const std::wstring& wRegexPattern)
     }
 }
 
-
-
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::string& title, const std::string& message, UINT type)
+bool Utilities::Clipboard::ContainsRegex(const char* cRegexPattern)
 {
-	int messageResult = MessageBoxA(hwndOwner, message.c_str(), title.c_str(), type);
+    return false;
+}
 
-	switch (messageResult)
-	{
-		case IDOK:      return E_MessageResult::OK;
-		case IDCANCEL:  return E_MessageResult::Cancel;
-		case IDABORT:   return E_MessageResult::Abort;
-		case IDRETRY:   return E_MessageResult::Retry;
-		case IDIGNORE:  return E_MessageResult::Ignore;
-		case IDYES:     return E_MessageResult::Yes;
-		case IDNO:      return E_MessageResult::No;
-		case 0:         return E_MessageResult::Timeout;
-		default:        return E_MessageResult::Unknown;
-	}
-}
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message, UINT type)
+bool Utilities::Clipboard::ContainsRegex(const wchar_t* wcRegexPattern)
 {
-	return Message::Show(nullptr, title, message, type);
+    return false;
 }
+
+
+
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon)
+{
+    UINT type = static_cast<UINT>(buttons) | static_cast<UINT>(icon);
+    int messageResult = MessageBoxW(hwndOwner, message.c_str(), title.c_str(), type);
+
+    switch (messageResult)
+    {
+        case IDOK:      return E_MessageResult::OK;
+        case IDCANCEL:  return E_MessageResult::Cancel;
+        case IDABORT:   return E_MessageResult::Abort;
+        case IDRETRY:   return E_MessageResult::Retry;
+        case IDIGNORE:  return E_MessageResult::Ignore;
+        case IDYES:     return E_MessageResult::Yes;
+        case IDNO:      return E_MessageResult::No;
+        case 0:         return E_MessageResult::Timeout;
+        default:        return E_MessageResult::Unknown;
+    }
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(hwndOwner, String::ToString(title), String::ToString(message), buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon);
+}
+
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon)
+{
+	return Show(nullptr, title, message, buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, title, message, buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* title, const char* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, title, message, buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, title, message, buttons, icon);
+}
+
+
 Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message)
 {
-	return Message::Show(nullptr, title, message, MB_OK);
+	return Show(nullptr, title, message);
 }
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message, UINT type)
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& title, const std::wstring& message)
 {
-	return Message::Show(nullptr, Environment::GetExecutableName(false), message, type);
+    return Show(nullptr, title, message);
 }
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* title, const char* message)
+{
+    return Show(nullptr, title, message);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* title, const wchar_t* message)
+{
+    return Show(nullptr, title, message);
+}
+
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message, E_Buttons buttons, E_Icon icon)
+{
+	return Show(nullptr, Environment::GetExecutableName(false), message, buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), message, buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, Environment::GetExecutableName(false), String::ToString(message), buttons, icon);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* message, E_Buttons buttons, E_Icon icon)
+{
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), String::ToWString(message), buttons, icon);
+}
+
+
 Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message)
 {
-	return Message::Show(nullptr, Environment::GetExecutableName(false), message, MB_OK);
+	return Show(nullptr, Environment::GetExecutableName(false), message);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& message)
+{
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), message);
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* message)
+{
+    return Show(nullptr, Environment::GetExecutableName(false), String::ToString(message));
+}
+
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* message)
+{
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), String::ToWString(message));
 }
 
 
@@ -608,6 +949,17 @@ std::wstring Utilities::String::ToLowerCase(std::wstring wString)
 	return wString;
 }
 
+std::string Utilities::String::ToLowerCase(const char* cString)
+{
+    return ToLowerCase(String::ToString(cString));
+}
+
+std::wstring Utilities::String::ToLowerCase(const wchar_t* wcString)
+{
+    return ToLowerCase(String::ToWString(wcString));
+}
+
+
 
 
 std::string Utilities::String::ToUpperCase(std::string string)
@@ -628,6 +980,16 @@ std::wstring Utilities::String::ToUpperCase(std::wstring wString)
 	});
 
 	return wString;
+}
+
+std::string Utilities::String::ToUpperCase(const char* cString)
+{
+    return ToUpperCase(String::ToString(cString));
+}
+
+std::wstring Utilities::String::ToUpperCase(const wchar_t* wcString)
+{
+    return ToUpperCase(String::ToWString(wcString));
 }
 
 
@@ -665,6 +1027,11 @@ std::string Utilities::String::Replace(const std::string& string, const std::wst
 	return Replace(string, ToString(from), ToString(to));
 }
 
+std::string Utilities::String::Replace(const char* cString, const char* from, const char* to)
+{
+    return Replace(ToString(cString), ToString(from), ToString(to));
+}
+
 
 std::wstring Utilities::String::Replace(std::wstring wString, const std::wstring& from, const std::wstring& to)
 {
@@ -696,6 +1063,11 @@ std::wstring Utilities::String::Replace(const std::wstring& wString, const std::
 std::wstring Utilities::String::Replace(const std::wstring& wString, const std::string& from, const std::string& to)
 {
 	return Replace(wString, ToWString(from), ToWString(to));
+}
+
+std::wstring Utilities::String::Replace(const wchar_t* wcString, const wchar_t* from, const wchar_t* to)
+{
+    return Replace(ToWString(wcString), ToWString(from), ToWString(to));
 }
 
 
@@ -732,6 +1104,11 @@ std::string Utilities::String::ReplaceFirstOf(const std::string& string, const s
 	return ReplaceFirstOf(string, ToString(from), ToString(to));
 }
 
+std::string Utilities::String::ReplaceFirstOf(const char* cString, const char* from, const char* to)
+{
+    return ReplaceFirstOf(ToString(cString), ToString(from), ToString(to));
+}
+
 
 std::wstring Utilities::String::ReplaceFirstOf(std::wstring wString, const std::wstring& from, const std::wstring& to)
 {
@@ -762,6 +1139,11 @@ std::wstring Utilities::String::ReplaceFirstOf(const std::wstring& wString, cons
 std::wstring Utilities::String::ReplaceFirstOf(const std::wstring& wString, const std::string& from, const std::string& to)
 {
 	return ReplaceFirstOf(wString, ToWString(from), ToWString(to));
+}
+
+std::wstring Utilities::String::ReplaceFirstOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to)
+{
+    return ReplaceFirstOf(ToWString(wcString), ToWString(from), ToWString(to));
 }
 
 
@@ -796,6 +1178,11 @@ std::string Utilities::String::ReplaceLastOf(const std::string& string, const st
 	return ReplaceLastOf(string, ToString(from), ToString(to));
 }
 
+std::string Utilities::String::ReplaceLastOf(const char* cString, const char* from, const char* to)
+{
+    return ReplaceLastOf(ToString(cString), ToString(from), ToString(to));
+}
+
 
 std::wstring Utilities::String::ReplaceLastOf(std::wstring wString, const std::wstring& from, const std::wstring& to)
 {
@@ -826,6 +1213,11 @@ std::wstring Utilities::String::ReplaceLastOf(const std::wstring& wString, const
 std::wstring Utilities::String::ReplaceLastOf(const std::wstring& wString, const std::string& from, const std::string& to)
 {
 	return ReplaceLastOf(wString, ToWString(from), ToWString(to));
+}
+
+std::wstring Utilities::String::ReplaceLastOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to)
+{
+    return ReplaceLastOf(ToWString(wcString), ToWString(from), ToWString(to));
 }
 
 
@@ -965,17 +1357,14 @@ std::wstring Utilities::String::Reverse(std::wstring wString)
     return wString;
 }
 
-
 std::string Utilities::String::Reverse(const char* cString)
 {
-    std::string string = ToString(cString);
-    return Reverse(string);
+    return Reverse(ToString(cString));
 }
 
 std::wstring Utilities::String::Reverse(const wchar_t* wcString)
 {
-    std::wstring wString = ToWString(wcString);
-    return Reverse(wString);
+    return Reverse(ToWString(wcString));
 }
 
 
@@ -1221,13 +1610,18 @@ bool Utilities::File::Exists(const std::wstring& filePath)
 }
 
 
-std::string Utilities::File::ReadTextASCII(const std::string& filePath)
+bool Utilities::File::ReadText(const std::string& filePath, std::string* outContents)
 {
-    return File::ReadTextASCII(String::ToWString(filePath));
+    return File::ReadText(String::ToWString(filePath), outContents);
 }
 
-std::string Utilities::File::ReadTextASCII(const std::wstring& filePath)
+bool Utilities::File::ReadText(const std::wstring& filePath, std::string* outContents)
 {
+    if (outContents == nullptr)
+    {
+        return false;
+    }
+
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
         GENERIC_READ,          // Desired access.
@@ -1240,37 +1634,43 @@ std::string Utilities::File::ReadTextASCII(const std::wstring& filePath)
 
     if (hFile == INVALID_HANDLE_VALUE) // Check if handle isn't valid.
     {
-        return std::string();
+        return false;
     }
 
     LARGE_INTEGER fileSize;
     if (GetFileSizeEx(hFile, &fileSize) == false)
     {
         CloseHandle(hFile);
-        return std::string();
+        return false;
     }
 
-    std::string fileContents(fileSize.QuadPart, '\0');
+    outContents->resize(fileSize.QuadPart);
 
     DWORD bytesRead;
-    if (ReadFile(hFile, fileContents.data(), static_cast<DWORD>(fileSize.QuadPart), &bytesRead, nullptr) == false)
+    if (ReadFile(hFile, outContents->data(), static_cast<DWORD>(fileSize.QuadPart), &bytesRead, nullptr) == false)
     {
+        outContents->clear();
         CloseHandle(hFile);
-        return std::string();
+        return false;
     }
 
     CloseHandle(hFile);
-    return fileContents;
+    return true;
 }
 
 
-std::wstring Utilities::File::ReadText(const std::string& filePath)
+bool Utilities::File::ReadTextUtf16(const std::string& filePath, std::wstring* outContents)
 {
-    return File::ReadText(String::ToWString(filePath));
+    return File::ReadTextUtf16(String::ToWString(filePath), outContents);
 }
 
-std::wstring Utilities::File::ReadText(const std::wstring& filePath)
+bool Utilities::File::ReadTextUtf16(const std::wstring& filePath, std::wstring* outContents)
 {
+    if (outContents == nullptr)
+    {
+        return false;
+    }
+
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
         GENERIC_READ,          // Desired access.
@@ -1283,47 +1683,58 @@ std::wstring Utilities::File::ReadText(const std::wstring& filePath)
 
     if (hFile == INVALID_HANDLE_VALUE) // Check if handle isn't valid.
     {
-        return std::wstring();
+        return false;
     }
 
     LARGE_INTEGER fileSize;
     if (GetFileSizeEx(hFile, &fileSize) == false)
     {
         CloseHandle(hFile);
-        return std::wstring();
+        return false;
     }
 
     if (fileSize.QuadPart % sizeof(wchar_t) != 0) // File size must be multiple of sizeof(wchar_t).
     {
         CloseHandle(hFile);
-        return std::wstring();
+        return false;
     }
 
     size_t wCharCount = fileSize.QuadPart / sizeof(wchar_t);
 
-    std::wstring fileContents(wCharCount, L'\0');
+    outContents->resize(wCharCount);
 
     DWORD bytesRead;
-    if (ReadFile(hFile, fileContents.data(), static_cast<DWORD>(fileSize.QuadPart), &bytesRead, nullptr) == false)
+    if (ReadFile(hFile, outContents->data(), static_cast<DWORD>(fileSize.QuadPart), &bytesRead, nullptr) == false)
     {
+        outContents->clear();
         CloseHandle(hFile);
-        return std::wstring();
+        return false;
     }
 
     CloseHandle(hFile);
-    return fileContents;
+    return true;
 }
 
 
-std::vector<std::string> Utilities::File::ReadLinesASCII(const std::string& filePath)
+bool Utilities::File::ReadLines(const std::string& filePath, std::vector<std::string>* outLines)
 {
-    return File::ReadLinesASCII(String::ToWString(filePath));
+    return File::ReadLines(String::ToWString(filePath), outLines);
 }
 
-std::vector<std::string> Utilities::File::ReadLinesASCII(const std::wstring& filePath)
+bool Utilities::File::ReadLines(const std::wstring& filePath, std::vector<std::string>* outLines)
 {
-    std::string fileContents = File::ReadTextASCII(filePath);
-    std::vector<std::string> lines;
+    if (outLines == nullptr)
+    {
+        return false;
+    }
+
+    std::string fileContents;
+    if (File::ReadText(filePath, &fileContents) == false)
+    {
+        return false;
+    }
+
+    outLines->clear();
     size_t start = 0;
     size_t pos = 0;
 
@@ -1336,7 +1747,7 @@ std::vector<std::string> Utilities::File::ReadLinesASCII(const std::wstring& fil
             line.pop_back();
         }
 
-        lines.push_back(std::move(line));
+        outLines->push_back(std::move(line));
         start = pos + 1;
     }
 
@@ -1350,22 +1761,32 @@ std::vector<std::string> Utilities::File::ReadLinesASCII(const std::wstring& fil
             line.pop_back();
         }
 
-        lines.push_back(std::move(line));
+        outLines->push_back(std::move(line));
     }
 
-    return lines;
+    return true;
 }
 
 
-std::vector<std::wstring> Utilities::File::ReadLines(const std::string& filePath)
+bool Utilities::File::ReadLinesUtf16(const std::string& filePath, std::vector<std::wstring>* outLines)
 {
-    return File::ReadLines(String::ToWString(filePath));
+    return File::ReadLinesUtf16(String::ToWString(filePath), outLines);
 }
 
-std::vector<std::wstring> Utilities::File::ReadLines(const std::wstring& filePath)
+bool Utilities::File::ReadLinesUtf16(const std::wstring& filePath, std::vector<std::wstring>* outLines)
 {
-    std::wstring fileContents = ReadText(filePath);
-    std::vector<std::wstring> lines;
+    if (outLines == nullptr)
+    {
+        return false;
+    }
+
+    std::wstring fileContents;
+    if (File::ReadTextUtf16(filePath, &fileContents) == false)
+    {
+        return false;
+    }
+
+    outLines->clear();
     size_t start = 0;
     size_t pos = 0;
 
@@ -1378,7 +1799,7 @@ std::vector<std::wstring> Utilities::File::ReadLines(const std::wstring& filePat
             line.pop_back();
         }
 
-        lines.push_back(std::move(line));
+        outLines->push_back(std::move(line));
         start = pos + 1;
     }
 
@@ -1391,19 +1812,19 @@ std::vector<std::wstring> Utilities::File::ReadLines(const std::wstring& filePat
             line.pop_back();
         }
 
-        lines.push_back(std::move(line));
+        outLines->push_back(std::move(line));
     }
 
-    return lines;
+    return true;
 }
 
 
-bool Utilities::File::WriteTextASCII(const std::string& filePath, const std::string& text)
+bool Utilities::File::WriteText(const std::string& filePath, const std::string& text)
 {
-    return File::WriteTextASCII(String::ToWString(filePath), text);
+    return File::WriteText(String::ToWString(filePath), text);
 }
 
-bool Utilities::File::WriteTextASCII(const std::wstring& filePath, const std::string& text)
+bool Utilities::File::WriteText(const std::wstring& filePath, const std::string& text)
 {
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
@@ -1432,12 +1853,12 @@ bool Utilities::File::WriteTextASCII(const std::wstring& filePath, const std::st
 }
 
 
-bool Utilities::File::WriteText(const std::string& filePath, const std::wstring& text)
+bool Utilities::File::WriteTextUtf16(const std::string& filePath, const std::wstring& text)
 {
-    return File::WriteText(String::ToWString(filePath), text);
+    return File::WriteTextUtf16(String::ToWString(filePath), text);
 }
 
-bool Utilities::File::WriteText(const std::wstring& filePath, const std::wstring& text)
+bool Utilities::File::WriteTextUtf16(const std::wstring& filePath, const std::wstring& text)
 {
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
@@ -1466,12 +1887,12 @@ bool Utilities::File::WriteText(const std::wstring& filePath, const std::wstring
 }
 
 
-bool Utilities::File::WriteLinesASCII(const std::string& filePath, const std::vector<std::string>& lines)
+bool Utilities::File::WriteLines(const std::string& filePath, const std::vector<std::string>& lines)
 {
-    return WriteLinesASCII(String::ToWString(filePath), lines);
+    return WriteLines(String::ToWString(filePath), lines);
 }
 
-bool Utilities::File::WriteLinesASCII(const std::wstring& filePath, const std::vector<std::string>& lines)
+bool Utilities::File::WriteLines(const std::wstring& filePath, const std::vector<std::string>& lines)
 {
     std::string content;
 
@@ -1493,15 +1914,15 @@ bool Utilities::File::WriteLinesASCII(const std::wstring& filePath, const std::v
         first = false;
     }
 
-    return WriteTextASCII(filePath, content);
+    return WriteText(filePath, content);
 }
 
-bool Utilities::File::WriteLines(const std::string& filePath, const std::vector<std::wstring>& lines)
+bool Utilities::File::WriteLinesUtf16(const std::string& filePath, const std::vector<std::wstring>& lines)
 {
-    return WriteLines(String::ToWString(filePath), lines);
+    return WriteLinesUtf16(String::ToWString(filePath), lines);
 }
 
-bool Utilities::File::WriteLines(const std::wstring& filePath, const std::vector<std::wstring>& lines)
+bool Utilities::File::WriteLinesUtf16(const std::wstring& filePath, const std::vector<std::wstring>& lines)
 {
     std::wstring content;
 
@@ -1523,16 +1944,16 @@ bool Utilities::File::WriteLines(const std::wstring& filePath, const std::vector
         first = false;
     }
 
-    return WriteText(filePath, content);
+    return WriteTextUtf16(filePath, content);
 }
 
 
-bool Utilities::File::AppendTextASCII(const std::string& filePath, const std::string& text)
+bool Utilities::File::AppendText(const std::string& filePath, const std::string& text)
 {
-    return File::AppendTextASCII(String::ToWString(filePath), text);
+    return File::AppendText(String::ToWString(filePath), text);
 }
 
-bool Utilities::File::AppendTextASCII(const std::wstring& filePath, const std::string& text)
+bool Utilities::File::AppendText(const std::wstring& filePath, const std::string& text)
 {
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
@@ -1560,12 +1981,12 @@ bool Utilities::File::AppendTextASCII(const std::wstring& filePath, const std::s
     return true;
 }
 
-bool Utilities::File::AppendText(const std::string& filePath, const std::wstring& text)
+bool Utilities::File::AppendTextUtf16(const std::string& filePath, const std::wstring& text)
 {
-    return File::AppendText(String::ToWString(filePath), text);
+    return File::AppendTextUtf16(String::ToWString(filePath), text);
 }
 
-bool Utilities::File::AppendText(const std::wstring& filePath, const std::wstring& text)
+bool Utilities::File::AppendTextUtf16(const std::wstring& filePath, const std::wstring& text)
 {
     HANDLE hFile = CreateFileW(
         filePath.c_str(),      // File path.
@@ -1594,35 +2015,35 @@ bool Utilities::File::AppendText(const std::wstring& filePath, const std::wstrin
 }
 
 
-bool Utilities::File::AppendLineASCII(const std::string& filePath, const std::string& line)
-{
-    return File::AppendLineASCII(String::ToWString(filePath), line);
-}
-
-bool Utilities::File::AppendLineASCII(const std::wstring& filePath, const std::string& line)
-{
-    std::string content = line + '\n';
-    return File::AppendTextASCII(filePath, content);
-}
-
-bool Utilities::File::AppendLine(const std::string& filePath, const std::wstring& line)
+bool Utilities::File::AppendLine(const std::string& filePath, const std::string& line)
 {
     return File::AppendLine(String::ToWString(filePath), line);
 }
 
-bool Utilities::File::AppendLine(const std::wstring& filePath, const std::wstring& line)
+bool Utilities::File::AppendLine(const std::wstring& filePath, const std::string& line)
 {
-    std::wstring content = line + L'\n';
+    std::string content = line + '\n';
     return File::AppendText(filePath, content);
 }
 
-
-bool Utilities::File::AppendLinesASCII(const std::string& filePath, const std::vector<std::string>& lines)
+bool Utilities::File::AppendLineUtf16(const std::string& filePath, const std::wstring& line)
 {
-    return File::AppendLinesASCII(String::ToWString(filePath), lines);
+    return File::AppendLineUtf16(String::ToWString(filePath), line);
 }
 
-bool Utilities::File::AppendLinesASCII(const std::wstring& filePath, const std::vector<std::string>& lines)
+bool Utilities::File::AppendLineUtf16(const std::wstring& filePath, const std::wstring& line)
+{
+    std::wstring content = line + L'\n';
+    return File::AppendTextUtf16(filePath, content);
+}
+
+
+bool Utilities::File::AppendLines(const std::string& filePath, const std::vector<std::string>& lines)
+{
+    return File::AppendLines(String::ToWString(filePath), lines);
+}
+
+bool Utilities::File::AppendLines(const std::wstring& filePath, const std::vector<std::string>& lines)
 {
     std::string content;
 
@@ -1640,15 +2061,15 @@ bool Utilities::File::AppendLinesASCII(const std::wstring& filePath, const std::
         content += '\n';
     }
 
-    return File::AppendTextASCII(filePath, content);
+    return File::AppendText(filePath, content);
 }
 
-bool Utilities::File::AppendLines(const std::string& filePath, const std::vector<std::wstring>& lines)
+bool Utilities::File::AppendLinesUtf16(const std::string& filePath, const std::vector<std::wstring>& lines)
 {
-    return File::AppendLines(String::ToWString(filePath), lines);
+    return File::AppendLinesUtf16(String::ToWString(filePath), lines);
 }
 
-bool Utilities::File::AppendLines(const std::wstring& filePath, const std::vector<std::wstring>& lines)
+bool Utilities::File::AppendLinesUtf16(const std::wstring& filePath, const std::vector<std::wstring>& lines)
 {
     std::wstring content;
 
@@ -1666,7 +2087,7 @@ bool Utilities::File::AppendLines(const std::wstring& filePath, const std::vecto
         content += L'\n';
     }
 
-    return File::AppendText(filePath, content);
+    return File::AppendTextUtf16(filePath, content);
 }
 
 
