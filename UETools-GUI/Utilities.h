@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <cwctype>
 #include <regex>
+#include <iostream>
 
 
 
@@ -84,8 +85,14 @@ namespace Utilities
 	class Console
 	{
 	public:
-		static void Create(bool setTitle = true, bool redirectStreams = false);
+		static void Create(const std::string& title, bool redirectStreams = false);
+		static void Create(const std::wstring& title, bool redirectStreams = false);
+		static void Create(const char* title, bool redirectStreams = false);
+		static void Create(const wchar_t* title, bool redirectStreams = false);
+		static void Create(bool redirectStreams = false);
+
 		static void SetBufferSize(short newBufferSize = SHRT_MAX);
+
 		static void Clear();
 
 		static void EncodingUTF8(); // Universal
@@ -159,36 +166,32 @@ namespace Utilities
 			Information = MB_ICONINFORMATION
 		};
 
+		enum class E_DefaultButton : UINT
+		{
+			Button1 = MB_DEFBUTTON1,
+			Button2 = MB_DEFBUTTON2,
+			Button3 = MB_DEFBUTTON3,
+			Button4 = MB_DEFBUTTON4
+		};
 
-		/* HWND, title, message, type (buttons/icon). */
-		static E_MessageResult Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
 
-		/* title, message, type (buttons/icon). */
-		static E_MessageResult Show(const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
+		/* HWND, title, message, type (buttons/icon/defaultButton). */
+		static E_MessageResult Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
 
-		/* title, message. */
-		static E_MessageResult Show(const std::string& title, const std::string& message);
-		static E_MessageResult Show(const std::wstring& title, const std::wstring& message);
-		static E_MessageResult Show(const char* title, const char* message);
-		static E_MessageResult Show(const wchar_t* title, const wchar_t* message);
+		/* title, message, type (buttons/icon/defaultButton). */
+		static E_MessageResult Show(const std::string& title, const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const char* title, const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
 
-		/* message, type (buttons/icon). */
-		static E_MessageResult Show(const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-		static E_MessageResult Show(const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None);
-
-		/* message. */
-		static E_MessageResult Show(const std::string& message);
-		static E_MessageResult Show(const std::wstring& message);
-		static E_MessageResult Show(const char* message);
-		static E_MessageResult Show(const wchar_t* message);
+		/* message, type (buttons/icon/defaultButton). */
+		static E_MessageResult Show(const std::string& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const std::wstring& message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const char* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
+		static E_MessageResult Show(const wchar_t* message, E_Buttons buttons = E_Buttons::OK, E_Icon icon = E_Icon::None, E_DefaultButton defaultButton = E_DefaultButton::Button1);
 	};
 
 

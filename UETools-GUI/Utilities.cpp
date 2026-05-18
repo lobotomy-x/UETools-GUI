@@ -421,31 +421,54 @@ std::wstring Utilities::Environment::GetSystemDriveUtf16()
 
 
 
-void Utilities::Console::Create(bool setTitle, bool redirectStreams)
+void Utilities::Console::Create(const std::string& title, bool redirectStreams)
 {
-	AllocConsole();
-
-	if (setTitle)
-	{
-		std::string executableName = Environment::GetExecutableName(false);
-		if (executableName.empty())
-		{
-			SetConsoleTitleA("DEBUG CONSOLE");
-		}
-		else
-		{
-			SetConsoleTitleA(executableName.c_str());
-		}
-	}
-
-	if (redirectStreams)
-	{
-		FILE* fConsole;
-		freopen_s(&fConsole, "CONIN$", "r", stdin);
-		freopen_s(&fConsole, "CONOUT$", "w", stdout);
-		freopen_s(&fConsole, "CONOUT$", "w", stderr);
-	}
+    Create(String::ToWString(title), redirectStreams);
 }
+
+void Utilities::Console::Create(const std::wstring& title, bool redirectStreams)
+{
+    bool consoleExists = (GetConsoleWindow() != nullptr);
+    if (consoleExists == false)
+    {
+        AllocConsole();
+    }
+
+    bool isTitleEmpty = title.empty();
+    if (consoleExists == false || isTitleEmpty == false)
+    {
+        SetConsoleTitleW(title.empty() ? L"Console Window" : title.c_str());
+    }
+
+    if (redirectStreams)
+    {
+        FILE* fConsole;
+        freopen_s(&fConsole, "CONIN$", "r", stdin);
+        freopen_s(&fConsole, "CONOUT$", "w", stdout);
+        freopen_s(&fConsole, "CONOUT$", "w", stderr);
+
+        std::cout.clear();
+        std::clog.clear();
+        std::cerr.clear();
+        std::cin.clear();
+    }
+}
+
+void Utilities::Console::Create(const char* title, bool redirectStreams)
+{
+    Create(String::ToString(title), redirectStreams);
+}
+
+void Utilities::Console::Create(const wchar_t* title, bool redirectStreams)
+{
+    Create(String::ToWString(title), redirectStreams);
+}
+
+void Utilities::Console::Create(bool redirectStreams)
+{
+    Create(std::wstring(), redirectStreams);
+}
+
 
 void Utilities::Console::SetBufferSize(short newBufferSize)
 {
@@ -467,6 +490,7 @@ void Utilities::Console::SetBufferSize(short newBufferSize)
 		}
 	}
 }
+
 
 void Utilities::Console::Clear()
 {
@@ -708,14 +732,14 @@ bool Utilities::Clipboard::ContainsRegex(const wchar_t* wcRegexPattern)
 
 
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon)
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon);
+    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon)
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    UINT type = static_cast<UINT>(buttons) | static_cast<UINT>(icon);
+    UINT type = static_cast<UINT>(buttons) | static_cast<UINT>(icon) | static_cast<UINT>(defaultButton);
     int messageResult = MessageBoxW(hwndOwner, message.c_str(), title.c_str(), type);
 
     switch (messageResult)
@@ -732,98 +756,56 @@ Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, con
     }
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons, E_Icon icon)
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const char* title, const char* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(hwndOwner, String::ToString(title), String::ToString(message), buttons, icon);
+    return Show(hwndOwner, String::ToString(title), String::ToString(message), buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon)
+Utilities::Message::E_MessageResult Utilities::Message::Show(HWND hwndOwner, const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon);
-}
-
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon)
-{
-	return Show(nullptr, title, message, buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, title, message, buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const char* title, const char* message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, title, message, buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, title, message, buttons, icon);
+    return Show(hwndOwner, String::ToWString(title), String::ToWString(message), buttons, icon, defaultButton);
 }
 
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& title, const std::string& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-	return Show(nullptr, title, message);
+	return Show(nullptr, title, message, buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& title, const std::wstring& message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& title, const std::wstring& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, title, message);
+    return Show(nullptr, title, message, buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const char* title, const char* message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* title, const char* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, title, message);
+    return Show(nullptr, title, message, buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* title, const wchar_t* message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* title, const wchar_t* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, title, message);
-}
-
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message, E_Buttons buttons, E_Icon icon)
-{
-	return Show(nullptr, Environment::GetExecutableName(false), message, buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, Environment::GetExecutableNameUtf16(false), message, buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const char* message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, Environment::GetExecutableName(false), String::ToString(message), buttons, icon);
-}
-
-Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* message, E_Buttons buttons, E_Icon icon)
-{
-    return Show(nullptr, Environment::GetExecutableNameUtf16(false), String::ToWString(message), buttons, icon);
+    return Show(nullptr, title, message, buttons, icon, defaultButton);
 }
 
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::string& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-	return Show(nullptr, Environment::GetExecutableName(false), message);
+	return Show(nullptr, Environment::GetExecutableName(false), message, buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const std::wstring& message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, Environment::GetExecutableNameUtf16(false), message);
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), message, buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const char* message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const char* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, Environment::GetExecutableName(false), String::ToString(message));
+    return Show(nullptr, Environment::GetExecutableName(false), String::ToString(message), buttons, icon, defaultButton);
 }
 
-Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* message)
+Utilities::Message::E_MessageResult Utilities::Message::Show(const wchar_t* message, E_Buttons buttons, E_Icon icon, E_DefaultButton defaultButton)
 {
-    return Show(nullptr, Environment::GetExecutableNameUtf16(false), String::ToWString(message));
+    return Show(nullptr, Environment::GetExecutableNameUtf16(false), String::ToWString(message), buttons, icon, defaultButton);
 }
 
 
