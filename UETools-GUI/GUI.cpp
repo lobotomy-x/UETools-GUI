@@ -1662,11 +1662,7 @@ void Features::Debug::Update()
 
 	if (Features::Debug::wasCommandLineObtained == false)
 	{
-		LPWSTR lCommandLine = GetCommandLineW();
-		std::wstring wCommandLine = std::wstring(lCommandLine);
-		std::string commandLine = std::string(wCommandLine.begin(), wCommandLine.end());
-
-		Features::Debug::commandLine = commandLine;
+		Features::Debug::commandLine = Utilities::CommandLine::Get();
 		Features::Debug::wasCommandLineObtained = true;
 	}
 

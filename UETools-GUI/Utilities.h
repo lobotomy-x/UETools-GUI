@@ -105,6 +105,26 @@ namespace Utilities
 
 
 
+	class CommandLine
+	{
+	public:
+		static std::string Get();
+		static std::wstring GetUtf16();
+
+		static std::vector<std::string> GetArguments();
+		static std::vector<std::wstring> GetArgumentsUtf16();
+
+		static int Count();
+
+		static bool HasArgument(const std::string& argument);
+		static bool HasArgument(const std::wstring& argument);
+		static bool HasArgument(const char* argument);
+		static bool HasArgument(const wchar_t* argument);
+	};
+
+
+
+
 	class Clipboard
 	{
 	public:
@@ -122,9 +142,9 @@ namespace Utilities
 		static bool Contains(const wchar_t* wcString);
 
 		static bool ContainsRegex(const std::string& regexPattern);
-		static bool ContainsRegex(const std::wstring& wRegexPattern);
-		static bool ContainsRegex(const char* cRegexPattern);
-		static bool ContainsRegex(const wchar_t* wcRegexPattern);
+		static bool ContainsRegex(const std::wstring& regexPattern);
+		static bool ContainsRegex(const char* regexPattern);
+		static bool ContainsRegex(const wchar_t* regexPattern);
 	};
 
 

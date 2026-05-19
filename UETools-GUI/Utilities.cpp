@@ -578,6 +578,110 @@ void Utilities::Console::Encoding437()
 
 
 
+std::string Utilities::CommandLine::Get()
+{
+    if (LPSTR cmdLine = GetCommandLineA())
+        return std::string(cmdLine);
+
+    return std::string();
+}
+
+std::wstring Utilities::CommandLine::GetUtf16()
+{
+    if (LPWSTR cmdLine = GetCommandLineW())
+        return std::wstring(cmdLine);
+
+    return std::wstring();
+}
+
+
+std::vector<std::string> Utilities::CommandLine::GetArguments()
+{
+    std::vector<std::string> outArguments;
+    
+    std::vector<std::wstring> arguments = GetArgumentsUtf16();
+    for (std::wstring& arg : arguments)
+    {
+        outArguments.push_back(String::ToString(arg));
+    }
+
+    return outArguments;
+}
+
+std::vector<std::wstring> Utilities::CommandLine::GetArgumentsUtf16()
+{
+    std::vector<std::wstring> outArguments;
+    int32_t argCount = 0;
+
+    if (LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argCount))
+    {
+        for (int32_t argId = 0; argId < argCount; ++argId)
+        {
+            if (argv[argId])
+                outArguments.push_back(std::wstring(argv[argId]));
+        }
+
+        LocalFree(argv);
+    }
+
+    return outArguments;
+}
+
+
+int Utilities::CommandLine::Count()
+{
+    int32_t argCount = 0;
+
+    if (LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argCount))
+        LocalFree(argv);
+
+    return argCount;
+}
+
+
+bool Utilities::CommandLine::HasArgument(const std::string& argument)
+{
+    if (argument.empty())
+        return false;
+
+    std::vector<std::string> arguments = GetArguments();
+    for (std::string& arg : arguments)
+    {
+        if (arg == argument)
+            return true;
+    }
+
+    return false;
+}
+
+bool Utilities::CommandLine::HasArgument(const std::wstring& argument)
+{
+    if (argument.empty())
+        return false;
+
+    std::vector<std::wstring> arguments = GetArgumentsUtf16();
+    for (std::wstring& arg : arguments)
+    {
+        if (arg == argument)
+            return true;
+    }
+
+    return false;
+}
+
+bool Utilities::CommandLine::HasArgument(const char* argument)
+{
+    return HasArgument(String::ToString(argument));
+}
+
+bool Utilities::CommandLine::HasArgument(const wchar_t* argument)
+{
+    return HasArgument(String::ToWString(argument));
+}
+
+
+
+
 std::string Utilities::Clipboard::GetText()
 {
     return String::ToString(GetTextUtf16());
@@ -724,12 +828,12 @@ bool Utilities::Clipboard::ContainsRegex(const std::string& regexPattern)
     }
 }
 
-bool Utilities::Clipboard::ContainsRegex(const std::wstring& wRegexPattern)
+bool Utilities::Clipboard::ContainsRegex(const std::wstring& regexPattern)
 {
     std::wstring text = GetTextUtf16();
     try
     {
-        std::wregex re(wRegexPattern);
+        std::wregex re(regexPattern);
         return std::regex_search(text, re);
     }
     catch (std::regex_error&)
@@ -738,14 +842,14 @@ bool Utilities::Clipboard::ContainsRegex(const std::wstring& wRegexPattern)
     }
 }
 
-bool Utilities::Clipboard::ContainsRegex(const char* cRegexPattern)
+bool Utilities::Clipboard::ContainsRegex(const char* regexPattern)
 {
-    return false;
+    return ContainsRegex(String::ToString(regexPattern));
 }
 
-bool Utilities::Clipboard::ContainsRegex(const wchar_t* wcRegexPattern)
+bool Utilities::Clipboard::ContainsRegex(const wchar_t* regexPattern)
 {
-    return false;
+    return ContainsRegex(String::ToWString(regexPattern));
 }
 
 
