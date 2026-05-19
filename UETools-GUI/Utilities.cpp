@@ -432,12 +432,31 @@ void Utilities::Console::Create(const std::wstring& title, bool redirectStreams)
     if (consoleExists == false)
     {
         AllocConsole();
+
+        HWND hConsole = GetConsoleWindow();
+        if (hConsole != nullptr)
+        {
+            std::wstring executablePath = Environment::GetExecutablePathUtf16();
+            if (executablePath.empty() == false)
+            {
+                HICON hIconBig = nullptr;
+                HICON hIconSmall = nullptr;
+
+                ExtractIconExW(executablePath.c_str(), 0, &hIconBig, &hIconSmall, 1);
+
+                if (hIconBig != nullptr)
+                    SendMessageW(hConsole, WM_SETICON, ICON_BIG, (LPARAM)hIconBig);
+
+                if (hIconSmall != nullptr)
+                    SendMessageW(hConsole, WM_SETICON, ICON_SMALL, (LPARAM)hIconSmall);
+            }
+        }
     }
 
     bool isTitleEmpty = title.empty();
     if (consoleExists == false || isTitleEmpty == false)
     {
-        SetConsoleTitleW(title.empty() ? L"Console Window" : title.c_str());
+        SetConsoleTitleW(title.empty() ? L"Console" : title.c_str());
     }
 
     if (redirectStreams)
