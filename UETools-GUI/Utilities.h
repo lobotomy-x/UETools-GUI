@@ -288,6 +288,24 @@ namespace Utilities
 		static bool Contains(const wchar_t* wcString, const wchar_t* substring);
 
 
+		static bool StartsWith(const std::string& string, const std::string& substring);
+		static bool StartsWith(const std::string& string, const std::wstring& substring);
+		static bool StartsWith(const char* cString, const char* substring);
+
+		static bool StartsWith(const std::wstring& wString, const std::wstring& substring);
+		static bool StartsWith(const std::wstring& wString, const std::string& substring);
+		static bool StartsWith(const wchar_t* wcString, const wchar_t* substring);
+
+
+		static bool EndsWith(const std::string& string, const std::string& substring);
+		static bool EndsWith(const std::string& string, const std::wstring& substring);
+		static bool EndsWith(const char* cString, const char* substring);
+
+		static bool EndsWith(const std::wstring& wString, const std::wstring& substring);
+		static bool EndsWith(const std::wstring& wString, const std::string& substring);
+		static bool EndsWith(const wchar_t* wcString, const wchar_t* substring);
+
+
 		static std::vector<std::string> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true);
 		static std::vector<std::string> Split(const std::wstring& wString, const char& separator, const bool& removeSeparatorSpaces = true);
 		static std::vector<std::string> Split(const char* cString, const char& separator, const bool& removeSeparatorSpaces = true);

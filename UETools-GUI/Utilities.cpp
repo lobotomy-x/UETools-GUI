@@ -1368,6 +1368,98 @@ bool Utilities::String::Contains(const wchar_t* wcString, const wchar_t* substri
 
 
 
+bool Utilities::String::StartsWith(const std::string& string, const std::string& substring)
+{
+    if (substring.empty())
+        return true;
+
+    if (string.empty() || string.length() < substring.length())
+        return false;
+
+    return string.compare(0, substring.length(), substring) == 0;
+}
+
+bool Utilities::String::StartsWith(const std::string& string, const std::wstring& substring)
+{
+    return StartsWith(string, ToString(substring));
+}
+
+bool Utilities::String::StartsWith(const char* cString, const char* substring)
+{
+    return StartsWith(ToString(cString), ToString(substring));
+}
+
+
+bool Utilities::String::StartsWith(const std::wstring& wString, const std::wstring& substring)
+{
+    if (substring.empty())
+        return true;
+
+    if (wString.empty() || wString.length() < substring.length())
+        return false;
+
+    return wString.compare(0, substring.length(), substring) == 0;
+}
+
+bool Utilities::String::StartsWith(const std::wstring& wString, const std::string& substring)
+{
+    return StartsWith(wString, ToWString(substring));
+}
+
+bool Utilities::String::StartsWith(const wchar_t* wcString, const wchar_t* substring)
+{
+    return StartsWith(ToWString(wcString), ToWString(substring));
+}
+
+
+
+
+bool Utilities::String::EndsWith(const std::string& string, const std::string& substring)
+{
+    if (substring.empty())
+        return true;
+
+    if (string.empty() || string.length() < substring.length())
+        return false;
+
+    return string.compare(string.length() - substring.length(), substring.length(), substring) == 0;
+}
+
+bool Utilities::String::EndsWith(const std::string& string, const std::wstring& substring)
+{
+    return EndsWith(string, ToString(substring));
+}
+
+bool Utilities::String::EndsWith(const char* cString, const char* substring)
+{
+    return EndsWith(ToString(cString), ToString(substring));
+}
+
+
+bool Utilities::String::EndsWith(const std::wstring& wString, const std::wstring& substring)
+{
+    if (substring.empty())
+        return true;
+
+    if (wString.empty() || wString.length() < substring.length())
+        return false;
+
+    return wString.compare(wString.length() - substring.length(), substring.length(), substring) == 0;
+}
+
+bool Utilities::String::EndsWith(const std::wstring& wString, const std::string& substring)
+{
+    return EndsWith(wString, ToWString(substring));
+}
+
+bool Utilities::String::EndsWith(const wchar_t* wcString, const wchar_t* substring)
+{
+    return EndsWith(ToWString(wcString), ToWString(substring));
+}
+
+
+
+
 std::vector<std::string> Utilities::String::Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces)
 {
 	std::vector<std::string> outCollection;
