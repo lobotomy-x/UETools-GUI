@@ -1328,6 +1328,46 @@ std::wstring Utilities::String::ReplaceLastOf(const wchar_t* wcString, const wch
 
 
 
+bool Utilities::String::Contains(const std::string& string, const std::string& substring)
+{
+    if (string.empty() || substring.empty())
+        return false;
+
+    return string.find(substring) != std::string::npos;
+}
+
+bool Utilities::String::Contains(const std::string& string, const std::wstring& substring)
+{
+    return Contains(string, ToString(substring));
+}
+
+bool Utilities::String::Contains(const char* cString, const char* substring)
+{
+    return Contains(ToString(cString), ToString(substring));
+}
+
+
+bool Utilities::String::Contains(const std::wstring& wString, const std::wstring& substring)
+{
+    if (wString.empty() || substring.empty())
+        return false;
+
+    return wString.find(substring) != std::wstring::npos;
+}
+
+bool Utilities::String::Contains(const std::wstring& wString, const std::string& substring)
+{
+    return Contains(wString, ToWString(substring));
+}
+
+bool Utilities::String::Contains(const wchar_t* wcString, const wchar_t* substring)
+{
+    return Contains(ToWString(wcString), ToWString(substring));
+}
+
+
+
+
 std::vector<std::string> Utilities::String::Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces)
 {
 	std::vector<std::string> outCollection;

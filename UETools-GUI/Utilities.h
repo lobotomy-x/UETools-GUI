@@ -279,6 +279,15 @@ namespace Utilities
 		static std::wstring ReplaceLastOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to);
 
 
+		static bool Contains(const std::string& string, const std::string& substring);
+		static bool Contains(const std::string& string, const std::wstring& substring);
+		static bool Contains(const char* cString, const char* substring);
+
+		static bool Contains(const std::wstring& wString, const std::wstring& substring);
+		static bool Contains(const std::wstring& wString, const std::string& substring);
+		static bool Contains(const wchar_t* wcString, const wchar_t* substring);
+
+
 		static std::vector<std::string> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true);
 		static std::vector<std::string> Split(const std::wstring& wString, const char& separator, const bool& removeSeparatorSpaces = true);
 		static std::vector<std::string> Split(const char* cString, const char& separator, const bool& removeSeparatorSpaces = true);
@@ -290,10 +299,10 @@ namespace Utilities
 		static std::vector<std::wstring> Split(const wchar_t* wcString, const wchar_t& separator, const bool& removeSeparatorSpaces = true);
 
 
-		std::string Reverse(std::string string);
-		std::wstring Reverse(std::wstring wString);
-		std::string Reverse(const char* cString);
-		std::wstring Reverse(const wchar_t* wcString);
+		static std::string Reverse(std::string string);
+		static std::wstring Reverse(std::wstring wString);
+		static std::string Reverse(const char* cString);
+		static std::wstring Reverse(const wchar_t* wcString);
 
 
 		static std::wstring NormalizeObjectPath(std::wstring objectPath);
