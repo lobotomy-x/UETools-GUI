@@ -136,10 +136,10 @@ namespace Utilities
 		static bool SetText(const char* cString);
 		static bool SetText(const wchar_t* wcString);
 
-		static bool Contains(const std::string& string);
-		static bool Contains(const std::wstring& wString);
-		static bool Contains(const char* cString);
-		static bool Contains(const wchar_t* wcString);
+		static bool Contains(const std::string& substring);
+		static bool Contains(const std::wstring& substring);
+		static bool Contains(const char* substring);
+		static bool Contains(const wchar_t* substring);
 
 		static bool ContainsRegex(const std::string& regexPattern);
 		static bool ContainsRegex(const std::wstring& regexPattern);
@@ -279,31 +279,31 @@ namespace Utilities
 		static std::wstring ReplaceLastOf(const wchar_t* wcString, const wchar_t* from, const wchar_t* to);
 
 
-		static bool Contains(const std::string& string, const std::string& substring);
-		static bool Contains(const std::string& string, const std::wstring& substring);
-		static bool Contains(const char* cString, const char* substring);
+		static bool Contains(const std::string& string, const std::string& substring, const bool& useCase = true);
+		static bool Contains(const std::string& string, const std::wstring& substring, const bool& useCase = true);
+		static bool Contains(const char* cString, const char* substring, const bool& useCase = true);
 
-		static bool Contains(const std::wstring& wString, const std::wstring& substring);
-		static bool Contains(const std::wstring& wString, const std::string& substring);
-		static bool Contains(const wchar_t* wcString, const wchar_t* substring);
-
-
-		static bool StartsWith(const std::string& string, const std::string& substring);
-		static bool StartsWith(const std::string& string, const std::wstring& substring);
-		static bool StartsWith(const char* cString, const char* substring);
-
-		static bool StartsWith(const std::wstring& wString, const std::wstring& substring);
-		static bool StartsWith(const std::wstring& wString, const std::string& substring);
-		static bool StartsWith(const wchar_t* wcString, const wchar_t* substring);
+		static bool Contains(const std::wstring& wString, const std::wstring& substring, const bool& useCase = true);
+		static bool Contains(const std::wstring& wString, const std::string& substring, const bool& useCase = true);
+		static bool Contains(const wchar_t* wcString, const wchar_t* substring, const bool& useCase = true);
 
 
-		static bool EndsWith(const std::string& string, const std::string& substring);
-		static bool EndsWith(const std::string& string, const std::wstring& substring);
-		static bool EndsWith(const char* cString, const char* substring);
+		static bool StartsWith(const std::string& string, const std::string& substring, const bool& useCase = true);
+		static bool StartsWith(const std::string& string, const std::wstring& substring, const bool& useCase = true);
+		static bool StartsWith(const char* cString, const char* substring, const bool& useCase = true);
 
-		static bool EndsWith(const std::wstring& wString, const std::wstring& substring);
-		static bool EndsWith(const std::wstring& wString, const std::string& substring);
-		static bool EndsWith(const wchar_t* wcString, const wchar_t* substring);
+		static bool StartsWith(const std::wstring& wString, const std::wstring& substring, const bool& useCase = true);
+		static bool StartsWith(const std::wstring& wString, const std::string& substring, const bool& useCase = true);
+		static bool StartsWith(const wchar_t* wcString, const wchar_t* substring, const bool& useCase = true);
+
+
+		static bool EndsWith(const std::string& string, const std::string& substring, const bool& useCase = true);
+		static bool EndsWith(const std::string& string, const std::wstring& substring, const bool& useCase = true);
+		static bool EndsWith(const char* cString, const char* substring, const bool& useCase = true);
+
+		static bool EndsWith(const std::wstring& wString, const std::wstring& substring, const bool& useCase = true);
+		static bool EndsWith(const std::wstring& wString, const std::string& substring, const bool& useCase = true);
+		static bool EndsWith(const wchar_t* wcString, const wchar_t* substring, const bool& useCase = true);
 
 
 		static std::vector<std::string> Split(const std::string& string, const char& separator, const bool& removeSeparatorSpaces = true);

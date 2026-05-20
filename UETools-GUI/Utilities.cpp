@@ -791,26 +791,26 @@ bool Utilities::Clipboard::SetText(const wchar_t* wcString)
 }
 
 
-bool Utilities::Clipboard::Contains(const std::string& string)
+bool Utilities::Clipboard::Contains(const std::string& substring)
 {
     std::string text = Clipboard::GetText();
-    return (text.find(string) != std::string::npos);
+    return (text.find(substring) != std::string::npos);
 }
 
-bool Utilities::Clipboard::Contains(const std::wstring& wString)
+bool Utilities::Clipboard::Contains(const std::wstring& substring)
 {
     std::wstring text = GetTextUtf16();
-    return (text.find(wString) != std::wstring::npos);
+    return (text.find(substring) != std::wstring::npos);
 }
 
-bool Utilities::Clipboard::Contains(const char* cString)
+bool Utilities::Clipboard::Contains(const char* substring)
 {
-    return Contains(String::ToString(cString));
+    return Contains(String::ToString(substring));
 }
 
-bool Utilities::Clipboard::Contains(const wchar_t* wcString)
+bool Utilities::Clipboard::Contains(const wchar_t* substring)
 {
-    return Contains(String::ToWString(wcString));
+    return Contains(String::ToWString(substring));
 }
 
 
@@ -1328,93 +1328,57 @@ std::wstring Utilities::String::ReplaceLastOf(const wchar_t* wcString, const wch
 
 
 
-bool Utilities::String::Contains(const std::string& string, const std::string& substring)
+bool Utilities::String::Contains(const std::string& string, const std::string& substring, const bool& useCase)
 {
     if (string.empty() || substring.empty())
         return false;
 
-    return string.find(substring) != std::string::npos;
+    if (useCase)
+        return string.find(substring) != std::string::npos;
+
+    std::string stringLower = ToLowerCase(string);
+    std::string substringLower = ToLowerCase(substring);
+    return stringLower.find(substringLower) != std::string::npos;
 }
 
-bool Utilities::String::Contains(const std::string& string, const std::wstring& substring)
+bool Utilities::String::Contains(const std::string& string, const std::wstring& substring, const bool& useCase)
 {
-    return Contains(string, ToString(substring));
+    return Contains(string, ToString(substring), useCase);
 }
 
-bool Utilities::String::Contains(const char* cString, const char* substring)
+bool Utilities::String::Contains(const char* cString, const char* substring, const bool& useCase)
 {
-    return Contains(ToString(cString), ToString(substring));
+    return Contains(ToString(cString), ToString(substring), useCase);
 }
 
 
-bool Utilities::String::Contains(const std::wstring& wString, const std::wstring& substring)
+bool Utilities::String::Contains(const std::wstring& wString, const std::wstring& substring, const bool& useCase)
 {
     if (wString.empty() || substring.empty())
         return false;
 
-    return wString.find(substring) != std::wstring::npos;
+    if (useCase)
+        return wString.find(substring) != std::wstring::npos;
+
+    std::wstring wStringLower = ToLowerCase(wString);
+    std::wstring substringLower = ToLowerCase(substring);
+    return wStringLower.find(substringLower) != std::wstring::npos;
 }
 
-bool Utilities::String::Contains(const std::wstring& wString, const std::string& substring)
+bool Utilities::String::Contains(const std::wstring& wString, const std::string& substring, const bool& useCase)
 {
-    return Contains(wString, ToWString(substring));
+    return Contains(wString, ToWString(substring), useCase);
 }
 
-bool Utilities::String::Contains(const wchar_t* wcString, const wchar_t* substring)
+bool Utilities::String::Contains(const wchar_t* wcString, const wchar_t* substring, const bool& useCase)
 {
-    return Contains(ToWString(wcString), ToWString(substring));
+    return Contains(ToWString(wcString), ToWString(substring), useCase);
 }
 
 
 
 
-bool Utilities::String::StartsWith(const std::string& string, const std::string& substring)
-{
-    if (substring.empty())
-        return true;
-
-    if (string.empty() || string.length() < substring.length())
-        return false;
-
-    return string.compare(0, substring.length(), substring) == 0;
-}
-
-bool Utilities::String::StartsWith(const std::string& string, const std::wstring& substring)
-{
-    return StartsWith(string, ToString(substring));
-}
-
-bool Utilities::String::StartsWith(const char* cString, const char* substring)
-{
-    return StartsWith(ToString(cString), ToString(substring));
-}
-
-
-bool Utilities::String::StartsWith(const std::wstring& wString, const std::wstring& substring)
-{
-    if (substring.empty())
-        return true;
-
-    if (wString.empty() || wString.length() < substring.length())
-        return false;
-
-    return wString.compare(0, substring.length(), substring) == 0;
-}
-
-bool Utilities::String::StartsWith(const std::wstring& wString, const std::string& substring)
-{
-    return StartsWith(wString, ToWString(substring));
-}
-
-bool Utilities::String::StartsWith(const wchar_t* wcString, const wchar_t* substring)
-{
-    return StartsWith(ToWString(wcString), ToWString(substring));
-}
-
-
-
-
-bool Utilities::String::EndsWith(const std::string& string, const std::string& substring)
+bool Utilities::String::StartsWith(const std::string& string, const std::string& substring, const bool& useCase)
 {
     if (substring.empty())
         return true;
@@ -1422,21 +1386,26 @@ bool Utilities::String::EndsWith(const std::string& string, const std::string& s
     if (string.empty() || string.length() < substring.length())
         return false;
 
-    return string.compare(string.length() - substring.length(), substring.length(), substring) == 0;
+    if (useCase)
+        return string.compare(0, substring.length(), substring) == 0;
+
+    std::string stringLower = ToLowerCase(string);
+    std::string substringLower = ToLowerCase(substring);
+    return stringLower.compare(0, substringLower.length(), substringLower) == 0;
 }
 
-bool Utilities::String::EndsWith(const std::string& string, const std::wstring& substring)
+bool Utilities::String::StartsWith(const std::string& string, const std::wstring& substring, const bool& useCase)
 {
-    return EndsWith(string, ToString(substring));
+    return StartsWith(string, ToString(substring), useCase);
 }
 
-bool Utilities::String::EndsWith(const char* cString, const char* substring)
+bool Utilities::String::StartsWith(const char* cString, const char* substring, const bool& useCase)
 {
-    return EndsWith(ToString(cString), ToString(substring));
+    return StartsWith(ToString(cString), ToString(substring), useCase);
 }
 
 
-bool Utilities::String::EndsWith(const std::wstring& wString, const std::wstring& substring)
+bool Utilities::String::StartsWith(const std::wstring& wString, const std::wstring& substring, const bool& useCase)
 {
     if (substring.empty())
         return true;
@@ -1444,17 +1413,78 @@ bool Utilities::String::EndsWith(const std::wstring& wString, const std::wstring
     if (wString.empty() || wString.length() < substring.length())
         return false;
 
-    return wString.compare(wString.length() - substring.length(), substring.length(), substring) == 0;
+    if (useCase)
+        return wString.compare(0, substring.length(), substring) == 0;
+
+    std::wstring wStringLower = ToLowerCase(wString);
+    std::wstring substringLower = ToLowerCase(substring);
+    return wStringLower.compare(0, substringLower.length(), substringLower) == 0;
 }
 
-bool Utilities::String::EndsWith(const std::wstring& wString, const std::string& substring)
+bool Utilities::String::StartsWith(const std::wstring& wString, const std::string& substring, const bool& useCase)
 {
-    return EndsWith(wString, ToWString(substring));
+    return StartsWith(wString, ToWString(substring), useCase);
 }
 
-bool Utilities::String::EndsWith(const wchar_t* wcString, const wchar_t* substring)
+bool Utilities::String::StartsWith(const wchar_t* wcString, const wchar_t* substring, const bool& useCase)
 {
-    return EndsWith(ToWString(wcString), ToWString(substring));
+    return StartsWith(ToWString(wcString), ToWString(substring), useCase);
+}
+
+
+
+
+bool Utilities::String::EndsWith(const std::string& string, const std::string& substring, const bool& useCase)
+{
+    if (substring.empty())
+        return true;
+
+    if (string.empty() || string.length() < substring.length())
+        return false;
+
+    if (useCase)
+        return string.compare(string.length() - substring.length(), substring.length(), substring) == 0;
+
+    std::string stringLower = ToLowerCase(string);
+    std::string substringLower = ToLowerCase(substring);
+    return stringLower.compare(stringLower.length() - substringLower.length(), substringLower.length(), substringLower) == 0;
+}
+
+bool Utilities::String::EndsWith(const std::string& string, const std::wstring& substring, const bool& useCase)
+{
+    return EndsWith(string, ToString(substring), useCase);
+}
+
+bool Utilities::String::EndsWith(const char* cString, const char* substring, const bool& useCase)
+{
+    return EndsWith(ToString(cString), ToString(substring), useCase);
+}
+
+
+bool Utilities::String::EndsWith(const std::wstring& wString, const std::wstring& substring, const bool& useCase)
+{
+    if (substring.empty())
+        return true;
+
+    if (wString.empty() || wString.length() < substring.length())
+        return false;
+
+    if (useCase)
+        return wString.compare(wString.length() - substring.length(), substring.length(), substring) == 0;
+
+    std::wstring wStringLower = ToLowerCase(wString);
+    std::wstring substringLower = ToLowerCase(substring);
+    return wStringLower.compare(wStringLower.length() - substringLower.length(), substringLower.length(), substringLower) == 0;
+}
+
+bool Utilities::String::EndsWith(const std::wstring& wString, const std::string& substring, const bool& useCase)
+{
+    return EndsWith(wString, ToWString(substring), useCase);
+}
+
+bool Utilities::String::EndsWith(const wchar_t* wcString, const wchar_t* substring, const bool& useCase)
+{
+    return EndsWith(ToWString(wcString), ToWString(substring), useCase);
 }
 
 
