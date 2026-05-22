@@ -2479,6 +2479,47 @@ uintptr_t Utilities::Memory::Internal::AddressAddOffset(const uintptr_t& memoryA
 
 
 
+void* Utilities::Memory::Internal::PtrDereference(const void* memoryPtr, size_t offset)
+{
+    /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
+    uintptr_t memoryAddress = reinterpret_cast<uintptr_t>(memoryPtr);
+    return PtrDereference(memoryAddress, offset);
+}
+
+void* Utilities::Memory::Internal::PtrDereference(const uintptr_t& memoryAddress, size_t offset)
+{
+    /* Get the dereferenced address. */
+    uintptr_t newMemoryAddress = AddressDereference(memoryAddress, offset);
+    if (newMemoryAddress == 0x0) // Return null pointer if memory region is invalid.
+        return nullptr;
+
+    return reinterpret_cast<void*>(newMemoryAddress);
+}
+
+uintptr_t Utilities::Memory::Internal::AddressDereference(const void* memoryPtr, size_t offset)
+{
+    /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
+    uintptr_t memoryAddress = reinterpret_cast<uintptr_t>(memoryPtr);
+    return AddressDereference(memoryAddress, offset);
+}
+
+uintptr_t Utilities::Memory::Internal::AddressDereference(const uintptr_t& memoryAddress, size_t offset)
+{
+    /* Calculate the target address by adding the offset. */
+    uintptr_t targetAddress = memoryAddress + offset;
+
+    /* Verify we can safely read sizeof(uintptr_t) bytes at 'targetAddress'. */
+    if (IsValidAddress(targetAddress) == false ||
+        IsValidAddress((targetAddress + sizeof(uintptr_t) - 1)) == false)
+        return 0x0;
+
+    /* Dereference and return the read value. */
+    return *reinterpret_cast<uintptr_t*>(targetAddress);
+}
+
+
+
+
 void* Utilities::Memory::Internal::PtrFollowPointerChain(const void* memoryPtr, const std::vector<uintptr_t>& memoryOffsets)
 {
     /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
@@ -4580,6 +4621,8 @@ bool Utilities::Memory::External::IsValidAddress(const HANDLE& hProcess, const u
 }
 
 
+
+
 void* Utilities::Memory::External::PtrAddOffset(const HANDLE& hProcess, const void* memoryPtr, size_t offset)
 {
     /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
@@ -4618,6 +4661,55 @@ uintptr_t Utilities::Memory::External::AddressAddOffset(const HANDLE& hProcess, 
 
     /* Return the valid address */
     return newMemoryAddress;
+}
+
+
+
+
+void* Utilities::Memory::External::PtrDereference(const HANDLE& hProcess, const void* memoryPtr, size_t offset)
+{
+    /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
+    uintptr_t memoryAddress = reinterpret_cast<uintptr_t>(memoryPtr);
+    return PtrDereference(hProcess, memoryAddress, offset);
+}
+
+void* Utilities::Memory::External::PtrDereference(const HANDLE& hProcess, const uintptr_t& memoryAddress, size_t offset)
+{
+    /* Get the dereferenced address. */
+    uintptr_t newMemoryAddress = AddressDereference(hProcess, memoryAddress, offset);
+    if (newMemoryAddress == 0x0) // Return null pointer if memory region is invalid.
+        return nullptr;
+
+    return reinterpret_cast<void*>(newMemoryAddress);
+}
+
+
+uintptr_t Utilities::Memory::External::AddressDereference(const HANDLE& hProcess, const void* memoryPtr, size_t offset)
+{
+    /* Since void* doesn't support pointer arithmetics, we need to convert it to uintptr_t first. */
+    uintptr_t memoryAddress = reinterpret_cast<uintptr_t>(memoryPtr);
+    return AddressDereference(hProcess, memoryAddress, offset);
+}
+
+uintptr_t Utilities::Memory::External::AddressDereference(const HANDLE& hProcess, const uintptr_t& memoryAddress, size_t offset)
+{
+    /* Calculate the target address by adding the offset. */
+    uintptr_t targetAddress = memoryAddress + offset;
+
+    /* Verify we can safely read from 'targetAddress' in the target process. */
+    if (IsValidAddress(hProcess, targetAddress) == false ||
+        IsValidAddress(hProcess, (targetAddress + sizeof(uintptr_t) - 1)) == false)
+        return 0x0;
+
+    /* Read and return the pointer value from the target address. */
+    uintptr_t dereferencedAddress = 0x0;
+    SIZE_T bytesRead = 0;
+    if (!ReadProcessMemory(hProcess, reinterpret_cast<LPCVOID>(targetAddress),
+        &dereferencedAddress, sizeof(dereferencedAddress), &bytesRead)
+        || bytesRead != sizeof(dereferencedAddress))
+        return 0x0;
+
+    return dereferencedAddress;
 }
 
 

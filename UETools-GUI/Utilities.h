@@ -466,6 +466,40 @@ namespace Utilities
 			static uintptr_t AddressAddOffset(const uintptr_t& memoryAddress, size_t offset);
 
 			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer.
+			* @param memoryPtr - Pointer to the starting memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid pointer read from the memory location;
+			*         otherwise returns 'nullptr' to indicate an invalid/unreadable address.
+			*/
+			static void* PtrDereference(const void* memoryPtr, size_t offset);
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer.
+			* @param memoryAddress - Address of the memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid pointer read from the memory location;
+			*         otherwise returns 'nullptr' to indicate an invalid/unreadable address.
+			*/
+			static void* PtrDereference(const uintptr_t& memoryAddress, size_t offset);
+
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer.
+			* @param memoryPtr - Pointer to the starting memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid memory address read from the memory location;
+			*         otherwise returns '0x0' to indicate an invalid/unreadable address.
+			*/
+			static uintptr_t AddressDereference(const void* memoryPtr, size_t offset);
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer.
+			* @param memoryAddress - Address of the memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid memory address read from the memory location;
+			*         otherwise returns '0x0' to indicate an invalid/unreadable address.
+			*/
+			static uintptr_t AddressDereference(const uintptr_t& memoryAddress, size_t offset);
+
+			/**
 			* @brief Follows a chain of pointers starting from a base address, applying a sequence of offsets.
 			* @param memoryPtr - Pointer to the starting memory location from which the pointer chain will be resolved.
 			* @return The new valid memory address if pointer chain was successfully resolved and final destination was reached;
@@ -810,6 +844,44 @@ namespace Utilities
 			*         otherwise returns '0x0' to indicate an invalid or unreadable address.
 			*/
 			static uintptr_t AddressAddOffset(const HANDLE& hProcess, const uintptr_t& memoryAddress, size_t offset);
+
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer in an external process.
+			* @param hProcess - Process HANDLE in whose address space to operate.
+			* @param memoryPtr - Pointer to the starting memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid pointer read from the memory location;
+			*         otherwise returns 'nullptr' to indicate an invalid/unreadable address.
+			*/
+			static void* PtrDereference(const HANDLE& hProcess, const void* memoryPtr, size_t offset);
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer in an external process.
+			* @param hProcess - Process HANDLE in whose address space to operate.
+			* @param memoryAddress - Address of the memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid pointer read from the memory location;
+			*         otherwise returns 'nullptr' to indicate an invalid/unreadable address.
+			*/
+			static void* PtrDereference(const HANDLE& hProcess, const uintptr_t& memoryAddress, size_t offset);
+
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer in an external process.
+			* @param hProcess - Process HANDLE in whose address space to operate.
+			* @param memoryPtr - Pointer to the starting memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid memory address read from the memory location;
+			*         otherwise returns '0x0' to indicate an invalid/unreadable address.
+			*/
+			static uintptr_t AddressDereference(const HANDLE& hProcess, const void* memoryPtr, size_t offset);
+			/**
+			* @brief Adds a byte offset to a base memory address, verifies readability, and dereferences it to read the next pointer in an external process.
+			* @param hProcess - Process HANDLE in whose address space to operate.
+			* @param memoryAddress - Address of the memory location.
+			* @param offset - The number of bytes to add to the base address before dereferencing (default is 0).
+			* @return The new valid memory address read from the memory location;
+			*         otherwise returns '0x0' to indicate an invalid/unreadable address.
+			*/
+			static uintptr_t AddressDereference(const HANDLE& hProcess, const uintptr_t& memoryAddress, size_t offset);
 
 			/**
 			* @brief Follows a chain of pointers starting from a base address, applying a sequence of offsets.
