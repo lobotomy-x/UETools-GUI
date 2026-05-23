@@ -453,11 +453,7 @@ void Utilities::Console::Create(const std::wstring& title, bool redirectStreams)
         }
     }
 
-    bool isTitleEmpty = title.empty();
-    if (consoleExists == false || isTitleEmpty == false)
-    {
-        SetConsoleTitleW(title.empty() ? L"Console" : title.c_str());
-    }
+    SetConsoleTitleW(title.empty() ? L"Console" : title.c_str());
 
     if (redirectStreams)
     {
