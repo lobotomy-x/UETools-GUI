@@ -28,6 +28,11 @@ REM   These are always on:
 REM     SOFT_PATH, FREE_CAMERA, ACTORS_TRACKING, COLLISION_VISUALIZER,
 REM     WAIT_FOR_TITLE_INIT
 REM
+REM SDK COMPILATION
+REM   Basic.cpp and ALL *_functions.cpp files in the SDK are compiled.
+REM   This avoids "unresolved external symbol" errors that occur when SDK
+REM   classes call into a package not included in a hand-picked list.
+REM
 REM REQUIREMENTS
 REM   Visual Studio 2022 (any edition) with the Desktop C++ workload,
 REM   or VS Build Tools 2022.
@@ -261,21 +266,14 @@ REM -- ImGui source files --
 >> "%BUILD_HELPER%" echo     "%ROOT%\SDKs\ImGui\imgui_tables.cpp" ^^
 >> "%BUILD_HELPER%" echo     "%ROOT%\SDKs\ImGui\imgui_widgets.cpp" ^^
 
-REM -- Game SDK core files (always required) --
+REM -- Game SDK: Basic.cpp (always present) --
 >> "%BUILD_HELPER%" echo     "%SDK%\SDK\Basic.cpp" ^^
->> "%BUILD_HELPER%" echo     "%SDK%\SDK\CoreUObject_functions.cpp" ^^
->> "%BUILD_HELPER%" echo     "%SDK%\SDK\Engine_functions.cpp" ^^
 
-REM -- Game SDK optional files (compiled when present and relevant) --
-if !HAS_UMG!==1 (
-    if exist "%SDK%\SDK\UMG_functions.cpp" (
-        >> "%BUILD_HELPER%" echo     "%SDK%\SDK\UMG_functions.cpp" ^^
-    )
-)
-if !HAS_LEVEL_SEQUENCE!==1 (
-    if exist "%SDK%\SDK\LevelSequence_functions.cpp" (
-        >> "%BUILD_HELPER%" echo     "%SDK%\SDK\LevelSequence_functions.cpp" ^^
-    )
+REM -- Game SDK: ALL *_functions.cpp files found in the SDK.
+REM    Compiling every functions file avoids "unresolved external symbol" errors
+REM    that occur when any SDK class calls into a package we didn't explicitly list.
+for %%F in ("%SDK%\SDK\*_functions.cpp") do (
+    >> "%BUILD_HELPER%" echo     "%%F" ^^
 )
 
 REM -- Linker (no ^^ on the last line) --
